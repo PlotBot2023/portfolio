@@ -1,0 +1,21 @@
+---
+title: "Projects"
+description: "Nine notebooks — market analysis, causal inference, pipeline diagnostics, and data wrangling. Each published with its outputs intact; code is one click away on every page."
+listing:
+  id: project-listing
+  contents: notebooks
+  type: default
+  sort: "order asc"
+  sort-ui: [order, date, title]
+  filter-ui: true
+  categories: true
+  fields: [title, description, categories, date]
+  date-format: "MMMM YYYY"
+  page-size: 20
+toc: false
+---
+
+Grouped roughly by what they demonstrate: the **Broward Airbnb** series is end-to-end analysis for a non-technical decision-maker; the **SportsAnalytics** notebooks come out of a nine-sport projections platform I run on PostgreSQL; the **coursework** notebooks are labelled as such — they're from IBM and sports-analytics course tracks, kept here because the wrangling and visualization work is honest and legible.
+
+::: {#project-listing}
+:::

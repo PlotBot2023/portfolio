@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-01-14">
+<meta name="description" content="Shot-location heatmaps and court visualizations built from raw shot logs.">
+
+<title>Visualizing Basketball Shot Data – Richard Chute</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a277fc7c0b5572c02727048f32503fbf.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0b627ad7bf503adecabbfce8127bba6c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a277fc7c0b5572c02727048f32503fbf.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-d2f44606c07c7b578d04f1edaf3818d3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-b668fb65cecde93978d4b325da8cb332.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-d2f44606c07c7b578d04f1edaf3818d3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Visualizing Basketball Shot Data – Richard Chute">
+<meta property="og:description" content="Shot-location heatmaps and court visualizations built from raw shot logs.">
+<meta property="og:image" content="https://plotbot2023.github.io/portfolio/notebooks/basketball-heatmap_files/figure-html/cell-4-output-1.png">
+<meta property="og:site_name" content="Richard Chute">
+<meta property="og:image:height" content="413">
+<meta property="og:image:width" content="552">
+<meta name="twitter:title" content="Visualizing Basketball Shot Data – Richard Chute">
+<meta name="twitter:description" content="Shot-location heatmaps and court visualizations built from raw shot logs.">
+<meta name="twitter:image" content="https://plotbot2023.github.io/portfolio/notebooks/basketball-heatmap_files/figure-html/cell-4-output-1.png">
+<meta name="twitter:image-height" content="413">
+<meta name="twitter:image-width" content="552">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Richard Chute</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resume.html"> 
+<span class="menu-text">Résumé</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/PlotBot2023"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:plotbot2023@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="Email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#easy-self-test" id="toc-easy-self-test" class="nav-link active" data-scroll-target="#easy-self-test">Easy self test</a></li>
+  <li><a href="#more-difficult-self-test" id="toc-more-difficult-self-test" class="nav-link" data-scroll-target="#more-difficult-self-test">More difficult self test</a></li>
+  <li><a href="#self-test" id="toc-self-test" class="nav-link" data-scroll-target="#self-test">Self Test</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Visualizing Basketball Shot Data</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">Visualization</div>
+    <div class="quarto-category">Coursework</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Shot-location heatmaps and court visualizations built from raw shot logs.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 14, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In this notebook we’re going to look at ways of visualizing performance in basketball. We are going to use the data that we were introduced to last week.</p>
+<p>Our analysis here is going to focus on the where the ball was thrown from, which is recorded using (x, y) co-ordinates, in the same way that we had the coordinates for the baseball data. This data is easy to graph and illuminating.</p>
+<p>We choose three different ways to look at the data</p>
+<ol type="1">
+<li>shot outcome: scored, missed or blocked</li>
+<li>shot types by player</li>
+<li>narrowing the focus to a particular region of the court</li>
+</ol>
+<div id="fdc5b4de" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#As usual, we begin by importing the packages we will need</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="81d6cff2" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The data consists of the shot log for the NBA season 2016/17</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>shot <span class="op">=</span> pd.read_csv(<span class="vs">r"data/NBA Shotlog_16_17</span><span class="dv">.</span><span class="vs">csv"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="dv">100</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shot.columns.tolist())</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>shot.describe().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['self_previous_shot', 'player_position', 'home_game', 'location_x', 'opponent_previous_shot', 'home_team', 'shot_type', 'points', 'away_team', 'location_y', 'time', 'date', 'shoot_player', 'time_from_last_shot', 'quarter', 'current_shot_outcome']</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">location_x</th>
+<th data-quarto-table-cell-role="th">points</th>
+<th data-quarto-table-cell-role="th">location_y</th>
+<th data-quarto-table-cell-role="th">time_from_last_shot</th>
+<th data-quarto-table-cell-role="th">quarter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">count</th>
+<td>209675.00</td>
+<td>210072.00</td>
+<td>209675.00</td>
+<td>200072.00</td>
+<td>210072.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean</th>
+<td>468.52</td>
+<td>2.32</td>
+<td>249.45</td>
+<td>33.28</td>
+<td>2.48</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">std</th>
+<td>345.06</td>
+<td>0.46</td>
+<td>111.02</td>
+<td>19.80</td>
+<td>1.14</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">min</th>
+<td>0.00</td>
+<td>2.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>1.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25%</th>
+<td>94.00</td>
+<td>2.00</td>
+<td>197.00</td>
+<td>22.00</td>
+<td>1.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">50%</th>
+<td>342.00</td>
+<td>2.00</td>
+<td>250.00</td>
+<td>31.00</td>
+<td>2.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">75%</th>
+<td>843.00</td>
+<td>3.00</td>
+<td>303.00</td>
+<td>41.00</td>
+<td>3.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">max</th>
+<td>933.00</td>
+<td>3.00</td>
+<td>500.00</td>
+<td>255.00</td>
+<td>8.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>From the print() command we have a good deal of information on each shot, including the name of the player, the type of shot, team names, time in the game and so on. From the .describe() we can see that there are over 210,000 shots in the data although there is a small number of shots with missing coordinates (around 400). Also note that the x-axis location variable (this is the sideline) ranges from 0 to 993, while the y-axis variable (this is the baseline) runs from 0 to 500.</p>
+<p>We can generate a simple plot as follows:</p>
+<div id="9bed6c59" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple plot of coordinates</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> shot[<span class="st">'location_x'</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> shot[<span class="st">'location_y'</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(x,y, s<span class="op">=</span><span class="fl">.005</span>,c<span class="op">=</span><span class="st">'r'</span>, marker<span class="op">=</span> <span class="st">'.'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One point to note about the data is that it does not include free throws - otherwise there would be a deep red concentration at the center of the free throw line.</p>
+<p>The plot above gives us a very clear picture of the location of shots, notably from under the basket and from the three point line. However, the plot does not take account of the proportions of the court. Moreover, it would be useful to add a grid to identify more clearly the different locations.</p>
+<p>The dimensions of the court defined by the NBA are 94 feet by 50 feet. We can specify that ratio using figsize = (a,b). Note that we can also scale this to control the size of the plot in our window (we divide both the x and y figsize by 6).</p>
+<div id="8b87a6ca" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple plot of coordinates, scaled for court dimensions and with grid added.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">6</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(x,y, s<span class="op">=</span><span class="fl">.1</span>,c<span class="op">=</span><span class="st">'r'</span>, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.minorticks_on()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'.5'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Rather than look at both ends of the court, we can just look at one half of the court by fixing the range of the x axis using plt.xlim, which we set to cover the right hand half court. Note that to maintain the same dimensions we also need to halve the x axis on figsize (to 94/12 rather than 94/6).</p>
+<div id="f7640d28" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The right hand half court</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">12</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(x,y, s<span class="op">=</span><span class="fl">.1</span>,c<span class="op">=</span><span class="st">'r'</span>, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.minorticks_on()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linewidth<span class="op">=</span><span class="st">'.5'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linewidth<span class="op">=</span><span class="st">'.5'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">933</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">933</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The last plot just shows us one half of the court. To include both halves but show only the half court, we can convert the coordinates from the left hand half court so that they have the same relative location on the right hand half court (of course, there should be no real difference in performance based on which end of the court the player is attacking, and the two halves are mirror images of each other).</p>
+<p>We can convert the plot to show shots from both ends on a half court if we adjust the coordinates. The x-axis runs from 0 to 933, so if we want to just show the right hand half court with all shots, we can recode the location_x variables, where x is less the 933/2 (the left had half court) as equal to “933 - location_x”. This produces a mirror image of the x coordinate in the right hand half of the court. However, since the direction toward the basket is the reverse of the other half court, we need to take the mirror image of the y coordinate for shots in the left had half court - that is “500 - location_y”.</p>
+<p>The following code (which works like an “if” statement in Excel) creates these mirror images:</p>
+<div id="ea17a33a" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>shot[<span class="st">'halfcourt_x'</span>] <span class="op">=</span>np.where(shot[<span class="st">'location_x'</span>] <span class="op">&lt;</span> <span class="dv">933</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">933</span> <span class="op">-</span> shot[<span class="st">'location_x'</span>],shot[<span class="st">'location_x'</span>])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>shot[<span class="st">'halfcourt_y'</span>] <span class="op">=</span>np.where(shot[<span class="st">'location_x'</span>] <span class="op">&lt;</span> <span class="dv">933</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">500</span> <span class="op">-</span> shot[<span class="st">'location_y'</span>],shot[<span class="st">'location_y'</span>])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>shot.describe().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">location_x</th>
+<th data-quarto-table-cell-role="th">points</th>
+<th data-quarto-table-cell-role="th">location_y</th>
+<th data-quarto-table-cell-role="th">time_from_last_shot</th>
+<th data-quarto-table-cell-role="th">quarter</th>
+<th data-quarto-table-cell-role="th">halfcourt_x</th>
+<th data-quarto-table-cell-role="th">halfcourt_y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">count</th>
+<td>209675.00</td>
+<td>210072.00</td>
+<td>209675.00</td>
+<td>200072.00</td>
+<td>210072.00</td>
+<td>209675.00</td>
+<td>209675.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean</th>
+<td>468.52</td>
+<td>2.32</td>
+<td>249.45</td>
+<td>33.28</td>
+<td>2.48</td>
+<td>799.73</td>
+<td>250.30</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">std</th>
+<td>345.06</td>
+<td>0.46</td>
+<td>111.02</td>
+<td>19.80</td>
+<td>1.14</td>
+<td>89.61</td>
+<td>111.02</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">min</th>
+<td>0.00</td>
+<td>2.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>1.00</td>
+<td>468.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25%</th>
+<td>94.00</td>
+<td>2.00</td>
+<td>197.00</td>
+<td>22.00</td>
+<td>1.00</td>
+<td>720.00</td>
+<td>197.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">50%</th>
+<td>342.00</td>
+<td>2.00</td>
+<td>250.00</td>
+<td>31.00</td>
+<td>2.00</td>
+<td>841.00</td>
+<td>250.00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">75%</th>
+<td>843.00</td>
+<td>3.00</td>
+<td>303.00</td>
+<td>41.00</td>
+<td>3.00</td>
+<td>878.00</td>
+<td>303.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">max</th>
+<td>933.00</td>
+<td>3.00</td>
+<td>500.00</td>
+<td>255.00</td>
+<td>8.00</td>
+<td>933.00</td>
+<td>500.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Note that the sideline coordinates now only run between 468 and 933, but that the baseline coordinates still run between 0 and 500, even though all the y locations have been changed. We can now plot the half court data, noting that we now halve the x axis in figsize, to preserve the same proportions as before.</p>
+<div id="00b7094e" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># all shots shown on a half court</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>hx <span class="op">=</span> shot[<span class="st">'halfcourt_x'</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>hy <span class="op">=</span> shot[<span class="st">'halfcourt_y'</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">12</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.scatter(hx,hy, s<span class="op">=</span><span class="fl">.01</span>,c<span class="op">=</span><span class="st">'r'</span>, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.minorticks_on()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'.5'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Shots"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="easy-self-test" class="level2">
+<h2 class="anchored" data-anchor-id="easy-self-test">Easy self test</h2>
+<p>Experiment with different sized markers. What size do you think gives you the best visual representation of the data? Why?</p>
+</section>
+<section id="more-difficult-self-test" class="level2">
+<h2 class="anchored" data-anchor-id="more-difficult-self-test">More difficult self test</h2>
+<p>Show all the shots on a halfcourt, but show the data with the baseline on the left, not on the right.</p>
+<p>We now breakdown shots into three categories: scored, missed and blocked. To do this we simply create subsets of the shot df based on shot outcome.</p>
+<div id="e8177948" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scoring shots</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Scored <span class="op">=</span> shot[shot.current_shot_outcome <span class="op">==</span> <span class="st">'SCORED'</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>hxs <span class="op">=</span> Scored[<span class="st">'halfcourt_x'</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>hys <span class="op">=</span> Scored[<span class="st">'halfcourt_y'</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">12</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(hxs,hys, s<span class="op">=</span><span class="fl">.01</span>,c<span class="op">=</span><span class="st">'g'</span>, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.minorticks_on()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'.5'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Scored"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="bbbd7c78" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Missed Shots</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Missed <span class="op">=</span> shot[shot.current_shot_outcome <span class="op">==</span> <span class="st">'MISSED'</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>hxm <span class="op">=</span> Missed[<span class="st">'halfcourt_x'</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>hym <span class="op">=</span> Missed[<span class="st">'halfcourt_y'</span>]</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">12</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(hxm,hym, s<span class="op">=</span><span class="fl">.01</span>,c<span class="op">=</span><span class="st">'b'</span>, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.minorticks_on()</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'.5'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Missed"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="821fdc24" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Blocked shots</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Blocked <span class="op">=</span> shot[shot.current_shot_outcome <span class="op">==</span> <span class="st">'BLOCKED'</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>hxb <span class="op">=</span> Blocked[<span class="st">'halfcourt_x'</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>hyb <span class="op">=</span> Blocked[<span class="st">'halfcourt_y'</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">12</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(hxb,hyb, s<span class="op">=</span><span class="dv">1</span>,c<span class="op">=</span><span class="st">'m'</span>, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.minorticks_on()</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'major'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="st">'.5'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.grid(which<span class="op">=</span><span class="st">'minor'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, linewidth<span class="op">=</span><span class="st">'0.5'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Blocked"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>While informative, the location of shots by shot type is not that surprising. There has been a lot of interest in recent years in the rise of the 3-point shot with evidence suggesting that in the past there were more more shots from distance inside the three-point line, and that these have tended to die out since the payoff is much lower than a shot from just outside the three-point. We don’t have past data here to make the comparison.</p>
+<p>Probably the greatest interest lies in comparing individual players. We can do this easily by taking subsets as we did above. First it’s useful to generate a list of player names.</p>
+<div id="24232591" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparing players</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We use a pivot table here to list players by shots</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>playersn <span class="op">=</span> shot.groupby(<span class="st">'shoot_player'</span>)[<span class="st">'current_shot_outcome'</span>].describe().reset_index()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>playersn.sort_values(by <span class="op">=</span> <span class="st">'count'</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">shoot_player</th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">unique</th>
+<th data-quarto-table-cell-role="th">top</th>
+<th data-quarto-table-cell-role="th">freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">402</th>
+<td>Russell Westbrook</td>
+<td>1940</td>
+<td>3</td>
+<td>MISSED</td>
+<td>1026</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">25</th>
+<td>Andrew Wiggins</td>
+<td>1568</td>
+<td>3</td>
+<td>MISSED</td>
+<td>760</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">106</th>
+<td>DeMar DeRozan</td>
+<td>1545</td>
+<td>3</td>
+<td>MISSED</td>
+<td>731</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">193</th>
+<td>James Harden</td>
+<td>1532</td>
+<td>3</td>
+<td>MISSED</td>
+<td>772</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28</th>
+<td>Anthony Davis</td>
+<td>1525</td>
+<td>3</td>
+<td>SCORED</td>
+<td>770</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">111</th>
+<td>Demetrius Jackson</td>
+<td>4</td>
+<td>2</td>
+<td>SCORED</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">203</th>
+<td>Jarrett Jack</td>
+<td>3</td>
+<td>2</td>
+<td>SCORED</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">38</th>
+<td>Ben Bentil</td>
+<td>3</td>
+<td>1</td>
+<td>MISSED</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">202</th>
+<td>Jarnell Stokes</td>
+<td>1</td>
+<td>1</td>
+<td>SCORED</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">377</th>
+<td>RJ Hunter</td>
+<td>1</td>
+<td>1</td>
+<td>MISSED</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>485 rows × 5 columns</p>
+</div>
+</div>
+</div>
+<p>We now compare LeBron James with Steph Curry.</p>
+<div id="4436ec5e" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LeBron subset</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>LeBron <span class="op">=</span> shot[shot[<span class="st">'shoot_player'</span>]<span class="op">==</span><span class="st">'LeBron James'</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>LeBron</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">self_previous_shot</th>
+<th data-quarto-table-cell-role="th">player_position</th>
+<th data-quarto-table-cell-role="th">home_game</th>
+<th data-quarto-table-cell-role="th">location_x</th>
+<th data-quarto-table-cell-role="th">opponent_previous_shot</th>
+<th data-quarto-table-cell-role="th">home_team</th>
+<th data-quarto-table-cell-role="th">shot_type</th>
+<th data-quarto-table-cell-role="th">points</th>
+<th data-quarto-table-cell-role="th">away_team</th>
+<th data-quarto-table-cell-role="th">location_y</th>
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">shoot_player</th>
+<th data-quarto-table-cell-role="th">time_from_last_shot</th>
+<th data-quarto-table-cell-role="th">quarter</th>
+<th data-quarto-table-cell-role="th">current_shot_outcome</th>
+<th data-quarto-table-cell-role="th">halfcourt_x</th>
+<th data-quarto-table-cell-role="th">halfcourt_y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35023</th>
+<td>MISSED</td>
+<td>SF</td>
+<td>Yes</td>
+<td>131.0</td>
+<td>SCORED</td>
+<td>CLE</td>
+<td>Jump Shot</td>
+<td>2</td>
+<td>NYK</td>
+<td>171.0</td>
+<td>1:01</td>
+<td>10/25/2016</td>
+<td>LeBron James</td>
+<td>27.0</td>
+<td>1</td>
+<td>SCORED</td>
+<td>802.0</td>
+<td>329.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">35028</th>
+<td>MISSED</td>
+<td>SF</td>
+<td>Yes</td>
+<td>236.0</td>
+<td>MISSED</td>
+<td>CLE</td>
+<td>Jump Shot</td>
+<td>3</td>
+<td>NYK</td>
+<td>84.0</td>
+<td>2:33</td>
+<td>10/25/2016</td>
+<td>LeBron James</td>
+<td>6.0</td>
+<td>1</td>
+<td>MISSED</td>
+<td>697.0</td>
+<td>416.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35030</th>
+<td>BLOCKED</td>
+<td>SF</td>
+<td>Yes</td>
+<td>264.0</td>
+<td>SCORED</td>
+<td>CLE</td>
+<td>Jump Shot</td>
+<td>3</td>
+<td>NYK</td>
+<td>383.0</td>
+<td>3:44</td>
+<td>10/25/2016</td>
+<td>LeBron James</td>
+<td>42.0</td>
+<td>1</td>
+<td>MISSED</td>
+<td>669.0</td>
+<td>117.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">35037</th>
+<td>SCORED</td>
+<td>SF</td>
+<td>Yes</td>
+<td>50.0</td>
+<td>MISSED</td>
+<td>CLE</td>
+<td>Running Layup</td>
+<td>2</td>
+<td>NYK</td>
+<td>259.0</td>
+<td>6:04</td>
+<td>10/25/2016</td>
+<td>LeBron James</td>
+<td>17.0</td>
+<td>1</td>
+<td>SCORED</td>
+<td>883.0</td>
+<td>241.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">35044</th>
+<td>MISSED</td>
+<td>SF</td>
+<td>Yes</td>
+<td>52.0</td>
+<td>SCORED</td>
+<td>CLE</td>
+<td>Putback Dunk</td>
+<td>2</td>
+<td>NYK</td>
+<td>250.0</td>
+<td>8:23</td>
+<td>10/25/2016</td>
+<td>LeBron James</td>
+<td>4.0</td>
+<td>1</td>
+<td>SCORED</td>
+<td>881.0</td>
+<td>250.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">41795</th>
+<td>MISSED</td>
+<td>SF</td>
+<td>No</td>
+<td>51.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>CLE</td>
+<td>246.0</td>
+<td>1:16</td>
+<td>4/9/2017</td>
+<td>LeBron James</td>
+<td>47.0</td>
+<td>4</td>
+<td>MISSED</td>
+<td>882.0</td>
+<td>254.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">41798</th>
+<td>SCORED</td>
+<td>SF</td>
+<td>No</td>
+<td>58.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>CLE</td>
+<td>249.0</td>
+<td>3:36</td>
+<td>4/9/2017</td>
+<td>LeBron James</td>
+<td>58.0</td>
+<td>4</td>
+<td>SCORED</td>
+<td>875.0</td>
+<td>251.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">41801</th>
+<td>SCORED</td>
+<td>SF</td>
+<td>No</td>
+<td>52.0</td>
+<td>MISSED</td>
+<td>ATL</td>
+<td>Driving Dunk</td>
+<td>2</td>
+<td>CLE</td>
+<td>250.0</td>
+<td>5:54</td>
+<td>4/9/2017</td>
+<td>LeBron James</td>
+<td>29.0</td>
+<td>4</td>
+<td>SCORED</td>
+<td>881.0</td>
+<td>250.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">41806</th>
+<td>SCORED</td>
+<td>SF</td>
+<td>No</td>
+<td>77.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Fadeaway Jumper</td>
+<td>2</td>
+<td>CLE</td>
+<td>450.0</td>
+<td>8:54</td>
+<td>4/9/2017</td>
+<td>LeBron James</td>
+<td>31.0</td>
+<td>4</td>
+<td>MISSED</td>
+<td>856.0</td>
+<td>50.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">41813</th>
+<td>MISSED</td>
+<td>SF</td>
+<td>No</td>
+<td>141.0</td>
+<td>MISSED</td>
+<td>ATL</td>
+<td>Floating Jump Shot</td>
+<td>2</td>
+<td>CLE</td>
+<td>290.0</td>
+<td>2:08</td>
+<td>4/9/2017</td>
+<td>LeBron James</td>
+<td>76.0</td>
+<td>5</td>
+<td>MISSED</td>
+<td>792.0</td>
+<td>210.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>1344 rows × 18 columns</p>
+</div>
+</div>
+</div>
+<div id="45a0d03c" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LeBron plot</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note how the shots can be color coded using an np.where statement. </span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>hxL <span class="op">=</span> LeBron[<span class="st">'halfcourt_x'</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>hyL <span class="op">=</span> LeBron[<span class="st">'halfcourt_y'</span>]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(LeBron[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'SCORED'</span>,<span class="st">'r'</span>,np.where(LeBron[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'MISSED'</span>,<span class="st">'b'</span>,<span class="st">'g'</span>))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">12</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(hxL,hyL, s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span> colors, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"LeBron James"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="f29a3f5e" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Steph Curry plot</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Curry <span class="op">=</span> shot[shot[<span class="st">'shoot_player'</span>]<span class="op">==</span><span class="st">'Stephen Curry'</span>]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>hxC <span class="op">=</span> Curry[<span class="st">'halfcourt_x'</span>]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>hyC <span class="op">=</span> Curry[<span class="st">'halfcourt_y'</span>]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(Curry[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'SCORED'</span>,<span class="st">'r'</span>,np.where(Curry[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'MISSED'</span>,<span class="st">'b'</span>,<span class="st">'g'</span>))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">12</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(hxC,hyC, s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span> colors, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Steph Curry"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="2d6c7252" class="cell" data-execution_count="33">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LeBron James and Steph Curry side by side</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">6</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">121</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(LeBron[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'SCORED'</span>,<span class="st">'r'</span>,np.where(LeBron[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'MISSED'</span>,<span class="st">'b'</span>,<span class="st">'g'</span>))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.scatter(hxL,hyL, s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span> colors, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"LeBron James"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">122</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(Curry[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'SCORED'</span>,<span class="st">'r'</span>,np.where(Curry[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'MISSED'</span>,<span class="st">'b'</span>,<span class="st">'g'</span>))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.scatter(hxC,hyC, s<span class="op">=</span><span class="dv">10</span>, c<span class="op">=</span> colors, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Steph Curry"</span>, fontsize <span class="op">=</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>These simple plots make clear some of the differences between the two players. It is clearly visible that Curry shoots more from the three-point line than LeBron, while LeBron is more active on the paint. Some more subtle differences are also visible. LeBron is more active on the left hand side of the court, while Curry is equally active on both sides. Curry also shoots more thre-pointers from the corners.</p>
+</section>
+<section id="self-test" class="level2">
+<h2 class="anchored" data-anchor-id="self-test">Self Test</h2>
+<p>Identify two other players in the data and generate a similar comparison for those players.</p>
+<p>As a final exercise we zoom in on the data to see what it looks like close up. We can identify a particular location based on our grid. First, we look at shots from the paint. We can define the paint here as x coordinates between 700 and 900, and y coordinates 200 and 300. We first create this subset, then we create the plot.</p>
+<div id="67c29f5e" class="cell" data-execution_count="36">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the subset</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>rect1 <span class="op">=</span> shot[(((shot[<span class="st">'location_x'</span>]<span class="op">&gt;</span><span class="dv">700</span>) <span class="op">&amp;</span> (shot[<span class="st">'location_x'</span>]<span class="op">&lt;</span><span class="dv">900</span>)) <span class="op">&amp;</span> <span class="op">\</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                 ((shot[<span class="st">'location_y'</span>] <span class="op">&gt;</span> <span class="dv">200</span>) <span class="op">&amp;</span> (shot[<span class="st">'location_y'</span>] <span class="op">&lt;</span> <span class="dv">300</span>)))]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>rect1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">self_previous_shot</th>
+<th data-quarto-table-cell-role="th">player_position</th>
+<th data-quarto-table-cell-role="th">home_game</th>
+<th data-quarto-table-cell-role="th">location_x</th>
+<th data-quarto-table-cell-role="th">opponent_previous_shot</th>
+<th data-quarto-table-cell-role="th">home_team</th>
+<th data-quarto-table-cell-role="th">shot_type</th>
+<th data-quarto-table-cell-role="th">points</th>
+<th data-quarto-table-cell-role="th">away_team</th>
+<th data-quarto-table-cell-role="th">location_y</th>
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">shoot_player</th>
+<th data-quarto-table-cell-role="th">time_from_last_shot</th>
+<th data-quarto-table-cell-role="th">quarter</th>
+<th data-quarto-table-cell-role="th">current_shot_outcome</th>
+<th data-quarto-table-cell-role="th">halfcourt_x</th>
+<th data-quarto-table-cell-role="th">halfcourt_y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">49</th>
+<td>MISSED</td>
+<td>PG</td>
+<td>Yes</td>
+<td>886.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>257.0</td>
+<td>0:15</td>
+<td>10/27/2016</td>
+<td>Dennis Schroder</td>
+<td>NaN</td>
+<td>3</td>
+<td>SCORED</td>
+<td>886.0</td>
+<td>257.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">51</th>
+<td>MISSED</td>
+<td>PF</td>
+<td>Yes</td>
+<td>871.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>246.0</td>
+<td>1:26</td>
+<td>10/27/2016</td>
+<td>Paul Millsap</td>
+<td>24.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>871.0</td>
+<td>246.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">53</th>
+<td>MISSED</td>
+<td>PF</td>
+<td>Yes</td>
+<td>868.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>257.0</td>
+<td>3:31</td>
+<td>10/27/2016</td>
+<td>Paul Millsap</td>
+<td>58.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>868.0</td>
+<td>257.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">54</th>
+<td>SCORED</td>
+<td>PG</td>
+<td>Yes</td>
+<td>882.0</td>
+<td>MISSED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>228.0</td>
+<td>4:11</td>
+<td>10/27/2016</td>
+<td>Dennis Schroder</td>
+<td>40.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>882.0</td>
+<td>228.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">59</th>
+<td>MISSED</td>
+<td>C</td>
+<td>Yes</td>
+<td>888.0</td>
+<td>MISSED</td>
+<td>ATL</td>
+<td>Dunk</td>
+<td>2</td>
+<td>WAS</td>
+<td>250.0</td>
+<td>6:51</td>
+<td>10/27/2016</td>
+<td>Dwight Howard</td>
+<td>22.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>888.0</td>
+<td>250.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">210017</th>
+<td>SCORED</td>
+<td>G</td>
+<td>No</td>
+<td>882.0</td>
+<td>MISSED</td>
+<td>MIA</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>241.0</td>
+<td>4:19</td>
+<td>4/12/2017</td>
+<td>Sheldon McClellan</td>
+<td>81.0</td>
+<td>2</td>
+<td>SCORED</td>
+<td>882.0</td>
+<td>241.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">210018</th>
+<td>SCORED</td>
+<td>PG</td>
+<td>No</td>
+<td>824.0</td>
+<td>SCORED</td>
+<td>MIA</td>
+<td>Jump Shot</td>
+<td>2</td>
+<td>WAS</td>
+<td>251.0</td>
+<td>4:50</td>
+<td>4/12/2017</td>
+<td>Trey Burke</td>
+<td>31.0</td>
+<td>2</td>
+<td>SCORED</td>
+<td>824.0</td>
+<td>251.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">210020</th>
+<td>MISSED</td>
+<td>G</td>
+<td>No</td>
+<td>886.0</td>
+<td>SCORED</td>
+<td>MIA</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>238.0</td>
+<td>6:18</td>
+<td>4/12/2017</td>
+<td>Sheldon McClellan</td>
+<td>34.0</td>
+<td>2</td>
+<td>MISSED</td>
+<td>886.0</td>
+<td>238.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">210021</th>
+<td>MISSED</td>
+<td>PG</td>
+<td>No</td>
+<td>706.0</td>
+<td>SCORED</td>
+<td>MIA</td>
+<td>Step Back Jump Shot</td>
+<td>2</td>
+<td>WAS</td>
+<td>236.0</td>
+<td>7:17</td>
+<td>4/12/2017</td>
+<td>Trey Burke</td>
+<td>59.0</td>
+<td>2</td>
+<td>SCORED</td>
+<td>706.0</td>
+<td>236.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">210027</th>
+<td>MISSED</td>
+<td>SF</td>
+<td>No</td>
+<td>878.0</td>
+<td>SCORED</td>
+<td>MIA</td>
+<td>Jr. 3' Cutting Layup Shot</td>
+<td>2</td>
+<td>WAS</td>
+<td>226.0</td>
+<td>10:00</td>
+<td>4/12/2017</td>
+<td>Otto Porter Jr.</td>
+<td>27.0</td>
+<td>2</td>
+<td>SCORED</td>
+<td>878.0</td>
+<td>226.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>45163 rows × 18 columns</p>
+</div>
+</div>
+</div>
+<div id="d96a9d4c" class="cell" data-execution_count="37">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shots on the paint</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>xr <span class="op">=</span> rect1[<span class="st">'location_x'</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>yr <span class="op">=</span> rect1[<span class="st">'location_y'</span>]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(rect1[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'SCORED'</span>,<span class="st">'r'</span>,np.where(rect1[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'MISSED'</span>,<span class="st">'b'</span>,<span class="st">'g'</span>))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">6</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(xr,yr, s<span class="op">=</span><span class="dv">50</span>, c<span class="op">=</span> colors, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note how the locations appear in vertical lines. This reflects the fact that the resolution of the location coding is finite. The difference between adjacent vertical lines on this plot is approximately one inch (2.5cm).</p>
+<p>But we can still zoom in further. Below we look at the area immediately under the basket:</p>
+<div id="bd8e3110" class="cell" data-execution_count="38">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset area</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>rect2 <span class="op">=</span> shot[(((shot[<span class="st">'location_x'</span>]<span class="op">&gt;</span><span class="dv">850</span>) <span class="op">&amp;</span> (shot[<span class="st">'location_x'</span>]<span class="op">&lt;</span><span class="dv">875</span>)) <span class="op">&amp;</span> <span class="op">\</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                 ((shot[<span class="st">'location_y'</span>] <span class="op">&gt;</span> <span class="dv">240</span>) <span class="op">&amp;</span> (shot[<span class="st">'location_y'</span>] <span class="op">&lt;</span> <span class="dv">260</span>)))]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>rect2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">self_previous_shot</th>
+<th data-quarto-table-cell-role="th">player_position</th>
+<th data-quarto-table-cell-role="th">home_game</th>
+<th data-quarto-table-cell-role="th">location_x</th>
+<th data-quarto-table-cell-role="th">opponent_previous_shot</th>
+<th data-quarto-table-cell-role="th">home_team</th>
+<th data-quarto-table-cell-role="th">shot_type</th>
+<th data-quarto-table-cell-role="th">points</th>
+<th data-quarto-table-cell-role="th">away_team</th>
+<th data-quarto-table-cell-role="th">location_y</th>
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">shoot_player</th>
+<th data-quarto-table-cell-role="th">time_from_last_shot</th>
+<th data-quarto-table-cell-role="th">quarter</th>
+<th data-quarto-table-cell-role="th">current_shot_outcome</th>
+<th data-quarto-table-cell-role="th">halfcourt_x</th>
+<th data-quarto-table-cell-role="th">halfcourt_y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">51</th>
+<td>MISSED</td>
+<td>PF</td>
+<td>Yes</td>
+<td>871.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>246.0</td>
+<td>1:26</td>
+<td>10/27/2016</td>
+<td>Paul Millsap</td>
+<td>24.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>871.0</td>
+<td>246.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">53</th>
+<td>MISSED</td>
+<td>PF</td>
+<td>Yes</td>
+<td>868.0</td>
+<td>SCORED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>257.0</td>
+<td>3:31</td>
+<td>10/27/2016</td>
+<td>Paul Millsap</td>
+<td>58.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>868.0</td>
+<td>257.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">94</th>
+<td>MISSED</td>
+<td>PG</td>
+<td>No</td>
+<td>858.0</td>
+<td>MISSED</td>
+<td>PHI</td>
+<td>Driving Floating Jump Shot</td>
+<td>2</td>
+<td>ATL</td>
+<td>259.0</td>
+<td>2:49</td>
+<td>10/29/2016</td>
+<td>Dennis Schroder</td>
+<td>26.0</td>
+<td>1</td>
+<td>SCORED</td>
+<td>858.0</td>
+<td>259.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">120</th>
+<td>BLOCKED</td>
+<td>C</td>
+<td>No</td>
+<td>866.0</td>
+<td>MISSED</td>
+<td>PHI</td>
+<td>Layup</td>
+<td>2</td>
+<td>ATL</td>
+<td>254.0</td>
+<td>4:14</td>
+<td>10/29/2016</td>
+<td>Dwight Howard</td>
+<td>37.0</td>
+<td>2</td>
+<td>BLOCKED</td>
+<td>866.0</td>
+<td>254.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">299</th>
+<td>SCORED</td>
+<td>C</td>
+<td>Yes</td>
+<td>873.0</td>
+<td>MISSED</td>
+<td>ATL</td>
+<td>Driving Layup</td>
+<td>2</td>
+<td>LAL</td>
+<td>248.0</td>
+<td>2:43</td>
+<td>11/2/2016</td>
+<td>Dwight Howard</td>
+<td>30.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>873.0</td>
+<td>248.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">209719</th>
+<td>MISSED</td>
+<td>PF</td>
+<td>Yes</td>
+<td>868.0</td>
+<td>SCORED</td>
+<td>WAS</td>
+<td>Morris 2' Driving Reverse Layup</td>
+<td>2</td>
+<td>CHA</td>
+<td>248.0</td>
+<td>6:27</td>
+<td>4/4/2017</td>
+<td>Markieff Morris</td>
+<td>32.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>868.0</td>
+<td>248.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">209749</th>
+<td>MISSED</td>
+<td>C</td>
+<td>No</td>
+<td>851.0</td>
+<td>SCORED</td>
+<td>NYK</td>
+<td>Jump Shot</td>
+<td>2</td>
+<td>WAS</td>
+<td>254.0</td>
+<td>1:50</td>
+<td>4/6/2017</td>
+<td>Marcin Gortat</td>
+<td>58.0</td>
+<td>1</td>
+<td>SCORED</td>
+<td>851.0</td>
+<td>254.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">209863</th>
+<td>MISSED</td>
+<td>C</td>
+<td>Yes</td>
+<td>873.0</td>
+<td>SCORED</td>
+<td>WAS</td>
+<td>Tip Layup Shot</td>
+<td>2</td>
+<td>MIA</td>
+<td>259.0</td>
+<td>1:46</td>
+<td>4/8/2017</td>
+<td>Marcin Gortat</td>
+<td>3.0</td>
+<td>3</td>
+<td>SCORED</td>
+<td>873.0</td>
+<td>259.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">209887</th>
+<td>SCORED</td>
+<td>SF</td>
+<td>Yes</td>
+<td>868.0</td>
+<td>SCORED</td>
+<td>WAS</td>
+<td>Layup</td>
+<td>2</td>
+<td>MIA</td>
+<td>251.0</td>
+<td>4:02</td>
+<td>4/8/2017</td>
+<td>Bojan Bogdanovic</td>
+<td>62.0</td>
+<td>4</td>
+<td>BLOCKED</td>
+<td>868.0</td>
+<td>251.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">209999</th>
+<td>SCORED</td>
+<td>PG</td>
+<td>No</td>
+<td>873.0</td>
+<td>MISSED</td>
+<td>MIA</td>
+<td>Finger Roll Layup</td>
+<td>2</td>
+<td>WAS</td>
+<td>248.0</td>
+<td>6:22</td>
+<td>4/12/2017</td>
+<td>Brandon Jennings</td>
+<td>33.0</td>
+<td>1</td>
+<td>MISSED</td>
+<td>873.0</td>
+<td>248.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>3533 rows × 18 columns</p>
+</div>
+</div>
+</div>
+<div id="8732a8fe" class="cell" data-execution_count="40">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shots under the basket</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>xq <span class="op">=</span> rect2[<span class="st">'location_x'</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>yq <span class="op">=</span> rect2[<span class="st">'location_y'</span>]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.where(rect2[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'SCORED'</span>,<span class="st">'r'</span>,np.where(rect2[<span class="st">'current_shot_outcome'</span>]<span class="op">==</span><span class="st">'MISSED'</span>,<span class="st">'b'</span>,<span class="st">'g'</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">94</span><span class="op">/</span><span class="dv">6</span>,<span class="dv">50</span><span class="op">/</span><span class="dv">6</span>))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(xq,yq, s<span class="op">=</span><span class="dv">50</span>, c<span class="op">=</span> colors, marker<span class="op">=</span> <span class="st">'.'</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="basketball-heatmap_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It turns out that this degree of resolution is not very informative. The problem is that the all the points are piled upon each other and there is nothing in between - recalling that the gaps are still approximately one inch. It would only be possble to extract a reliable picture if the data were even more fine grained.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Using charts can be incredibly helpful in understanding the pattern of events on the field/court/pitch/ice. Charts can suggest to us logical relationships which may exist, but they do not quantify them. In the next two weeks we turn to regression analysis, which is one of the most common ways to quantify relationships among variables.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/plotbot2023\.github\.io\/portfolio");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Richard Chute</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/PlotBot2023">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:plotbot2023@gmail.com">
+      <i class="bi bi-envelope" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

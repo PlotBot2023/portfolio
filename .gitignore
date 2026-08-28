@@ -1,0 +1,36 @@
+# Quarto build intermediates — SOURCE SIDE ONLY.
+# docs/ is the published site and must stay tracked, including the
+# docs/**/*_files/ directories that hold every rendered chart PNG.
+/.quarto/
+/*_files/
+*.rmarkdown
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Env / secrets — never commit
+.env
+.env.*
+*.pem
+*.key
+
+# Data (keep the repo light; notebooks ship with saved outputs)
+data/
+*.parquet
+*.pkl
+*.joblib
+*.cbm
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+**/*.quarto_ipynb
+
+# Salvaged old git internals, not part of the site
+_to_delete/

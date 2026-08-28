@@ -1,0 +1,83 @@
+---
+title: "Résumé"
+description: "Richard Chute — analytics and operations. Download the PDF or read the summary below."
+toc: true
+---
+
+::: {.cta}
+[Download PDF](assets/Richard_Chute_Resume.pdf){.primary}
+[Email me](mailto:plotbot2023@gmail.com)
+[GitHub](https://github.com/PlotBot2023)
+:::
+
+**Richard Chute** — Fort Lauderdale, FL · [plotbot2023@gmail.com](mailto:plotbot2023@gmail.com) · [github.com/PlotBot2023](https://github.com/PlotBot2023)
+
+## Summary
+
+Analytical operations leader moving into data engineering and analysis. Fifteen years implementing data-driven processes, automating workflows, and optimizing vendor relationships to reduce cost and improve service quality. Now building and maintaining production data pipelines in Python and PostgreSQL, with applied modeling work in simulation, gradient boosting, clustering, and causal inference.
+
+## Technical skills
+
+| | |
+|---|---|
+| **Languages** | Python, SQL, R |
+| **Databases** | PostgreSQL, MySQL, SQLite |
+| **Analysis** | pandas, NumPy, scikit-learn, XGBoost, CatBoost, statsmodels |
+| **Methods** | Monte Carlo simulation, regression, time-series, Bayesian priors, ANOVA, hypothesis testing, GMM clustering, structural causal models |
+| **Engineering** | Docker, Docker Compose, Alembic, pytest, FastAPI, Git, uv, Makefile-driven workflows |
+| **Visualization** | matplotlib, Quarto, Tableau, Power BI, Excel |
+
+## Selected project
+
+**SportsAnalytics** — multi-sport projections platform *(2025–present)*
+
+- Nine sports, seven PostgreSQL databases, daily pipelines from raw play-by-play through projections and calibration.
+- Python 3.11 package with Docker Compose dev stack, Alembic migrations, cross-sport pytest suite, and a FastAPI/site-generator layer for published reports.
+- Append-only data design with explicit casting and load-timestamped JSONL run logs; calibration and backtest notebooks validate model output against realized results.
+- Selected notebooks from this system are published under [Projects](projects.qmd).
+
+## Experience
+
+### Independent Analytics Practice — Stats Over Fiction
+*Fort Lauderdale, FL · 2025 – Present*
+
+- Published portfolio of nine analyses at [plotbot2023.github.io/portfolio](https://plotbot2023.github.io/portfolio), each with its source code attached.
+- Build and operate the SportsAnalytics platform described above: nine sports, seven PostgreSQL databases, daily ingestion through projection and calibration.
+- Broward County short-term rental study: 20,575 entire-home listings across four quarterly snapshots, clustered with Gaussian Mixture Models and profiled by revenue to answer a concrete investment question.
+- Structural causal model audit of a production NBA pipeline, using d-separation to separate causally defensible signals from merely correlated ones.
+- Multi-sport data quality reporting: freshness, run status, row counts and projection-quality checks read directly from the backing Postgres instances.
+
+### Sales Executive — The Taverna Collection
+*Plantation, FL · May 2026 – July 2026*
+
+- Brand expert and sales executive; structured finance deals and managed inventory availability against monthly targets.
+
+### Owner / Operator — Blue Turtle Pool Co.
+*Davie, FL · March 2018 – 2026*
+
+- Turned field operations into a structured data pipeline, logging every job, part, travel leg, and incident.
+- Built daily and weekly dashboards tracking utilization, response time, recurring revenue, and churn drivers.
+- Designed routing and schedule rules that reduced travel time 20%.
+- Forecast inventory and seasonal demand from historical service logs, reducing stockouts and emergency parts purchases 30%.
+- Automated recurring invoicing and reconciliation, cutting billing time 50%.
+- Introduced QA metrics and technician scorecards tied to repeat-repair rates and customer satisfaction.
+- Ran pricing and service-package experiments, improving conversion 15%.
+
+### General Manager — Pool Pros of Hollywood
+*Hollywood, FL · May 2012 – March 2022*
+
+- Centralized order, receiving, pick/pack/ship, and inventory events into a single analytics dataset.
+- Developed daily KPIs for orders/hour, pick accuracy, on-time fulfillment, and inventory turns.
+- Designed SKU-level demand forecasting and automated reorder rules, cutting stockouts and emergency freight 25%.
+- Built vendor scorecards on fill rate, lead time, price variance, and contract compliance; consolidated suppliers 20% via price-volume modeling.
+- Negotiated seasonal buys with volume discounts and early-buy incentives, lowering COGS 10%.
+- Implemented PO-batching and consolidated shipments, reducing freight cost per order 15%.
+
+## Education & certifications
+
+- **SQL** — IBM (online)
+- **Machine Learning** — IBM (online)
+- **Python** — University of Michigan (online)
+- **Data Analytics** — Google (online)
+- **Data Analysis with R Studio** — Google (online)
+- **Google Analytics Certification**

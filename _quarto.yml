@@ -1,0 +1,65 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "notebooks/*.ipynb"
+
+# Notebooks are NOT re-executed at render time: they read from a local Postgres
+# instance and local CSV exports that CI (and any other machine) cannot reach.
+# Saved outputs are published as-is. To re-run a notebook, execute it in Jupyter
+# and re-render, or flip `enabled: true` below on a machine with the data.
+execute:
+  enabled: false
+  freeze: auto
+
+website:
+  title: "Richard Chute"
+  description: "Data analysis, pipelines, and applied modeling — Fort Lauderdale, FL"
+  site-url: "https://plotbot2023.github.io/portfolio"
+  favicon: assets/favicon.svg
+  open-graph: true
+  twitter-card: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects
+      - href: about.qmd
+        text: About
+      - href: resume.qmd
+        text: Résumé
+    right:
+      - icon: github
+        href: https://github.com/PlotBot2023
+        aria-label: GitHub
+      - icon: envelope
+        href: mailto:plotbot2023@gmail.com
+        aria-label: Email
+  page-footer:
+    left: "© 2026 Richard Chute"
+    right:
+      - icon: github
+        href: https://github.com/PlotBot2023
+      - icon: envelope
+        href: mailto:plotbot2023@gmail.com
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles.scss]
+      dark: [darkly, styles-dark.scss]
+    css: styles.css
+    toc: true
+    code-fold: true
+    code-summary: "Show code"
+    code-tools: false
+    code-overflow: wrap
+    df-print: paged
+    fig-align: center
+    link-external-newwindow: true
+    smooth-scroll: true
+    html-math-method: mathjax
+    anchor-sections: true
+    fig-responsive: true

@@ -1,0 +1,127 @@
+/* ---- shared layout polish (theme-agnostic; colors come from the SCSS themes) ---- */
+
+.hero {
+  padding: 2.2rem 0 1.4rem;
+  border-bottom: 1px solid rgba(128, 145, 165, 0.22);
+  margin-bottom: 2rem;
+}
+.hero h1 {
+  margin-bottom: .35rem;
+  font-size: 2.5rem;
+  line-height: 1.15;
+}
+.hero .tagline {
+  font-size: 1.16rem;
+  opacity: .82;
+  max-width: 46rem;
+  margin-bottom: 1.1rem;
+}
+.hero .kicker {
+  text-transform: uppercase;
+  letter-spacing: .11em;
+  font-size: .74rem;
+  font-weight: 700;
+  opacity: .6;
+  margin-bottom: .5rem;
+}
+
+/* call-to-action buttons */
+.cta { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+.cta a {
+  display: inline-block;
+  padding: .5rem 1.05rem;
+  border-radius: 6px;
+  border: 1px solid rgba(128, 145, 165, 0.42);
+  text-decoration: none;
+  font-weight: 550;
+  font-size: .93rem;
+  transition: transform .12s ease, border-color .12s ease;
+}
+.cta a:hover { transform: translateY(-1px); border-color: currentColor; }
+.cta a.primary { background: #1a5f7a; color: #fff; border-color: #1a5f7a; }
+.quarto-dark .cta a.primary { background: #2a7f9e; border-color: #2a7f9e; }
+
+/* skill chips */
+.chips { display: flex; flex-wrap: wrap; gap: .38rem; margin: .9rem 0 0; padding: 0; list-style: none; }
+.chips li {
+  font-size: .8rem;
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(128, 145, 165, 0.35);
+  opacity: .9;
+}
+
+/* project listing cards */
+.quarto-listing-category { margin-bottom: 1.4rem; }
+div.quarto-post {
+  border: 1px solid rgba(128, 145, 165, 0.22);
+  border-radius: 9px;
+  padding: 1.15rem 1.3rem;
+  margin-bottom: 1rem;
+  transition: border-color .14s ease, transform .14s ease;
+}
+div.quarto-post:hover { border-color: rgba(128, 145, 165, 0.55); transform: translateY(-1px); }
+div.quarto-post .listing-title { font-size: 1.16rem; font-weight: 640; margin-bottom: .3rem; }
+div.quarto-post .listing-description { opacity: .84; line-height: 1.55; }
+
+/* two-column blocks used on About */
+.cols2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.6rem; }
+
+/* keep wide notebook output (tables, plots) from breaking the page */
+.cell-output, .cell-output-display, div.sourceCode { overflow-x: auto; max-width: 100%; }
+.cell-output-display > table, .dataframe { display: block; overflow-x: auto; white-space: nowrap; }
+.cell-output-display img, .cell-output img { max-width: 100%; height: auto; }
+
+/* notebook code blocks a touch smaller than body text */
+div.sourceCode pre code { font-size: .855rem; line-height: 1.5; }
+
+/* the "Show code" fold control */
+.callout, details.code-fold > summary { font-size: .88rem; }
+
+/* honest-labelling note used on notebook pages */
+.note-box {
+  border-left: 3px solid #1a5f7a;
+  background: rgba(26, 95, 122, 0.06);
+  padding: .8rem 1rem;
+  border-radius: 0 6px 6px 0;
+  font-size: .92rem;
+  margin: 1.2rem 0;
+}
+.quarto-dark .note-box { border-left-color: #5eb3d1; background: rgba(94, 179, 209, 0.09); }
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.95rem; }
+  .hero .tagline { font-size: 1.05rem; }
+}
+
+/* ---- fixes ---- */
+
+/* skill chips: pandoc wraps the list inside the fenced div, so target the ul */
+.chips ul, ul.chips {
+  display: flex; flex-wrap: wrap; gap: .38rem;
+  margin: .9rem 0 0; padding: 0; list-style: none;
+}
+.chips ul li, ul.chips li {
+  font-size: .8rem; padding: .2rem .65rem; border-radius: 999px;
+  border: 1px solid rgba(128, 145, 165, 0.35); opacity: .9; list-style: none;
+}
+.chips { margin-top: .2rem; }
+
+/* listing cards: collapse the empty thumbnail column, keep the date compact */
+div.quarto-post { align-items: flex-start; gap: 1.1rem; }
+div.quarto-post .metadata {
+  flex: 0 0 7.5rem; max-width: 7.5rem;
+  font-size: .82rem; opacity: .68; padding-top: .15rem;
+}
+div.quarto-post .thumbnail { display: none; }
+div.quarto-post .body { flex: 1 1 auto; }
+
+/* notebook pages: the front-matter title is the page title, so don't let a
+   stray in-notebook h1 compete with it */
+#quarto-document-content > h1:first-of-type { display: none; }
+
+/* keep tag pills legible in both themes */
+.listing-category, .quarto-category {
+  font-size: .68rem !important; letter-spacing: .04em;
+  opacity: .85; border-radius: 4px;
+}

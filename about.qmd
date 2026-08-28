@@ -1,0 +1,56 @@
+---
+title: "About"
+description: "Career-changer into data, with fifteen years of operations behind it."
+toc: true
+---
+
+## The short version
+
+I'm an analyst and pipeline builder in Fort Lauderdale. I work in Python and PostgreSQL, structure my analysis in Jupyter, and publish it where people can read it.
+
+I came to this from the other side. For fifteen years I ran field-service and distribution operations — a pool service company I own and operate, and before that a distributor where I was general manager. Those jobs were data jobs before I knew how to write the code: SKU-level demand forecasting, vendor scorecards, technician performance metrics, route optimization, daily KPI dashboards. I built them in spreadsheets and ERP exports, and I made payroll on whether they were right.
+
+That's the part I'd point a hiring manager at. I've never had the luxury of an analysis being interesting but wrong.
+
+## What I actually do
+
+::: {.cols2}
+::: {}
+### Pipelines and data engineering
+
+I maintain **SportsAnalytics**, a nine-sport projections platform: Python 3.11, seven PostgreSQL databases, Docker Compose for local dev, Alembic migrations, a pytest suite, and daily pipelines for NBA, college basketball, NFL, NCAAF, MLB, NHL, NASCAR, UFC, soccer, and WNBA.
+
+It runs on rules I learned the expensive way — append-only writes, explicit casts on every column, load-timestamped JSONL run logs, and calibration checks that fail loudly rather than quietly.
+:::
+
+::: {}
+### Analysis and modeling
+
+Monte Carlo simulation, XGBoost and CatBoost, Gaussian Mixture Models for segmentation, Bayesian priors for calibration, and structural causal models when the question is whether a signal is real or just correlated.
+
+The Broward Airbnb series is the clearest example of the whole loop: raw Inside Airbnb snapshots in R, metrics in SQL, analysis in Python, and a written answer a non-technical investor can act on.
+:::
+:::
+
+## Operations background
+
+The résumé has the detail, but the through-line is this:
+
+- **Blue Turtle Pool Co.** (owner/operator, 2018–present) — turned field operations into a logged dataset: every job, part, travel leg, and incident. Built the dashboards that track utilization, response time, recurring revenue, and churn. Route rules cut travel time 20%; demand forecasting from historical service logs cut emergency parts purchases 30%.
+- **Pool Pros of Hollywood** (general manager, 2012–2022) — centralized order, receiving, pick/pack/ship, and inventory events into one analytics dataset. SKU-level forecasting and automated reorder rules cut stockouts and emergency freight 25%. Vendor scorecards on fill rate, lead time, and price variance; price-volume modeling that lowered COGS 10%.
+
+## Training
+
+Self-directed, and ongoing: **SQL** and **Machine Learning** (IBM), **Python** (University of Michigan), **Data Analytics** and **Data Analysis with R Studio** (Google), plus Google Analytics certification.
+
+I'll say plainly that I don't have a CS or statistics degree. What I have instead is a decade and a half of owning the consequences of an operational number being wrong, and a working system I built and maintain that you can read the source of.
+
+## What I'm looking for
+
+Analyst, analytics engineer, or data engineer roles where the work reaches a decision — ideally somewhere the data describes a physical operation, since that's the domain I know in my hands. Open to remote or South Florida.
+
+::: {.cta}
+[Email me](mailto:plotbot2023@gmail.com){.primary}
+[GitHub](https://github.com/PlotBot2023)
+[Résumé](resume.qmd)
+:::

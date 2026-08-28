@@ -1,0 +1,23 @@
+/*-- scss:defaults --*/
+$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-monospace: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace !default;
+
+$primary:   #1a5f7a;
+$body-color: #1c2430;
+$body-bg:   #ffffff;
+$link-color: #14607d;
+$border-color: #e3e8ee;
+$navbar-bg: #1a5f7a;
+$navbar-fg: #ffffff;
+$code-bg: #f6f8fa;
+
+$h1-font-size: 2.1rem;
+$h2-font-size: 1.45rem;
+$h3-font-size: 1.15rem;
+$headings-font-weight: 650;
+
+/*-- scss:rules --*/
+body { font-size: 1.01rem; line-height: 1.68; -webkit-font-smoothing: antialiased; }
+.navbar { border-bottom: 1px solid $border-color; box-shadow: none; }
+h1, h2, h3 { letter-spacing: -0.015em; }
+h2 { margin-top: 2.4rem; padding-bottom: .3rem; border-bottom: 1px solid $border-color; }
