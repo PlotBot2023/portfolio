@@ -1,0 +1,12 @@
+# Normalize line endings: LF inside the repository, native in the working tree.
+# Added 2026-08-28 to stop 52 files showing as modified on every status.
+* text=auto
+
+# Binary assets, never converted
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.ico binary
+*.woff binary
+*.woff2 binary
