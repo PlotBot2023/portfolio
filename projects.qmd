@@ -1,6 +1,6 @@
 ---
 title: "Projects"
-description: "Nine notebooks — market analysis, causal inference, pipeline diagnostics, and data wrangling. Each published with its outputs intact; code is one click away on every page."
+description: "Eight notebooks — market analysis, causal inference, and data wrangling. Each published with its outputs intact; code is one click away on every page."
 listing:
   id: project-listing
   contents: notebooks

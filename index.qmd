@@ -70,7 +70,7 @@ Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue. T
 
 :::
 
-[See all nine projects →](projects.qmd)
+[See all eight projects →](projects.qmd)
 
 ## How I work
 
