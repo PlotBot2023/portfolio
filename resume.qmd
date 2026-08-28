@@ -31,7 +31,7 @@ Analytical operations leader moving into data engineering and analysis. Fifteen 
 
 **SportsAnalytics** — multi-sport projections platform *(2025–present)*
 
-- Nine sports, seven PostgreSQL databases, daily pipelines from raw play-by-play through projections and calibration.
+- Multi-sport, PostgreSQL-backed, with daily pipelines from raw play-by-play through projections and calibration.
 - Python 3.11 package with Docker Compose dev stack, Alembic migrations, cross-sport pytest suite, and a FastAPI/site-generator layer for published reports.
 - Append-only data design with explicit casting and load-timestamped JSONL run logs; calibration and backtest notebooks validate model output against realized results.
 - Selected notebooks from this system are published under [Projects](projects.qmd).
@@ -41,8 +41,8 @@ Analytical operations leader moving into data engineering and analysis. Fifteen 
 ### Independent Analytics Practice — Stats Over Fiction
 *Fort Lauderdale, FL · 2025 – Present*
 
-- Published portfolio of nine analyses at [plotbot2023.github.io/portfolio](https://plotbot2023.github.io/portfolio), each with its source code attached.
-- Build and operate the SportsAnalytics platform described above: nine sports, seven PostgreSQL databases, daily ingestion through projection and calibration.
+- Published portfolio of eight analyses at [plotbot2023.github.io/portfolio](https://plotbot2023.github.io/portfolio), each with its source code attached.
+- Build and operate the SportsAnalytics platform described above: multi-sport, PostgreSQL-backed, daily ingestion through projection and calibration.
 - Broward County short-term rental study: 20,575 entire-home listings across four quarterly snapshots, clustered with Gaussian Mixture Models and profiled by revenue to answer a concrete investment question.
 - Structural causal model audit of a production NBA pipeline, using d-separation to separate causally defensible signals from merely correlated ones.
 - Multi-sport data quality reporting: freshness, run status, row counts and projection-quality checks read directly from the backing Postgres instances.

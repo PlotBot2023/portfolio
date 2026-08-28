@@ -18,7 +18,7 @@ That's the part I'd point a hiring manager at. I've never had the luxury of an a
 ::: {}
 ### Pipelines and data engineering
 
-I maintain **SportsAnalytics**, a nine-sport projections platform: Python 3.11, seven PostgreSQL databases, Docker Compose for local dev, Alembic migrations, a pytest suite, and daily pipelines for NBA, college basketball, NFL, NCAAF, MLB, NHL, NASCAR, UFC, soccer, and WNBA.
+I maintain a private multi-sport projections platform: Python 3.11, PostgreSQL, Docker Compose for local dev, Alembic migrations, a pytest suite, and daily pipelines that run unattended.
 
 It runs on rules I learned the expensive way — append-only writes, explicit casts on every column, load-timestamped JSONL run logs, and calibration checks that fail loudly rather than quietly.
 :::

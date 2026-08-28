@@ -15,7 +15,7 @@ listing:
 toc: false
 ---
 
-Grouped roughly by what they demonstrate: the **Broward Airbnb** series is end-to-end analysis for a non-technical decision-maker; the **SportsAnalytics** notebooks come out of a nine-sport projections platform I run on PostgreSQL; the **coursework** notebooks are labelled as such — they're from IBM and sports-analytics course tracks, kept here because the wrangling and visualization work is honest and legible.
+Grouped roughly by what they demonstrate: the **Broward Airbnb** series is end-to-end analysis for a non-technical decision-maker; the **sports** notebooks come out of a projections platform I run privately; the **coursework** notebooks are labelled as such — they're from IBM and sports-analytics course tracks, kept here because the wrangling and visualization work is honest and legible.
 
 ::: {#project-listing}
 :::

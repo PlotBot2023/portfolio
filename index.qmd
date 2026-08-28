@@ -41,7 +41,7 @@ I build data pipelines and analyses that people actually make decisions from —
 
 ## Selected work
 
-Four quarters of Airbnb data turned into an investment answer; a causal-inference audit of my own production pipeline; operational diagnostics across nine sports and seven Postgres databases. Each one is a real notebook with its outputs intact — the code is one click away on every page.
+Four quarters of Airbnb data turned into an investment answer; a causal-inference audit of a production pipeline; clustering, wrangling and visualization work with the reasoning left visible. Each one is a real notebook with its outputs intact — the code is one click away on every page.
 
 ::: {.cols2}
 ::: {}
