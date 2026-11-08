@@ -1,23 +1,297 @@
 /*-- scss:defaults --*/
-$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
-$font-family-monospace: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace !default;
+// The Studies look (SportsAnalytics shared/brand/tokens.py, STUDIES), copied as values because Quarto cannot import
+// the Python kit. Dark-only: the kit defines no light Studies skin, and the owner's identity rule is "dark-first".
+// Contrast on the panel glass (#251D56), from the kit's pinned measures: ink 13.7:1, ink2 9.8:1, mute 7.8:1,
+// accent 8.2:1, cyan 10.4:1.
+$st-page:   #120D2C;   // the ground: mid ultraviolet
+$st-glass:  #251D56;   // panel glass composited on the ground
+$st-glass1: rgba(46, 36, 104, .95);
+$st-glass2: rgba(30, 24, 72, .96);
+$st-tile1:  #2B2262;
+$st-tile2:  #1D1747;
+$st-floor:  #181238;
+$st-inlay:  #0B0822;   // recessed inlays: code wells, tables, figure wells, fact boxes
+$st-pill:   #40338E;   // raised pills and capsules
+$st-ink:    #F5F2FF;
+$st-ink2:   #D3CCF0;
+$st-mute:   #BCB5DE;
+$st-accent: #C4B5FD;   // labels, eyebrows: lavender takes gold's jobs
+$st-cy:     #6EE7F5;   // the neon edge, links, the selected control, the focus ring
+$st-vi:     #9D7BFF;
+$st-pk:     #F46BB4;
+$st-or:     #F7A15A;
+$st-display: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+$st-num:     "Cascadia Mono", "Cascadia Code", Consolas, ui-monospace, Menlo, monospace;
 
-$primary:   #1a5f7a;
-$body-color: #1c2430;
-$body-bg:   #ffffff;
-$link-color: #14607d;
-$border-color: #e3e8ee;
-$navbar-bg: #1a5f7a;
-$navbar-fg: #ffffff;
-$code-bg: #f6f8fa;
+$font-family-sans-serif: $st-display;
+$font-family-monospace: $st-num;
+$font-size-base: 1.0625rem;        // 17 px body
+$line-height-base: 1.65;
 
-$h1-font-size: 2.1rem;
-$h2-font-size: 1.45rem;
-$h3-font-size: 1.15rem;
-$headings-font-weight: 650;
+$body-bg: $st-page;
+$body-color: $st-ink2;             // 9.8:1 on glass, higher on the ground
+$headings-color: $st-ink;
+$headings-font-weight: 800;
+$h1-font-size: 2.6rem;
+$h2-font-size: 1.75rem;
+$h3-font-size: 1.3rem;
+
+$primary: $st-vi;
+$secondary: $st-pill;
+$info: $st-cy;
+$link-color: $st-cy;
+$link-hover-color: #A5F3FC;
+$border-color: rgba(110, 231, 245, .24);
+$hr-border-color: rgba(110, 231, 245, .24);
+
+$navbar-bg: #0E0A26;
+$navbar-fg: $st-ink2;
+$navbar-hl: $st-cy;
+$footer-bg: $st-inlay;
+$footer-fg: $st-mute;
+
+$code-bg: $st-inlay;
+$code-color: $st-ink;
+$code-block-bg: $st-inlay;
+
+$table-color: $st-ink2;
+$table-border-color: rgba(110, 231, 245, .16);
+$table-striped-bg: rgba(157, 123, 255, .07);
+$table-hover-bg: rgba(110, 231, 245, .07);
+
+$input-bg: $st-inlay;
+$input-color: $st-ink;
+$input-border-color: rgba(110, 231, 245, .35);
+$input-placeholder-color: $st-mute;
+
+$border-radius: 14px;
 
 /*-- scss:rules --*/
-body { font-size: 1.01rem; line-height: 1.68; -webkit-font-smoothing: antialiased; }
-.navbar { border-bottom: 1px solid $border-color; box-shadow: none; }
-h1, h2, h3 { letter-spacing: -0.015em; }
-h2 { margin-top: 2.4rem; padding-bottom: .3rem; border-bottom: 1px solid $border-color; }
+
+// ── the two metal finishes (the owner's helmet references, 2026-11-07 and 2026-11-08) ──
+// Polished metal: a saturated base, one broad bright band across the top third (the "dome"), a hard falloff to dark
+// at the foot, a top light and an under-shadow. Used on identity and selection only.
+// Matte satin metal: the same family, low contrast, a soft diffuse sheen and a fine grain, no bright band.
+// Used on surfaces that hold information. A finish is texture only: it never carries a value.
+:root {
+  --st-cy: #{$st-cy}; --st-vi: #{$st-vi}; --st-pk: #{$st-pk}; --st-or: #{$st-or}; --st-accent: #{$st-accent};
+  --st-inlay: #{$st-inlay}; --st-pill: #{$st-pill};
+  --st-ramp: linear-gradient(90deg, #{$st-cy}, #{$st-vi} 40%, #{$st-pk} 75%, #{$st-or});
+  --st-title: linear-gradient(90deg, #{$st-accent}, #{$st-pk} 50%, #{$st-or});
+  --st-split: -1px 0 rgba(0, 229, 255, .28), 1px 0 rgba(255, 40, 160, .28);
+  --st-lift: inset 0 1px 0 rgba(255, 255, 255, .16), inset 0 0 40px rgba(110, 231, 245, .045), 0 22px 40px -18px rgba(0, 0, 0, .85), 0 2px 0 rgba(0, 0, 0, .3);
+  --st-sink: inset 0 3px 12px rgba(0, 0, 0, .7), inset 0 0 0 1px rgba(0, 0, 0, .35), 0 1px 0 rgba(255, 255, 255, .07);
+  --st-grain: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nLjknIG51bU9jdGF2ZXM9JzInIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz48ZmVDb2xvck1hdHJpeCB2YWx1ZXM9JzAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMCAxIDAgMCAwIC41IDAnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWx0ZXI9J3VybCgjbiknIG9wYWNpdHk9Jy4wOScvPjwvc3ZnPg==");
+  --fin-polish: linear-gradient(180deg, rgba(255, 255, 255, .18) 0%, rgba(255, 255, 255, .07) 14%, rgba(255, 255, 255, .14) 22%, rgba(255, 255, 255, 0) 38%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, .32) 100%);
+  --fin-polish-edge: inset 0 1px 0 rgba(255, 255, 255, .55), inset 0 -2px 0 rgba(0, 0, 0, .35), 0 8px 18px -8px rgba(0, 0, 0, .75);
+  --fin-matte: radial-gradient(120% 85% at 28% 0%, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0) 60%), var(--st-grain);
+  --st-brk: linear-gradient(#{$st-cy}, #{$st-cy}) top left / 20px 2px no-repeat, linear-gradient(#{$st-cy}, #{$st-cy}) top left / 2px 20px no-repeat,
+    linear-gradient(#{$st-cy}, #{$st-cy}) top right / 20px 2px no-repeat, linear-gradient(#{$st-cy}, #{$st-cy}) top right / 2px 20px no-repeat,
+    linear-gradient(#{$st-pk}, #{$st-pk}) bottom left / 20px 2px no-repeat, linear-gradient(#{$st-pk}, #{$st-pk}) bottom left / 2px 20px no-repeat,
+    linear-gradient(#{$st-pk}, #{$st-pk}) bottom right / 20px 2px no-repeat, linear-gradient(#{$st-pk}, #{$st-pk}) bottom right / 2px 20px no-repeat;
+}
+
+// ── the ground: three soft aurora glows over a faint 64 px cyan grid ──
+html { background: $st-page; }
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: $st-page;
+  background-image:
+    radial-gradient(900px 520px at 6% -2%, rgba(157, 107, 255, .24), transparent 62%),
+    radial-gradient(820px 500px at 100% 6%, rgba(244, 107, 180, .15), transparent 60%),
+    radial-gradient(1000px 640px at 55% 104%, rgba(247, 161, 90, .11), transparent 62%),
+    linear-gradient(rgba(110, 231, 245, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(110, 231, 245, .045) 1px, transparent 1px);
+  background-size: auto, auto, auto, 64px 64px, 64px 64px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
+  background-attachment: fixed;
+}
+::selection { background: rgba(110, 231, 245, .32); color: $st-ink; }
+a { text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-color: $st-cy; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid $st-cy; outline-offset: 3px; border-radius: 6px;
+}
+strong, b { color: $st-ink; }
+
+h1, h2, h3, h4, .h1, .h2, .h3 { font-family: $st-display; color: $st-ink; letter-spacing: -.02em; }
+h3 { margin-top: 1.8rem; }
+h3 a { color: $st-ink; text-decoration: none; }
+h3 a:hover { color: $st-cy; text-decoration: underline; }
+
+// ── section banners: every h2 opens on a tinted band with the diagonal hatch, a violet hue rail and a top light ──
+#quarto-content h2, main h2 {
+  margin: 2.6rem 0 1.2rem; padding: .7rem 1.2rem .7rem 1.25rem; border: 1px solid rgba(110, 231, 245, .3);
+  border-left: 6px solid $st-vi; border-radius: 16px; font-size: $h2-font-size; line-height: 1.15;
+  background: linear-gradient(90deg, rgba(157, 123, 255, .34), rgba(244, 107, 180, .14) 45%, rgba(40, 31, 90, .25) 80%),
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 22px), $st-floor;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 12px 26px -16px rgba(0, 0, 0, .8);
+  text-shadow: var(--st-split);
+}
+#quarto-content h2 .anchorjs-link, main h2 .anchorjs-link { color: $st-accent; }
+
+// ── navbar: dark glass, the brand ramp as its lower edge; the current page a cyan holo chip ──
+.navbar {
+  background: linear-gradient(180deg, rgba(14, 10, 38, .97), rgba(18, 13, 44, .94)) !important;
+  border-bottom: 2px solid transparent; border-image: var(--st-ramp) 1; box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .8);
+}
+.navbar-brand .navbar-title, .navbar-title { font-weight: 800; color: $st-ink !important; letter-spacing: -.01em; }
+.navbar .nav-link {
+  min-height: 44px; display: flex; align-items: center; padding: 0 .95rem !important; border-radius: 999px;
+  border: 1.5px solid transparent; color: $st-ink2 !important; font-weight: 650; font-size: 1rem;
+}
+.navbar .nav-link:hover { background: rgba(110, 231, 245, .07); border-color: rgba(110, 231, 245, .4); color: $st-ink !important; }
+.navbar .nav-link.active, .navbar .nav-link[aria-current="page"] {
+  background: rgba(110, 231, 245, .14); border-color: $st-cy; color: $st-ink !important;
+  box-shadow: inset 0 0 16px rgba(110, 231, 245, .14), 0 0 16px -5px rgba(110, 231, 245, .7);
+}
+.navbar .navbar-nav { gap: .25rem; }
+.navbar-toggler { min-width: 44px; min-height: 44px; border-color: rgba(110, 231, 245, .5); }
+@media (max-width: 991.98px) {
+  .navbar-collapse { padding: .5rem 0 .75rem; }
+  .navbar .nav-link { justify-content: flex-start; }
+}
+
+// ── the notebook and page title block: a hero banner with HUD brackets ──
+#title-block-header.quarto-title-block {
+  position: relative; margin: 1.6rem 0 2rem; padding: 1.6rem 1.8rem 1.4rem; border-radius: 24px;
+  border: 1.5px solid rgba(110, 231, 245, .5);
+  background: var(--fin-matte), repeating-linear-gradient(118deg, rgba(255, 255, 255, .045) 0 2px, transparent 2px 24px),
+    linear-gradient(135deg, rgba(157, 123, 255, .30), rgba(244, 107, 180, .12) 55%, rgba(30, 24, 72, .2)),
+    linear-gradient(180deg, $st-glass1, $st-glass2);
+  box-shadow: var(--st-lift);
+}
+#title-block-header.quarto-title-block::after {
+  content: ""; position: absolute; inset: 8px; pointer-events: none; background: var(--st-brk); opacity: .78;
+}
+#title-block-header h1.title {
+  font-size: clamp(2rem, 4.2vw, 3.1rem); line-height: 1.08; font-weight: 850; letter-spacing: -.03em;
+  text-shadow: var(--st-split); margin-bottom: .6rem;
+}
+#title-block-header .description, #title-block-header .subtitle { color: $st-ink2; font-size: 1.1rem; }
+#title-block-header .quarto-title-meta { color: $st-mute; }
+#title-block-header .quarto-title-meta-heading {
+  color: $st-accent; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 750;
+}
+#title-block-header .quarto-title-meta-contents { font-family: $st-num; color: $st-ink; }
+
+// ── raised pills: categories and tags, polished capsules standing off their tray ──
+.quarto-categories { display: flex; flex-wrap: wrap; gap: .45rem; padding: .45rem; margin-top: .6rem;
+  border-radius: 22px; background: $st-inlay; box-shadow: var(--st-sink); width: fit-content; max-width: 100%; }
+.quarto-category, .listing-category {
+  font-size: .8rem !important; font-weight: 700; letter-spacing: .02em; text-transform: none !important;
+  color: $st-ink !important; opacity: 1 !important; border-radius: 999px !important; padding: .28rem .8rem !important;
+  border: 1.5px solid rgba(110, 231, 245, .55) !important;
+  background: var(--fin-polish), #34287A !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .45), var(--fin-polish-edge);
+}
+.listing-category { cursor: pointer; min-height: 32px; display: inline-flex; align-items: center; }
+.listing-category:hover { border-color: $st-cy !important; }
+
+// ── table of contents: recessed rail, the current section in cyan ──
+#TOC, nav#TOC { font-size: .95rem; }
+#TOC h2, #toc-title { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important;
+  margin: 0 0 .6rem !important; font-size: .8rem !important; letter-spacing: .14em; text-transform: uppercase; color: $st-accent !important; text-shadow: none !important; }
+#TOC > ul.collapse { display: block; }
+#TOC ul { border-left: 2px solid rgba(110, 231, 245, .18); }
+#TOC .nav-link, #TOC a { color: $st-mute; padding-top: .3rem; padding-bottom: .3rem; }
+#TOC .nav-link:hover, #TOC a:hover { color: $st-ink; }
+#TOC .nav-link.active, #TOC a.active { color: $st-cy !important; border-left-color: $st-cy !important; font-weight: 700; }
+
+// ── code: recessed wells; tokens recoloured inside the Studies palette, each at least 7:1 on the well ──
+div.sourceCode, pre.sourceCode, .cell-output pre, pre:not(.sourceCode) {
+  background: $st-inlay !important; border: 1px solid rgba(110, 231, 245, .18) !important; border-radius: 14px !important;
+  box-shadow: var(--st-sink);
+}
+div.sourceCode pre, pre.sourceCode { border: 0 !important; box-shadow: none; background: transparent !important; }
+pre code, div.sourceCode pre code { font-size: .875rem !important; line-height: 1.55; color: $st-ink; }
+// long unbroken runs (comment rules made of box characters, long paths) wrap instead of pushing the page sideways
+div.sourceCode pre code, div.sourceCode pre code span, .cell-output pre, .cell-output pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+// long identifiers in prose, wide markdown tables and heading anchors stay inside the column on a phone
+:not(pre) > code { white-space: pre-wrap !important; overflow-wrap: anywhere; word-break: break-word; }
+#quarto-document-content p, #quarto-document-content li { overflow-wrap: anywhere; }
+#quarto-document-content table { display: block; max-width: 100%; overflow-x: auto; }
+h1, h2, h3, h4 { overflow-wrap: anywhere; }
+@media (max-width: 640px) { .anchorjs-link { display: none !important; } }
+mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+.cell-output-stdout pre, .cell-output pre { color: $st-ink2; padding: .9rem 1rem; }
+:not(pre) > code { background: rgba(157, 123, 255, .16); color: $st-ink; border-radius: 6px; padding: .1em .35em; font-size: .92em; }
+div.sourceCode code span.kw, div.sourceCode code span.cf, div.sourceCode code span.im { color: #F9A8D4; }
+div.sourceCode code span.st, div.sourceCode code span.ss, div.sourceCode code span.ch, div.sourceCode code span.vs { color: #8BF0FA; }
+div.sourceCode code span.dv, div.sourceCode code span.fl, div.sourceCode code span.bn, div.sourceCode code span.dc { color: #FDC28F; }
+div.sourceCode code span.co, div.sourceCode code span.an, div.sourceCode code span.cv, div.sourceCode code span.do { color: $st-mute; font-style: italic; }
+div.sourceCode code span.bu, div.sourceCode code span.fu, div.sourceCode code span.at { color: $st-accent; }
+div.sourceCode code span.op, div.sourceCode code span.ot, div.sourceCode code span.va, div.sourceCode code span.sc { color: $st-ink2; }
+div.sourceCode code span.cn, div.sourceCode code span.bi { color: #A5B4FC; }
+div.sourceCode code span.er, div.sourceCode code span.al { color: #FDA4AF; }
+
+// the "Show code" fold: a matte capsule, 44 px
+details.code-fold > summary {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0 1.05rem; margin: .4rem 0 .6rem;
+  border-radius: 999px; border: 1.5px solid rgba(110, 231, 245, .55); color: $st-ink; font-weight: 700; font-size: .95rem;
+  background: var(--fin-matte), $st-tile1; box-shadow: var(--st-lift); cursor: pointer;
+}
+details.code-fold > summary:hover { border-color: $st-cy; background: rgba(110, 231, 245, .12); }
+details.code-fold[open] > summary { border-color: $st-cy; }
+.code-copy-button { min-width: 44px; min-height: 44px; color: $st-ink2 !important; }
+
+// ── figures: the saved notebook figures keep their own white plates, set inside a recessed well ──
+.cell-output-display .figure, .cell-output-display > p:has(> img), .quarto-figure {
+  padding: 12px; border-radius: 18px; background: $st-inlay; box-shadow: var(--st-sink);
+  border: 1px solid rgba(110, 231, 245, .18); margin: 1rem 0 1.4rem;
+}
+.cell-output-display img, .quarto-figure img { border-radius: 10px; display: block; margin: 0 auto; }
+.figure-caption, figcaption { color: $st-mute; font-size: .9rem; margin-top: .6rem; }
+
+// ── tables (dataframes and the résumé's skills table): a recessed inlay, lavender small-caps headers, mono numerals ──
+.cell-output-display table, main table, .table {
+  --bs-table-bg: transparent; color: $st-ink2; font-size: .9rem;
+}
+.cell-output-display > div:has(> table), .cell-output-display > table, .dataframe, main > table, #quarto-document-content > table {
+  background: $st-inlay; border-radius: 14px; box-shadow: var(--st-sink); border: 1px solid rgba(110, 231, 245, .18);
+}
+table th, .dataframe thead th {
+  color: $st-accent !important; font-weight: 750; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+  border-bottom: 1.5px solid rgba(110, 231, 245, .35) !important;
+}
+table td { font-variant-numeric: tabular-nums; border-color: rgba(110, 231, 245, .12) !important; }
+.dataframe td { font-family: $st-num; font-size: .85rem; color: $st-ink; }
+.table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-accent-bg: rgba(157, 123, 255, .07); color: $st-ink2; }
+
+// ── callouts: recessed inlays with a hue rail ──
+.callout { background: $st-inlay !important; border-radius: 14px !important; box-shadow: var(--st-sink); border-color: rgba(110, 231, 245, .2) !important; }
+.callout .callout-header { background: transparent !important; }
+
+// ── listing filter and sort: 44 px controls on a recessed tray ──
+.quarto-listing-filter input, .quarto-listing-sort select, .quarto-listing-filter .input-group-text, .input-group-sm > .form-control, .input-group-sm > .form-select {
+  min-height: 44px; font-size: .95rem !important; color: $st-ink; background-color: $st-inlay; border-color: rgba(110, 231, 245, .35);
+}
+.quarto-listing-filter .input-group-text { color: $st-accent; }
+
+// ── footer: an inlay strip ──
+.nav-footer { background: $st-inlay !important; border-top: 1px solid rgba(110, 231, 245, .2) !important; color: $st-mute; font-size: .95rem; }
+.nav-footer a, .nav-footer .nav-link { color: $st-ink2; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
+
+// Quarto's search button and the inline links inside fact boxes: at least 44 px and 24 px
+.aa-DetachedSearchButton, #quarto-search button, button#autocomplete-0-label, .quarto-navbar-tools a, .quarto-navigation-tool {
+  min-width: 44px !important; min-height: 44px !important; display: inline-flex; align-items: center; justify-content: center;
+}
+.note-box a { display: inline-block; padding: 2px 0; }
+
+// a page with no front-matter title (the home page) leaves an empty title block: hide it
+#title-block-header.quarto-title-block:not(:has(h1)) { display: none; }
+
+// the Projects page's category list: matte rows with a cyan rail on the chosen one
+.quarto-listing-category-title { color: $st-accent !important; font-size: .8rem !important; letter-spacing: .14em; text-transform: uppercase; font-weight: 750; }
+.quarto-listing-category .category { min-height: 36px; display: flex; align-items: center; padding: 0 .7rem; margin: 2px 0; border-radius: 10px;
+  color: $st-ink2; border-left: 3px solid transparent; cursor: pointer; }
+.quarto-listing-category .category:hover { background: rgba(110, 231, 245, .07); color: $st-ink; }
+.quarto-listing-category .category.active { background: rgba(110, 231, 245, .12); border-left-color: $st-cy; color: $st-ink; font-weight: 700; }
+.quarto-listing-category .category-count { font-family: $st-num; color: $st-accent; margin-left: .3rem; }
+
+// back-to-top and other small round buttons
+#quarto-back-to-top { min-height: 44px; background: $st-tile1; color: $st-ink; border: 1.5px solid rgba(110, 231, 245, .55); border-radius: 999px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}

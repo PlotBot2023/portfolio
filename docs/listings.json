@@ -1,0 +1,15 @@
+[
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/notebooks/broward-investor-guide.html",
+      "/notebooks/broward-segmentation.html",
+      "/notebooks/broward-pricing-consistency.html",
+      "/notebooks/broward-market-analysis.html",
+      "/notebooks/causal-scm-dseparation.html",
+      "/notebooks/nhl-data-merge.html",
+      "/notebooks/basketball-heatmap.html",
+      "/notebooks/nba-shooter-comparison.html"
+    ]
+  }
+]
