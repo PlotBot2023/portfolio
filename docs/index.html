@@ -81,10 +81,14 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Richard Chute — Data Analysis &amp; Pipelines">
 <meta property="og:description" content="Data analysis, pipelines, and applied modeling — Fort Lauderdale, FL">
+<meta property="og:image" content="https://plotbot2023.github.io/portfolio/assets/projects/target-const.webp">
 <meta property="og:site_name" content="Richard Chute">
+<meta property="og:image:alt" content="A dark constellation map of pipeline files grouped into labelled layers.">
 <meta name="twitter:title" content="Richard Chute — Data Analysis &amp; Pipelines">
 <meta name="twitter:description" content="Data analysis, pipelines, and applied modeling — Fort Lauderdale, FL">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://plotbot2023.github.io/portfolio/assets/projects/target-const.webp">
+<meta name="twitter:image:alt" content="A dark constellation map of pipeline files grouped into labelled layers.">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -182,25 +186,31 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="selected-work" class="level2">
 <h2 class="anchored" data-anchor-id="selected-work">Selected work</h2>
-<p>Four quarters of Airbnb data turned into an investment answer; a causal-inference audit of a production pipeline; clustering, wrangling and visualization work with the reasoning left visible. Each one is a real notebook with its outputs intact — the code is one click away on every page.</p>
+<p>A pipeline rebuilt from an audit of itself, a sourced map of a fast-moving legal market, and four quarters of Airbnb data turned into an investment answer. The first two run in a private platform, so they’re described here; the notebook is public with its outputs intact.</p>
 <div class="cols2">
+<div>
+<p><img src="assets/projects/target-const.webp" class="img-fluid" alt="A dark constellation map of pipeline files grouped into labelled layers."></p>
+<section id="the-target-pipeline-rebuild" class="level3">
+<h3 class="anchored" data-anchor-id="the-target-pipeline-rebuild"><a href="./projects.html#systems">The Target pipeline rebuild</a></h3>
+<p>An audit of my own production pipeline turned into a plan, then into code: one intake engine, one typing gate, a fact store with declared grains, and calibration as a loop. Each layer has a live meter that climbs planned, coded, tested, live.</p>
+<p><em>Python · PostgreSQL · data contracts · 15 of 89 nodes live, 2026-11-08</em></p>
+</section>
+</div>
+<div>
+<p><img src="assets/projects/markets-map.webp" class="img-fluid" alt="A dark dashboard with headline tiles and a tile map of US states."></p>
+<section id="markets-a-sourced-legal-map" class="level3">
+<h3 class="anchored" data-anchor-id="markets-a-sourced-legal-map"><a href="./projects.html#systems">Markets: a sourced legal map</a></h3>
+<p>Where each kind of betting is legal, state by state, with 31 operator scorecards and every free finance API graded on its limits and terms. Every fact carries its source and a grade, and only verified facts are scored.</p>
+<p><em>Research · data governance · API terms review</em></p>
+</section>
+</div>
 <section id="the-best-and-worst-bets-in-the-broward-airbnb-market" class="level3">
 <h3 class="anchored" data-anchor-id="the-best-and-worst-bets-in-the-broward-airbnb-market"><a href="./notebooks/broward-investor-guide.html">The Best and Worst Bets in the Broward Airbnb Market</a></h3>
 <p>17,000+ listings across four quarterly snapshots, reduced to a straight answer for an individual investor: what a Broward short-term rental actually earns, which neighborhoods clear their cost basis, and how much of the market is already corporate.</p>
 <p><em>Python · pandas · Inside Airbnb · four-snapshot panel</em></p>
 </section>
-<section id="structural-causal-models-d-separation-in-an-nba-pipeline" class="level3">
-<h3 class="anchored" data-anchor-id="structural-causal-models-d-separation-in-an-nba-pipeline"><a href="./notebooks/causal-scm-dseparation.html">Structural Causal Models &amp; D-Separation in an NBA Pipeline</a></h3>
-<p>Pearl-style causal inference pointed at my own production system. Builds the DAG, runs d-separation tests to find which conditioning sets block confounding paths, and separates the signals that are causally defensible from the ones that are merely correlated.</p>
-<p><em>Causal inference · PostgreSQL · Python</em></p>
-</section>
-<section id="market-segmentation-where-what-and-how-to-invest" class="level3">
-<h3 class="anchored" data-anchor-id="market-segmentation-where-what-and-how-to-invest"><a href="./notebooks/broward-segmentation.html">Market Segmentation: Where, What, and How to Invest</a></h3>
-<p>Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue. The finding that surprised me: property type beats location. Four geographic zones land within $5 of each other on RevPAR; a bedroom is worth $50+.</p>
-<p><em>Clustering · GMM · scikit-learn</em></p>
-</section>
 </div>
-<p><a href="./projects.html">See all eight projects →</a></p>
+<p><a href="./projects.html">See every system, study and notebook →</a></p>
 </section>
 <section id="how-i-work" class="level2">
 <h2 class="anchored" data-anchor-id="how-i-work">How I work</h2>

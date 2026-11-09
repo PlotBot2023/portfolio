@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Eight notebooks — market analysis, causal inference, and data wrangling. Each published with its outputs intact; code is one click away on every page.">
+<meta name="description" content="Systems I build and run, the studies and experiments that come out of them, and eight notebooks with their outputs intact.">
 
 <title>Projects – Richard Chute</title>
 <style>
@@ -140,11 +140,15 @@ window.Quarto = {
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Projects – Richard Chute">
-<meta property="og:description" content="Eight notebooks — market analysis, causal inference, and data wrangling. Each published with its outputs intact; code is one click away on every page.">
+<meta property="og:description" content="Systems I build and run, the studies and experiments that come out of them, and eight notebooks with their outputs intact.">
+<meta property="og:image" content="https://plotbot2023.github.io/portfolio/assets/projects/target-const.webp">
 <meta property="og:site_name" content="Richard Chute">
+<meta property="og:image:alt" content="A dark constellation map of pipeline files grouped into labelled layers from sources on the left to outputs on the right.">
 <meta name="twitter:title" content="Projects – Richard Chute">
-<meta name="twitter:description" content="Eight notebooks — market analysis, causal inference, and data wrangling. Each published with its outputs intact; code is one click away on every page.">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="Systems I build and run, the studies and experiments that come out of them, and eight notebooks with their outputs intact.">
+<meta name="twitter:image" content="https://plotbot2023.github.io/portfolio/assets/projects/target-const.webp">
+<meta name="twitter:image:alt" content="A dark constellation map of pipeline files grouped into labelled layers from sources on the left to outputs on the right.">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -215,7 +219,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Eight notebooks — market analysis, causal inference, and data wrangling. Each published with its outputs intact; code is one click away on every page.
+    Systems I build and run, the studies and experiments that come out of them, and eight notebooks with their outputs intact.
   </div>
 </div>
 
@@ -232,7 +236,172 @@ window.Quarto = {
 </header>
 
 
-<p>Grouped roughly by what they demonstrate: the <strong>Broward Airbnb</strong> series is end-to-end analysis for a non-technical decision-maker; the <strong>sports</strong> notebooks come out of a projections platform I run privately; the <strong>coursework</strong> notebooks are labelled as such — they’re from IBM and sports-analytics course tracks, kept here because the wrangling and visualization work is honest and legible.</p>
+<p>Most of my work lives in a private platform I build and run every day, so it can’t all be one click away. The systems below are described as they stand, with a picture where a picture is safe to publish, and every number carries the date it was read. The <strong>studies</strong> are public and rebuild from their own folder. The <strong>notebooks</strong> at the foot of the page are complete, with code under “Show code.”</p>
+<p>A walkthrough of any private system is one email away: <a href="mailto:plotbot2023@gmail.com">plotbot2023@gmail.com</a>.</p>
+<section id="systems" class="level2">
+<h2 class="anchored" data-anchor-id="systems">Systems</h2>
+<div class="sys-feature">
+<div class="sys-shot">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/projects/target-const.webp" class="img-fluid figure-img" alt="A dark constellation map of pipeline files grouped into labelled layers from sources on the left to outputs on the right."></p>
+<figcaption>The Target pipeline plan as an orbitable constellation: every planned node is a real file, coloured by layer, with solid lines for data flow and dashes for imports.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sys-body">
+<p><span class="sys-status building">◐ Building</span></p>
+<section id="the-target-pipeline-rebuild" class="level3">
+<h3 class="anchored" data-anchor-id="the-target-pipeline-rebuild">The Target pipeline rebuild</h3>
+<p>An audit of my own production pipeline, turned into a plan and then into code. The audit found the same data recalled in many places, derived numbers defined more than once, and probabilities produced several ways in one run. The plan lays the pipeline out again as one path: a single intake engine, one typing gate, a fact store with declared grains, estimators before simulation, and calibration as a loop rather than a step.</p>
+<p>Each layer has its own page with a live meter that climbs planned, coded, tested, live. The spine keeps its own run and QA record: every check with its value, baseline, sample size and threshold, plus rejected rows and data freshness.</p>
+<div class="sys-stats">
+<ul>
+<li><span class="n">15 / 89</span> nodes live</li>
+<li><span class="n">816</span> tests on the plan</li>
+<li><span class="n">0</span> failing</li>
+</ul>
+</div>
+<p><em>Python · PostgreSQL · DAG orchestration · data contracts · as of 2026-11-08</em></p>
+</section>
+</div>
+</div>
+<div class="sys-feature flip">
+<div class="sys-shot">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/projects/markets-map.webp" class="img-fluid figure-img" alt="A dark dashboard with four headline tiles and a tile map of US states coloured by legal status."></p>
+<figcaption>The Markets legal map: online sportsbook, prediction market, pick’em and sweepstakes status for every state, with sourced counts above it.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sys-body">
+<p><span class="sys-status live">● Live</span></p>
+<section id="markets-a-sourced-map-of-legal-betting-and-free-market-data" class="level3">
+<h3 class="anchored" data-anchor-id="markets-a-sourced-map-of-legal-betting-and-free-market-data">Markets: a sourced map of legal betting and free market data</h3>
+<p>Where each kind of betting is legal, state by state, across four layers: online sportsbooks, prediction markets and their court fights, pick’em apps, and sweepstakes. Every operator gets a scorecard, z-scored within its kind. The same page catalogues every free odds, finance, crypto, commodity and macro API, with its limits on one scale and its terms in words.</p>
+<p>The rule that makes it trustworthy: <strong>every fact carries its source and a grade</strong>, and only facts opened at the source or confirmed by a second one are ever scored. An API whose terms ban automated use is listed so you know, and never wired.</p>
+<div class="sys-stats">
+<ul>
+<li><span class="n">51</span> states + DC mapped</li>
+<li><span class="n">31</span> operator scorecards</li>
+<li><span class="n">29</span> finance APIs graded</li>
+</ul>
+</div>
+<p><em>Research · data governance · API terms review · data as of 2026-10-25</em></p>
+</section>
+</div>
+</div>
+<div class="sys-feature">
+<div class="sys-shot">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/projects/ideas.webp" class="img-fluid figure-img" alt="A dark board titled ML and DS Ideas with status counts and an ascent map of numbered idea nodes linked by arrows."></p>
+<figcaption>The ML and DS ideas board: 197 ideas in tier lanes, with arrows showing which idea unlocks which.</figcaption>
+</figure>
+</div>
+</div>
+<div class="sys-body">
+<p><span class="sys-status live">● Live</span></p>
+<section id="the-ml-ds-ideas-board" class="level3">
+<h3 class="anchored" data-anchor-id="the-ml-ds-ideas-board">The ML &amp; DS ideas board</h3>
+<p>A research backlog run like a portfolio. Each idea is one Markdown file with a spec sheet: its baseline, the result that would falsify it, and the compute it needs. The board draws every idea in its tier lane with the lines that say what unlocks what, and shows which seasons each data source actually covers. An idea is coded only after its decision is written down and approved.</p>
+<div class="sys-stats">
+<ul>
+<li><span class="n">197</span> ideas on the board</li>
+<li><span class="n">46</span> live</li>
+<li><span class="n">37</span> retired, kept with reasons</li>
+</ul>
+</div>
+<p><em>Experiment design · research planning · as of 2026-11-08</em></p>
+</section>
+</div>
+</div>
+<div class="sys-grid">
+<div class="sys">
+<p><span class="sys-status live">● Live</span></p>
+<section id="review-bench-and-judge-trainer" class="level3">
+<h3 class="anchored" data-anchor-id="review-bench-and-judge-trainer">Review bench and judge trainer</h3>
+<p>Seventeen automated judges that every new view, restyle or pipeline change faces before its pull request: contrast, type floor, honesty labels, data checks. Each judge has numbered rules and tunable thresholds with their acceptable ranges. When I overrule a judge, the ruling is recorded and becomes training data for the next review.</p>
+<p><em>QA automation · Playwright · accessibility measurement</em></p>
+</section>
+</div>
+<div class="sys">
+<p><span class="sys-status live">● Live</span></p>
+<section id="data-lineage-read-from-the-code" class="level3">
+<h3 class="anchored" data-anchor-id="data-lineage-read-from-the-code">Data lineage, read from the code</h3>
+<p>Every external feed, loader, raw table, derived table and reader, mapped with a file and line number behind each node and edge, at three drill levels. A companion atlas profiles every raw column’s values. Where a count needs the live catalogue, it reads “not measured” instead of a guess.</p>
+<p><em>Static analysis · data cataloguing · lineage</em></p>
+</section>
+</div>
+<div class="sys">
+<p><span class="sys-status building">◐ Building</span></p>
+<section id="pre-registered-experiments" class="level3">
+<h3 class="anchored" data-anchor-id="pre-registered-experiments">Pre-registered experiments</h3>
+<p>Tests that state their pass gate before they run and score their holdout once. One asks whether a game simulation beats the closing line by enough to matter. Another moves a traded or injured starter’s share of team production with him, and enters the model only if the holdout errors improve.</p>
+<p><em>Experiment design · holdout testing · Monte Carlo</em></p>
+</section>
+</div>
+<div class="sys">
+<p><span class="sys-status live">● Live</span></p>
+<section id="writing-console" class="level3">
+<h3 class="anchored" data-anchor-id="writing-console">Writing console</h3>
+<p>A drafting desk for the publication below. Pick a story from the week’s flagged movements, write the hook yourself, and the desk drafts the rest with a receipt on every number. Every figure, credit line and data-provider rule is checked before anything can be copied out, and nothing posts until I press.</p>
+<p><em>Content pipeline · provenance · Python</em></p>
+</section>
+</div>
+<div class="sys">
+<p><span class="sys-status building">◐ Building</span></p>
+<section id="political-and-corporate-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="political-and-corporate-dashboard">Political and corporate dashboard</h3>
+<p>One card per member of Congress, Fortune 500 executive and director, and Supreme Court justice, each with three key numbers. It traces the money from PACs to candidates and from agencies to contractors, and lists the most leveraged and most shorted companies. Each number carries its source and as-of date, and a feed that isn’t wired yet says so.</p>
+<p><em>Public-records integration · entity resolution</em></p>
+</section>
+</div>
+<div class="sys">
+<p><span class="sys-status live">● Live</span></p>
+<section id="mise-household-nutrition-and-training" class="level3">
+<h3 class="anchored" data-anchor-id="mise-household-nutrition-and-training">Mise: household nutrition and training</h3>
+<p>A meal plan per person built from each profile’s targets, a grocery list priced by aisle and by store, workouts by training phase, and a bloodwork page that turns a lab panel into plain words and a plan. It runs offline, because the data is a family’s health.</p>
+<p><em>Single-file app · offline-first · nutrition modelling</em></p>
+</section>
+</div>
+<div class="sys">
+<p><span class="sys-status live">● Live</span></p>
+<section id="hot-wheels-value-field-guide" class="level3">
+<h3 class="anchored" data-anchor-id="hot-wheels-value-field-guide">Hot Wheels value field guide</h3>
+<p>How to identify, authenticate, grade and price a collectible car, generation by generation. Every feature is drawn and zoomed, the fake and restoration tells are listed, and a ranked watch list covers 500 rare pieces. Every value carries its source, basis and date.</p>
+<p><em>Market research · pricing · reference design</em></p>
+</section>
+</div>
+</div>
+</section>
+<section id="studies" class="level2">
+<h2 class="anchored" data-anchor-id="studies">Studies</h2>
+<p>Public write-ups that rebuild end to end from the committed data in their own folder: no database, no trust required. A movement is only called a story if it clears a threshold measured against that team’s own history, and null results are published as nulls. They’re collected under <strong>Stats Over Fiction</strong>.</p>
+<div class="cols2">
+<div>
+<p><img src="assets/projects/sof-trajectories.webp" class="img-fluid" alt="Line chart of every NFL team's season-to-date efficiency across the 2025 season."></p>
+<section id="the-2025-efficiency-race" class="level3">
+<h3 class="anchored" data-anchor-id="the-2025-efficiency-race"><a href="https://github.com/PlotBot2023/stats-over-fiction/blob/main/studies/power-trajectories-2025/post.md">The 2025 efficiency race</a></h3>
+<p>A season is a trajectory, not a table. All 32 teams’ season-to-date efficiency, week by week, and the collapse that hid inside a top-10 finish.</p>
+<p><em>Python · nflverse · reproducible study</em></p>
+</section>
+</div>
+<div>
+<p><img src="assets/projects/sof-draft-gradient.webp" class="img-fluid" alt="Chart of running-back breakout rates by draft round."></p>
+<section id="draft-capital-vs.-athleticism" class="level3">
+<h3 class="anchored" data-anchor-id="draft-capital-vs.-athleticism"><a href="https://github.com/PlotBot2023/stats-over-fiction/blob/main/studies/draft-vs-athleticism/post.md">Draft capital vs.&nbsp;athleticism</a></h3>
+<p>What makes a running back break out: the draft-capital gradient, what speed score really adds, and the seven-player cell that answers the rescue question, shown with its sample size rather than trimmed.</p>
+<p><em>Python · nflverse · reproducible study</em></p>
+</section>
+</div>
+</div>
+<p><a href="https://github.com/PlotBot2023/stats-over-fiction">All studies on GitHub →</a></p>
+</section>
+<section id="notebooks" class="level2">
+<h2 class="anchored" data-anchor-id="notebooks">Notebooks</h2>
+<p>Grouped roughly by what they demonstrate: the <strong>Broward Airbnb</strong> series is end-to-end analysis for a non-technical decision-maker; the <strong>sports</strong> notebooks come out of the private platform above; the <strong>coursework</strong> notebooks are labelled as such. They’re from IBM and sports-analytics course tracks, kept here because the wrangling and visualization work is honest and legible.</p>
 <div id="listing-project-listing" class="quarto-listing quarto-listing-container-default">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
@@ -471,6 +640,7 @@ January 2026
 
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
