@@ -47,9 +47,9 @@ website:
 
 format:
   html:
-    theme:
-      light: [cosmo, styles.scss]
-      dark: [darkly, styles-dark.scss]
+    # Dark-only, in the Studies look (SportsAnalytics shared/brand STUDIES tokens, copied into styles.scss).
+    theme: [darkly, styles.scss]
+    highlight-style: github-dark
     css: styles.css
     toc: true
     code-fold: true

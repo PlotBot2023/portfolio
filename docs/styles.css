@@ -1,127 +1,117 @@
-/* ---- shared layout polish (theme-agnostic; colors come from the SCSS themes) ---- */
+/* ---- layout and components in the Studies look (colour values and finishes come from styles.scss) ---- */
 
+/* ── the landing hero: glass a level above the ground, HUD brackets, a huge title with the hairline split ── */
 .hero {
-  padding: 2.2rem 0 1.4rem;
-  border-bottom: 1px solid rgba(128, 145, 165, 0.22);
-  margin-bottom: 2rem;
+  position: relative; margin: 1.8rem 0 2.2rem; padding: 2.2rem 2.2rem 1.9rem; border-radius: 26px;
+  border: 1.5px solid rgba(110, 231, 245, .5);
+  background: var(--fin-matte), repeating-linear-gradient(118deg, rgba(255, 255, 255, .04) 0 2px, transparent 2px 24px),
+    linear-gradient(135deg, rgba(157, 123, 255, .32), rgba(244, 107, 180, .14) 55%, rgba(247, 161, 90, .06)),
+    linear-gradient(180deg, rgba(46, 36, 104, .95), rgba(30, 24, 72, .96));
+  box-shadow: var(--st-lift), 0 0 40px -18px rgba(157, 123, 255, .8);
 }
+.hero::after { content: ""; position: absolute; inset: 12px; pointer-events: none; background: var(--st-brk); opacity: .78; }
 .hero h1 {
-  margin-bottom: .35rem;
-  font-size: 2.5rem;
-  line-height: 1.15;
+  margin: 0 0 .5rem; font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1.02; font-weight: 850; letter-spacing: -.035em;
+  color: #F5F2FF; text-shadow: var(--st-split);
 }
-.hero .tagline {
-  font-size: 1.16rem;
-  opacity: .82;
-  max-width: 46rem;
-  margin-bottom: 1.1rem;
-}
+.hero .tagline { font-size: 1.2rem; line-height: 1.6; color: #D3CCF0; max-width: 48rem; margin-bottom: 1.3rem; }
 .hero .kicker {
-  text-transform: uppercase;
-  letter-spacing: .11em;
-  font-size: .74rem;
-  font-weight: 700;
-  opacity: .6;
-  margin-bottom: .5rem;
+  display: inline-block; text-transform: uppercase; letter-spacing: .16em; font-size: .82rem; font-weight: 800;
+  color: #C4B5FD; margin-bottom: .7rem;
 }
 
-/* call-to-action buttons */
-.cta { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+/* ── buttons: 44 px capsules. The primary is polished metal (violet to pink, the bright band on top);
+      the rest are matte satin capsules with a cyan edge ── */
+.cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.1rem 0 .4rem; }
+.cta p { display: contents; }
 .cta a {
-  display: inline-block;
-  padding: .5rem 1.05rem;
-  border-radius: 6px;
-  border: 1px solid rgba(128, 145, 165, 0.42);
-  text-decoration: none;
-  font-weight: 550;
-  font-size: .93rem;
-  transition: transform .12s ease, border-color .12s ease;
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.25rem; border-radius: 999px;
+  font-weight: 750; font-size: 1rem; text-decoration: none; color: #F5F2FF;
+  border: 1.5px solid rgba(110, 231, 245, .6);
+  background: var(--fin-matte), #2B2262;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 18px -10px rgba(0, 0, 0, .8);
+  transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
 }
-.cta a:hover { transform: translateY(-1px); border-color: currentColor; }
-.cta a.primary { background: #1a5f7a; color: #fff; border-color: #1a5f7a; }
-.quarto-dark .cta a.primary { background: #2a7f9e; border-color: #2a7f9e; }
+.cta a:hover { transform: translateY(-1px); border-color: #6EE7F5; color: #F5F2FF; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 0 18px -6px rgba(110, 231, 245, .8); }
+.cta a.primary {
+  border-color: rgba(255, 255, 255, .55);
+  background: var(--fin-polish), linear-gradient(135deg, #6236D6, #A0337A);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .45), var(--fin-polish-edge), 0 0 22px -8px rgba(244, 107, 180, .8);
+  color: #FFFFFF;
+}
+.cta a.primary:hover { border-color: #FFFFFF; }
 
-/* skill chips */
-.chips { display: flex; flex-wrap: wrap; gap: .38rem; margin: .9rem 0 0; padding: 0; list-style: none; }
-.chips li {
-  font-size: .8rem;
-  padding: .2rem .6rem;
-  border-radius: 999px;
-  border: 1px solid rgba(128, 145, 165, 0.35);
-  opacity: .9;
+/* ── skill chips: polished capsules raised off a recessed tray, parted from it by a thin dark ring ── */
+.chips { margin-top: .9rem; }
+.chips ul, ul.chips {
+  display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: .55rem; list-style: none; width: fit-content; max-width: 100%;
+  border-radius: 22px; background: #0B0822; border: 1px solid rgba(110, 231, 245, .2);
+  box-shadow: inset 0 3px 12px rgba(0, 0, 0, .7), inset 0 0 0 1px rgba(0, 0, 0, .35), 0 1px 0 rgba(255, 255, 255, .07);
+}
+.chips ul li, ul.chips li {
+  list-style: none; font-size: .9rem; font-weight: 700; color: #F5F2FF; padding: .32rem .85rem; border-radius: 999px;
+  border: 1.5px solid rgba(110, 231, 245, .5);
+  background: var(--fin-polish), #34287A;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .5), var(--fin-polish-edge);
 }
 
-/* project listing cards */
+/* ── "Selected work" and About's two-column blocks: matte glass panels with brackets and a hue rail on top ── */
+.cols2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1.4rem; margin-top: 1.2rem; }
+.cols2 > div, .cols2 > section {
+  position: relative; padding: 1.3rem 1.4rem 1.2rem; border-radius: 20px; overflow: hidden;
+  border: 1.5px solid rgba(110, 231, 245, .38);
+  background: var(--fin-matte), linear-gradient(180deg, rgba(46, 36, 104, .95), rgba(30, 24, 72, .96));
+  box-shadow: var(--st-lift);
+}
+.cols2 > div::before, .cols2 > section::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--st-ramp); opacity: .9; }
+.cols2 > div::after, .cols2 > section::after { content: ""; position: absolute; inset: 8px; pointer-events: none; background: var(--st-brk); opacity: .6; }
+.cols2 > div > h3, .cols2 > section > h3 { margin-top: .2rem; font-size: 1.3rem; line-height: 1.25; }
+.cols2 > div em, .cols2 > section em { color: #C4B5FD; font-style: normal; font-weight: 650; font-size: .95rem; }
+
+/* ── project listing cards: matte glass, a cyan edge, the date in the mono face ── */
 .quarto-listing-category { margin-bottom: 1.4rem; }
 div.quarto-post {
-  border: 1px solid rgba(128, 145, 165, 0.22);
-  border-radius: 9px;
-  padding: 1.15rem 1.3rem;
-  margin-bottom: 1rem;
-  transition: border-color .14s ease, transform .14s ease;
+  position: relative; display: flex; align-items: flex-start; gap: 1.2rem; margin-bottom: 1.1rem; padding: 1.25rem 1.4rem;
+  border-radius: 20px; border: 1.5px solid rgba(110, 231, 245, .32);
+  background: var(--fin-matte), linear-gradient(180deg, rgba(46, 36, 104, .95), rgba(30, 24, 72, .96));
+  box-shadow: var(--st-lift);
+  transition: border-color .14s ease, transform .14s ease, box-shadow .14s ease;
 }
-div.quarto-post:hover { border-color: rgba(128, 145, 165, 0.55); transform: translateY(-1px); }
-div.quarto-post .listing-title { font-size: 1.16rem; font-weight: 640; margin-bottom: .3rem; }
-div.quarto-post .listing-description { opacity: .84; line-height: 1.55; }
-
-/* two-column blocks used on About */
-.cols2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.6rem; }
+div.quarto-post:hover { border-color: #6EE7F5; transform: translateY(-1px); box-shadow: var(--st-lift), 0 0 24px -12px rgba(110, 231, 245, .9); }
+div.quarto-post .listing-title { font-size: 1.3rem; font-weight: 800 !important; line-height: 1.25; margin-bottom: .4rem; color: #F5F2FF; }
+div.quarto-post .listing-title a, div.quarto-post a { color: #F5F2FF; text-decoration: none; }
+div.quarto-post .listing-description { color: #D3CCF0; line-height: 1.6; }
+div.quarto-post .listing-categories { display: flex; flex-wrap: wrap; gap: .45rem; margin: .7rem 0 0; }
+div.quarto-post .metadata {
+  flex: 0 0 8.5rem; max-width: 8.5rem; padding: .55rem .7rem; border-radius: 12px; text-align: center;
+  background: #0B0822; border: 1px solid rgba(110, 231, 245, .2);
+  box-shadow: inset 0 3px 10px rgba(0, 0, 0, .65);
+}
+div.quarto-post .listing-date { font-family: "Cascadia Mono", "Cascadia Code", Consolas, ui-monospace, Menlo, monospace; font-size: .88rem; color: #C4B5FD; }
+div.quarto-post .thumbnail { display: none; }
+div.quarto-post .body { flex: 1 1 auto; }
+@media (max-width: 640px) {
+  div.quarto-post { flex-direction: column; gap: .7rem; padding: 1.1rem; }
+  div.quarto-post .metadata { flex: none; max-width: none; text-align: left; }
+}
 
 /* keep wide notebook output (tables, plots) from breaking the page */
 .cell-output, .cell-output-display, div.sourceCode { overflow-x: auto; max-width: 100%; }
 .cell-output-display > table, .dataframe { display: block; overflow-x: auto; white-space: nowrap; }
 .cell-output-display img, .cell-output img { max-width: 100%; height: auto; }
 
-/* notebook code blocks a touch smaller than body text */
-div.sourceCode pre code { font-size: .855rem; line-height: 1.5; }
-
-/* the "Show code" fold control */
-.callout, details.code-fold > summary { font-size: .88rem; }
-
-/* honest-labelling note used on notebook pages */
+/* ── the honest-labelling note: a recessed fact box with a violet rail ── */
 .note-box {
-  border-left: 3px solid #1a5f7a;
-  background: rgba(26, 95, 122, 0.06);
-  padding: .8rem 1rem;
-  border-radius: 0 6px 6px 0;
-  font-size: .92rem;
-  margin: 1.2rem 0;
-}
-.quarto-dark .note-box { border-left-color: #5eb3d1; background: rgba(94, 179, 209, 0.09); }
-
-@media (max-width: 640px) {
-  .hero h1 { font-size: 1.95rem; }
-  .hero .tagline { font-size: 1.05rem; }
+  margin: 1.6rem 0; padding: 1rem 1.2rem; border-radius: 16px; font-size: 1rem; color: #D3CCF0;
+  background: #0B0822; border: 1px solid rgba(110, 231, 245, .22); border-left: 5px solid #9D7BFF;
+  box-shadow: inset 0 3px 12px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 255, 255, .07);
 }
 
-/* ---- fixes ---- */
-
-/* skill chips: pandoc wraps the list inside the fenced div, so target the ul */
-.chips ul, ul.chips {
-  display: flex; flex-wrap: wrap; gap: .38rem;
-  margin: .9rem 0 0; padding: 0; list-style: none;
-}
-.chips ul li, ul.chips li {
-  font-size: .8rem; padding: .2rem .65rem; border-radius: 999px;
-  border: 1px solid rgba(128, 145, 165, 0.35); opacity: .9; list-style: none;
-}
-.chips { margin-top: .2rem; }
-
-/* listing cards: collapse the empty thumbnail column, keep the date compact */
-div.quarto-post { align-items: flex-start; gap: 1.1rem; }
-div.quarto-post .metadata {
-  flex: 0 0 7.5rem; max-width: 7.5rem;
-  font-size: .82rem; opacity: .68; padding-top: .15rem;
-}
-div.quarto-post .thumbnail { display: none; }
-div.quarto-post .body { flex: 1 1 auto; }
-
-/* notebook pages: the front-matter title is the page title, so don't let a
-   stray in-notebook h1 compete with it */
+/* notebook pages: the front-matter title is the page title, so a stray in-notebook h1 does not compete with it */
 #quarto-document-content > h1:first-of-type { display: none; }
 
-/* keep tag pills legible in both themes */
-.listing-category, .quarto-category {
-  font-size: .68rem !important; letter-spacing: .04em;
-  opacity: .85; border-radius: 4px;
+@media (max-width: 640px) {
+  .hero { padding: 1.5rem 1.2rem 1.4rem; border-radius: 20px; }
+  .hero .tagline { font-size: 1.08rem; }
+  #quarto-content h2, main h2 { font-size: 1.4rem; }
 }
