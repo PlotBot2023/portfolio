@@ -81,10 +81,10 @@ $border-radius: 14px;
   --st-split: -1px 0 rgba(0, 229, 255, .28), 1px 0 rgba(255, 40, 160, .28);
   --st-lift: inset 0 1px 0 rgba(255, 255, 255, .16), inset 0 0 40px rgba(110, 231, 245, .045), 0 22px 40px -18px rgba(0, 0, 0, .85), 0 2px 0 rgba(0, 0, 0, .3);
   --st-sink: inset 0 3px 12px rgba(0, 0, 0, .7), inset 0 0 0 1px rgba(0, 0, 0, .35), 0 1px 0 rgba(255, 255, 255, .07);
-  --st-grain: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nLjknIG51bU9jdGF2ZXM9JzInIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz48ZmVDb2xvck1hdHJpeCB2YWx1ZXM9JzAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMCAxIDAgMCAwIC41IDAnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWx0ZXI9J3VybCgjbiknIG9wYWNpdHk9Jy4wOScvPjwvc3ZnPg==");
   --fin-polish: linear-gradient(180deg, rgba(255, 255, 255, .18) 0%, rgba(255, 255, 255, .07) 14%, rgba(255, 255, 255, .14) 22%, rgba(255, 255, 255, 0) 38%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, .32) 100%);
   --fin-polish-edge: inset 0 1px 0 rgba(255, 255, 255, .55), inset 0 -2px 0 rgba(0, 0, 0, .35), 0 8px 18px -8px rgba(0, 0, 0, .75);
-  --fin-matte: radial-gradient(120% 85% at 28% 0%, rgba(255, 255, 255, .07), rgba(255, 255, 255, 0) 60%), var(--st-grain);
+  --fin-matte: radial-gradient(140% 90% at 22% 0%, rgba(190, 175, 255, .08), rgba(190, 175, 255, 0) 60%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .022) 0 1px, rgba(255, 255, 255, 0) 1px 3px);   // the kit's ST_MATTE: gradients only, so the checker measures text on it
   --st-brk: linear-gradient(#{$st-cy}, #{$st-cy}) top left / 20px 2px no-repeat, linear-gradient(#{$st-cy}, #{$st-cy}) top left / 2px 20px no-repeat,
     linear-gradient(#{$st-cy}, #{$st-cy}) top right / 20px 2px no-repeat, linear-gradient(#{$st-cy}, #{$st-cy}) top right / 2px 20px no-repeat,
     linear-gradient(#{$st-pk}, #{$st-pk}) bottom left / 20px 2px no-repeat, linear-gradient(#{$st-pk}, #{$st-pk}) bottom left / 2px 20px no-repeat,
@@ -171,7 +171,7 @@ h3 a:hover { color: $st-cy; text-decoration: underline; }
 #title-block-header .description, #title-block-header .subtitle { color: $st-ink2; font-size: 1.1rem; }
 #title-block-header .quarto-title-meta { color: $st-mute; }
 #title-block-header .quarto-title-meta-heading {
-  color: $st-accent; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 750;
+  color: $st-ink !important; opacity: 1 !important; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 750;
 }
 #title-block-header .quarto-title-meta-contents { font-family: $st-num; color: $st-ink; }
 
