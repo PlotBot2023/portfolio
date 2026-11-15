@@ -244,3 +244,27 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   text-shadow: 0 2px 0 rgba(0, 0, 0, .55), 0 0 18px rgba(255, 199, 44, .35); }
 .ab-deck .how { font-style: italic; font-weight: 700; color: #fff; }
 .ab-deck .why { color: #DCE3F2; }
+
+/* the gold parallel (the owner: "golden banner?"): the first-ranked card's band in burnished gold foil. A deep gold
+   base keeps white text above 7:1; the shine sits on the rim, a slow sheen and the name, never under body text */
+.ab-top.gold { border: 2px solid #FFD970; border-bottom-width: 3px;
+  background:
+    linear-gradient(115deg, transparent 20%, rgba(255, 236, 160, .22) 34%, rgba(255, 255, 255, .05) 40%, transparent 52%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .025) 0 2px, transparent 2px 5px),
+    radial-gradient(90% 140% at 12% 0%, #7A5512, transparent 60%),
+    linear-gradient(90deg, #3D2A05, #5C410B 38%, #2E2006 70%, #4A3409);
+  box-shadow: inset 0 2px 0 rgba(255, 236, 160, .65), inset 0 -2px 0 rgba(0, 0, 0, .5), inset 0 0 0 1px rgba(255, 217, 112, .35),
+    0 0 34px -8px rgba(255, 199, 44, .75), 0 16px 34px -14px rgba(0, 0, 0, .9); }
+.ab-top.gold::after { background: linear-gradient(90deg, transparent, #FFD970, transparent); height: 2px; }
+.ab-top.gold .ab-id .eyebrow { color: #FFE9A8; }
+.ab-top.gold .ab-id .eyebrow::after { background: linear-gradient(90deg, #FFE9A8, transparent); }
+.ab-top.gold .ab-name { background: linear-gradient(180deg, #FFFFFF 0 48%, #FFE08A 49% 100%); -webkit-background-clip: text; background-clip: text;
+  filter: drop-shadow(0 4px 0 rgba(40, 24, 0, .75)) drop-shadow(0 0 26px rgba(255, 199, 44, .45)); }
+.ab-top.gold .ab-disc { background: radial-gradient(circle at 35% 30%, #FFF8DC 0 24%, #FFD54F 55%, #9C6B0A); color: #2A1A00;
+  box-shadow: 0 0 0 5px rgba(255, 217, 112, .55), 0 0 0 9px rgba(40, 24, 0, .55), 0 12px 28px rgba(0, 0, 0, .8), 0 0 46px -4px rgba(255, 199, 44, .9); }
+.ab-top.gold .ab-deck::before { background: linear-gradient(180deg, #FFF1B8, #FFC72C); }
+.ab-top.gold .ab-deck .fig { color: #FFE08A; }
+@media (prefers-reduced-motion: no-preference) {
+  .ab-top.gold { background-size: 260% 100%, auto, auto, auto; animation: ab-foil 7s ease-in-out infinite; }
+  @keyframes ab-foil { 0%, 100% { background-position: 100% 0, 0 0, 0 0, 0 0; } 50% { background-position: 0% 0, 0 0, 0 0, 0 0; } }
+}

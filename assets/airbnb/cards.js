@@ -249,6 +249,9 @@
       x = list[state.a];
     }
     DLG.querySelector(".ab-band").innerHTML = band(x);
+    // the gold parallel: the card ranked first in its level on RevPAR wears a gold foil banner
+    var top = state.view === "card" && x.m.revpar != null && rankOf(state.level, "revpar", x.m.revpar).rank === 1;
+    DLG.querySelector(".ab-top").classList.toggle("gold", top);
     var lv = LEVELS.map(function (l) { return '<button type="button" class="ab-seg" data-level="' + l[0] + '" aria-pressed="' + (l[0] === state.level) + '">' + l[1] + "</button>"; }).join("");
     var fams = D.models ? '<div class="ab-segs ab-fam" role="group" aria-label="Stat family">' + FAMS.map(function (f) { return '<button type="button" class="ab-seg" data-fam="' + f[0] + '" aria-pressed="' + (f[0] === state.fam) + '">' + f[1] + "</button>"; }).join("") + "</div>" : "";
     var pick = fams + (state.level === "listing" ? nbFilter() : "") + picker("ab-a", state.a, state.view === "h2h" ? "Left" : "Card") + (state.view === "h2h" ? picker("ab-b", state.b, "Right") : "");
