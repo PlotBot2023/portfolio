@@ -29,6 +29,7 @@
   var TILES = { group: ["adr", "occ", "rev", "rev_bed", "clear50", "super"], listing: ["adr", "occ", "rev", "rev_bed", "bedrooms", "superhost"],
     models: ["churn", "resid", "mood", "cap", "noi", "anom"], models_listing: ["churn", "resid", "mood", "cap", "noi", "anom"] };
   var FAMS = [["rev", "Revenue"], ["models", "Models"]];
+  var MEDAL = [["gold", "1st"], ["silver", "2nd"], ["bronze", "3rd"]];
   var ROWS = ["revpar", "adr", "occ", "rev", "rev_bed", "clear50", "super"], MROWS = ["revpar", "churn", "resid", "mood", "cap", "noi", "anom"];
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -148,17 +149,20 @@
   function tile(x, k, hero) {
     var d = M[k], v = x.m[k], z = zOf(state.level, k, v), r = d.plain || v == null ? null : rankOf(state.level, k, v);
     var rk = r ? "rank " + r.rank.toLocaleString("en-US") + " of " + r.of.toLocaleString("en-US") : "";
+    // a medal for the first three of the level on this tile's own measure (ties share a place)
+    var place = r && r.rank <= 3 && r.of >= 4 ? r.rank : 0;
+    var medal = place ? '<span class="ab-medal m' + place + '">' + MEDAL[place - 1][1] + "</span>" : "";
     function hd(small) { return '<div class="ab-th"><i></i><span class="t">' + esc(d.l) + "</span>" + (small ? "<small>" + esc(small) + "</small>" : "") + '<span class="ab-fh" aria-hidden="true">↻</span></div>'; }
     var head = hd(rk);
     var q = x.q && x.q[k] ? "middle half " + fmt(k, x.q[k][0]) + " to " + fmt(k, x.q[k][1]) : "";
     var extra = hero ? '<div class="ab-hx"><div><span>Expected revenue a year</span><b>' + fmt("rev", x.m.rev) + "</b></div><div><span>County median RevPAR</span><b>" + fmt("revpar", D.county.revpar) + "</b></div></div>" : "";
-    var front = '<div class="ab-face ab-f">' + head + '<div class="ab-tv"><b>' + fmt(k, v) + "</b>" + (d.per ? '<span class="per">' + esc(d.per) + "</span>" : "") + gem(z) + "</div>"
+    var front = '<div class="ab-face ab-f">' + head + '<div class="ab-tv"><b>' + fmt(k, v) + "</b>" + (d.per ? '<span class="per">' + esc(d.per) + "</span>" : "") + medal + gem(z) + "</div>"
       + slider(z) + (hero ? strip(x, k, false) + extra : M[k].share ? shareBar(k, v) : strip(x, k, false)) + "</div>";
     var back = '<div class="ab-face ab-b" aria-hidden="true">' + hd(x.h ? (M[k].share ? "" : "median ") + fmt(k, v) : "this home " + fmt(k, v))
       + (D.edges[k] ? strip(x, k, true) : '<div class="ab-cols"><p>' + esc(M[k].full) + ": " + esc(fmt(k, v)) + (D.county[k] != null ? ", against " + esc(fmt(k, D.county[k])) + " across the county" : "") + ".</p>" + (M[k].share ? shareBar(k, v) : "") + "</div>")
       + (q ? '<p class="q">' + esc(q) + "</p>" : "") + "</div>";
-    var label = d.full + ", " + fmt(k, v) + (z == null ? "" : ", " + (z >= .25 ? "above" : z <= -.25 ? "below" : "near") + " the " + LWORD[state.level] + " average, z " + z.toFixed(1)) + (r ? ", rank " + r.rank + " of " + r.of : "") + ". Turn over for the homes behind it.";
-    return '<div class="ab-t' + (hero ? " hero" : "") + '" style="--sh:' + d.hue + '" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="' + esc(label) + '"><div class="ab-in">' + front + back + "</div></div>";
+    var label = d.full + ", " + fmt(k, v) + (z == null ? "" : ", " + (z >= .25 ? "above" : z <= -.25 ? "below" : "near") + " the " + LWORD[state.level] + " average, z " + z.toFixed(1)) + (r ? ", rank " + r.rank + " of " + r.of : "") + (place ? ", a " + MEDAL[place - 1][0] + " medal" : "") + ". Turn over for the homes behind it.";
+    return '<div class="ab-t' + (hero ? " hero" : "") + (place ? " medal m" + place : "") + '" style="--sh:' + d.hue + '" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="' + esc(label) + '"><div class="ab-in">' + front + back + "</div></div>";
   }
 
   function picker(id, idx, label) {
@@ -250,8 +254,10 @@
     }
     DLG.querySelector(".ab-band").innerHTML = band(x);
     // the gold parallel: the card ranked first in its level on RevPAR wears a gold foil banner
-    var top = state.view === "card" && x.m.revpar != null && rankOf(state.level, "revpar", x.m.revpar).rank === 1;
-    DLG.querySelector(".ab-top").classList.toggle("gold", top);
+    // the banner's metal: gold, silver or bronze for the first three of the level on RevPAR
+    var rr = state.view === "card" && x.m.revpar != null ? rankOf(state.level, "revpar", x.m.revpar) : null;
+    var tier = rr && rr.rank <= 3 && rr.of >= 4 ? MEDAL[rr.rank - 1][0] : "";
+    ["gold", "silver", "bronze"].forEach(function (t) { DLG.querySelector(".ab-top").classList.toggle(t, t === tier); });
     var lv = LEVELS.map(function (l) { return '<button type="button" class="ab-seg" data-level="' + l[0] + '" aria-pressed="' + (l[0] === state.level) + '">' + l[1] + "</button>"; }).join("");
     var fams = D.models ? '<div class="ab-segs ab-fam" role="group" aria-label="Stat family">' + FAMS.map(function (f) { return '<button type="button" class="ab-seg" data-fam="' + f[0] + '" aria-pressed="' + (f[0] === state.fam) + '">' + f[1] + "</button>"; }).join("") + "</div>" : "";
     var pick = fams + (state.level === "listing" ? nbFilter() : "") + picker("ab-a", state.a, state.view === "h2h" ? "Left" : "Card") + (state.view === "h2h" ? picker("ab-b", state.b, "Right") : "");

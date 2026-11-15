@@ -268,3 +268,67 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   .ab-top.gold { background-size: 260% 100%, auto, auto, auto; animation: ab-foil 7s ease-in-out infinite; }
   @keyframes ab-foil { 0%, 100% { background-position: 100% 0, 0 0, 0 0, 0 0; } 50% { background-position: 0% 0, 0 0, 0 0, 0 0; } }
 }
+
+/* silver and bronze banners: the gold foil's build in brushed steel and burnished copper, dark enough for white text */
+.ab-top.silver, .ab-top.bronze { border: 2px solid var(--rim); border-bottom-width: 3px;
+  background:
+    linear-gradient(115deg, transparent 20%, color-mix(in srgb, var(--rim) 30%, transparent) 34%, rgba(255, 255, 255, .05) 40%, transparent 52%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .03) 0 2px, transparent 2px 5px),
+    radial-gradient(90% 140% at 12% 0%, var(--hi), transparent 60%),
+    linear-gradient(90deg, var(--d1), var(--d2) 38%, var(--d3) 70%, var(--d2));
+  box-shadow: inset 0 2px 0 color-mix(in srgb, var(--rim) 80%, transparent), inset 0 -2px 0 rgba(0, 0, 0, .5),
+    0 0 34px -8px var(--rim), 0 16px 34px -14px rgba(0, 0, 0, .9); }
+.ab-top.silver { --rim: #E3E9F4; --hi: #5E6678; --d1: #22262F; --d2: #3A404D; --d3: #1C2028; }
+.ab-top.bronze { --rim: #F0A867; --hi: #7A4320; --d1: #2E1A0C; --d2: #4C2B14; --d3: #26150A; }
+.ab-top.silver::after, .ab-top.bronze::after { background: linear-gradient(90deg, transparent, var(--rim), transparent); height: 2px; }
+.ab-top.silver .ab-name, .ab-top.bronze .ab-name { background: linear-gradient(180deg, #FFFFFF 0 48%, color-mix(in srgb, var(--rim) 70%, #fff) 49% 100%);
+  -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 4px 0 rgba(0, 0, 0, .7)) drop-shadow(0 0 24px color-mix(in srgb, var(--rim) 45%, transparent)); }
+.ab-top.silver .ab-disc { background: radial-gradient(circle at 35% 30%, #FFFFFF 0 24%, #C9D1DE 55%, #6D7688); color: #12161E; }
+.ab-top.bronze .ab-disc { background: radial-gradient(circle at 35% 30%, #FFE8D2 0 24%, #D98A4A 55%, #7A3F14); color: #1E0F04; }
+.ab-top.silver .ab-disc, .ab-top.bronze .ab-disc { box-shadow: 0 0 0 5px color-mix(in srgb, var(--rim) 55%, transparent), 0 0 0 9px rgba(0, 0, 0, .5), 0 12px 28px rgba(0, 0, 0, .8), 0 0 40px -6px var(--rim); }
+@media (prefers-reduced-motion: no-preference) {
+  .ab-top.silver, .ab-top.bronze { background-size: 260% 100%, auto, auto, auto; animation: ab-foil 7s ease-in-out infinite; }
+}
+
+/* a tile's medal: a metal badge in its header and a metal trim along its top, for the first three on its measure */
+.ab-medal { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 28px; padding: 0 10px; border-radius: 999px;
+  font: 900 1rem var(--num); letter-spacing: .02em; text-transform: none; color: #1A1204;
+  border: 1.5px solid rgba(255, 255, 255, .7); box-shadow: 0 0 14px -2px var(--mc), 0 3px 8px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .85), inset 0 -2px 3px rgba(0, 0, 0, .25);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, .18)), var(--mc); }
+.ab-medal.m1, .ab-t.m1 { --mc: #FFC72C; }
+.ab-medal.m2, .ab-t.m2 { --mc: #D7DEEA; }
+.ab-medal.m3, .ab-t.m3 { --mc: #E0915A; }
+.ab-t.medal .ab-face { border-top: 3px solid var(--mc); box-shadow: 0 24px 44px -14px rgba(0, 0, 0, .9), 0 0 0 1px rgba(0, 0, 0, .6), inset 0 1.5px 0 rgba(255, 255, 255, .3),
+  inset 0 -2px 0 rgba(0, 0, 0, .45), inset 10px 0 24px -16px var(--sh), 0 -6px 22px -12px var(--mc); }
+/* the medal states the place, so a medalled tile's front drops its "rank n of m" (the back and the spoken label keep it) */
+.ab-f .ab-th .ab-medal ~ small { display: none; }
+@media (max-width: 1599px) { .ab-medal { min-width: 0; height: 26px; padding: 0 7px; } .ab-th { gap: 7px; letter-spacing: .04em; padding-left: 12px; } }
+
+/* contrast on the metal banners (the owner: "poor contrast?"): deeper bases, a dark band behind the text block, a solid
+   white name with a hard edge, an eyebrow and figures in a light tint of the metal, and a fainter sweep */
+.ab-top.gold { --rim: #FFD970; --tint: #FFE9A8; --d1: #2A1C03; --d2: #3F2C06; --d3: #221703; --hi: rgba(122, 85, 18, .55); }
+.ab-top.silver { --tint: #EEF2F9; --d1: #15181F; --d2: #262B35; --d3: #12151B; --hi: rgba(94, 102, 120, .5); }
+.ab-top.bronze { --tint: #FFE1C4; --d1: #1C0F06; --d2: #301B0B; --d3: #170C04; --hi: rgba(122, 67, 32, .5); }
+.ab-top.gold, .ab-top.silver, .ab-top.bronze { border: 2px solid var(--rim); border-bottom-width: 3px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .35) 45%, transparent 70%),
+    linear-gradient(115deg, transparent 22%, color-mix(in srgb, var(--rim) 16%, transparent) 34%, transparent 46%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .025) 0 2px, transparent 2px 5px),
+    radial-gradient(90% 140% at 12% 0%, var(--hi), transparent 60%),
+    linear-gradient(90deg, var(--d1), var(--d2) 38%, var(--d3) 70%, var(--d2)); }
+@media (prefers-reduced-motion: no-preference) {
+  .ab-top.gold, .ab-top.silver, .ab-top.bronze { background-size: auto, 260% 100%, auto, auto, auto; animation: ab-foil2 7s ease-in-out infinite; }
+  @keyframes ab-foil2 { 0%, 100% { background-position: 0 0, 100% 0, 0 0, 0 0, 0 0; } 50% { background-position: 0 0, 0% 0, 0 0, 0 0, 0 0; } }
+}
+.ab-top.gold .ab-name, .ab-top.silver .ab-name, .ab-top.bronze .ab-name { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #FFFFFF;
+  -webkit-text-stroke: 0; text-shadow: 0 3px 0 rgba(0, 0, 0, .85), 0 0 2px rgba(0, 0, 0, .9);
+  filter: drop-shadow(0 0 22px color-mix(in srgb, var(--rim) 40%, transparent)); }
+.ab-top.gold .ab-id .eyebrow, .ab-top.silver .ab-id .eyebrow, .ab-top.bronze .ab-id .eyebrow,
+.ab-top.gold .ab-sub, .ab-top.silver .ab-sub, .ab-top.bronze .ab-sub,
+.ab-top.gold .ab-cnt, .ab-top.silver .ab-cnt, .ab-top.bronze .ab-cnt,
+.ab-top.gold .ab-deck .fig, .ab-top.silver .ab-deck .fig, .ab-top.bronze .ab-deck .fig { color: var(--tint); text-shadow: 0 2px 0 rgba(0, 0, 0, .7); }
+.ab-top.gold .ab-id .eyebrow::after, .ab-top.silver .ab-id .eyebrow::after, .ab-top.bronze .ab-id .eyebrow::after { background: linear-gradient(90deg, var(--tint), transparent); }
+.ab-top.gold .ab-deck, .ab-top.silver .ab-deck, .ab-top.bronze .ab-deck { color: #FFFFFF; text-shadow: 0 2px 0 rgba(0, 0, 0, .6); }
+.ab-top.gold .ab-deck::before, .ab-top.silver .ab-deck::before, .ab-top.bronze .ab-deck::before { background: linear-gradient(180deg, var(--tint), var(--rim)); }
+.ab-tv .ab-medal { height: 34px; min-width: 52px; font-size: 1.0625rem; }
+.ab-t.hero .ab-tv .ab-medal { height: 40px; min-width: 60px; font-size: 1.25rem; }
