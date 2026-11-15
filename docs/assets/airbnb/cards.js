@@ -22,15 +22,22 @@
     mood: { l: "Review mood", full: "Mean VADER sentiment of its reviews, minus 1 to plus 1", per: "", f: "mood", hue: "#FBBF24", src: "NLP" },
     cap: { l: "Cap rate", full: "Net operating income over the ZIP's home value", per: "", f: "pct1", hue: "#38BDF8", src: "MDL" },
     noi: { l: "NOI", full: "Net operating income a year, after operating costs", per: "a year", f: "moneyk", hue: "#A78BFA", src: "MDL" },
+    pred: { l: "Model RevPAR", full: "RevPAR the XGBoost occupancy model expects for a home like this", per: "a night", f: "money", hue: "#2DD4BF", src: "MDL" },
+    dsr: { l: "Last review", full: "Days since the last review", per: "days ago", f: "int", hue: "#94A3B8", src: "LST", dir: -1 },
+    hv: { l: "Home value", full: "Zillow home value index (ZHVI) of the home's ZIP: a typical value, not this home's price", per: "", f: "moneyk", hue: "#38BDF8", src: "ZHVI" },
+    gy: { l: "Gross yield", full: "Revenue a year over the ZIP's home value", per: "", f: "pct1", hue: "#34D399", src: "INV" },
+    coc: { l: "Cash on cash", full: "Cash flow after the mortgage over the cash put in (25% down, 2% closing, 7% 30-year)", per: "", f: "pct1", hue: "#FFC72C", src: "INV" },
+    dscr: { l: "DSCR", full: "Debt service coverage: NOI over the year's mortgage payments; 1.25 is a lender's usual floor", per: "x", f: "x2", hue: "#C084FC", src: "INV" },
     anom: { l: "Anomalies", full: "Share of its homes the IsolationForest flags as anomalous", per: "of homes", f: "pct", hue: "#FB7185", src: "MDL", share: true, dir: -1 },
     bedrooms: { l: "Bedrooms", full: "Bedrooms", per: "", f: "int", hue: "#60A5FA", src: "LST", plain: true },
     superhost: { l: "Superhost", full: "Run by a Superhost", per: "", f: "yes", hue: "#CBD5E1", src: "LST", plain: true }
   };
   var TILES = { group: ["adr", "occ", "rev", "rev_bed", "clear50", "super"], listing: ["adr", "occ", "rev", "rev_bed", "bedrooms", "superhost"],
-    models: ["churn", "resid", "mood", "cap", "noi", "anom"], models_listing: ["churn", "resid", "mood", "cap", "noi", "anom"] };
-  var FAMS = [["rev", "Revenue"], ["models", "Models"]];
+    models: ["churn", "resid", "pred", "mood", "dsr", "anom"], invest: ["hv", "gy", "noi", "cap", "coc", "dscr"] };
+  var FAMS = [["rev", "Revenue"], ["invest", "Investment"], ["models", "Models"]];
   var MEDAL = [["gold", "1st"], ["silver", "2nd"], ["bronze", "3rd"]];
-  var ROWS = ["revpar", "adr", "occ", "rev", "rev_bed", "clear50", "super"], MROWS = ["revpar", "churn", "resid", "mood", "cap", "noi", "anom"];
+  var ROWS = ["revpar", "adr", "occ", "rev", "rev_bed", "clear50", "super"], MROWS = ["revpar", "churn", "resid", "pred", "mood", "dsr", "anom"],
+    IROWS = ["revpar", "hv", "gy", "noi", "cap", "coc", "dscr"];
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function fmt(k, v) {
@@ -41,6 +48,7 @@
     if (f === "smoney") return (v > 0 ? "+" : v < 0 ? "-" : "") + "$" + Math.abs(Math.round(v)).toLocaleString("en-US");
     if (f === "mood") return (v > 0 ? "+" : "") + v.toFixed(2);
     if (f === "pct1") return v.toFixed(1) + "%";
+    if (f === "x2") return v.toFixed(2);
     if (f === "pct") return Math.round(v) + "%";
     if (f === "yes") return v ? "Yes" : "No";
     return String(Math.round(v));
@@ -106,7 +114,9 @@
         sub: "Listing L" + String(i + 1).padStart(5, "0") + ", RevPAR rank " + (i + 1).toLocaleString("en-US") + " in the county", nb: r[ix.nb], seg: r[ix.seg], host: r[ix.host],
         n: 1, m: { revpar: r[ix.revpar], adr: r[ix.adr], occ: r[ix.occ], rev: r[ix.rev], rev_bed: r[ix.rev_bed], bedrooms: bed, superhost: r[ix.superhost],
           churn: ix.churn != null ? r[ix.churn] : null, resid: ix.resid != null ? r[ix.resid] : null, mood: ix.mood != null ? r[ix.mood] : null,
-          cap: ix.cap != null ? r[ix.cap] : null, noi: ix.noi != null ? r[ix.noi] : null, anom: ix.anom != null ? r[ix.anom] : null } };
+          cap: ix.cap != null ? r[ix.cap] : null, noi: ix.noi != null ? r[ix.noi] : null, anom: ix.anom != null ? r[ix.anom] : null,
+          pred: ix.pred != null ? r[ix.pred] : null, dsr: ix.dsr != null ? r[ix.dsr] : null, hv: ix.hv != null ? r[ix.hv] : null,
+          gy: ix.gy != null ? r[ix.gy] : null, coc: ix.coc != null ? r[ix.coc] : null, dscr: ix.dscr != null ? r[ix.dscr] : null } };
     });
     return LISTING_CACHE;
   }
@@ -239,18 +249,20 @@
 
   function cardView() {
     var list = items(state.level), x = list[state.a] || list[0], fam = D.models ? state.fam : "rev";
-    var keys = fam === "models" ? TILES.models : state.level === "listing" ? TILES.listing : TILES.group;
+    var keys = fam === "models" ? TILES.models : fam === "invest" ? TILES.invest : state.level === "listing" ? TILES.listing : TILES.group;
     var notes = state.level === "seg" ? '<p class="ab-note">' + esc(D.seg_meta.method) + ". Titles follow a rule on each group's rate and calendar against the county's medians, so a refit renames itself. Homes whose nightly price was a placeholder are not segmented.</p>"
       : state.level === "host" ? '<p class="ab-note">Hosts with ' + D.host_min + " or more entire homes, coded by size. No names or Airbnb ids: most hosts are private people.</p>"
       : state.level === "listing" ? '<p class="ab-note">Each listing is coded by its RevPAR rank. No names, ids or links. Its tiles turn over to the county with this home marked.</p>' : "";
-    if (fam === "models") notes = '<p class="ab-note">' + esc(D.models.src) + ". Matched by listing id to " + D.models.matched.toLocaleString("en-US") + " of these " + D.models.of.toLocaleString("en-US")
+    if (fam === "invest") notes = '<p class="ab-note">Investment: bnbscope\'s calculator, same formulas and defaults: ' + D.finance.down + "% down, " + D.finance.closing + "% closing, a "
+      + D.finance.rate + "% " + D.finance.term + "-year loan. Home value is the ZIP's Zillow index, a typical value, not this home's price. Revenue and NOI come from the 22 September 2026 run, an estimate.</p>";
+    else if (fam === "models") notes = '<p class="ab-note">' + esc(D.models.src) + ". Matched by listing id to " + D.models.matched.toLocaleString("en-US") + " of these " + D.models.of.toLocaleString("en-US")
       + " homes" + (x.matched != null ? "; this card, " + x.matched.toLocaleString("en-US") + " of its " + x.n.toLocaleString("en-US") : "") + ". Model revenue there is the asking price times occupancy, an estimate; RevPAR on the hero tile is measured.</p>";
     return '<div class="ab-tiles">' + tile(x, "revpar", true) + keys.map(function (k) { return tile(x, k, false); }).join("") + "</div>" + notes;
   }
 
   function h2hView() {
     var list = items(state.level), A = list[state.a] || list[0], B = list[state.b] || list[1] || list[0];
-    var keys = D.models && state.fam === "models" ? MROWS : state.level === "listing" ? ROWS.slice(0, 5) : ROWS;
+    var keys = D.models && state.fam === "models" ? MROWS : D.models && state.fam === "invest" ? IROWS : state.level === "listing" ? ROWS.slice(0, 5) : ROWS;
     function side(x, k, right) {
       var v = x.m[k], z = zOf(state.level, k, v), r = v == null ? null : rankOf(state.level, k, v);
       var bar = z == null ? '<span class="vl"><span class="mid"></span></span>' : (function () {

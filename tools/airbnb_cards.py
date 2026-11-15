@@ -20,7 +20,15 @@ HOST_MIN = 5
 BINS = 16
 METRICS = ["revpar", "adr", "occ", "rev", "rev_bed"]          # the histogram metrics (a home has one value of each)
 # the earlier bnbscope models (its 22 September 2026 run), joined by listing id; a separate family on the cards
-MODEL_METRICS = ["churn", "resid", "mood", "cap", "noi"]
+MODEL_METRICS = ["churn", "resid", "mood", "cap", "noi", "pred", "dsr", "hv", "gy", "coc", "dscr"]
+# bnbscope's Investment Calculator defaults (dashboard/pages/04_Investment_Calculator.py), same formulas: the rate is its
+# default because the Freddie Mac PMMS file is not cached on this PC
+RATE_PCT, DOWN_PCT, TERM_YEARS, CLOSING_PCT = 7.0, 25.0, 30, 2.0
+
+
+def monthly_payment(principal, rate_pct=RATE_PCT, term_years=TERM_YEARS):
+    r, n = rate_pct / 100 / 12, term_years * 12
+    return principal * (r * (1 + r) ** n) / ((1 + r) ** n - 1)
 
 
 def load_models(d) -> pd.DataFrame:
@@ -28,20 +36,27 @@ def load_models(d) -> pd.DataFrame:
     predicted RevPAR), the anomaly flag, VADER review sentiment (latest snapshot), NOI and cap rate (latest snapshot)."""
     import pathlib
     d = pathlib.Path(d)
-    churn = pd.read_parquet(d / "churn_predictor.parquet", columns=["listing_id", "churn_proba"])
-    xgb = pd.read_parquet(d / "xgboost_revpar.parquet", columns=["listing_id", "residual"])
+    churn = pd.read_parquet(d / "churn_predictor.parquet", columns=["listing_id", "churn_proba", "days_since_last_review"])
+    xgb = pd.read_parquet(d / "xgboost_revpar.parquet", columns=["listing_id", "residual", "predicted_revpar"])
     an = pd.read_parquet(d / "anomaly_detection.parquet", columns=["listing_id", "is_anomaly"])
     se = pd.read_parquet(d / "features" / "review_sentiment.parquet", columns=["listing_id", "snapshot_date", "sentiment_mean"])
     se = se.sort_values("snapshot_date").drop_duplicates("listing_id", keep="last")
-    inv = pd.read_parquet(d / "investment_metrics.parquet", columns=["listing_id", "snapshot_date", "noi", "home_value"])
+    inv = pd.read_parquet(d / "investment_metrics.parquet", columns=["listing_id", "snapshot_date", "noi", "home_value", "revenue_annual"])
     inv = inv.sort_values("snapshot_date").drop_duplicates("listing_id", keep="last")
-    inv["cap"] = 100 * inv["noi"] / inv["home_value"].where(inv["home_value"] > 0)
-    m = churn.drop_duplicates("listing_id").rename(columns={"churn_proba": "churn"})
+    hv = inv["home_value"].where(inv["home_value"] > 0)
+    inv["hv"] = hv
+    inv["cap"] = 100 * inv["noi"] / hv
+    inv["gy"] = 100 * inv["revenue_annual"] / hv
+    debt = 12 * monthly_payment(hv * (1 - DOWN_PCT / 100))
+    cash = hv * (DOWN_PCT + CLOSING_PCT) / 100
+    inv["coc"] = 100 * (inv["noi"] - debt) / cash
+    inv["dscr"] = inv["noi"] / debt
+    m = churn.drop_duplicates("listing_id").rename(columns={"churn_proba": "churn", "days_since_last_review": "dsr"})
     m["churn"] = 100 * m["churn"]
     an = an.drop_duplicates("listing_id")
     an["anom"] = 100.0 * an["is_anomaly"].astype(float)
-    for t in (xgb.drop_duplicates("listing_id").rename(columns={"residual": "resid"}), an[["listing_id", "anom"]],
-              se.rename(columns={"sentiment_mean": "mood"})[["listing_id", "mood"]], inv[["listing_id", "noi", "cap"]]):
+    for t in (xgb.drop_duplicates("listing_id").rename(columns={"residual": "resid", "predicted_revpar": "pred"}), an[["listing_id", "anom"]],
+              se.rename(columns={"sentiment_mean": "mood"})[["listing_id", "mood"]], inv[["listing_id", "noi", "cap", "hv", "gy", "coc", "dscr"]]):
         m = m.merge(t, on="listing_id", how="outer")
     return m
 
@@ -156,7 +171,8 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
                      host_idx.get(r["host_id"], -1),
                      None if pd.isna(bed) else int(bed), int(r["super"] > 0),
                           *[None if pd.isna(r[c]) else round(float(r[c]), d) for c, d in (("revpar", 2), ("adr", 2), ("occ", 1), ("rev", 0), ("rev_bed", 0))
-                       + ((("churn", 1), ("resid", 2), ("mood", 3), ("cap", 2), ("noi", 0), ("anom", 0)) if have_models else ())]])
+                       + ((("churn", 1), ("resid", 2), ("mood", 3), ("cap", 2), ("noi", 0), ("anom", 0), ("pred", 2), ("dsr", 0),
+                           ("hv", 0), ("gy", 2), ("coc", 2), ("dscr", 2)) if have_models else ())]])
     county = {m: num(h[m].median()) for m in HM} | {"clear50": num(h["clear50"].mean(), 1), "super": num(h["super"].mean(), 1)}
     if have_models:
         county["anom"] = num(h["anom"].mean(), 1)
@@ -170,5 +186,6 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
             "levels": {"nb": nbs, "seg": segs, "host": hosts}, "seg_names": seg_names,
             "host_types": ["Corporate, 10+ listings", "Small operator, 2 to 9", "Single home"], "seg_meta": seg_meta, "host_min": HOST_MIN,
             "listing_cols": ["nb", "seg", "host", "bedrooms", "superhost", "revpar", "adr", "occ", "rev", "rev_bed"]
-                            + (["churn", "resid", "mood", "cap", "noi", "anom"] if have_models else []),
+                            + (["churn", "resid", "mood", "cap", "noi", "anom", "pred", "dsr", "hv", "gy", "coc", "dscr"] if have_models else []),
+            "finance": {"rate": RATE_PCT, "down": DOWN_PCT, "term": TERM_YEARS, "closing": CLOSING_PCT},
             "listings": rows}
