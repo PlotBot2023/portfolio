@@ -165,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
       <button class="tab" role="tab" id="t-nb" aria-controls="v-nb" aria-selected="false">Neighbourhoods</button>
       <button class="tab" role="tab" id="t-tg" aria-controls="v-tg" aria-selected="false">Revenue targets</button>
       <button class="tab" role="tab" id="t-gr" aria-controls="v-gr" aria-selected="false">Growth</button>
+      <button class="tab" role="tab" id="t-now" aria-controls="v-now" aria-selected="false">Market now</button>
     </div>
     <div class="tabpanel cv" role="tabpanel" id="v-map" aria-labelledby="t-map">
       <div class="mapwrap inlay"><img src="assets/airbnb/revpar-map.webp" alt="Map of 14,701 Broward County entire-home listings as dots, coloured by RevPAR from blue for the lowest sixth to yellow for the highest. Listings crowd the coast in a dense band, where most of the yellow sits; inland they thin out."></div>
@@ -175,17 +176,18 @@ ul.task-list li input[type="checkbox"] {
       </div>
     </div>
     <div class="tabpanel cv" role="tabpanel" id="v-nb" aria-labelledby="t-nb" hidden="">
-      <div class="cv-chart"><span class="eyebrow">Median RevPAR, the 6 strongest and 4 weakest of 19 neighbourhoods</span><ul class="hbars ">
-<li><span class="hb-l">Lighthouse Point<small>91.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:100.0%"></span></span><span class="hb-v">$113</span></li>
-<li><span class="hb-l">Pembroke Pines<small>143.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:68.2%"></span></span><span class="hb-v">$77</span></li>
-<li><span class="hb-l">Davie<small>102.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:67.2%"></span></span><span class="hb-v">$76</span></li>
-<li><span class="hb-l">Pompano Beach<small>1,635.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:66.2%"></span></span><span class="hb-v">$75</span></li>
-<li><span class="hb-l">Lauderdale By The Sea<small>392.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:62.0%"></span></span><span class="hb-v">$70</span></li>
-<li><span class="hb-l">Margate<small>55.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:59.5%"></span></span><span class="hb-v">$67</span></li>
-<li><span class="hb-l">West Park<small>61.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:36.4%"></span></span><span class="hb-v">$41</span></li>
-<li><span class="hb-l">Sunrise<small>109.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:35.5%"></span></span><span class="hb-v">$40</span></li>
-<li><span class="hb-l">Lauderhill<small>54.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:34.2%"></span></span><span class="hb-v">$39</span></li>
-<li><span class="hb-l">Hallandale Beach<small>1,625.0 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:31.6%"></span></span><span class="hb-v">$36</span></li>
+      <div class="cv-chart"><span class="eyebrow">Median RevPAR, the 6 strongest and 4 weakest of 19 neighbourhoods</span><ul class="hbars dense" tabindex="0">
+<li><span class="hb-l">Lighthouse Point<small>91 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:100.0%"></span></span><span class="hb-v">$113</span></li>
+<li><span class="hb-l">Pembroke Pines<small>143 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:68.2%"></span></span><span class="hb-v">$77</span></li>
+<li><span class="hb-l">Davie<small>102 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:67.2%"></span></span><span class="hb-v">$76</span></li>
+<li><span class="hb-l">Pompano Beach<small>1,635 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:66.2%"></span></span><span class="hb-v">$75</span></li>
+<li><span class="hb-l">Lauderdale By The Sea<small>392 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:62.0%"></span></span><span class="hb-v">$70</span></li>
+<li><span class="hb-l">Margate<small>55 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:59.5%"></span></span><span class="hb-v">$67</span></li>
+<li class="hb-split"><span>The 4 weakest</span></li>
+<li><span class="hb-l">West Park<small>61 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:36.4%"></span></span><span class="hb-v">$41</span></li>
+<li><span class="hb-l">Sunrise<small>109 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:35.5%"></span></span><span class="hb-v">$40</span></li>
+<li><span class="hb-l">Lauderhill<small>54 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:34.2%"></span></span><span class="hb-v">$39</span></li>
+<li><span class="hb-l">Hallandale Beach<small>1,625 homes</small></span><span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:31.6%"></span></span><span class="hb-v">$36</span></li>
 </ul></div>
       <div class="cv-side"><button class="btn" type="button" popovertarget="tw-nb">Table</button></div>
     </div>
@@ -208,6 +210,21 @@ ul.task-list li input[type="checkbox"] {
 </ul></div>
       <div class="cv-side"><button class="btn" type="button" popovertarget="tw-gr">Table</button></div>
     </div>
+    <div class="tabpanel cv" role="tabpanel" id="v-now" aria-labelledby="t-now" hidden="">
+      <div class="cv-chart">
+        <span class="eyebrow">The newest snapshot, 22 September 2026</span>
+        <ul class="stats" aria-label="Key numbers, snapshot of 22 September 2026">
+          <li class="stat"><span class="n">17,630</span><span class="l">active listings</span></li>
+          <li class="stat"><span class="n">6,524</span><span class="l">hosts</span></li>
+          <li class="stat"><span class="n">$246</span><span class="l">median listing price a night, entire homes</span></li>
+          <li class="stat"><span class="n">21%</span><span class="l">median occupancy, entire homes, next 365 days</span></li>
+          <li class="stat est"><span class="n">$46</span><span class="l">RevPAR a night, an estimate</span></li>
+        </ul>
+        <p class="cv-note">Revenue on the other views stops at March 2025: Inside Airbnb stopped publishing
+          calendar prices after it. The estimate is each entire home's listing price times its occupancy, a model, not a measurement.</p>
+      </div>
+      <div class="cv-side"><button class="btn" type="button" popovertarget="tw-now">Table</button></div>
+    </div>
   </section>
   <section class="panel case-answer" aria-labelledby="ans-title">
     <h2 id="ans-title" class="sec-title">The answer</h2>
@@ -215,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="verdicts">
       <li><span class="vk up" aria-hidden="true"></span><span><b>Best bet:</b> Lighthouse Point, median RevPAR $113</span></li>
       <li><span class="vk dn" aria-hidden="true"></span><span><b>Toughest:</b> Hallandale Beach, median RevPAR $36</span></li>
-      <li><span class="vk ev" aria-hidden="true"></span><span><b>Typical home:</b> $220 a night at 26% occupancy</span></li>
+      <li><span class="vk ev" aria-hidden="true"></span><span><b>Typical home:</b> RevPAR $60, $220 a night, 26% booked</span></li>
       <li><span class="vk ev" aria-hidden="true"></span><span><b>Only 24%</b> clear $50k a year</span></li>
     </ul>
     <span class="eyebrow">Open a notebook</span>
@@ -228,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
   </section>
   
     <ul class="rail" aria-label="About this data">
-      <li>Inside Airbnb</li><li>As of 19 March 2025</li><li>4 snapshots</li><li>17,237 active listings</li><li>6,648 hosts</li>
+      <li>Inside Airbnb</li><li>Revenue as of 19 March 2025</li><li>Market now as of 22 September 2026</li><li>4 snapshots with prices</li><li>17,237 active listings</li><li>6,648 hosts</li>
     </ul>
 </div>
 <div id="tw-map" popover="" class="note"><h3>The map as a table</h3>
@@ -283,133 +300,133 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Lighthouse Point</td>
-<td>91.0</td>
+<td>91</td>
 <td>$113</td>
 <td>$400</td>
 <td>28%</td>
 </tr>
 <tr class="even">
 <td>Pembroke Pines</td>
-<td>143.0</td>
+<td>143</td>
 <td>$77</td>
 <td>$190</td>
 <td>52%</td>
 </tr>
 <tr class="odd">
 <td>Davie</td>
-<td>102.0</td>
+<td>102</td>
 <td>$76</td>
 <td>$199</td>
 <td>37%</td>
 </tr>
 <tr class="even">
 <td>Pompano Beach</td>
-<td>1,635.0</td>
+<td>1,635</td>
 <td>$75</td>
 <td>$199</td>
 <td>35%</td>
 </tr>
 <tr class="odd">
 <td>Lauderdale By The Sea</td>
-<td>392.0</td>
+<td>392</td>
 <td>$70</td>
 <td>$225</td>
 <td>30%</td>
 </tr>
 <tr class="even">
 <td>Margate</td>
-<td>55.0</td>
+<td>55</td>
 <td>$67</td>
 <td>$180</td>
 <td>49%</td>
 </tr>
 <tr class="odd">
 <td>Fort Lauderdale</td>
-<td>3,935.0</td>
+<td>3,935</td>
 <td>$67</td>
 <td>$235</td>
 <td>28%</td>
 </tr>
 <tr class="even">
 <td>Deerfield Beach</td>
-<td>655.0</td>
+<td>655</td>
 <td>$65</td>
 <td>$228</td>
 <td>30%</td>
 </tr>
 <tr class="odd">
 <td>Miramar</td>
-<td>98.0</td>
+<td>98</td>
 <td>$62</td>
 <td>$154</td>
 <td>55%</td>
 </tr>
 <tr class="even">
 <td>Hollywood</td>
-<td>3,901.0</td>
+<td>3,901</td>
 <td>$62</td>
 <td>$220</td>
 <td>25%</td>
 </tr>
 <tr class="odd">
 <td>Weston</td>
-<td>92.0</td>
+<td>92</td>
 <td>$61</td>
 <td>$112</td>
 <td>72%</td>
 </tr>
 <tr class="even">
 <td>Oakland Park</td>
-<td>422.0</td>
+<td>422</td>
 <td>$60</td>
 <td>$216</td>
 <td>30%</td>
 </tr>
 <tr class="odd">
 <td>Dania Beach</td>
-<td>432.0</td>
+<td>432</td>
 <td>$57</td>
 <td>$175</td>
 <td>36%</td>
 </tr>
 <tr class="even">
 <td>Wilton Manors</td>
-<td>422.0</td>
+<td>422</td>
 <td>$56</td>
 <td>$250</td>
 <td>24%</td>
 </tr>
 <tr class="odd">
 <td>Plantation</td>
-<td>128.0</td>
+<td>128</td>
 <td>$55</td>
 <td>$464</td>
 <td>10%</td>
 </tr>
 <tr class="even">
 <td>West Park</td>
-<td>61.0</td>
+<td>61</td>
 <td>$41</td>
 <td>$135</td>
 <td>41%</td>
 </tr>
 <tr class="odd">
 <td>Sunrise</td>
-<td>109.0</td>
+<td>109</td>
 <td>$40</td>
 <td>$168</td>
 <td>30%</td>
 </tr>
 <tr class="even">
 <td>Lauderhill</td>
-<td>54.0</td>
+<td>54</td>
 <td>$39</td>
 <td>$155</td>
 <td>25%</td>
 </tr>
 <tr class="odd">
 <td>Hallandale Beach</td>
-<td>1,625.0</td>
+<td>1,625</td>
 <td>$36</td>
 <td>$250</td>
 <td>9%</td>
@@ -484,10 +501,50 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <button class="btn" popovertarget="tw-gr" popovertargetaction="hide">Close</button></div>
+<div id="tw-now" popover="" class="note"><h3>Market now as a table</h3>
+<table class="twin caption-top table">
+<caption>Inside Airbnb snapshot of 22 September 2026; calendar prices last published March 2025.</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" scope="col">Measure</th>
+<th data-quarto-table-cell-role="th" scope="col">Value</th>
+<th data-quarto-table-cell-role="th" scope="col">Measured on</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Active listings</td>
+<td>17,630</td>
+<td>every listing</td>
+</tr>
+<tr class="even">
+<td>Hosts</td>
+<td>6,524</td>
+<td>every listing</td>
+</tr>
+<tr class="odd">
+<td>Median listing price a night, entire homes</td>
+<td>$246</td>
+<td>13,798 priced entire homes</td>
+</tr>
+<tr class="even">
+<td>Median occupancy, next 365 days, entire homes</td>
+<td>21%</td>
+<td>14,820 entire homes</td>
+</tr>
+<tr class="odd">
+<td>RevPAR a night, estimate</td>
+<td>$46</td>
+<td>13,798 entire homes, listing price times occupancy</td>
+</tr>
+</tbody>
+</table>
+<button class="btn" popovertarget="tw-now" popovertargetaction="hide">Close</button></div>
 <div id="n-method" popover="" class="note"><h3>Method</h3><p>Four quarterly Inside Airbnb snapshots of Broward County, June 2024 to 19 March 2025. For each listing the
           study reads the 365-day calendar after a snapshot: booked nights, the average daily rate (ADR), occupancy, RevPAR (revenue per available
           night) and expected annual revenue. Headline numbers are medians over entire homes in the latest snapshot (14,701 of 17,237
-          active listings). A neighbourhood is ranked only with at least 50 entire homes. A multi-listing host holds 10 or more active listings.</p>
+          active listings). Each median is taken on its own, so the median ADR times the median occupancy
+          ($57) is close to, but not the same as, the median RevPAR ($60). A neighbourhood is ranked only with at least 50 entire homes. A multi-listing host holds 10 or more active listings.</p>
           <p>Calendar availability is a proxy for bookings: a blocked night can be a stay or an owner's hold, so occupancy is an estimate, labelled as such.</p><button class="btn" popovertarget="n-method" popovertargetaction="hide">Close</button></div>
 <script src="assets/sv.js"></script>
 
