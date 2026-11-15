@@ -9,6 +9,8 @@ project:
   post-render: tools/harden_docs.py
   resources:
     - "assets/**"
+    # the Hot Wheels Value Field Guide, a self-contained page copied in by tools/hotwheels_guide.py
+    - "guides/**"
 
 # Notebooks are NOT re-executed at render time: they read from a local Postgres
 # instance and local CSV exports that CI (and any other machine) cannot reach.

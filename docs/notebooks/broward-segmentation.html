@@ -52,7 +52,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d87f8aa919d9cd326c82f4d5ce1d0762.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-78bc8e05f5c5663edab11c7bcce6126f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-e8e310544d0251463ba6c5d6acbeada4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -152,7 +152,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#broward-county-airbnb-clustering-analysis" id="toc-broward-county-airbnb-clustering-analysis" class="nav-link active" data-scroll-target="#broward-county-airbnb-clustering-analysis">Broward County Airbnb — Clustering Analysis</a></li>
+  <li><a href="#broward-county-airbnb-clustering-analysis" id="toc-broward-county-airbnb-clustering-analysis" class="nav-link active" data-scroll-target="#broward-county-airbnb-clustering-analysis">Broward County Airbnb, Clustering Analysis</a></li>
   <li><a href="#setup-data-loading" id="toc-setup-data-loading" class="nav-link" data-scroll-target="#setup-data-loading">1. Setup &amp; Data Loading</a></li>
   <li><a href="#filtering-to-the-mom-and-pop-universe" id="toc-filtering-to-the-mom-and-pop-universe" class="nav-link" data-scroll-target="#filtering-to-the-mom-and-pop-universe">2. Filtering to the Mom-and-Pop Universe</a></li>
   <li><a href="#helper-functions" id="toc-helper-functions" class="nav-link" data-scroll-target="#helper-functions">3. Helper Functions</a></li>
@@ -202,9 +202,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 <section id="broward-county-airbnb-clustering-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="broward-county-airbnb-clustering-analysis">Broward County Airbnb — Clustering Analysis</h2>
-<p>Every investment decision comes down to three questions: <strong>where</strong> to invest (geography), <strong>what</strong> to buy (property type), and <strong>how</strong> to operate (host behavior). Most analyses pick one lens and ignore the rest. This notebook uses all three — and then cross-references them to find the combinations that actually outperform.</p>
-<p>We use Gaussian Mixture Models (GMM) to discover natural clusters in the data, then profile each cluster by its revenue performance. The key finding: <strong>property type matters more than location.</strong> All four geographic zones land within $5 of each other on RevPAR, but the gap between a 1BR and a 3BR is $50+. If you only have budget for one upgrade, add a bedroom — don’t move neighborhoods.</p>
+<h2 class="anchored" data-anchor-id="broward-county-airbnb-clustering-analysis">Broward County Airbnb, Clustering Analysis</h2>
+<p>Every investment decision comes down to three questions: <strong>where</strong> to invest (geography), <strong>what</strong> to buy (property type), and <strong>how</strong> to operate (host behavior). Most analyses pick one lens and ignore the rest. This notebook uses all three, and then cross-references them to find the combinations that actually outperform.</p>
+<p>We use Gaussian Mixture Models (GMM) to discover natural clusters in the data, then profile each cluster by its revenue performance. The key finding: <strong>property type matters more than location.</strong> All four geographic zones land within $5 of each other on RevPAR, but the gap between a 1BR and a 3BR is $50+. If you only have budget for one upgrade, add a bedroom, don’t move neighborhoods.</p>
 <p>The analysis is run separately for <strong>entire homes</strong> (20,575 listings) and <strong>private rooms</strong> (3,415 listings) since these are fundamentally different products with different guest expectations and revenue dynamics.</p>
 </section>
 <section id="setup-data-loading" class="level2">
@@ -225,7 +225,7 @@ Advanced metrics:    68,038 rows</code></pre>
 <section id="filtering-to-the-mom-and-pop-universe" class="level2">
 <h2 class="anchored" data-anchor-id="filtering-to-the-mom-and-pop-universe">2. Filtering to the Mom-and-Pop Universe</h2>
 <p>Before any clustering, we strip out listings that would distort the picture for a small investor. That means removing <strong>corporate operators</strong> (Vacasa, Evolve, Sonder, etc. plus anyone running 10+ listings), <strong>hotels and shared rooms</strong>, <strong>luxury outliers</strong> (ADR &gt; $500/night), and <strong>inactive listings</strong> with no reviews in the past 6 months.</p>
-<p>What remains is the mom-and-pop universe — the competitive set you would actually face as an individual host.</p>
+<p>What remains is the mom-and-pop universe, the competitive set you would actually face as an individual host.</p>
 <div id="78e0a2c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.440175Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.440175Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.727265Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.727265Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>Corporate / commercial host IDs: 365</code></pre>
@@ -267,10 +267,10 @@ Private rooms ready: 3,116</code></pre>
 </section>
 <section id="entire-homes-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="entire-homes-analysis">4. Entire Homes Analysis</h2>
-<p>With 20,575 listings, entire homes are the dominant product in Broward County. We analyze them through three lenses — geography, property characteristics, and host behavior — then cross-reference to find the winning combinations.</p>
+<p>With 20,575 listings, entire homes are the dominant product in Broward County. We analyze them through three lenses, geography, property characteristics, and host behavior, then cross-reference to find the winning combinations.</p>
 <section id="a.-geographic-segmentation" class="level3">
 <h3 class="anchored" data-anchor-id="a.-geographic-segmentation">4a. Geographic Segmentation</h3>
-<p>Where are the listings, and does location actually matter for revenue? We cluster on latitude and longitude only — no performance data in the clustering features — then overlay RevPAR to see which zones earn more.</p>
+<p>Where are the listings, and does location actually matter for revenue? We cluster on latitude and longitude only, no performance data in the clustering features, then overlay RevPAR to see which zones earn more.</p>
 <div id="8cd6bb6e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.983501Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.983501Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:55.383191Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:55.383191Z&quot;}}" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>Geographic K selected: 3
@@ -361,11 +361,11 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Takeaway:</strong> The geographic zones are remarkably close in median RevPAR — all within about $5 of each other. This is the first hint that <strong>where you buy matters less than what you buy.</strong> The Pompano Beach / Deerfield zone has a slight edge, but you would not want to pay a $50K premium for a marginal $5/night advantage.</p>
+<p><strong>Takeaway:</strong> The geographic zones are remarkably close in median RevPAR, all within about $5 of each other. This is the first hint that <strong>where you buy matters less than what you buy.</strong> The Pompano Beach / Deerfield zone has a slight edge, but you would not want to pay a $50K premium for a marginal $5/night advantage.</p>
 </section>
 <section id="b.-property-segmentation" class="level3">
 <h3 class="anchored" data-anchor-id="b.-property-segmentation">4b. Property Segmentation</h3>
-<p>Now the question that actually moves the needle: what kind of property should you buy? We cluster on physical characteristics — bedrooms, bathrooms, and guest capacity — and see how revenue varies across property types.</p>
+<p>Now the question that actually moves the needle: what kind of property should you buy? We cluster on physical characteristics, bedrooms, bathrooms, and guest capacity, and see how revenue varies across property types.</p>
 <div id="7b038eb3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:55.846923Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:55.846923Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:11.405833Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:11.405833Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-stdout">
 <pre><code>Property K selected: 3
@@ -447,12 +447,12 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Takeaway:</strong> The gap between property types is dramatic. A 3BR/6-guest property earns roughly $90 RevPAR — more than <strong>double</strong> the $39 RevPAR of a typical 1BR/2-guest unit. The extra bedroom is worth far more than any neighborhood advantage.</p>
+<p><strong>Takeaway:</strong> The gap between property types is dramatic. A 3BR/6-guest property earns roughly $90 RevPAR, more than <strong>double</strong> the $39 RevPAR of a typical 1BR/2-guest unit. The extra bedroom is worth far more than any neighborhood advantage.</p>
 <p>If you are buying your first investment property, the single most important decision is bedroom count. A 3BR in a “B” neighborhood will outperform a 1BR in a prime beachfront location.</p>
 </section>
 <section id="c.-host-behavior-segmentation" class="level3">
 <h3 class="anchored" data-anchor-id="c.-host-behavior-segmentation">4c. Host Behavior Segmentation</h3>
-<p>Same property, same location — but two hosts can produce very different results. We cluster on <strong>operational</strong> variables: instant booking, portfolio size, review velocity, response rate, and acceptance rate. None of these are performance metrics — they describe <em>how</em> a host runs their business, not the outcome.</p>
+<p>Same property, same location, but two hosts can produce very different results. We cluster on <strong>operational</strong> variables: instant booking, portfolio size, review velocity, response rate, and acceptance rate. None of these are performance metrics, they describe <em>how</em> a host runs their business, not the outcome.</p>
 <div id="d9dec60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:11.872117Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:11.871338Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:34.418967Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:34.418967Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-stdout">
 <pre><code>Host K selected: 3
@@ -539,7 +539,7 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Takeaway:</strong> The highest-performing host style combines Superhost status (57%), strong review velocity (1.5 reviews/month), and active engagement. Superhost status alone is associated with roughly a <strong>+19% RevPAR premium</strong> across all segments. This is the operational lever most hosts underestimate — responding quickly and maintaining quality is worth real money.</p>
+<p><strong>Takeaway:</strong> The highest-performing host style combines Superhost status (57%), strong review velocity (1.5 reviews/month), and active engagement. Superhost status alone is associated with roughly a <strong>+19% RevPAR premium</strong> across all segments. This is the operational lever most hosts underestimate, responding quickly and maintaining quality is worth real money.</p>
 </section>
 <section id="d.-cross-reference-geography-x-property-type" class="level3">
 <h3 class="anchored" data-anchor-id="d.-cross-reference-geography-x-property-type">4d. Cross-Reference: Geography x Property Type</h3>
@@ -570,14 +570,14 @@ geo_cluster
 </div>
 </div>
 </div>
-<p><strong>The headline result:</strong> A 3BR property in the Pompano Beach / Deerfield zone commands roughly <strong>$103 RevPAR</strong> — the strongest combination in the entire market. This is driven by the combination of slightly higher demand in the northern coastal zone and the premium that larger properties command everywhere.</p>
+<p><strong>The headline result:</strong> A 3BR property in the Pompano Beach / Deerfield zone commands roughly <strong>$103 RevPAR</strong>, the strongest combination in the entire market. This is driven by the combination of slightly higher demand in the northern coastal zone and the premium that larger properties command everywhere.</p>
 <p>But notice the pattern: the difference between property types <em>within</em> a zone is always larger than the difference between zones <em>for the same property type</em>. A 3BR in the “worst” zone still beats a 1BR in the “best” zone. <strong>Property type dominates geography.</strong></p>
 <hr>
 </section>
 </section>
 <section id="private-rooms-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="private-rooms-analysis">5. Private Rooms Analysis</h2>
-<p>Private rooms are a smaller market (3,415 listings) with fundamentally different economics. Guests expect lower prices, stays tend to be longer, and the host is typically sharing their own home. The same three lenses apply, but the results tell a different story — more fragmentation, lower returns, but also more consistency.</p>
+<p>Private rooms are a smaller market (3,415 listings) with fundamentally different economics. Guests expect lower prices, stays tend to be longer, and the host is typically sharing their own home. The same three lenses apply, but the results tell a different story, more fragmentation, lower returns, but also more consistency.</p>
 <section id="a.-geographic-segmentation-private-rooms" class="level3">
 <h3 class="anchored" data-anchor-id="a.-geographic-segmentation-private-rooms">5a. Geographic Segmentation (Private Rooms)</h3>
 <div id="7a1d4f19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:35.072856Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:35.072856Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:42.441233Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:42.441233Z&quot;}}" data-execution_count="21">
@@ -805,7 +805,7 @@ Stability (ARI): 0.824</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Note:</strong> Private rooms show more fragmented property clusters (K=6, ARI=0.711) compared to entire homes (K=4, ARI=0.924). This makes sense — private rooms vary widely in what “a room” means (a spare bedroom in a house vs.&nbsp;a converted garage vs.&nbsp;a luxury suite). The market is less standardized.</p>
+<p><strong>Note:</strong> Private rooms show more fragmented property clusters (K=6, ARI=0.711) compared to entire homes (K=4, ARI=0.924). This makes sense, private rooms vary widely in what “a room” means (a spare bedroom in a house vs.&nbsp;a converted garage vs.&nbsp;a luxury suite). The market is less standardized.</p>
 </section>
 <section id="c.-host-behavior-segmentation-private-rooms" class="level3">
 <h3 class="anchored" data-anchor-id="c.-host-behavior-segmentation-private-rooms">5c. Host Behavior Segmentation (Private Rooms)</h3>
@@ -930,7 +930,7 @@ Stability (ARI): 0.959</code></pre>
 </section>
 <section id="no-leakage" class="level3">
 <h3 class="anchored" data-anchor-id="no-leakage">No Leakage</h3>
-<p>Performance metrics (ADR, occupancy, RevPAR, revenue) are <strong>never</strong> included in the clustering features. We cluster on <em>inputs</em> — location, property characteristics, host behavior — and then <em>overlay</em> performance to see how segments differ. This prevents the circular logic of “high-revenue listings cluster together because we told the algorithm to group by revenue.”</p>
+<p>Performance metrics (ADR, occupancy, RevPAR, revenue) are <strong>never</strong> included in the clustering features. We cluster on <em>inputs</em>, location, property characteristics, host behavior, and then <em>overlay</em> performance to see how segments differ. This prevents the circular logic of “high-revenue listings cluster together because we told the algorithm to group by revenue.”</p>
 </section>
 <section id="k-selection" class="level3">
 <h3 class="anchored" data-anchor-id="k-selection">K Selection</h3>
@@ -938,7 +938,7 @@ Stability (ARI): 0.959</code></pre>
 </section>
 <section id="stability-ari" class="level3">
 <h3 class="anchored" data-anchor-id="stability-ari">Stability (ARI)</h3>
-<p>We fit each GMM 10 times with different random seeds and measure the Adjusted Rand Index (ARI) between all pairs of label assignments. An ARI near 1.0 means the clusters are robust — you get the same answer regardless of initialization. Geographic clusters (ARI &gt; 0.99) are extremely stable; property clusters (ARI ~0.92 for entire homes, ~0.71 for private rooms) are somewhat less so, reflecting the fuzzier boundaries between property types.</p>
+<p>We fit each GMM 10 times with different random seeds and measure the Adjusted Rand Index (ARI) between all pairs of label assignments. An ARI near 1.0 means the clusters are robust, you get the same answer regardless of initialization. Geographic clusters (ARI &gt; 0.99) are extremely stable; property clusters (ARI ~0.92 for entire homes, ~0.71 for private rooms) are somewhat less so, reflecting the fuzzier boundaries between property types.</p>
 <hr>
 </section>
 </section>
