@@ -58,10 +58,10 @@ body-classes: sv-page
 
       <article class="panel rail-top" data-item="leaders" aria-label="Sports leaderboards and experiments">
         <div class="media inlay poster scoreline" aria-hidden="true">
-          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:78%"></span></span><span class="sl-chip hot">Elite</span></div>
-          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:56%"></span></span><span class="sl-chip warm">Good</span></div>
+          <div class="sl-row"><span class="sl-k">Team A</span><span class="sl-bar"><span style="width:78%"></span></span><span class="sl-chip hot">Elite</span></div>
+          <div class="sl-row"><span class="sl-k">Team B</span><span class="sl-bar"><span style="width:56%"></span></span><span class="sl-chip warm">Good</span></div>
           <div class="sl-row"><span class="sl-k">Baseline</span><span class="sl-bar base"><span style="width:44%"></span></span><span class="sl-chip">Average</span></div>
-          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:24%"></span></span><span class="sl-chip cold">Poor</span></div>
+          <div class="sl-row"><span class="sl-k">Team C</span><span class="sl-bar"><span style="width:24%"></span></span><span class="sl-chip cold">Poor</span></div>
         </div>
         <div class="info">
           <div class="head"><h2>Sports leaderboards and experiments</h2><span class="status live">Live</span></div>
@@ -72,7 +72,7 @@ body-classes: sv-page
           </ul>
           <div class="foot">
             <ul class="tray slim" aria-label="Methods"><li>z-scores</li><li>Pre-registration</li><li>Holdout tests</li></ul>
-            <div class="btn-row"><button class="btn" type="button" popovertarget="n-leaders">Leaderboards</button><button class="btn" type="button" popovertarget="n-experiments">Experiments</button></div>
+            <div class="btn-row"><button class="btn" type="button" popovertarget="n-leaders">Leaderboards</button><button class="btn" type="button" popovertarget="n-experiments">Experiments</button><a class="btn primary" href="guides/leaderboards/nfl.html">Open the leaderboards</a></div>
           </div>
         </div>
       </article>
@@ -113,7 +113,8 @@ body-classes: sv-page
   <h3>Leaderboards</h3>
   <p>Every sport gets its own leaderboards: basic stats, advanced stats, betting, accuracy and results. Each row is scored against a stated baseline (the league mean, a coin flip, break-even, or the market) and its z-score sets the heat colour, so a number always reads against something.</p>
   <p>Small samples are held back: a row under 30 games is never ranked or coloured. Early in a season the board shows early leaders instead, labelled as early. Every board has a table twin with every row and its notes.</p>
-  <button class="btn" popovertarget="n-leaders" popovertargetaction="hide">Close</button>
+  <p>The leaderboards run live on my own machine; the link opens a dated snapshot of them, built from the same code.</p>
+  <div class="btn-row"><a class="btn primary" href="guides/leaderboards/nfl.html">Open the leaderboards</a><button class="btn" popovertarget="n-leaders" popovertargetaction="hide">Close</button></div>
 </div>
 <div id="n-experiments" popover class="note">
   <h3>Pre-registered experiments</h3>
