@@ -2,12 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HuyyT1UZfOjnY2CjuwoW+xRbAAbQmpWxdQU4vgtkZ6k=' 'sha256-IhnsZFVWPGMcZL/zq5Axfp8NsqJ9t1jtkNjKWzU7Kbg='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noai, noimageai">
 <meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2026-04-24">
-<meta name="description" content="The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across ~17,000 active listings per snapshot.">
+<meta name="description" content="The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across about 17,000 active listings per snapshot.">
 
 <title>Broward County Airbnb: Market Analysis – Richard Chute</title>
 <style>
@@ -28,45 +31,11 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -83,7 +52,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d87f8aa919d9cd326c82f4d5ce1d0762.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-38e91d965ddb263c0a7b11ee179be836.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-78bc8e05f5c5663edab11c7bcce6126f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -112,20 +81,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Broward County Airbnb: Market Analysis – Richard Chute">
-<meta property="og:description" content="The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across ~17,000 active listings per snapshot.">
+<meta property="og:description" content="The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across about 17,000 active listings per snapshot.">
 <meta property="og:image" content="https://plotbot2023.github.io/portfolio/notebooks/broward-market-analysis_files/figure-html/cell-3-output-1.png">
 <meta property="og:site_name" content="Richard Chute">
 <meta property="og:image:height" content="493">
 <meta property="og:image:width" content="1227">
 <meta name="twitter:title" content="Broward County Airbnb: Market Analysis – Richard Chute">
-<meta name="twitter:description" content="The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across ~17,000 active listings per snapshot.">
+<meta name="twitter:description" content="The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across about 17,000 active listings per snapshot.">
 <meta name="twitter:image" content="https://plotbot2023.github.io/portfolio/notebooks/broward-market-analysis_files/figure-html/cell-3-output-1.png">
 <meta name="twitter:image-height" content="493">
 <meta name="twitter:image-width" content="1227">
@@ -162,20 +129,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../airbnb.html"> 
+<span class="menu-text">Airbnb case study</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../resume.html"> 
-<span class="menu-text">Résumé</span></a>
-  </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/PlotBot2023"> <i class="bi bi-github" role="img" aria-label="GitHub">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="mailto:plotbot2023@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="Email">
-</i> 
-<span class="menu-text"></span></a>
+<span class="menu-text">Resume</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -218,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across ~17,000 active listings per snapshot.
+    The foundation notebook for the Broward series. ADR, occupancy, RevPAR and expected annual revenue derived from calendar availability across about 17,000 active listings per snapshot.
   </div>
 </div>
 
@@ -251,36 +210,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Expected Revenue</strong> — projected annual gross revenue per listing</li>
 </ul>
 <div id="cell-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:19.842090Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:19.842090Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:20.570491Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:20.570491Z&quot;}}" data-execution_count="1">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> mticker</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Dark theme for GitHub-friendly visuals</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"legend.labelcolor"</span>: <span class="st">"#c9d1d9"</span>, <span class="st">"legend.facecolor"</span>: <span class="st">"#161b22"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"legend.edgecolor"</span>: <span class="st">"#30363d"</span>, <span class="st">"legend.framealpha"</span>: <span class="fl">0.9</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.facecolor"</span>: <span class="st">"#0d1117"</span>, <span class="st">"axes.facecolor"</span>: <span class="st">"#161b22"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.edgecolor"</span>: <span class="st">"#30363d"</span>, <span class="st">"axes.labelcolor"</span>: <span class="st">"#c9d1d9"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text.color"</span>: <span class="st">"#c9d1d9"</span>, <span class="st">"xtick.color"</span>: <span class="st">"#8b949e"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ytick.color"</span>: <span class="st">"#8b949e"</span>, <span class="st">"grid.color"</span>: <span class="st">"#21262d"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grid.alpha"</span>: <span class="fl">0.6</span>, <span class="st">"font.size"</span>: <span class="dv">11</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.titlesize"</span>: <span class="dv">14</span>, <span class="st">"axes.titleweight"</span>: <span class="st">"bold"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>PALETTE <span class="op">=</span> [<span class="st">"#58a6ff"</span>, <span class="st">"#3fb950"</span>, <span class="st">"#d29922"</span>, <span class="st">"#f85149"</span>, <span class="st">"#bc8cff"</span>, <span class="st">"#79c0ff"</span>]</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>cal <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/calendar_metrics.csv"</span>, parse_dates<span class="op">=</span>[<span class="st">"snapshot_date"</span>])</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>adv <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/listings_adv_metrics.csv"</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Calendar metrics: </span><span class="sc">{</span>cal<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows across </span><span class="sc">{</span>cal<span class="sc">.</span>snapshot_date<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss"> snapshots"</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Listing profiles: </span><span class="sc">{</span>adv<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> listings"</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Snapshot range: </span><span class="sc">{</span>cal<span class="sc">.</span>snapshot_date<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:</span><span class="op">%</span>B <span class="op">%</span>Y<span class="sc">}</span><span class="ss"> — </span><span class="sc">{</span>cal<span class="sc">.</span>snapshot_date<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:</span><span class="op">%</span>B <span class="op">%</span>Y<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Calendar metrics: 68,036 rows across 4 snapshots
 Listing profiles: 68,038 listings
@@ -292,40 +221,6 @@ Snapshot range: June 2024 — March 2025</code></pre>
 <h2 class="anchored" data-anchor-id="market-overview">1. Market Overview</h2>
 <p>How many listings are active, and what types of properties dominate?</p>
 <div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:20.597356Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:20.597356Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:20.806021Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:20.805378Z&quot;}}" data-execution_count="2">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Listing count by snapshot</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> cal.groupby(<span class="st">"snapshot_date"</span>)[<span class="st">"listing_id"</span>].nunique()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> axes[<span class="dv">0</span>].bar(<span class="bu">range</span>(<span class="bu">len</span>(counts)), counts.values, color<span class="op">=</span>PALETTE[<span class="dv">0</span>], width<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(counts)))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels(counts.index.strftime(<span class="st">"%b</span><span class="ch">\n</span><span class="st">%Y"</span>), fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Active Listings"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Listing Growth Across Snapshots"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylim(counts.<span class="bu">min</span>() <span class="op">*</span> <span class="fl">0.97</span>, counts.<span class="bu">max</span>() <span class="op">*</span> <span class="fl">1.04</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, counts.values):</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="dv">2</span>, v <span class="op">+</span> <span class="dv">30</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"</span><span class="sc">{</span>v<span class="sc">:,}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Room type breakdown</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>rt <span class="op">=</span> adv[<span class="st">"room_type"</span>].value_counts()</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>wedges, texts, autotexts <span class="op">=</span> axes[<span class="dv">1</span>].pie(</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    rt.values, labels<span class="op">=</span>rt.index, autopct<span class="op">=</span><span class="st">"%1.0f</span><span class="sc">%%</span><span class="st">"</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    colors<span class="op">=</span>PALETTE[:<span class="bu">len</span>(rt)], textprops<span class="op">=</span>{<span class="st">"color"</span>: <span class="st">"#c9d1d9"</span>, <span class="st">"fontsize"</span>: <span class="dv">10</span>},</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    pctdistance<span class="op">=</span><span class="fl">0.75</span>, startangle<span class="op">=</span><span class="dv">90</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> at <span class="kw">in</span> autotexts:</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    at.set_fontweight(<span class="st">"bold"</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Property Type Distribution"</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Broward County Airbnb Market Overview"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>fig.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>growth <span class="op">=</span> (counts.iloc[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> counts.iloc[<span class="dv">0</span>]) <span class="op">/</span> counts.iloc[<span class="dv">0</span>]</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Market grew </span><span class="sc">{</span>growth<span class="sc">:.1%}</span><span class="ss"> over the observation period (</span><span class="sc">{</span>counts<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> → </span><span class="sc">{</span>counts<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:,}</span><span class="ss"> listings)"</span>)</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Entire homes dominate at </span><span class="sc">{</span>rt<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="op">/</span>rt<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.0%}</span><span class="ss"> of inventory"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -345,41 +240,6 @@ Entire homes dominate at 85% of inventory</code></pre>
 <h2 class="anchored" data-anchor-id="pricing-analysis">2. Pricing Analysis</h2>
 <p>What do nightly rates look like across the market?</p>
 <div id="cell-6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:20.806517Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:20.806517Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:21.034017Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:21.033376Z&quot;}}" data-execution_count="3">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ADR distribution</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>adr <span class="op">=</span> adv[<span class="st">"adr_avg"</span>].dropna()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>adr_trim <span class="op">=</span> adr[(adr <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (adr <span class="op">&lt;=</span> adr.quantile(<span class="fl">0.95</span>))]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(adr_trim, bins<span class="op">=</span><span class="dv">60</span>, color<span class="op">=</span>PALETTE[<span class="dv">0</span>], edgecolor<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.85</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axvline(adr_trim.median(), color<span class="op">=</span>PALETTE[<span class="dv">3</span>], ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="ss">f"Median: $</span><span class="sc">{</span>adr_trim<span class="sc">.</span>median()<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Average Daily Rate ($)"</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Number of Listings"</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"ADR Distribution (Trimmed to 95th Pctile)"</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(facecolor<span class="op">=</span><span class="st">"#161b22"</span>, edgecolor<span class="op">=</span><span class="st">"#30363d"</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x, _: <span class="ss">f"$</span><span class="sc">{</span>x<span class="sc">:,.0f}</span><span class="ss">"</span>))</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Median ADR by room type</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>med_adr <span class="op">=</span> adv.groupby(<span class="st">"room_type"</span>)[<span class="st">"adr_avg"</span>].median().sort_values(ascending<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> axes[<span class="dv">1</span>].barh(<span class="bu">range</span>(<span class="bu">len</span>(med_adr)), med_adr.values,</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                     color<span class="op">=</span>[PALETTE[i] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(med_adr))], height<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(med_adr)))</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticklabels(med_adr.index)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Median ADR ($)"</span>)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Median ADR by Room Type"</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, med_adr.values):</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].text(v <span class="op">+</span> <span class="dv">3</span>, bar.get_y() <span class="op">+</span> bar.get_height()<span class="op">/</span><span class="dv">2</span>,</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"$</span><span class="sc">{</span>v<span class="sc">:,.0f}</span><span class="ss">"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Pricing Analysis"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>fig.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Median ADR: $</span><span class="sc">{</span>adr_trim<span class="sc">.</span>median()<span class="sc">:,.0f}</span><span class="ss"> | Mean ADR: $</span><span class="sc">{</span>adr_trim<span class="sc">.</span>mean()<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Right-skewed distribution — luxury properties pull the mean above the median"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -398,44 +258,6 @@ Right-skewed distribution — luxury properties pull the mean above the median</
 <h2 class="anchored" data-anchor-id="occupancy-patterns">3. Occupancy Patterns</h2>
 <p>How utilized is the Broward County rental market?</p>
 <div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:21.036540Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:21.036540Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:21.246517Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:21.246517Z&quot;}}" data-execution_count="4">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Occupancy distribution</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>occ <span class="op">=</span> adv[<span class="st">"occupancy_avg"</span>].dropna()</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(occ, bins<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span>PALETTE[<span class="dv">1</span>], edgecolor<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.85</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axvline(occ.median(), color<span class="op">=</span>PALETTE[<span class="dv">3</span>], ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="ss">f"Median: </span><span class="sc">{</span>occ<span class="sc">.</span>median()<span class="sc">:.0%}</span><span class="ss">"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Occupancy Rate"</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Number of Listings"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Occupancy Distribution"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(facecolor<span class="op">=</span><span class="st">"#161b22"</span>, edgecolor<span class="op">=</span><span class="st">"#30363d"</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].xaxis.set_major_formatter(mticker.PercentFormatter(<span class="fl">1.0</span>))</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Occupancy trend</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>med_occ_snap <span class="op">=</span> cal.groupby(<span class="st">"snapshot_date"</span>)[<span class="st">"occupancy"</span>].median()</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(<span class="bu">range</span>(<span class="bu">len</span>(med_occ_snap)), med_occ_snap.values,</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>             marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span>PALETTE[<span class="dv">1</span>], linewidth<span class="op">=</span><span class="fl">2.5</span>, markersize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(med_occ_snap)))</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels(med_occ_snap.index.strftime(<span class="st">"%b</span><span class="ch">\n</span><span class="st">%Y"</span>), fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Median Occupancy"</span>)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Occupancy Trend Over Time"</span>)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].yaxis.set_major_formatter(mticker.PercentFormatter(<span class="fl">1.0</span>))</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylim(<span class="dv">0</span>, med_occ_snap.<span class="bu">max</span>() <span class="op">*</span> <span class="fl">1.3</span>)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(med_occ_snap.values):</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].annotate(<span class="ss">f"</span><span class="sc">{</span>v<span class="sc">:.0%}</span><span class="ss">"</span>, (i, v), textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                     xytext<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">12</span>), ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Occupancy Patterns"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>fig.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>low_occ <span class="op">=</span> (occ <span class="op">&lt;</span> <span class="fl">0.10</span>).mean()</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>high_occ <span class="op">=</span> (occ <span class="op">&gt;</span> <span class="fl">0.60</span>).mean()</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>low_occ<span class="sc">:.0%}</span><span class="ss"> of listings have &lt;10% occupancy (likely inactive or seasonal)"</span>)</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>high_occ<span class="sc">:.0%}</span><span class="ss"> of listings exceed 60% occupancy (high performers)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -454,42 +276,6 @@ Right-skewed distribution — luxury properties pull the mean above the median</
 <h2 class="anchored" data-anchor-id="revenue-performance">4. Revenue Performance</h2>
 <p>Which areas generate the most revenue per available night?</p>
 <div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:21.248033Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:21.248033Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:21.466717Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:21.466717Z&quot;}}" data-execution_count="5">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># RevPAR distribution</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>revpar <span class="op">=</span> adv[<span class="st">"revpar_avg"</span>].dropna()</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>revpar_trim <span class="op">=</span> revpar[(revpar <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (revpar <span class="op">&lt;=</span> revpar.quantile(<span class="fl">0.95</span>))]</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(revpar_trim, bins<span class="op">=</span><span class="dv">60</span>, color<span class="op">=</span>PALETTE[<span class="dv">2</span>], edgecolor<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.85</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axvline(revpar_trim.median(), color<span class="op">=</span>PALETTE[<span class="dv">3</span>], ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="ss">f"Median: $</span><span class="sc">{</span>revpar_trim<span class="sc">.</span>median()<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"RevPAR ($)"</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Number of Listings"</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"RevPAR Distribution (Trimmed to 95th Pctile)"</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(facecolor<span class="op">=</span><span class="st">"#161b22"</span>, edgecolor<span class="op">=</span><span class="st">"#30363d"</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].xaxis.set_major_formatter(mticker.FuncFormatter(<span class="kw">lambda</span> x, _: <span class="ss">f"$</span><span class="sc">{</span>x<span class="sc">:,.0f}</span><span class="ss">"</span>))</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Top neighborhoods</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>top_n <span class="op">=</span> adv.groupby(<span class="st">"neighbourhood_cleansed"</span>)[<span class="st">"revpar_avg"</span>].agg([<span class="st">"median"</span>, <span class="st">"count"</span>])</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>top_n <span class="op">=</span> top_n[top_n[<span class="st">"count"</span>] <span class="op">&gt;=</span> <span class="dv">100</span>].nlargest(<span class="dv">10</span>, <span class="st">"median"</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> axes[<span class="dv">1</span>].barh(<span class="bu">range</span>(<span class="bu">len</span>(top_n)), top_n[<span class="st">"median"</span>].values,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                     color<span class="op">=</span>PALETTE[<span class="dv">2</span>], height<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(top_n)))</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticklabels(top_n.index, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Median RevPAR ($)"</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Top Neighborhoods by RevPAR (min 100 listings)"</span>)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, top_n[<span class="st">"median"</span>].values):</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].text(v <span class="op">+</span> <span class="dv">1</span>, bar.get_y() <span class="op">+</span> bar.get_height()<span class="op">/</span><span class="dv">2</span>,</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"$</span><span class="sc">{</span>v<span class="sc">:,.0f}</span><span class="ss">"</span>, va<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Revenue Performance"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>fig.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Lighthouse Point leads with $</span><span class="sc">{</span>top_n[<span class="st">'median'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">:,.0f}</span><span class="ss">/night RevPAR"</span>)</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Median market RevPAR: $</span><span class="sc">{</span>revpar_trim<span class="sc">.</span>median()<span class="sc">:,.0f}</span><span class="ss">/night"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -508,56 +294,6 @@ Median market RevPAR: $55/night</code></pre>
 <h2 class="anchored" data-anchor-id="host-analysis">5. Host Analysis</h2>
 <p>How does Superhost status affect performance, and how concentrated is ownership?</p>
 <div id="cell-12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:21.469936Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:21.466717Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:21.653087Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:21.652478Z&quot;}}" data-execution_count="6">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Superhost comparison</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>sh <span class="op">=</span> adv.groupby(<span class="st">"host_is_superhost"</span>)[[<span class="st">"occupancy_avg"</span>, <span class="st">"adr_avg"</span>, <span class="st">"revpar_avg"</span>]].median()</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sh.index <span class="op">=</span> sh.index.<span class="bu">map</span>({<span class="st">"t"</span>: <span class="st">"Superhost"</span>, <span class="st">"f"</span>: <span class="st">"Non-Superhost"</span>})</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">3</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.35</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>bars1 <span class="op">=</span> axes[<span class="dv">0</span>].bar(x <span class="op">-</span> w<span class="op">/</span><span class="dv">2</span>, sh.loc[<span class="st">"Superhost"</span>], w, label<span class="op">=</span><span class="st">"Superhost"</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                      color<span class="op">=</span>PALETTE[<span class="dv">1</span>])</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> axes[<span class="dv">0</span>].bar(x <span class="op">+</span> w<span class="op">/</span><span class="dv">2</span>, sh.loc[<span class="st">"Non-Superhost"</span>], w, label<span class="op">=</span><span class="st">"Non-Superhost"</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                      color<span class="op">=</span>PALETTE[<span class="dv">3</span>])</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticks(x)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels([<span class="st">"Occupancy"</span>, <span class="st">"ADR ($)"</span>, <span class="st">"RevPAR ($)"</span>])</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Superhost vs Non-Superhost (Median)"</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(facecolor<span class="op">=</span><span class="st">"#161b22"</span>, edgecolor<span class="op">=</span><span class="st">"#30363d"</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bars <span class="kw">in</span> [bars1, bars2]:</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> bar <span class="kw">in</span> bars:</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        val <span class="op">=</span> bar.get_height()</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>val<span class="sc">:.0%}</span><span class="ss">"</span> <span class="cf">if</span> val <span class="op">&lt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="ss">f"$</span><span class="sc">{</span>val<span class="sc">:,.0f}</span><span class="ss">"</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">0</span>].text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="dv">2</span>, val <span class="op">+</span> <span class="dv">2</span>,</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                     label, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Host portfolio size</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>host_counts <span class="op">=</span> adv.groupby(<span class="st">"host_id"</span>)[<span class="st">"listing_id"</span>].nunique()</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">50</span>, host_counts.<span class="bu">max</span>() <span class="op">+</span> <span class="dv">1</span>]</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3-4"</span>, <span class="st">"5-9"</span>, <span class="st">"10-49"</span>, <span class="st">"50+"</span>]</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>host_cats <span class="op">=</span> pd.cut(host_counts, bins<span class="op">=</span>bins, labels<span class="op">=</span>labels, right<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>cat_counts <span class="op">=</span> host_cats.value_counts().reindex(labels)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> axes[<span class="dv">1</span>].bar(<span class="bu">range</span>(<span class="bu">len</span>(cat_counts)), cat_counts.values,</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span>PALETTE[<span class="dv">4</span>], width<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(cat_counts)))</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels(labels)</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Number of Listings"</span>)</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Number of Hosts"</span>)</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Host Portfolio Size Distribution"</span>)</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, cat_counts.values):</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="dv">2</span>, v <span class="op">+</span> <span class="dv">20</span>,</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"</span><span class="sc">{</span>v<span class="sc">:,}</span><span class="ss">"</span>, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Host Analysis"</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>fig.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>single <span class="op">=</span> (host_counts <span class="op">==</span> <span class="dv">1</span>).mean()</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>multi <span class="op">=</span> (host_counts <span class="op">&gt;=</span> <span class="dv">10</span>).<span class="bu">sum</span>()</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>single<span class="sc">:.0%}</span><span class="ss"> of hosts operate a single listing"</span>)</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>multi<span class="sc">:,}</span><span class="ss"> hosts manage 10+ listings (professional operators)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -576,32 +312,6 @@ Median market RevPAR: $55/night</code></pre>
 <h2 class="anchored" data-anchor-id="neighborhood-comparison">6. Neighborhood Comparison</h2>
 <p>Side-by-side view of the top 8 neighborhoods across multiple dimensions.</p>
 <div id="cell-14" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:21.653400Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:21.653400Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:21.688947Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:21.688947Z&quot;}}" data-execution_count="7">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>top_hoods <span class="op">=</span> adv[<span class="st">"neighbourhood_cleansed"</span>].value_counts().head(<span class="dv">8</span>).index</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>hood_data <span class="op">=</span> adv[adv[<span class="st">"neighbourhood_cleansed"</span>].isin(top_hoods)]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> hood_data.groupby(<span class="st">"neighbourhood_cleansed"</span>).agg(</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    listings<span class="op">=</span>(<span class="st">"listing_id"</span>, <span class="st">"nunique"</span>),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    median_adr<span class="op">=</span>(<span class="st">"adr_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    median_occ<span class="op">=</span>(<span class="st">"occupancy_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    median_revpar<span class="op">=</span>(<span class="st">"revpar_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    median_revenue<span class="op">=</span>(<span class="st">"expected_revenue_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    pct_superhost<span class="op">=</span>(<span class="st">"host_is_superhost"</span>, <span class="kw">lambda</span> x: (x <span class="op">==</span> <span class="st">"t"</span>).mean()),</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>).sort_values(<span class="st">"median_revpar"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>summary[<span class="st">"median_occ"</span>] <span class="op">=</span> summary[<span class="st">"median_occ"</span>].<span class="bu">map</span>(<span class="st">"</span><span class="sc">{:.0%}</span><span class="st">"</span>.<span class="bu">format</span>)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>summary[<span class="st">"pct_superhost"</span>] <span class="op">=</span> summary[<span class="st">"pct_superhost"</span>].<span class="bu">map</span>(<span class="st">"</span><span class="sc">{:.0%}</span><span class="st">"</span>.<span class="bu">format</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>summary[<span class="st">"median_adr"</span>] <span class="op">=</span> summary[<span class="st">"median_adr"</span>].<span class="bu">map</span>(<span class="st">"$</span><span class="sc">{:,.0f}</span><span class="st">"</span>.<span class="bu">format</span>)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>summary[<span class="st">"median_revpar"</span>] <span class="op">=</span> summary[<span class="st">"median_revpar"</span>].<span class="bu">map</span>(<span class="st">"$</span><span class="sc">{:,.0f}</span><span class="st">"</span>.<span class="bu">format</span>)</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>summary[<span class="st">"median_revenue"</span>] <span class="op">=</span> summary[<span class="st">"median_revenue"</span>].<span class="bu">map</span>(<span class="st">"$</span><span class="sc">{:,.0f}</span><span class="st">"</span>.<span class="bu">format</span>)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>summary.columns <span class="op">=</span> [<span class="st">"Listings"</span>, <span class="st">"Median ADR"</span>, <span class="st">"Median Occ"</span>, <span class="st">"Median RevPAR"</span>,</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Median Revenue"</span>, <span class="st">"% Superhost"</span>]</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top 8 Neighborhoods — Ranked by RevPAR"</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">90</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Top 8 Neighborhoods — Ranked by RevPAR
 ==========================================================================================</code></pre>
@@ -1134,32 +844,6 @@ Median market RevPAR: $55/night</code></pre>
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>© 2026 Richard Chute</p>
-</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/PlotBot2023">
-      <i class="bi bi-github" role="img">
-</i> 
-    </a>
-  </li>  
-    <li class="nav-item compact">
-    <a class="nav-link" href="mailto:plotbot2023@gmail.com">
-      <i class="bi bi-envelope" role="img">
-</i> 
-    </a>
-  </li>  
-</ul>
-    </div>
-  </div>
-</footer>
 
 
 

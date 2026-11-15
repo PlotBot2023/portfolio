@@ -1,0 +1,9 @@
+---
+pagetitle: "Broward Airbnb case study, Richard Chute"
+description-meta: "What an entire-home short-term rental in Broward County earns, and where, from four Inside Airbnb snapshots."
+toc: false
+page-layout: custom
+body-classes: sv-page
+---
+
+{{< include _airbnb_generated.qmd >}}

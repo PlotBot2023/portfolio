@@ -2,12 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HuyyT1UZfOjnY2CjuwoW+xRbAAbQmpWxdQU4vgtkZ6k=' 'sha256-IhnsZFVWPGMcZL/zq5Axfp8NsqJ9t1jtkNjKWzU7Kbg='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noai, noimageai">
 <meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2026-04-24">
-<meta name="description" content="Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location — all four geographic zones land within $5 of each other on RevPAR, while a bedroom is worth $50+.">
+<meta name="description" content="Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location: all four geographic zones land within 5 dollars of each other on RevPAR, while a bedroom is worth more than 50 dollars.">
 
 <title>Market Segmentation: Where, What, and How to Invest – Richard Chute</title>
 <style>
@@ -28,45 +31,11 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -83,7 +52,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d87f8aa919d9cd326c82f4d5ce1d0762.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-38e91d965ddb263c0a7b11ee179be836.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-78bc8e05f5c5663edab11c7bcce6126f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -112,20 +81,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Market Segmentation: Where, What, and How to Invest – Richard Chute">
-<meta property="og:description" content="Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location — all four geographic zones land within $5 of each other on RevPAR, while a bedroom is worth $50+.">
+<meta property="og:description" content="Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location: all four geographic zones land within 5 dollars of each other on RevPAR, while a bedroom is worth more than 50 dollars.">
 <meta property="og:image" content="https://plotbot2023.github.io/portfolio/notebooks/broward-segmentation_files/figure-html/cell-11-output-1.png">
 <meta property="og:site_name" content="Richard Chute">
 <meta property="og:image:height" content="986">
 <meta property="og:image:width" content="786">
 <meta name="twitter:title" content="Market Segmentation: Where, What, and How to Invest – Richard Chute">
-<meta name="twitter:description" content="Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location — all four geographic zones land within $5 of each other on RevPAR, while a bedroom is worth $50+.">
+<meta name="twitter:description" content="Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location: all four geographic zones land within 5 dollars of each other on RevPAR, while a bedroom is worth more than 50 dollars.">
 <meta name="twitter:image" content="https://plotbot2023.github.io/portfolio/notebooks/broward-segmentation_files/figure-html/cell-11-output-1.png">
 <meta name="twitter:image-height" content="986">
 <meta name="twitter:image-width" content="786">
@@ -162,20 +129,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../airbnb.html"> 
+<span class="menu-text">Airbnb case study</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../resume.html"> 
-<span class="menu-text">Résumé</span></a>
-  </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/PlotBot2023"> <i class="bi bi-github" role="img" aria-label="GitHub">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="mailto:plotbot2023@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="Email">
-</i> 
-<span class="menu-text"></span></a>
+<span class="menu-text">Resume</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -219,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location — all four geographic zones land within $5 of each other on RevPAR, while a bedroom is worth $50+.
+    Gaussian Mixture Models over 20,575 entire-home listings, profiled by revenue performance. Headline finding: property type beats location: all four geographic zones land within 5 dollars of each other on RevPAR, while a bedroom is worth more than 50 dollars.
   </div>
 </div>
 
@@ -251,60 +210,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setup-data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="setup-data-loading">1. Setup &amp; Data Loading</h2>
 <div id="7b394a41" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:25.160783Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:25.160783Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:30.233882Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:30.233882Z&quot;}}" data-execution_count="1">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> mticker</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score, adjusted_rand_score</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Dark theme ─────────────────────────────────────────────</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"legend.labelcolor"</span>: <span class="st">"#c9d1d9"</span>, <span class="st">"legend.facecolor"</span>: <span class="st">"#161b22"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"legend.edgecolor"</span>: <span class="st">"#30363d"</span>, <span class="st">"legend.framealpha"</span>: <span class="fl">0.9</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.facecolor"</span>: <span class="st">"#0d1117"</span>, <span class="st">"axes.facecolor"</span>: <span class="st">"#161b22"</span>,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.edgecolor"</span>: <span class="st">"#30363d"</span>, <span class="st">"axes.labelcolor"</span>: <span class="st">"#c9d1d9"</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text.color"</span>: <span class="st">"#c9d1d9"</span>, <span class="st">"xtick.color"</span>: <span class="st">"#8b949e"</span>,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ytick.color"</span>: <span class="st">"#8b949e"</span>, <span class="st">"grid.color"</span>: <span class="st">"#21262d"</span>, <span class="st">"grid.alpha"</span>: <span class="fl">0.6</span>,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">11</span>, <span class="st">"axes.titlesize"</span>: <span class="dv">13</span>, <span class="st">"axes.titleweight"</span>: <span class="st">"bold"</span>,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>PAL <span class="op">=</span> [<span class="st">"#58a6ff"</span>, <span class="st">"#3fb950"</span>, <span class="st">"#d29922"</span>, <span class="st">"#f85149"</span>, <span class="st">"#bc8cff"</span>, <span class="st">"#79c0ff"</span>]</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Name a property cluster from its own profile rather than its arbitrary number,</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># so the labels stay correct even if GMM renumbers the clusters on new data.</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> type_label(profile, c):</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    br <span class="op">=</span> profile.loc[c, <span class="st">"med_bedrooms"</span>]</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    sl <span class="op">=</span> profile.loc[c, <span class="st">"med_sleeps"</span>]</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    room <span class="op">=</span> <span class="st">"Studio"</span> <span class="cf">if</span> br <span class="op">&lt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span><span class="bu">int</span>(br)<span class="sc">}</span><span class="ss">BR"</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>room<span class="sc">}</span><span class="ch">\n</span><span class="ss">sleeps </span><span class="sc">{</span><span class="bu">int</span>(sl)<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Libraries loaded."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Libraries loaded.</code></pre>
 </div>
 </div>
 <div id="8664c7b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:30.236872Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:30.235939Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.438982Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.438982Z&quot;}}" data-execution_count="2">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Load data ──────────────────────────────────────────────</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lst <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/listings_cleaned.csv"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cal <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/calendar_metrics.csv"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>adv <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/listings_adv_metrics.csv"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Listings file:       </span><span class="sc">{</span>lst<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Calendar metrics:    </span><span class="sc">{</span>cal<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Advanced metrics:    </span><span class="sc">{</span>adv<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Listings file:       68,038 rows
 Calendar metrics:    68,036 rows
@@ -317,113 +227,21 @@ Advanced metrics:    68,038 rows</code></pre>
 <p>Before any clustering, we strip out listings that would distort the picture for a small investor. That means removing <strong>corporate operators</strong> (Vacasa, Evolve, Sonder, etc. plus anyone running 10+ listings), <strong>hotels and shared rooms</strong>, <strong>luxury outliers</strong> (ADR &gt; $500/night), and <strong>inactive listings</strong> with no reviews in the past 6 months.</p>
 <p>What remains is the mom-and-pop universe — the competitive set you would actually face as an individual host.</p>
 <div id="78e0a2c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.440175Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.440175Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.727265Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.727265Z&quot;}}" data-execution_count="3">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Corporate host identification ─────────────────────────</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>corp_kw <span class="op">=</span> [<span class="st">"stay sol"</span>, <span class="st">"evolve"</span>, <span class="st">"vacasa"</span>, <span class="st">"sonder"</span>, <span class="st">"blueground"</span>, <span class="st">"kasa"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">"live suite"</span>, <span class="st">"roompicks"</span>, <span class="st">"golden stays"</span>, <span class="st">"stay today"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">"latitude key"</span>, <span class="st">"stay hospitality"</span>, <span class="st">"newman hospitality"</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>named_ids <span class="op">=</span> <span class="bu">set</span>()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> kw <span class="kw">in</span> corp_kw:</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    named_ids.update(</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        lst[lst[<span class="st">"host_name"</span>].<span class="bu">str</span>.lower().<span class="bu">str</span>.contains(kw, na<span class="op">=</span><span class="va">False</span>)][<span class="st">"host_id"</span>].unique()</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>big <span class="op">=</span> lst.groupby(<span class="st">"host_id"</span>)[<span class="st">"id"</span>].nunique()</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>commercial <span class="op">=</span> <span class="bu">set</span>(big[big <span class="op">&gt;=</span> <span class="dv">10</span>].index) <span class="op">|</span> named_ids</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Corporate / commercial host IDs: </span><span class="sc">{</span><span class="bu">len</span>(commercial)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corporate / commercial host IDs: 365</code></pre>
 </div>
 </div>
 <div id="91dfa339" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.727265Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.727265Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.851075Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.851075Z&quot;}}" data-execution_count="4">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Merge listings with advanced metrics ──────────────────</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> adv.copy()</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Bring in columns from listings_cleaned that we need but adv doesn't have</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>lst_cols <span class="op">=</span> lst[[<span class="st">"id"</span>, <span class="st">"host_name"</span>, <span class="st">"host_id"</span>, <span class="st">"accommodates"</span>, <span class="st">"instant_bookable"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">"host_response_rate"</span>, <span class="st">"host_acceptance_rate"</span>, <span class="st">"reviews_per_month"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">"host_is_superhost"</span>, <span class="st">"number_of_reviews"</span>, <span class="st">"last_review"</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"room_type"</span>, <span class="st">"calculated_host_listings_count"</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"latitude"</span>, <span class="st">"longitude"</span>, <span class="st">"bedrooms"</span>, <span class="st">"bathrooms"</span>]].copy()</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Take latest snapshot per listing from listings_cleaned</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>lst_dedup <span class="op">=</span> lst.sort_values(<span class="st">"snapshot_date"</span>).drop_duplicates(subset<span class="op">=</span><span class="st">"id"</span>, keep<span class="op">=</span><span class="st">"last"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>lst_cols <span class="op">=</span> lst_dedup[[<span class="st">"id"</span>, <span class="st">"host_name"</span>, <span class="st">"accommodates"</span>, <span class="st">"instant_bookable"</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"host_response_rate"</span>, <span class="st">"host_acceptance_rate"</span>, <span class="st">"reviews_per_month"</span>,</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"number_of_reviews"</span>, <span class="st">"last_review"</span>,</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"calculated_host_listings_count"</span>]].copy()</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>lst_cols.rename(columns<span class="op">=</span>{<span class="st">"id"</span>: <span class="st">"listing_id"</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.merge(lst_cols, on<span class="op">=</span><span class="st">"listing_id"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Merged dataset: </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> rows, </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Merged dataset: 68,038 rows, 30 columns</code></pre>
 </div>
 </div>
 <div id="83dc50ed" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.851075Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.851075Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.930559Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.930559Z&quot;}}" data-execution_count="5">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Parse and clean fields ────────────────────────────────</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># months_since_review</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"last_review"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"last_review"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>reference_date <span class="op">=</span> df[<span class="st">"last_review"</span>].<span class="bu">max</span>()</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"months_since_review"</span>] <span class="op">=</span> (</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    (reference_date <span class="op">-</span> df[<span class="st">"last_review"</span>]).dt.days <span class="op">/</span> <span class="fl">30.44</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>).fillna(<span class="dv">999</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># host response &amp; acceptance rates: strip % and convert</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"host_response_rate"</span>, <span class="st">"host_acceptance_rate"</span>]:</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> (</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        df[col].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="st">"%"</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        .replace([<span class="st">"nan"</span>, <span class="st">"N/A"</span>, <span class="st">""</span>], np.nan)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        .astype(<span class="bu">float</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># instant_bookable to binary</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"instant_book"</span>] <span class="op">=</span> (df[<span class="st">"instant_bookable"</span>] <span class="op">==</span> <span class="st">"t"</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># log host listings</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"log_host_listings"</span>] <span class="op">=</span> np.log1p(</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    pd.to_numeric(df[<span class="st">"calculated_host_listings_count"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>).fillna(<span class="dv">1</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure numeric</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"reviews_per_month"</span>, <span class="st">"bedrooms"</span>, <span class="st">"bathrooms"</span>, <span class="st">"accommodates"</span>,</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">"number_of_reviews"</span>, <span class="st">"adr_avg"</span>, <span class="st">"occupancy_avg"</span>, <span class="st">"revpar_avg"</span>,</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"expected_revenue_avg"</span>]:</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> pd.to_numeric(df[col], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Fields cleaned."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fields cleaned.</code></pre>
 </div>
 </div>
 <div id="f13e54d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.932304Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.932304Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.953396Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.953396Z&quot;}}" data-execution_count="6">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Mom-and-pop filter ────────────────────────────────────</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>review_ok <span class="op">=</span> (df[<span class="st">"number_of_reviews"</span>] <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">"months_since_review"</span>] <span class="op">&lt;=</span> <span class="dv">6</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>mp_mask <span class="op">=</span> (</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"room_type"</span>].isin([<span class="st">"Entire home/apt"</span>, <span class="st">"Private room"</span>]) <span class="op">&amp;</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"adr_avg"</span>] <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">"adr_avg"</span>] <span class="op">&lt;=</span> <span class="dv">500</span>) <span class="op">&amp;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>df[<span class="st">"host_id"</span>].isin(commercial)) <span class="op">&amp;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"occupancy_avg"</span>] <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    review_ok</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> df[mp_mask].copy()</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mom-and-pop universe: </span><span class="sc">{</span>mp<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">:,}</span><span class="ss"> listings"</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Entire homes:  </span><span class="sc">{</span>(mp[<span class="st">'room_type'</span>] <span class="op">==</span> <span class="st">'Entire home/apt'</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Private rooms: </span><span class="sc">{</span>(mp[<span class="st">'room_type'</span>] <span class="op">==</span> <span class="st">'Private room'</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Mom-and-pop universe: 22,228 listings
   Entire homes:  19,112
@@ -431,18 +249,6 @@ Advanced metrics:    68,038 rows</code></pre>
 </div>
 </div>
 <div id="aae94c73" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.953396Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.953396Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.972065Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.972065Z&quot;}}" data-execution_count="7">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Superhost flag (binary) ───────────────────────────────</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mp[<span class="st">"is_superhost"</span>] <span class="op">=</span> (mp[<span class="st">"host_is_superhost"</span>] <span class="op">==</span> <span class="st">"t"</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Split by room type ────────────────────────────────────</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>eh <span class="op">=</span> mp[mp[<span class="st">"room_type"</span>] <span class="op">==</span> <span class="st">"Entire home/apt"</span>].copy()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>pr <span class="op">=</span> mp[mp[<span class="st">"room_type"</span>] <span class="op">==</span> <span class="st">"Private room"</span>].copy()</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Entire homes ready: </span><span class="sc">{</span><span class="bu">len</span>(eh)<span class="sc">:,}</span><span class="ss">"</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Private rooms ready: </span><span class="sc">{</span><span class="bu">len</span>(pr)<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Entire homes ready: 19,112
 Private rooms ready: 3,116</code></pre>
@@ -453,58 +259,6 @@ Private rooms ready: 3,116</code></pre>
 <h2 class="anchored" data-anchor-id="helper-functions">3. Helper Functions</h2>
 <p>Two reusable pieces: a <strong>K-selection</strong> function that uses silhouette score with a K=2 override (since K=2 is almost always trivially best but not useful), and a <strong>stability check</strong> using Adjusted Rand Index (ARI) across multiple random seeds.</p>
 <div id="07f0cebf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.974492Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.972065Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:32.981274Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:32.981274Z&quot;}}" data-execution_count="8">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pick_k(X, k_range<span class="op">=</span><span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">8</span>)):</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Select best K for GMM using silhouette score with K=2 override logic."""</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    best_sil, best_k <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    sils <span class="op">=</span> {}</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> k_range:</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        gmm <span class="op">=</span> GaussianMixture(</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            n_components<span class="op">=</span>k, random_state<span class="op">=</span><span class="dv">42</span>, n_init<span class="op">=</span><span class="dv">5</span>, covariance_type<span class="op">=</span><span class="st">"full"</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        labels <span class="op">=</span> gmm.fit_predict(X)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        sil <span class="op">=</span> silhouette_score(</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            X, labels, sample_size<span class="op">=</span><span class="bu">min</span>(<span class="dv">5000</span>, <span class="bu">len</span>(X)), random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        sils[k] <span class="op">=</span> sil</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sil <span class="op">&gt;</span> best_sil:</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>            best_sil, best_k <span class="op">=</span> sil, k</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Override K=2 if a richer solution is viable</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> best_k <span class="op">==</span> <span class="dv">2</span>:</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> alt_k <span class="kw">in</span> [<span class="dv">4</span>, <span class="dv">3</span>]:</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> alt_k <span class="kw">in</span> sils <span class="kw">and</span> sils[alt_k] <span class="op">&gt;=</span> best_sil <span class="op">*</span> <span class="fl">0.55</span> <span class="kw">and</span> sils[alt_k] <span class="op">&gt;</span> <span class="fl">0.08</span>:</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>                best_k <span class="op">=</span> alt_k</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> best_k, sils</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> stability_ari(X, k, n_runs<span class="op">=</span><span class="dv">10</span>):</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Measure cluster stability via ARI across random seeds."""</span></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    labels_list <span class="op">=</span> []</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> seed <span class="kw">in</span> <span class="bu">range</span>(n_runs):</span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        gmm <span class="op">=</span> GaussianMixture(</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>            n_components<span class="op">=</span>k, random_state<span class="op">=</span>seed, n_init<span class="op">=</span><span class="dv">5</span>, covariance_type<span class="op">=</span><span class="st">"full"</span></span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        labels_list.append(gmm.fit_predict(X))</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pairwise ARI</span></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>    aris <span class="op">=</span> []</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(labels_list)):</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(labels_list)):</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>            aris.append(adjusted_rand_score(labels_list[i], labels_list[j]))</span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(aris)</span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_gmm(X, k):</span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Fit final GMM and return labels."""</span></span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>    gmm <span class="op">=</span> GaussianMixture(</span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>        n_components<span class="op">=</span>k, random_state<span class="op">=</span><span class="dv">42</span>, n_init<span class="op">=</span><span class="dv">5</span>, covariance_type<span class="op">=</span><span class="st">"full"</span></span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gmm.fit_predict(X)</span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Helper functions defined."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Helper functions defined.</code></pre>
 </div>
@@ -518,23 +272,6 @@ Private rooms ready: 3,116</code></pre>
 <h3 class="anchored" data-anchor-id="a.-geographic-segmentation">4a. Geographic Segmentation</h3>
 <p>Where are the listings, and does location actually matter for revenue? We cluster on latitude and longitude only — no performance data in the clustering features — then overlay RevPAR to see which zones earn more.</p>
 <div id="8cd6bb6e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:32.983501Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:32.983501Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:55.383191Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:55.383191Z&quot;}}" data-execution_count="9">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Prepare geographic features (Entire Homes) ────────────</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>geo_features_eh <span class="op">=</span> eh[[<span class="st">"latitude"</span>, <span class="st">"longitude"</span>]].dropna()</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>scaler_geo_eh <span class="op">=</span> StandardScaler()</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>X_geo_eh <span class="op">=</span> scaler_geo_eh.fit_transform(geo_features_eh)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Select K</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>k_geo_eh, sils_geo_eh <span class="op">=</span> pick_k(X_geo_eh)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Geographic K selected: </span><span class="sc">{</span>k_geo_eh<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Silhouette scores: </span><span class="sc">{</span>sils_geo_eh<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit and measure stability</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>eh.loc[geo_features_eh.index, <span class="st">"geo_cluster"</span>] <span class="op">=</span> fit_gmm(X_geo_eh, k_geo_eh)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>ari_geo_eh <span class="op">=</span> stability_ari(X_geo_eh, k_geo_eh)</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stability (ARI): </span><span class="sc">{</span>ari_geo_eh<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Geographic K selected: 3
 Silhouette scores: {2: np.float64(0.41458490161667033), 3: np.float64(0.41552189415805024), 4: np.float64(0.28244972984625044), 5: np.float64(0.21912430805068064), 6: np.float64(0.24979324239736606), 7: np.float64(0.22940296997131546)}
@@ -542,25 +279,6 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 <div id="d8e7ef2c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:55.383191Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:55.383191Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:55.612067Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:55.612067Z&quot;}}" data-execution_count="10">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Geographic cluster map ────────────────────────────────</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">10</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> <span class="bu">sorted</span>(eh[<span class="st">"geo_cluster"</span>].dropna().unique()):</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> eh[<span class="st">"geo_cluster"</span>] <span class="op">==</span> c</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    med_revpar <span class="op">=</span> eh.loc[mask, <span class="st">"revpar_avg"</span>].median()</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    ax.scatter(</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        eh.loc[mask, <span class="st">"longitude"</span>], eh.loc[mask, <span class="st">"latitude"</span>],</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span>PAL[<span class="bu">int</span>(c) <span class="op">%</span> <span class="bu">len</span>(PAL)], s<span class="op">=</span><span class="dv">4</span>, alpha<span class="op">=</span><span class="fl">0.35</span>,</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="ss">f"Zone </span><span class="sc">{</span><span class="bu">int</span>(c)<span class="sc">}</span><span class="ss"> ($</span><span class="sc">{</span>med_revpar<span class="sc">:.0f}</span><span class="ss"> RevPAR)"</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Entire Homes: Geographic Zones"</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Longitude"</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Latitude"</span>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, framealpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -570,24 +288,6 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 <div id="a27941a4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:55.613581Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:55.613581Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:55.633475Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:55.633475Z&quot;}}" data-execution_count="11">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Geographic zone performance summary ───────────────────</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>geo_profile_eh <span class="op">=</span> (</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    eh.groupby(<span class="st">"geo_cluster"</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"listing_id"</span>, <span class="st">"count"</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        med_adr<span class="op">=</span>(<span class="st">"adr_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        med_occ<span class="op">=</span>(<span class="st">"occupancy_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        med_revpar<span class="op">=</span>(<span class="st">"revpar_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        med_revenue<span class="op">=</span>(<span class="st">"expected_revenue_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        med_lat<span class="op">=</span>(<span class="st">"latitude"</span>, <span class="st">"median"</span>),</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        med_lon<span class="op">=</span>(<span class="st">"longitude"</span>, <span class="st">"median"</span>),</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>geo_profile_eh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
@@ -653,39 +353,6 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 <div id="c50062b3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:55.635479Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:55.635479Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:55.844272Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:55.844272Z&quot;}}" data-execution_count="12">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Geographic zone bar charts ────────────────────────────</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="fl">4.5</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>zone_labels <span class="op">=</span> [<span class="ss">f"Zone </span><span class="sc">{</span><span class="bu">int</span>(c)<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">sorted</span>(eh[<span class="st">"geo_cluster"</span>].dropna().unique())]</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>n_zones <span class="op">=</span> <span class="bu">len</span>(zone_labels)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, metric, title, fmt <span class="kw">in</span> <span class="bu">zip</span>(</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    axes,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"med_adr"</span>, <span class="st">"med_occ"</span>, <span class="st">"med_revpar"</span>],</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"Median ADR"</span>, <span class="st">"Median Occupancy"</span>, <span class="st">"Median RevPAR"</span>],</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"$</span><span class="sc">{:.0f}</span><span class="st">"</span>, <span class="st">"</span><span class="sc">{:.0%}</span><span class="st">"</span>, <span class="st">"$</span><span class="sc">{:.0f}</span><span class="st">"</span>],</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> geo_profile_eh[metric].values</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> metric <span class="op">==</span> <span class="st">"med_occ"</span>:</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># already 0-1 fraction</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    bars <span class="op">=</span> ax.bar(zone_labels, vals, color<span class="op">=</span>PAL[:n_zones], edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, vals):</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> fmt.<span class="bu">format</span>(v)</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        ax.annotate(label, xy<span class="op">=</span>(bar.get_x() <span class="op">+</span> bar.get_width() <span class="op">/</span> <span class="dv">2</span>, bar.get_height()),</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                    xytext<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">3</span>), textcoords<span class="op">=</span><span class="st">"offset points"</span>,</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                    ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(vals) <span class="op">*</span> <span class="fl">1.25</span>)</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> metric <span class="op">==</span> <span class="st">"med_occ"</span>:</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>        ax.yaxis.set_major_formatter(mticker.PercentFormatter(<span class="fl">1.0</span>))</span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Entire Homes: Geographic Zone Performance"</span>, fontsize<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>             fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -700,27 +367,6 @@ Stability (ARI): 1.000</code></pre>
 <h3 class="anchored" data-anchor-id="b.-property-segmentation">4b. Property Segmentation</h3>
 <p>Now the question that actually moves the needle: what kind of property should you buy? We cluster on physical characteristics — bedrooms, bathrooms, and guest capacity — and see how revenue varies across property types.</p>
 <div id="7b038eb3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:55.846923Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:55.846923Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:11.405833Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:11.405833Z&quot;}}" data-execution_count="13">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Prepare property features (Entire Homes) ──────────────</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>prop_cols_eh <span class="op">=</span> [<span class="st">"bedrooms"</span>, <span class="st">"bathrooms"</span>, <span class="st">"accommodates"</span>]</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>prop_df_eh <span class="op">=</span> eh[prop_cols_eh].dropna()</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>scaler_prop_eh <span class="op">=</span> StandardScaler()</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>X_prop_eh <span class="op">=</span> scaler_prop_eh.fit_transform(prop_df_eh)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># PCA for better cluster separation</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>pca_prop_eh <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="bu">min</span>(<span class="dv">3</span>, X_prop_eh.shape[<span class="dv">1</span>]), random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>X_prop_pca_eh <span class="op">=</span> pca_prop_eh.fit_transform(X_prop_eh)</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>k_prop_eh, sils_prop_eh <span class="op">=</span> pick_k(X_prop_pca_eh)</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Property K selected: </span><span class="sc">{</span>k_prop_eh<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Silhouette scores: </span><span class="sc">{</span>sils_prop_eh<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>eh.loc[prop_df_eh.index, <span class="st">"prop_cluster"</span>] <span class="op">=</span> fit_gmm(X_prop_pca_eh, k_prop_eh)</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>ari_prop_eh <span class="op">=</span> stability_ari(X_prop_pca_eh, k_prop_eh)</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stability (ARI): </span><span class="sc">{</span>ari_prop_eh<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Property K selected: 3
 Silhouette scores: {2: np.float64(0.515825801961365), 3: np.float64(0.4459588356229667), 4: np.float64(0.2700084805081486), 5: np.float64(0.3174276162734529), 6: np.float64(0.4219674914243793), 7: np.float64(0.40912696384014485)}
@@ -728,24 +374,6 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 <div id="58082442" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:11.405833Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:11.405833Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:11.424781Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:11.424399Z&quot;}}" data-execution_count="14">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Property cluster profiles ─────────────────────────────</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>prop_profile_eh <span class="op">=</span> (</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    eh.groupby(<span class="st">"prop_cluster"</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"listing_id"</span>, <span class="st">"count"</span>),</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        med_bedrooms<span class="op">=</span>(<span class="st">"bedrooms"</span>, <span class="st">"median"</span>),</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        med_sleeps<span class="op">=</span>(<span class="st">"accommodates"</span>, <span class="st">"median"</span>),</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        med_adr<span class="op">=</span>(<span class="st">"adr_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        med_occ<span class="op">=</span>(<span class="st">"occupancy_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        med_revpar<span class="op">=</span>(<span class="st">"revpar_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        med_revenue<span class="op">=</span>(<span class="st">"expected_revenue_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>prop_profile_eh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
@@ -811,37 +439,6 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 <div id="2df5961a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:11.424781Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:11.424781Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:11.869662Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:11.869662Z&quot;}}" data-execution_count="15">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Property cluster 6-panel profile ──────────────────────</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">8</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>type_labels <span class="op">=</span> [type_label(prop_profile_eh, c) <span class="cf">for</span> c <span class="kw">in</span> prop_profile_eh.index]</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>n_types <span class="op">=</span> <span class="bu">len</span>(type_labels)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>panels <span class="op">=</span> [</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_bedrooms"</span>, <span class="st">"Median Bedrooms"</span>, <span class="st">"</span><span class="sc">{:.1f}</span><span class="st">"</span>),</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_sleeps"</span>, <span class="st">"Median Sleeps"</span>, <span class="st">"</span><span class="sc">{:.0f}</span><span class="st">"</span>),</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_adr"</span>, <span class="st">"Median ADR"</span>, <span class="st">"$</span><span class="sc">{:.0f}</span><span class="st">"</span>),</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_occ"</span>, <span class="st">"Median Occupancy"</span>, <span class="st">"</span><span class="sc">{:.0%}</span><span class="st">"</span>),</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_revpar"</span>, <span class="st">"Median RevPAR"</span>, <span class="st">"$</span><span class="sc">{:.0f}</span><span class="st">"</span>),</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_revenue"</span>, <span class="st">"Median Revenue"</span>, <span class="st">"$</span><span class="sc">{:,.0f}</span><span class="st">"</span>),</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (metric, title, fmt) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, panels):</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> prop_profile_eh[metric].values</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    bars <span class="op">=</span> ax.bar(type_labels, vals, color<span class="op">=</span>PAL[:n_types], edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, vals):</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> fmt.<span class="bu">format</span>(v)</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>        ax.text(bar.get_x() <span class="op">+</span> bar.get_width() <span class="op">/</span> <span class="dv">2</span>, bar.get_height(),</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>                label, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(vals) <span class="op">*</span> <span class="fl">1.3</span> <span class="cf">if</span> <span class="bu">max</span>(vals) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">1</span>)</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Entire Homes: Property Type Profiles"</span>, fontsize<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>             fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -857,29 +454,6 @@ Stability (ARI): 1.000</code></pre>
 <h3 class="anchored" data-anchor-id="c.-host-behavior-segmentation">4c. Host Behavior Segmentation</h3>
 <p>Same property, same location — but two hosts can produce very different results. We cluster on <strong>operational</strong> variables: instant booking, portfolio size, review velocity, response rate, and acceptance rate. None of these are performance metrics — they describe <em>how</em> a host runs their business, not the outcome.</p>
 <div id="d9dec60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:11.872117Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:11.871338Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:34.418967Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:34.418967Z&quot;}}" data-execution_count="16">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Prepare host behavior features (Entire Homes) ─────────</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>host_cols <span class="op">=</span> [<span class="st">"instant_book"</span>, <span class="st">"log_host_listings"</span>, <span class="st">"reviews_per_month"</span>,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"host_response_rate"</span>, <span class="st">"host_acceptance_rate"</span>]</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>host_df_eh <span class="op">=</span> eh[host_cols].dropna()</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>scaler_host_eh <span class="op">=</span> StandardScaler()</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>X_host_eh <span class="op">=</span> scaler_host_eh.fit_transform(host_df_eh)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># PCA</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>pca_host_eh <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="bu">min</span>(<span class="dv">4</span>, X_host_eh.shape[<span class="dv">1</span>]), random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>X_host_pca_eh <span class="op">=</span> pca_host_eh.fit_transform(X_host_eh)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>k_host_eh, sils_host_eh <span class="op">=</span> pick_k(X_host_pca_eh)</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Host K selected: </span><span class="sc">{</span>k_host_eh<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Silhouette scores: </span><span class="sc">{</span>sils_host_eh<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>eh.loc[host_df_eh.index, <span class="st">"host_cluster"</span>] <span class="op">=</span> fit_gmm(X_host_pca_eh, k_host_eh)</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>ari_host_eh <span class="op">=</span> stability_ari(X_host_pca_eh, k_host_eh)</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stability (ARI): </span><span class="sc">{</span>ari_host_eh<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Host K selected: 3
 Silhouette scores: {2: np.float64(0.27084918295381877), 3: np.float64(0.3031479333606743), 4: np.float64(0.18514855090969773), 5: np.float64(0.18733092508394866), 6: np.float64(0.13633654597629738), 7: np.float64(0.0947134962143456)}
@@ -887,25 +461,6 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 <div id="16cbb4d9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:34.421211Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:34.421211Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:34.440110Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:34.440110Z&quot;}}" data-execution_count="17">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Host cluster profiles ─────────────────────────────────</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>host_profile_eh <span class="op">=</span> (</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    eh.groupby(<span class="st">"host_cluster"</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"listing_id"</span>, <span class="st">"count"</span>),</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        superhost_pct<span class="op">=</span>(<span class="st">"is_superhost"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        med_rpm<span class="op">=</span>(<span class="st">"reviews_per_month"</span>, <span class="st">"median"</span>),</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        med_instant_book<span class="op">=</span>(<span class="st">"instant_book"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        med_response<span class="op">=</span>(<span class="st">"host_response_rate"</span>, <span class="st">"median"</span>),</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        med_acceptance<span class="op">=</span>(<span class="st">"host_acceptance_rate"</span>, <span class="st">"median"</span>),</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        med_revpar<span class="op">=</span>(<span class="st">"revpar_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        med_revenue<span class="op">=</span>(<span class="st">"expected_revenue_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>host_profile_eh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 
@@ -976,37 +531,6 @@ Stability (ARI): 1.000</code></pre>
 </div>
 </div>
 <div id="50c399ad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:34.441933Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:34.441933Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:34.882293Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:34.881425Z&quot;}}" data-execution_count="18">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Host cluster bar charts ───────────────────────────────</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">8</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>style_labels <span class="op">=</span> [<span class="ss">f"Style </span><span class="sc">{</span><span class="bu">int</span>(c)<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">sorted</span>(eh[<span class="st">"host_cluster"</span>].dropna().unique())]</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>n_styles <span class="op">=</span> <span class="bu">len</span>(style_labels)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>host_panels <span class="op">=</span> [</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"superhost_pct"</span>, <span class="st">"Superhost %"</span>, <span class="st">"</span><span class="sc">{:.0%}</span><span class="st">"</span>),</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_rpm"</span>, <span class="st">"Reviews / Month"</span>, <span class="st">"</span><span class="sc">{:.2f}</span><span class="st">"</span>),</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_instant_book"</span>, <span class="st">"Instant Book %"</span>, <span class="st">"</span><span class="sc">{:.0%}</span><span class="st">"</span>),</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_response"</span>, <span class="st">"Response Rate %"</span>, <span class="st">"</span><span class="sc">{:.0f}</span><span class="st">%"</span>),</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_revpar"</span>, <span class="st">"Median RevPAR"</span>, <span class="st">"$</span><span class="sc">{:.0f}</span><span class="st">"</span>),</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"med_revenue"</span>, <span class="st">"Median Revenue"</span>, <span class="st">"$</span><span class="sc">{:,.0f}</span><span class="st">"</span>),</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (metric, title, fmt) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, host_panels):</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> host_profile_eh[metric].values</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    bars <span class="op">=</span> ax.bar(style_labels, vals, color<span class="op">=</span>PAL[:n_styles], edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, vals):</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> fmt.<span class="bu">format</span>(v)</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>        ax.text(bar.get_x() <span class="op">+</span> bar.get_width() <span class="op">/</span> <span class="dv">2</span>, bar.get_height(),</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>                label, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(vals) <span class="op">*</span> <span class="fl">1.3</span> <span class="cf">if</span> <span class="bu">max</span>(vals) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">1</span>)</span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Entire Homes: Host Behavior Profiles"</span>, fontsize<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>             fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1021,30 +545,6 @@ Stability (ARI): 1.000</code></pre>
 <h3 class="anchored" data-anchor-id="d.-cross-reference-geography-x-property-type">4d. Cross-Reference: Geography x Property Type</h3>
 <p>Now for the payoff. We combine the geographic and property clusters to find the specific combinations that outperform. If location alone does not differentiate much, does a <em>specific property type in a specific zone</em> stand out?</p>
 <div id="8df1aeb6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:34.883072Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:34.883072Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:34.925133Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:34.924804Z&quot;}}" data-execution_count="19">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Cross-reference heatmap ───────────────────────────────</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>cross_eh <span class="op">=</span> eh.dropna(subset<span class="op">=</span>[<span class="st">"geo_cluster"</span>, <span class="st">"prop_cluster"</span>]).copy()</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>cross_eh[<span class="st">"geo_cluster"</span>] <span class="op">=</span> cross_eh[<span class="st">"geo_cluster"</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>cross_eh[<span class="st">"prop_cluster"</span>] <span class="op">=</span> cross_eh[<span class="st">"prop_cluster"</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot: median RevPAR for each Geo x Property combination</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> cross_eh.pivot_table(</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"revpar_avg"</span>, index<span class="op">=</span><span class="st">"geo_cluster"</span>, columns<span class="op">=</span><span class="st">"prop_cluster"</span>,</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">"median"</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">0</span>)</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Count matrix for annotation</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>count_data <span class="op">=</span> cross_eh.pivot_table(</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"revpar_avg"</span>, index<span class="op">=</span><span class="st">"geo_cluster"</span>, columns<span class="op">=</span><span class="st">"prop_cluster"</span>,</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">"count"</span></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>).fillna(<span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Median RevPAR by Geo Zone x Property Type:"</span>)</span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(heatmap_data)</span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Count by Geo Zone x Property Type:"</span>)</span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(count_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Median RevPAR by Geo Zone x Property Type:
 prop_cluster     0      1     2
@@ -1062,36 +562,6 @@ geo_cluster
 </div>
 </div>
 <div id="c186cb39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:34.926987Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:34.926987Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:35.070888Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:35.070888Z&quot;}}" data-execution_count="20">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Heatmap visualization ─────────────────────────────────</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build annotation strings: "$RevPAR\n(n=count)"</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>annot_matrix <span class="op">=</span> heatmap_data.copy().astype(<span class="bu">str</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r <span class="kw">in</span> heatmap_data.index:</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> heatmap_data.columns:</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        rev <span class="op">=</span> heatmap_data.loc[r, c]</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        cnt <span class="op">=</span> count_data.loc[r, c] <span class="cf">if</span> r <span class="kw">in</span> count_data.index <span class="kw">and</span> c <span class="kw">in</span> count_data.columns <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pd.notna(rev):</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>            annot_matrix.loc[r, c] <span class="op">=</span> <span class="ss">f"$</span><span class="sc">{</span>rev<span class="sc">:.0f}</span><span class="ch">\n</span><span class="ss">(n=</span><span class="sc">{</span>cnt<span class="sc">}</span><span class="ss">)"</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>            annot_matrix.loc[r, c] <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    heatmap_data, annot<span class="op">=</span>annot_matrix, fmt<span class="op">=</span><span class="st">""</span>,</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"YlOrRd"</span>, linewidths<span class="op">=</span><span class="dv">1</span>, linecolor<span class="op">=</span><span class="st">"#30363d"</span>,</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax, cbar_kws<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Median RevPAR ($)"</span>},</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    annot_kws<span class="op">=</span>{<span class="st">"fontsize"</span>: <span class="dv">10</span>, <span class="st">"color"</span>: <span class="st">"#0d1117"</span>, <span class="st">"fontweight"</span>: <span class="st">"bold"</span>}</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Property Type Cluster"</span>)</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Geographic Zone"</span>)</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([type_label(prop_profile_eh, c) <span class="cf">for</span> c <span class="kw">in</span> heatmap_data.columns], fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels([<span class="ss">f"Zone </span><span class="sc">{</span>r<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> r <span class="kw">in</span> heatmap_data.index], rotation<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Entire Homes: RevPAR by Geography x Property Type"</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1111,21 +581,6 @@ geo_cluster
 <section id="a.-geographic-segmentation-private-rooms" class="level3">
 <h3 class="anchored" data-anchor-id="a.-geographic-segmentation-private-rooms">5a. Geographic Segmentation (Private Rooms)</h3>
 <div id="7a1d4f19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:35.072856Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:35.072856Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:42.441233Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:42.441233Z&quot;}}" data-execution_count="21">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Prepare geographic features (Private Rooms) ───────────</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>geo_features_pr <span class="op">=</span> pr[[<span class="st">"latitude"</span>, <span class="st">"longitude"</span>]].dropna()</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>scaler_geo_pr <span class="op">=</span> StandardScaler()</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>X_geo_pr <span class="op">=</span> scaler_geo_pr.fit_transform(geo_features_pr)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>k_geo_pr, sils_geo_pr <span class="op">=</span> pick_k(X_geo_pr)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Geographic K selected: </span><span class="sc">{</span>k_geo_pr<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Silhouette scores: </span><span class="sc">{</span>sils_geo_pr<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>pr.loc[geo_features_pr.index, <span class="st">"geo_cluster"</span>] <span class="op">=</span> fit_gmm(X_geo_pr, k_geo_pr)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>ari_geo_pr <span class="op">=</span> stability_ari(X_geo_pr, k_geo_pr)</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stability (ARI): </span><span class="sc">{</span>ari_geo_pr<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Geographic K selected: 6
 Silhouette scores: {2: np.float64(0.33434211277911774), 3: np.float64(0.37310530604697056), 4: np.float64(0.3638885219384703), 5: np.float64(0.41337636366978653), 6: np.float64(0.4381259673890926), 7: np.float64(0.3660169142333038)}
@@ -1133,25 +588,6 @@ Stability (ARI): 0.906</code></pre>
 </div>
 </div>
 <div id="6cd2814f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:42.441233Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:42.441233Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:42.608299Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:42.608299Z&quot;}}" data-execution_count="22">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Geographic cluster map (Private Rooms) ────────────────</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">10</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> <span class="bu">sorted</span>(pr[<span class="st">"geo_cluster"</span>].dropna().unique()):</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> pr[<span class="st">"geo_cluster"</span>] <span class="op">==</span> c</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    med_revpar <span class="op">=</span> pr.loc[mask, <span class="st">"revpar_avg"</span>].median()</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    ax.scatter(</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        pr.loc[mask, <span class="st">"longitude"</span>], pr.loc[mask, <span class="st">"latitude"</span>],</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span>PAL[<span class="bu">int</span>(c) <span class="op">%</span> <span class="bu">len</span>(PAL)], s<span class="op">=</span><span class="dv">6</span>, alpha<span class="op">=</span><span class="fl">0.4</span>,</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="ss">f"Zone </span><span class="sc">{</span><span class="bu">int</span>(c)<span class="sc">}</span><span class="ss"> ($</span><span class="sc">{</span>med_revpar<span class="sc">:.0f}</span><span class="ss"> RevPAR)"</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Private Rooms: Geographic Zones"</span>)</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Longitude"</span>)</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Latitude"</span>)</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper left"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, framealpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1161,24 +597,6 @@ Stability (ARI): 0.906</code></pre>
 </div>
 </div>
 <div id="471661a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:42.609921Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:42.609921Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:42.621830Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:42.621830Z&quot;}}" data-execution_count="23">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Geographic zone performance (Private Rooms) ───────────</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>geo_profile_pr <span class="op">=</span> (</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    pr.groupby(<span class="st">"geo_cluster"</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"listing_id"</span>, <span class="st">"count"</span>),</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        med_adr<span class="op">=</span>(<span class="st">"adr_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        med_occ<span class="op">=</span>(<span class="st">"occupancy_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>        med_revpar<span class="op">=</span>(<span class="st">"revpar_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>        med_revenue<span class="op">=</span>(<span class="st">"expected_revenue_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>        med_lat<span class="op">=</span>(<span class="st">"latitude"</span>, <span class="st">"median"</span>),</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>        med_lon<span class="op">=</span>(<span class="st">"longitude"</span>, <span class="st">"median"</span>),</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>geo_profile_pr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 
@@ -1277,26 +695,6 @@ Stability (ARI): 0.906</code></pre>
 <section id="b.-property-segmentation-private-rooms" class="level3">
 <h3 class="anchored" data-anchor-id="b.-property-segmentation-private-rooms">5b. Property Segmentation (Private Rooms)</h3>
 <div id="02faa805" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:42.624634Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:42.624634Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:48.825338Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:48.824444Z&quot;}}" data-execution_count="24">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Prepare property features (Private Rooms) ─────────────</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>prop_cols_pr <span class="op">=</span> [<span class="st">"bedrooms"</span>, <span class="st">"bathrooms"</span>, <span class="st">"accommodates"</span>]</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>prop_df_pr <span class="op">=</span> pr[prop_cols_pr].dropna()</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>scaler_prop_pr <span class="op">=</span> StandardScaler()</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>X_prop_pr <span class="op">=</span> scaler_prop_pr.fit_transform(prop_df_pr)</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>pca_prop_pr <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="bu">min</span>(<span class="dv">3</span>, X_prop_pr.shape[<span class="dv">1</span>]), random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>X_prop_pca_pr <span class="op">=</span> pca_prop_pr.fit_transform(X_prop_pr)</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>k_prop_pr, sils_prop_pr <span class="op">=</span> pick_k(X_prop_pca_pr)</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Property K selected: </span><span class="sc">{</span>k_prop_pr<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Silhouette scores: </span><span class="sc">{</span>sils_prop_pr<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>pr.loc[prop_df_pr.index, <span class="st">"prop_cluster"</span>] <span class="op">=</span> fit_gmm(X_prop_pca_pr, k_prop_pr)</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>ari_prop_pr <span class="op">=</span> stability_ari(X_prop_pca_pr, k_prop_pr)</span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stability (ARI): </span><span class="sc">{</span>ari_prop_pr<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Property K selected: 6
 Silhouette scores: {2: np.float64(0.6245611766984225), 3: np.float64(0.7150377926052682), 4: np.float64(0.6299934945212649), 5: np.float64(0.6708247992304998), 6: np.float64(0.7455379032867334), 7: np.float64(0.5763536627471587)}
@@ -1304,24 +702,6 @@ Stability (ARI): 0.824</code></pre>
 </div>
 </div>
 <div id="df47d551" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:48.825338Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:48.825338Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:48.849727Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:48.849727Z&quot;}}" data-execution_count="25">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Property cluster profiles (Private Rooms) ─────────────</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>prop_profile_pr <span class="op">=</span> (</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    pr.groupby(<span class="st">"prop_cluster"</span>)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"listing_id"</span>, <span class="st">"count"</span>),</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        med_bedrooms<span class="op">=</span>(<span class="st">"bedrooms"</span>, <span class="st">"median"</span>),</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        med_sleeps<span class="op">=</span>(<span class="st">"accommodates"</span>, <span class="st">"median"</span>),</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        med_adr<span class="op">=</span>(<span class="st">"adr_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>        med_occ<span class="op">=</span>(<span class="st">"occupancy_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>        med_revpar<span class="op">=</span>(<span class="st">"revpar_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>        med_revenue<span class="op">=</span>(<span class="st">"expected_revenue_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>prop_profile_pr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 
@@ -1417,28 +797,6 @@ Stability (ARI): 0.824</code></pre>
 </div>
 </div>
 <div id="4fc7578f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:48.849727Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:48.849727Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:49.376944Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:49.376293Z&quot;}}" data-execution_count="26">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Property cluster 6-panel profile (Private Rooms) ──────</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">8</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>type_labels_pr <span class="op">=</span> [type_label(prop_profile_pr, c) <span class="cf">for</span> c <span class="kw">in</span> prop_profile_pr.index]</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>n_types_pr <span class="op">=</span> <span class="bu">len</span>(type_labels_pr)</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (metric, title, fmt) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, panels):</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> prop_profile_pr[metric].values</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    bars <span class="op">=</span> ax.bar(type_labels_pr, vals, color<span class="op">=</span>PAL[:n_types_pr], edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, vals):</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> fmt.<span class="bu">format</span>(v)</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>        ax.text(bar.get_x() <span class="op">+</span> bar.get_width() <span class="op">/</span> <span class="dv">2</span>, bar.get_height(),</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>                label, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(vals) <span class="op">*</span> <span class="fl">1.3</span> <span class="cf">if</span> <span class="bu">max</span>(vals) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">1</span>)</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Private Rooms: Property Type Profiles"</span>, fontsize<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>             fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1452,25 +810,6 @@ Stability (ARI): 0.824</code></pre>
 <section id="c.-host-behavior-segmentation-private-rooms" class="level3">
 <h3 class="anchored" data-anchor-id="c.-host-behavior-segmentation-private-rooms">5c. Host Behavior Segmentation (Private Rooms)</h3>
 <div id="50758788" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:49.376944Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:49.376944Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:58.315770Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:58.315770Z&quot;}}" data-execution_count="27">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Prepare host behavior features (Private Rooms) ────────</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>host_df_pr <span class="op">=</span> pr[host_cols].dropna()</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>scaler_host_pr <span class="op">=</span> StandardScaler()</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>X_host_pr <span class="op">=</span> scaler_host_pr.fit_transform(host_df_pr)</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>pca_host_pr <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="bu">min</span>(<span class="dv">4</span>, X_host_pr.shape[<span class="dv">1</span>]), random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>X_host_pca_pr <span class="op">=</span> pca_host_pr.fit_transform(X_host_pr)</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>k_host_pr, sils_host_pr <span class="op">=</span> pick_k(X_host_pca_pr)</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Host K selected: </span><span class="sc">{</span>k_host_pr<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Silhouette scores: </span><span class="sc">{</span>sils_host_pr<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>pr.loc[host_df_pr.index, <span class="st">"host_cluster"</span>] <span class="op">=</span> fit_gmm(X_host_pca_pr, k_host_pr)</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>ari_host_pr <span class="op">=</span> stability_ari(X_host_pca_pr, k_host_pr)</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stability (ARI): </span><span class="sc">{</span>ari_host_pr<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Host K selected: 4
 Silhouette scores: {2: np.float64(0.19919384242847768), 3: np.float64(0.2476087430065002), 4: np.float64(0.25330492019834083), 5: np.float64(0.17727925497624245), 6: np.float64(0.16645828254596268), 7: np.float64(0.12249661646025892)}
@@ -1478,25 +817,6 @@ Stability (ARI): 0.959</code></pre>
 </div>
 </div>
 <div id="70632c28" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:58.315770Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:58.315770Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:58.338522Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:58.338522Z&quot;}}" data-execution_count="28">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Host cluster profiles (Private Rooms) ─────────────────</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>host_profile_pr <span class="op">=</span> (</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    pr.groupby(<span class="st">"host_cluster"</span>)</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>        n<span class="op">=</span>(<span class="st">"listing_id"</span>, <span class="st">"count"</span>),</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>        superhost_pct<span class="op">=</span>(<span class="st">"is_superhost"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>        med_rpm<span class="op">=</span>(<span class="st">"reviews_per_month"</span>, <span class="st">"median"</span>),</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>        med_instant_book<span class="op">=</span>(<span class="st">"instant_book"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>        med_response<span class="op">=</span>(<span class="st">"host_response_rate"</span>, <span class="st">"median"</span>),</span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>        med_acceptance<span class="op">=</span>(<span class="st">"host_acceptance_rate"</span>, <span class="st">"median"</span>),</span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>        med_revpar<span class="op">=</span>(<span class="st">"revpar_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>        med_revenue<span class="op">=</span>(<span class="st">"expected_revenue_avg"</span>, <span class="st">"median"</span>),</span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>host_profile_pr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <div>
 
@@ -1578,28 +898,6 @@ Stability (ARI): 0.959</code></pre>
 </div>
 </div>
 <div id="0fd8a221" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:58.338522Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:58.338522Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:58.773288Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:58.772827Z&quot;}}" data-execution_count="29">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Host cluster bar charts (Private Rooms) ───────────────</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">8</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>style_labels_pr <span class="op">=</span> [<span class="ss">f"Style </span><span class="sc">{</span><span class="bu">int</span>(c)<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">sorted</span>(pr[<span class="st">"host_cluster"</span>].dropna().unique())]</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>n_styles_pr <span class="op">=</span> <span class="bu">len</span>(style_labels_pr)</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (metric, title, fmt) <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, host_panels):</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    vals <span class="op">=</span> host_profile_pr[metric].values</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    bars <span class="op">=</span> ax.bar(style_labels_pr, vals, color<span class="op">=</span>PAL[:n_styles_pr], edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, vals):</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> fmt.<span class="bu">format</span>(v)</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>        ax.text(bar.get_x() <span class="op">+</span> bar.get_width() <span class="op">/</span> <span class="dv">2</span>, bar.get_height(),</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>                label, ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(vals) <span class="op">*</span> <span class="fl">1.3</span> <span class="cf">if</span> <span class="bu">max</span>(vals) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">1</span>)</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Private Rooms: Host Behavior Profiles"</span>, fontsize<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>             fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#c9d1d9"</span>)</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>))</span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1612,49 +910,6 @@ Stability (ARI): 0.959</code></pre>
 <section id="d.-cross-reference-geography-x-property-type-private-rooms" class="level3">
 <h3 class="anchored" data-anchor-id="d.-cross-reference-geography-x-property-type-private-rooms">5d. Cross-Reference: Geography x Property Type (Private Rooms)</h3>
 <div id="5a4d80e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:09:58.773288Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:09:58.773288Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:09:59.008948Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:09:59.008948Z&quot;}}" data-execution_count="30">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Cross-reference heatmap (Private Rooms) ───────────────</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>cross_pr <span class="op">=</span> pr.dropna(subset<span class="op">=</span>[<span class="st">"geo_cluster"</span>, <span class="st">"prop_cluster"</span>]).copy()</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>cross_pr[<span class="st">"geo_cluster"</span>] <span class="op">=</span> cross_pr[<span class="st">"geo_cluster"</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>cross_pr[<span class="st">"prop_cluster"</span>] <span class="op">=</span> cross_pr[<span class="st">"prop_cluster"</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>heatmap_data_pr <span class="op">=</span> cross_pr.pivot_table(</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"revpar_avg"</span>, index<span class="op">=</span><span class="st">"geo_cluster"</span>, columns<span class="op">=</span><span class="st">"prop_cluster"</span>,</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">"median"</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>).<span class="bu">round</span>(<span class="dv">0</span>)</span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>count_data_pr <span class="op">=</span> cross_pr.pivot_table(</span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"revpar_avg"</span>, index<span class="op">=</span><span class="st">"geo_cluster"</span>, columns<span class="op">=</span><span class="st">"prop_cluster"</span>,</span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">"count"</span></span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>).fillna(<span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>), facecolor<span class="op">=</span><span class="st">"#0d1117"</span>)</span>
-<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>annot_pr <span class="op">=</span> heatmap_data_pr.copy().astype(<span class="bu">str</span>)</span>
-<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r <span class="kw">in</span> heatmap_data_pr.index:</span>
-<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> heatmap_data_pr.columns:</span>
-<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>        rev <span class="op">=</span> heatmap_data_pr.loc[r, c]</span>
-<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>        cnt <span class="op">=</span> count_data_pr.loc[r, c] <span class="cf">if</span> r <span class="kw">in</span> count_data_pr.index <span class="kw">and</span> c <span class="kw">in</span> count_data_pr.columns <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pd.notna(rev):</span>
-<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>            annot_pr.loc[r, c] <span class="op">=</span> <span class="ss">f"$</span><span class="sc">{</span>rev<span class="sc">:.0f}</span><span class="ch">\n</span><span class="ss">(n=</span><span class="sc">{</span>cnt<span class="sc">}</span><span class="ss">)"</span></span>
-<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>            annot_pr.loc[r, c] <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
-<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a>    heatmap_data_pr, annot<span class="op">=</span>annot_pr, fmt<span class="op">=</span><span class="st">""</span>,</span>
-<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"YlOrRd"</span>, linewidths<span class="op">=</span><span class="dv">1</span>, linecolor<span class="op">=</span><span class="st">"#30363d"</span>,</span>
-<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax, cbar_kws<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Median RevPAR ($)"</span>},</span>
-<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>    annot_kws<span class="op">=</span>{<span class="st">"fontsize"</span>: <span class="dv">9</span>, <span class="st">"color"</span>: <span class="st">"#0d1117"</span>, <span class="st">"fontweight"</span>: <span class="st">"bold"</span>}</span>
-<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Property Type Cluster"</span>)</span>
-<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Geographic Zone"</span>)</span>
-<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([type_label(prop_profile_pr, c) <span class="cf">for</span> c <span class="kw">in</span> heatmap_data_pr.columns], fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels([<span class="ss">f"Zone </span><span class="sc">{</span>r<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> r <span class="kw">in</span> heatmap_data_pr.index], rotation<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Private Rooms: RevPAR by Geography x Property Type"</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2119,32 +1374,6 @@ Stability (ARI): 0.959</code></pre>
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>© 2026 Richard Chute</p>
-</div>   
-    <div class="nav-footer-center">
-      &nbsp;
-    </div>
-    <div class="nav-footer-right">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/PlotBot2023">
-      <i class="bi bi-github" role="img">
-</i> 
-    </a>
-  </li>  
-    <li class="nav-item compact">
-    <a class="nav-link" href="mailto:plotbot2023@gmail.com">
-      <i class="bi bi-envelope" role="img">
-</i> 
-    </a>
-  </li>  
-</ul>
-    </div>
-  </div>
-</footer>
 
 
 

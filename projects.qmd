@@ -1,198 +1,131 @@
 ---
-title: "Projects"
-description: "Systems I build and run, the studies and experiments that come out of them, and eight notebooks with their outputs intact."
-listing:
-  id: project-listing
-  contents: notebooks
-  type: default
-  sort: "order asc"
-  sort-ui: [order, date, title]
-  filter-ui: true
-  categories: true
-  fields: [title, description, categories, date]
-  date-format: "MMMM YYYY"
-  page-size: 20
+pagetitle: "Projects, Richard Chute"
+description-meta: "A Broward Airbnb market study, sports leaderboards and pre-registered experiments, and a collector's value guide."
 toc: false
+page-layout: custom
+body-classes: sv-page
 ---
 
-Most of my work lives in a private platform I build and run every day, so it can't all be one click away. The systems below are described as they stand, with a picture where a picture is safe to publish, and every number carries the date it was read. The **studies** are public and rebuild from their own folder. The **notebooks** at the foot of the page are complete, with code under "Show code."
+```{=html}
+<div class="sv v-projects">
 
-A walkthrough of any private system is one email away: [plotbot2023@gmail.com](mailto:plotbot2023@gmail.com).
+  <div class="top">
+    <div class="tt">
+      <span class="eyebrow">Projects</span>
+      <h1 class="page-title">What I build and measure</h1>
+    </div>
+    <ul class="rail" aria-label="On this page" style="grid-column:auto">
+      <li>3 projects</li><li>1 on the way</li>
+    </ul>
+  </div>
 
-## Systems
+  <div class="bs">
+    <div class="board one" data-stage="stage-pj" aria-label="Projects, pick one to show it">
+      <button class="tile" type="button" data-item="airbnb" aria-pressed="true">
+        <span class="mark"><img src="assets/airbnb/revpar-map.webp" alt=""></span>
+        <span class="tt"><span class="name">Broward Airbnb market study</span><span class="status live">Published</span></span>
+      </button>
+      <button class="tile" type="button" data-item="leaders" aria-pressed="false">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/><path d="M19 4l1.2 2.4 2.6.4-1.9 1.8.5 2.6L19 10l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/></svg></span>
+        <span class="tt"><span class="name">Sports leaderboards and experiments</span><span class="status live">Live</span></span>
+      </button>
+      <button class="tile" type="button" data-item="hotwheels" aria-pressed="false">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></span>
+        <span class="tt"><span class="name">Hot Wheels value field guide</span><span class="status live">Live</span></span>
+      </button>
+      <button class="tile" type="button" data-item="netflix" aria-pressed="false">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M10 9l4 2-4 2z"/></svg></span>
+        <span class="tt"><span class="name">Netflix analysis</span><span class="status building">Coming next</span></span>
+      </button>
+    </div>
 
-::: {.sys-feature}
-::: {.sys-shot}
-![The Target pipeline plan as an orbitable constellation: every planned node is a real file, coloured by layer, with solid lines for data flow and dashes for imports.](assets/projects/target-const.webp){fig-alt="A dark constellation map of pipeline files grouped into labelled layers from sources on the left to outputs on the right."}
-:::
-::: {.sys-body}
-[◐ Building]{.sys-status .building}
+    <div class="stage" id="stage-pj">
+      <article class="panel rail-top" data-item="airbnb" aria-label="Broward Airbnb market study">
+        <div class="media inlay"><img src="assets/airbnb/revpar-map.webp" alt="Map of Broward County entire-home listings as dots coloured by revenue per available night, blue for the lowest to yellow for the highest, crowded in a dense band along the coast."></div>
+        <div class="info">
+          <div class="head"><h2>Broward Airbnb market study</h2><span class="status live">Published</span></div>
+          <ul class="stats">
+            <li class="stat"><span class="n">4</span><span class="l">quarterly snapshots</span></li>
+            <li class="stat"><span class="n">4</span><span class="l">notebooks, end to end</span></li>
+            <li class="stat"><span class="n">1</span><span class="l">straight answer for an investor</span></li>
+          </ul>
+          <div class="foot">
+            <ul class="tray slim" aria-label="Methods"><li>Market analysis</li><li>Data quality</li><li>Clustering</li></ul>
+            <div class="btn-row"><button class="btn" type="button" popovertarget="n-airbnb">Notes</button><a class="btn primary" href="airbnb.html">Open the case study</a></div>
+          </div>
+        </div>
+      </article>
 
-### The Target pipeline rebuild
+      <article class="panel rail-top" data-item="leaders" aria-label="Sports leaderboards and experiments">
+        <div class="media inlay poster scoreline" aria-hidden="true">
+          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:78%"></span></span><span class="sl-chip hot">Elite</span></div>
+          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:56%"></span></span><span class="sl-chip warm">Good</span></div>
+          <div class="sl-row"><span class="sl-k">Baseline</span><span class="sl-bar base"><span style="width:44%"></span></span><span class="sl-chip">Average</span></div>
+          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:24%"></span></span><span class="sl-chip cold">Poor</span></div>
+        </div>
+        <div class="info">
+          <div class="head"><h2>Sports leaderboards and experiments</h2><span class="status live">Live</span></div>
+          <ul class="stats">
+            <li class="stat"><span class="n">11</span><span class="l">sports, each with its own boards</span></li>
+            <li class="stat"><span class="n">5</span><span class="l">boards a sport: basic, advanced, betting, accuracy, results</span></li>
+            <li class="stat"><span class="n">30</span><span class="l">games before a row is ranked</span></li>
+          </ul>
+          <div class="foot">
+            <ul class="tray slim" aria-label="Methods"><li>z-scores</li><li>Pre-registration</li><li>Holdout tests</li></ul>
+            <div class="btn-row"><button class="btn" type="button" popovertarget="n-leaders">Leaderboards</button><button class="btn" type="button" popovertarget="n-experiments">Experiments</button></div>
+          </div>
+        </div>
+      </article>
 
-An audit of my own production pipeline, turned into a plan and then into code. The audit found the same data recalled in many places, derived numbers defined more than once, and probabilities produced several ways in one run. The plan lays the pipeline out again as one path: a single intake engine, one typing gate, a fact store with declared grains, estimators before simulation, and calibration as a loop rather than a step.
+      <article class="panel rail-top" data-item="hotwheels" aria-label="Hot Wheels value field guide">
+        <div class="media inlay poster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></div>
+        <div class="info">
+          <div class="head"><h2>Hot Wheels value field guide</h2><span class="status live">Live</span></div>
+          <ul class="stats">
+            <li class="stat"><span class="n">500</span><span class="l">rare pieces on the watch list</span></li>
+            <li class="stat"><span class="n">Every value</span><span class="l">with its source, basis and date</span></li>
+          </ul>
+          <div class="foot">
+            <ul class="tray slim" aria-label="Methods"><li>Market research</li><li>Pricing</li><li>Reference design</li></ul>
+            <div class="btn-row"><button class="btn" type="button" popovertarget="n-hotwheels">Notes</button></div>
+          </div>
+        </div>
+      </article>
 
-Each layer has its own page with a live meter that climbs planned, coded, tested, live. The spine keeps its own run and QA record: every check with its value, baseline, sample size and threshold, plus rejected rows and data freshness.
+      <article class="panel rail-top" data-item="netflix" aria-label="Netflix analysis, coming next">
+        <div class="media inlay poster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M10 9l4 2-4 2z"/></svg></div>
+        <div class="info">
+          <div class="head"><h2>Netflix analysis</h2><span class="status building">Coming next</span></div>
+          <div class="foot"><ul class="tray slim" aria-label="Status"><li>In progress</li></ul></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
 
-::: {.sys-stats}
-- [15 / 89]{.n} nodes live
-- [816]{.n} tests on the plan
-- [0]{.n} failing
-:::
+<div id="n-airbnb" popover class="note">
+  <h3>Broward Airbnb market study</h3>
+  <p>Four quarterly Inside Airbnb snapshots of Broward County, reduced to a straight answer for an individual investor: what an entire-home rental actually earns, which neighbourhoods clear their cost basis, and how much of the market multi-listing hosts already hold.</p>
+  <p>Four notebooks carry it end to end: the market itself, a data-quality decision memo, a segmentation by mixture models, and the investor guide.</p>
+  <div class="btn-row"><a class="btn primary" href="airbnb.html">Open the case study</a><button class="btn" popovertarget="n-airbnb" popovertargetaction="hide">Close</button></div>
+</div>
+<div id="n-leaders" popover class="note">
+  <h3>Leaderboards</h3>
+  <p>Every sport gets its own leaderboards: basic stats, advanced stats, betting, accuracy and results. Each row is scored against a stated baseline (the league mean, a coin flip, break-even, or the market) and its z-score sets the heat colour, so a number always reads against something.</p>
+  <p>Small samples are held back: a row under 30 games is never ranked or coloured. Early in a season the board shows early leaders instead, labelled as early. Every board has a table twin with every row and its notes.</p>
+  <button class="btn" popovertarget="n-leaders" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-experiments" popover class="note">
+  <h3>Pre-registered experiments</h3>
+  <p>Each test writes down its question, data, seasons and pass mark before it runs, and scores its holdout once. A test passes only if it beats its baseline and the market by enough to matter.</p>
+  <p>Each one ships as a report: the question and verdict with one hero number, what was tested, the results, the checks against the baseline, the market and the holdout, what it means, the limits, and a table twin for every chart. Recent questions: whether pass-rush pressure adds points beyond the box score, and whether a starter's share of production moves with him after a trade or injury.</p>
+  <button class="btn" popovertarget="n-experiments" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-hotwheels" popover class="note">
+  <h3>Hot Wheels value field guide</h3>
+  <p>How to identify, authenticate, grade and price a collectible car, generation by generation. Every feature is drawn and zoomed, the fake and restoration tells are listed, and a ranked watch list covers 500 rare pieces. Every value carries its source, basis and date.</p>
+  <button class="btn" popovertarget="n-hotwheels" popovertargetaction="hide">Close</button>
+</div>
 
-*Python · PostgreSQL · DAG orchestration · data contracts · as of 2026-11-08*
-:::
-:::
-
-::: {.sys-feature .flip}
-::: {.sys-shot}
-![The Markets legal map: online sportsbook, prediction market, pick'em and sweepstakes status for every state, with sourced counts above it.](assets/projects/markets-map.webp){fig-alt="A dark dashboard with four headline tiles and a tile map of US states coloured by legal status."}
-:::
-::: {.sys-body}
-[● Live]{.sys-status .live}
-
-### Markets: a sourced map of legal betting and free market data
-
-Where each kind of betting is legal, state by state, across four layers: online sportsbooks, prediction markets and their court fights, pick'em apps, and sweepstakes. Every operator gets a scorecard, z-scored within its kind. The same page catalogues every free odds, finance, crypto, commodity and macro API, with its limits on one scale and its terms in words.
-
-The rule that makes it trustworthy: **every fact carries its source and a grade**, and only facts opened at the source or confirmed by a second one are ever scored. An API whose terms ban automated use is listed so you know, and never wired.
-
-::: {.sys-stats}
-- [51]{.n} states + DC mapped
-- [31]{.n} operator scorecards
-- [29]{.n} finance APIs graded
-:::
-
-*Research · data governance · API terms review · data as of 2026-10-25*
-:::
-:::
-
-::: {.sys-feature}
-::: {.sys-shot}
-![The ML and DS ideas board: 197 ideas in tier lanes, with arrows showing which idea unlocks which.](assets/projects/ideas.webp){fig-alt="A dark board titled ML and DS Ideas with status counts and an ascent map of numbered idea nodes linked by arrows."}
-:::
-::: {.sys-body}
-[● Live]{.sys-status .live}
-
-### The ML & DS ideas board
-
-A research backlog run like a portfolio. Each idea is one Markdown file with a spec sheet: its baseline, the result that would falsify it, and the compute it needs. The board draws every idea in its tier lane with the lines that say what unlocks what, and shows which seasons each data source actually covers. An idea is coded only after its decision is written down and approved.
-
-::: {.sys-stats}
-- [197]{.n} ideas on the board
-- [46]{.n} live
-- [37]{.n} retired, kept with reasons
-:::
-
-*Experiment design · research planning · as of 2026-11-08*
-:::
-:::
-
-::: {.sys-grid}
-
-::: {.sys}
-[● Live]{.sys-status .live}
-
-### Review bench and judge trainer
-
-Seventeen automated judges that every new view, restyle or pipeline change faces before its pull request: contrast, type floor, honesty labels, data checks. Each judge has numbered rules and tunable thresholds with their acceptable ranges. When I overrule a judge, the ruling is recorded and becomes training data for the next review.
-
-*QA automation · Playwright · accessibility measurement*
-:::
-
-::: {.sys}
-[● Live]{.sys-status .live}
-
-### Data lineage, read from the code
-
-Every external feed, loader, raw table, derived table and reader, mapped with a file and line number behind each node and edge, at three drill levels. A companion atlas profiles every raw column's values. Where a count needs the live catalogue, it reads "not measured" instead of a guess.
-
-*Static analysis · data cataloguing · lineage*
-:::
-
-::: {.sys}
-[◐ Building]{.sys-status .building}
-
-### Pre-registered experiments
-
-Tests that state their pass gate before they run and score their holdout once. One asks whether a game simulation beats the closing line by enough to matter. Another moves a traded or injured starter's share of team production with him, and enters the model only if the holdout errors improve.
-
-*Experiment design · holdout testing · Monte Carlo*
-:::
-
-::: {.sys}
-[● Live]{.sys-status .live}
-
-### Writing console
-
-A drafting desk for the publication below. Pick a story from the week's flagged movements, write the hook yourself, and the desk drafts the rest with a receipt on every number. Every figure, credit line and data-provider rule is checked before anything can be copied out, and nothing posts until I press.
-
-*Content pipeline · provenance · Python*
-:::
-
-::: {.sys}
-[◐ Building]{.sys-status .building}
-
-### Political and corporate dashboard
-
-One card per member of Congress, Fortune 500 executive and director, and Supreme Court justice, each with three key numbers. It traces the money from PACs to candidates and from agencies to contractors, and lists the most leveraged and most shorted companies. Each number carries its source and as-of date, and a feed that isn't wired yet says so.
-
-*Public-records integration · entity resolution*
-:::
-
-::: {.sys}
-[● Live]{.sys-status .live}
-
-### Mise: household nutrition and training
-
-A meal plan per person built from each profile's targets, a grocery list priced by aisle and by store, workouts by training phase, and a bloodwork page that turns a lab panel into plain words and a plan. It runs offline, because the data is a family's health.
-
-*Single-file app · offline-first · nutrition modelling*
-:::
-
-::: {.sys}
-[● Live]{.sys-status .live}
-
-### Hot Wheels value field guide
-
-How to identify, authenticate, grade and price a collectible car, generation by generation. Every feature is drawn and zoomed, the fake and restoration tells are listed, and a ranked watch list covers 500 rare pieces. Every value carries its source, basis and date.
-
-*Market research · pricing · reference design*
-:::
-
-:::
-
-## Studies
-
-Public write-ups that rebuild end to end from the committed data in their own folder: no database, no trust required. A movement is only called a story if it clears a threshold measured against that team's own history, and null results are published as nulls. They're collected under **Stats Over Fiction**.
-
-::: {.cols2}
-::: {}
-![](assets/projects/sof-trajectories.webp){fig-alt="Line chart of every NFL team's season-to-date efficiency across the 2025 season."}
-
-### [The 2025 efficiency race](https://github.com/PlotBot2023/stats-over-fiction/blob/main/studies/power-trajectories-2025/post.md)
-
-A season is a trajectory, not a table. All 32 teams' season-to-date efficiency, week by week, and the collapse that hid inside a top-10 finish.
-
-*Python · nflverse · reproducible study*
-:::
-
-::: {}
-![](assets/projects/sof-draft-gradient.webp){fig-alt="Chart of running-back breakout rates by draft round."}
-
-### [Draft capital vs. athleticism](https://github.com/PlotBot2023/stats-over-fiction/blob/main/studies/draft-vs-athleticism/post.md)
-
-What makes a running back break out: the draft-capital gradient, what speed score really adds, and the seven-player cell that answers the rescue question, shown with its sample size rather than trimmed.
-
-*Python · nflverse · reproducible study*
-:::
-:::
-
-[All studies on GitHub →](https://github.com/PlotBot2023/stats-over-fiction)
-
-## Notebooks
-
-Grouped roughly by what they demonstrate: the **Broward Airbnb** series is end-to-end analysis for a non-technical decision-maker; the **sports** notebooks come out of the private platform above; the **coursework** notebooks are labelled as such. They're from IBM and sports-analytics course tracks, kept here because the wrangling and visualization work is honest and legible.
-
-::: {#project-listing}
-:::
+<script src="assets/sv.js"></script>
+```

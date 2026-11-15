@@ -1,83 +1,166 @@
 ---
-title: "Résumé"
-description: "Richard Chute — analytics and operations. Download the PDF or read the summary below."
-toc: true
+pagetitle: "Resume, Richard Chute"
+description-meta: "Richard Chute, analytics and operations."
+toc: false
+page-layout: custom
+body-classes: sv-page
 ---
 
-::: {.cta}
-[Download PDF](assets/Richard_Chute_Resume.pdf){.primary}
-[Email me](mailto:plotbot2023@gmail.com)
-[GitHub](https://github.com/PlotBot2023)
-:::
+```{=html}
+<div class="sv v-resume">
 
-**Richard Chute** — Fort Lauderdale, FL · [plotbot2023@gmail.com](mailto:plotbot2023@gmail.com) · [github.com/PlotBot2023](https://github.com/PlotBot2023)
+  <div class="top">
+    <div class="tt">
+      <span class="eyebrow">Resume, Fort Lauderdale, Florida</span>
+      <h1 class="page-title">Operations leader turned data engineer</h1>
+    </div>
+    <div class="btn-row">
+      <button class="btn" type="button" popovertarget="n-edu">Training</button>
+      <a class="btn primary" href="projects.html">See the projects</a>
+    </div>
+  </div>
 
-## Summary
+  <section class="panel rail-top skills" aria-labelledby="skills-title">
+    <h2 id="skills-title" class="sec-title">Skills</h2>
+    <div class="skillgrid inlay">
+      <div class="skillrow"><span class="k">Languages</span><ul><li>Python</li><li>SQL</li><li>R</li></ul></div>
+      <div class="skillrow"><span class="k">Databases</span><ul><li>PostgreSQL</li><li>MySQL</li><li>SQLite</li></ul></div>
+      <div class="skillrow"><span class="k">Analysis</span><ul><li>pandas</li><li>NumPy</li><li>scikit-learn</li><li>XGBoost</li><li>CatBoost</li><li>statsmodels</li></ul></div>
+      <div class="skillrow"><span class="k">Methods</span><ul><li>Monte Carlo</li><li>Regression</li><li>Time series</li><li>Bayesian priors</li><li>Clustering</li><li>Causal models</li></ul></div>
+      <div class="skillrow"><span class="k">Engineering</span><ul><li>Docker</li><li>Alembic</li><li>pytest</li><li>FastAPI</li><li>Git</li><li>uv</li></ul></div>
+      <div class="skillrow"><span class="k">Visuals</span><ul><li>matplotlib</li><li>Quarto</li><li>Tableau</li><li>Power BI</li><li>Excel</li></ul></div>
+    </div>
+  </section>
 
-Analytical operations leader moving into data engineering and analysis. Fifteen years implementing data-driven processes, automating workflows, and optimizing vendor relationships to reduce cost and improve service quality. Now building and maintaining production data pipelines in Python and PostgreSQL, with applied modeling work in simulation, gradient boosting, clustering, and causal inference.
+  <section class="xp" aria-label="Experience">
+    <div class="board" data-stage="stage-cv" aria-label="Roles, pick one to show it">
+      <button class="tile" type="button" data-item="sof" aria-pressed="true">
+        <span class="sof-slot" data-slot="sof-logo" aria-hidden="true" style="width:52px;font-size:1rem">SOF</span>
+        <span class="tt"><span class="name">Stats Over Fiction</span><span class="sub">Analytics practice, 2025 to now</span></span>
+      </button>
+      <button class="tile" type="button" data-item="taverna" aria-pressed="false">
+        <span class="mark" style="color:var(--or)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16v12H4z"/><path d="M9 7V5h6v2"/><path d="M4 12h16"/></svg></span>
+        <span class="tt"><span class="name">The Taverna Collection</span><span class="sub">Sales executive, 2026</span></span>
+      </button>
+      <button class="tile" type="button" data-item="blueturtle" aria-pressed="false">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 15c2 0 2-1.5 4.5-1.5S10 15 12 15s2-1.5 4.5-1.5S19 15 21 15"/><path d="M3 19c2 0 2-1.5 4.5-1.5S10 19 12 19s2-1.5 4.5-1.5S19 19 21 19"/><path d="M8 11V5a2 2 0 0 1 4 0M12 11V5a2 2 0 0 1 4 0"/></svg></span>
+        <span class="tt"><span class="name">Blue Turtle Pool Co.</span><span class="sub">Owner and operator, 2018 to 2026</span></span>
+      </button>
+      <button class="tile" type="button" data-item="poolpros" aria-pressed="false">
+        <span class="mark" style="color:var(--vi)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 9l9-5 9 5v11H3z"/><path d="M7 20v-6h10v6"/><path d="M7 17h10"/></svg></span>
+        <span class="tt"><span class="name">Pool Pros of Hollywood</span><span class="sub">General manager, 2012 to 2022</span></span>
+      </button>
+    </div>
 
-## Technical skills
+    <div class="stage" id="stage-cv">
+      <article class="panel rail-top" data-item="sof" aria-label="Stats Over Fiction, independent analytics practice">
+        <div class="head"><h2>Independent analytics practice</h2><span class="role-when">2025 to now</span></div>
+        <ul class="stats wins">
+          <li class="stat"><span class="n">11</span><span class="l">sports with leaderboards</span></li>
+          <li class="stat"><span class="n">20,575</span><span class="l">rental listings clustered for an investor</span></li>
+          <li class="stat"><span class="n">Daily</span><span class="l">pipelines, ingestion to calibration</span></li>
+          <li class="stat"><span class="n">1</span><span class="l">causal audit of a live NBA pipeline</span></li>
+        </ul>
+        <div class="foot">
+          <ul class="tray slim" aria-label="Stack"><li>PostgreSQL</li><li>Python 3.11</li><li>Docker</li><li>FastAPI</li></ul>
+          <button class="btn" type="button" popovertarget="n-sof">Details</button>
+        </div>
+      </article>
+      <article class="panel rail-top" data-item="taverna" aria-label="The Taverna Collection, sales executive">
+        <div class="head"><h2>Sales executive</h2><span class="role-when">May to July 2026</span></div>
+        <ul class="stats wins">
+          <li class="stat"><span class="n">Finance</span><span class="l">deals structured</span></li>
+          <li class="stat"><span class="n">Monthly</span><span class="l">inventory against targets</span></li>
+        </ul>
+        <div class="foot">
+          <ul class="tray slim" aria-label="Where"><li>Plantation, Florida</li></ul>
+          <button class="btn" type="button" popovertarget="n-taverna">Details</button>
+        </div>
+      </article>
+      <article class="panel rail-top" data-item="blueturtle" aria-label="Blue Turtle Pool Co., owner and operator">
+        <div class="head"><h2>Owner and operator</h2><span class="role-when">March 2018 to 2026</span></div>
+        <ul class="stats wins">
+          <li class="stat"><span class="n">20%</span><span class="l">less travel time</span></li>
+          <li class="stat"><span class="n">30%</span><span class="l">fewer emergency parts buys</span></li>
+          <li class="stat"><span class="n">50%</span><span class="l">less billing time</span></li>
+          <li class="stat"><span class="n">15%</span><span class="l">better conversion, from pricing tests</span></li>
+        </ul>
+        <div class="foot">
+          <ul class="tray slim" aria-label="Built"><li>Job logs</li><li>Dashboards</li><li>Scorecards</li><li>Experiments</li></ul>
+          <button class="btn" type="button" popovertarget="n-blueturtle">Details</button>
+        </div>
+      </article>
+      <article class="panel rail-top" data-item="poolpros" aria-label="Pool Pros of Hollywood, general manager">
+        <div class="head"><h2>General manager</h2><span class="role-when">May 2012 to March 2022</span></div>
+        <ul class="stats wins">
+          <li class="stat"><span class="n">25%</span><span class="l">fewer stockouts and rush freight</span></li>
+          <li class="stat"><span class="n">20%</span><span class="l">fewer suppliers</span></li>
+          <li class="stat"><span class="n">10%</span><span class="l">lower cost of goods</span></li>
+          <li class="stat"><span class="n">15%</span><span class="l">lower freight per order</span></li>
+        </ul>
+        <div class="foot">
+          <ul class="tray slim" aria-label="Built"><li>One dataset</li><li>Daily KPIs</li><li>SKU forecasts</li><li>Vendor scorecards</li></ul>
+          <button class="btn" type="button" popovertarget="n-poolpros">Details</button>
+        </div>
+      </article>
+    </div>
+  </section>
 
-| | |
-|---|---|
-| **Languages** | Python, SQL, R |
-| **Databases** | PostgreSQL, MySQL, SQLite |
-| **Analysis** | pandas, NumPy, scikit-learn, XGBoost, CatBoost, statsmodels |
-| **Methods** | Monte Carlo simulation, regression, time-series, Bayesian priors, ANOVA, hypothesis testing, GMM clustering, structural causal models |
-| **Engineering** | Docker, Docker Compose, Alembic, pytest, FastAPI, Git, uv, Makefile-driven workflows |
-| **Visualization** | matplotlib, Quarto, Tableau, Power BI, Excel |
+</div>
 
-## Selected project
+<div id="n-sof" popover class="note">
+  <h3>Independent analytics practice, Stats Over Fiction</h3>
+  <ul>
+    <li>Build and run a private multi-sport projections platform, PostgreSQL-backed, with daily ingestion through projection and calibration.</li>
+    <li>Leaderboards for eleven sports, every row scored against a stated baseline; pre-registered experiments that score their holdout once.</li>
+    <li>Append-only data design with explicit casting and timestamped run logs; calibration and backtests check model output against results.</li>
+    <li>Broward County rental study: 20,575 entire-home listings across four quarterly snapshots, clustered with Gaussian mixture models and profiled by revenue.</li>
+    <li>Structural causal model audit of a production NBA pipeline, using d-separation to separate causal signals from merely correlated ones.</li>
+  </ul>
+  <button class="btn" popovertarget="n-sof" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-taverna" popover class="note">
+  <h3>Sales executive, The Taverna Collection</h3>
+  <p>Plantation, Florida, May 2026 to July 2026. Brand expert and sales executive: structured finance deals and managed inventory availability against monthly targets.</p>
+  <button class="btn" popovertarget="n-taverna" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-blueturtle" popover class="note">
+  <h3>Owner and operator, Blue Turtle Pool Co.</h3>
+  <ul>
+    <li>Turned field operations into a structured data pipeline, logging every job, part, travel leg and incident.</li>
+    <li>Daily and weekly dashboards for utilization, response time, recurring revenue and churn drivers.</li>
+    <li>Routing and schedule rules that cut travel time 20 percent.</li>
+    <li>Inventory and seasonal demand forecasts from service logs, cutting stockouts and emergency parts buys 30 percent.</li>
+    <li>Automated recurring invoicing and reconciliation, cutting billing time in half.</li>
+    <li>QA metrics and technician scorecards tied to repeat repairs and customer satisfaction.</li>
+    <li>Pricing and service-package experiments that lifted conversion 15 percent.</li>
+  </ul>
+  <button class="btn" popovertarget="n-blueturtle" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-poolpros" popover class="note">
+  <h3>General manager, Pool Pros of Hollywood</h3>
+  <ul>
+    <li>Brought order, receiving, pick, pack, ship and inventory events into a single analytics dataset.</li>
+    <li>Daily KPIs for orders per hour, pick accuracy, on-time fulfilment and inventory turns.</li>
+    <li>SKU-level demand forecasts and automated reorder rules, cutting stockouts and emergency freight 25 percent.</li>
+    <li>Vendor scorecards on fill rate, lead time, price variance and contract compliance; consolidated suppliers 20 percent with price-volume modelling.</li>
+    <li>Seasonal buys negotiated with volume and early-buy discounts, lowering cost of goods 10 percent.</li>
+    <li>PO batching and consolidated shipments, cutting freight cost per order 15 percent.</li>
+  </ul>
+  <button class="btn" popovertarget="n-poolpros" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-edu" popover class="note">
+  <h3>Courses and certificates</h3>
+  <ul>
+    <li>SQL, IBM, online</li>
+    <li>Machine Learning, IBM, online</li>
+    <li>Python, University of Michigan, online</li>
+    <li>Data Analytics, Google, online</li>
+    <li>Data Analysis with R Studio, Google, online</li>
+    <li>Google Analytics certification</li>
+  </ul>
+  <button class="btn" popovertarget="n-edu" popovertargetaction="hide">Close</button>
+</div>
 
-**SportsAnalytics** — multi-sport projections platform *(2025–present)*
-
-- Multi-sport, PostgreSQL-backed, with daily pipelines from raw play-by-play through projections and calibration.
-- Python 3.11 package with Docker Compose dev stack, Alembic migrations, cross-sport pytest suite, and a FastAPI/site-generator layer for published reports.
-- Append-only data design with explicit casting and load-timestamped JSONL run logs; calibration and backtest notebooks validate model output against realized results.
-- Selected notebooks from this system are published under [Projects](projects.qmd).
-
-## Experience
-
-### Independent Analytics Practice — Stats Over Fiction
-*Fort Lauderdale, FL · 2025 – Present*
-
-- Published portfolio of eight analyses at [plotbot2023.github.io/portfolio](https://plotbot2023.github.io/portfolio), each with its source code attached.
-- Build and operate the SportsAnalytics platform described above: multi-sport, PostgreSQL-backed, daily ingestion through projection and calibration.
-- Broward County short-term rental study: 20,575 entire-home listings across four quarterly snapshots, clustered with Gaussian Mixture Models and profiled by revenue to answer a concrete investment question.
-- Structural causal model audit of a production NBA pipeline, using d-separation to separate causally defensible signals from merely correlated ones.
-- Multi-sport data quality reporting: freshness, run status, row counts and projection-quality checks read directly from the backing Postgres instances.
-
-### Sales Executive — The Taverna Collection
-*Plantation, FL · May 2026 – July 2026*
-
-- Brand expert and sales executive; structured finance deals and managed inventory availability against monthly targets.
-
-### Owner / Operator — Blue Turtle Pool Co.
-*Davie, FL · March 2018 – 2026*
-
-- Turned field operations into a structured data pipeline, logging every job, part, travel leg, and incident.
-- Built daily and weekly dashboards tracking utilization, response time, recurring revenue, and churn drivers.
-- Designed routing and schedule rules that reduced travel time 20%.
-- Forecast inventory and seasonal demand from historical service logs, reducing stockouts and emergency parts purchases 30%.
-- Automated recurring invoicing and reconciliation, cutting billing time 50%.
-- Introduced QA metrics and technician scorecards tied to repeat-repair rates and customer satisfaction.
-- Ran pricing and service-package experiments, improving conversion 15%.
-
-### General Manager — Pool Pros of Hollywood
-*Hollywood, FL · May 2012 – March 2022*
-
-- Centralized order, receiving, pick/pack/ship, and inventory events into a single analytics dataset.
-- Developed daily KPIs for orders/hour, pick accuracy, on-time fulfillment, and inventory turns.
-- Designed SKU-level demand forecasting and automated reorder rules, cutting stockouts and emergency freight 25%.
-- Built vendor scorecards on fill rate, lead time, price variance, and contract compliance; consolidated suppliers 20% via price-volume modeling.
-- Negotiated seasonal buys with volume discounts and early-buy incentives, lowering COGS 10%.
-- Implemented PO-batching and consolidated shipments, reducing freight cost per order 15%.
-
-## Education & certifications
-
-- **SQL** — IBM (online)
-- **Machine Learning** — IBM (online)
-- **Python** — University of Michigan (online)
-- **Data Analytics** — Google (online)
-- **Data Analysis with R Studio** — Google (online)
-- **Google Analytics Certification**
+<script src="assets/sv.js"></script>
+```
