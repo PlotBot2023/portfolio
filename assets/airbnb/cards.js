@@ -182,13 +182,23 @@
       if (ratio >= 1) why = za > zo + .5 ? ", on rate more than bookings" : zo > za + .5 ? ", on bookings more than rate" : ", on rate and bookings together";
       else why = za < zo - .5 ? ", held back by its rate" : zo < za - .5 ? ", held back by empty nights" : ", on both rate and bookings";
     }
-    return fmt("revpar", v) + " a night, " + how + " the county's " + fmt("revpar", c) + why + ".";
+    var fig = function (t) { return '<b class="fig">' + esc(t) + "</b>"; };
+    return fig(fmt("revpar", v)) + " a night, " + '<em class="how">' + esc(how) + "</em> the county's " + fig(fmt("revpar", c)) + (why ? '<span class="why">' + esc(why) + "</span>" : "") + ".";
+  }
+  function subLine(x) {
+    var parts = String(x.sub).split(", ");
+    if (state.level === "seg" && parts.length >= 4) {
+      var hues = ["#2DD4BF", "#FFC72C", "#C084FC"];
+      return '<div class="ab-tags">' + parts.slice(0, 3).map(function (t, i) { return '<span class="ab-tag" style="--th:' + hues[i] + '">' + esc(t.charAt(0).toUpperCase() + t.slice(1)) + "</span>"; }).join("")
+        + '<span class="ab-cnt">' + esc(parts.slice(3).join(", ")) + "</span></div>";
+    }
+    return '<span class="ab-sub">' + esc(x.sub) + "</span>";
   }
   function band(x) {
     var r = rankOf(state.level, "revpar", x.m.revpar), z = zOf(state.level, "revpar", x.m.revpar);
     var lvl = LEVELS.filter(function (l) { return l[0] === state.level; })[0][1];
     return '<div class="ab-disc" aria-hidden="true">' + (state.level === "listing" ? "L" : state.level === "host" ? "H" : state.level === "seg" ? "ML" : "N") + "</div>"
-      + '<div class="ab-id"><span class="eyebrow">' + esc(lvl + ", Broward County, " + D.asof) + '</span><p id="ab-title" class="ab-name' + (x.name.length > 18 ? " long" : "") + '" role="heading" aria-level="2">' + esc(x.name) + '</p><span class="ab-sub">' + esc(x.sub) + '</span><p class="ab-deck">' + esc(deck(x)) + "</p></div>"
+      + '<div class="ab-id"><span class="eyebrow">' + esc(lvl + ", Broward County, " + D.asof) + '</span><p id="ab-title" class="ab-name' + (x.name.length > 18 ? " long" : "") + '" role="heading" aria-level="2">' + esc(x.name) + '</p>' + subLine(x) + '<p class="ab-deck">' + deck(x) + "</p></div>"
       + '<div class="ab-chips"><span class="ab-chip rk ' + heat(z) + '"><i>Rank</i><b>' + r.rank.toLocaleString("en-US") + "</b><small>of " + r.of.toLocaleString("en-US") + "</small></span>"
       + '<span class="ab-chip"><i>Priced</i><b>' + x.n.toLocaleString("en-US") + '</b></span><span class="ab-chip gold"><i>Data</i><b>Measured</b></span></div>';
   }

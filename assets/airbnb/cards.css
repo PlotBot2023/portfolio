@@ -224,3 +224,23 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-card .ab-id .ab-name.long { font-size: clamp(2.2rem, 5.2vh, 3.6rem); }
 .ab-pick select { min-height: 44px; }
 @media (max-width: 1599px) { .ab-f .ab-th small { display: none; } .ab-card .ab-id .ab-name { font-size: clamp(2.2rem, 5.6vh, 3.4rem); } }
+
+/* the standfirst and the profile (the owner: "more attention here"): chips for a segment's profile, a count in the
+   number face, a larger deck with a gold rule, gold numerals for its figures, balanced lines so no word sits alone */
+.ab-sub { text-wrap: balance; }
+.ab-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 4px 0 2px; }
+.ab-tag { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 14px 0 10px; border-radius: 999px; white-space: nowrap;
+  font-size: 1.0625rem; font-weight: 850; letter-spacing: .02em; color: #fff;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, .25)), color-mix(in srgb, var(--th) 26%, #14152E);
+  border: 1.5px solid color-mix(in srgb, var(--th) 70%, transparent);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .5), 0 6px 12px -6px rgba(0, 0, 0, .8), 0 0 16px -6px var(--th), inset 0 1px 0 rgba(255, 255, 255, .3); }
+.ab-tag::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--th); box-shadow: 0 0 10px var(--th); }
+.ab-cnt { font: 900 1.125rem var(--num); color: #FFC72C; letter-spacing: .02em; white-space: nowrap; }
+.ab-deck { position: relative; max-width: 46ch; margin-top: 8px !important; padding: 2px 0 2px 16px; text-wrap: balance;
+  font-size: clamp(1.25rem, 2.7vh, 1.7rem); line-height: 1.28; letter-spacing: .005em; color: #F4F5FA; }
+.ab-deck::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 4px; border-radius: 2px;
+  background: linear-gradient(180deg, #FFC72C, #FF7A59); box-shadow: 0 0 12px rgba(255, 199, 44, .6); }
+.ab-deck .fig { font-family: var(--num); font-style: normal; font-weight: 900; font-size: 1.08em; color: #FFC72C; letter-spacing: -.01em;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .55), 0 0 18px rgba(255, 199, 44, .35); }
+.ab-deck .how { font-style: italic; font-weight: 700; color: #fff; }
+.ab-deck .why { color: #DCE3F2; }
