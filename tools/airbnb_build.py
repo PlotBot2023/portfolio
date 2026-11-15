@@ -94,7 +94,8 @@ def build(df):
     homes = last[last["room_type"] == "Entire home/apt"].copy()
     host_n = last.groupby("host_id")["listing_id"].transform("count")
     last["multi"] = host_n >= MULTI
-    homes = homes.merge(last[["listing_id", "multi"]], on="listing_id", how="left")
+    last["host_n"] = host_n
+    homes = homes.merge(last[["listing_id", "multi", "host_n"]], on="listing_id", how="left")
 
     s = {
         "asof": pd.Timestamp(snaps[-1]).strftime("%d %B %Y").lstrip("0"),

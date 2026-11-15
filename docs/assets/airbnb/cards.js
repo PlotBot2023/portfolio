@@ -146,6 +146,22 @@
     return '<div class="ab-share"><span class="trk"><span class="fill" style="width:' + w.toFixed(1) + '%"></span><span class="cty" style="left:' + c.toFixed(1) + '%"></span></span>'
       + '<span class="lg"><i>' + esc(fmt(k, v) + " " + (M[k].per || "")) + "</i><i>county " + esc(fmt(k, c)) + "</i></span></div>";
   }
+  // the mix of a card's homes: by segment and by host type, as 100% bars with a plain legend (shares in words)
+  var SEG_HUES = ["#FFC72C", "#2DD4BF", "#C084FC", "#8792A8"], HOST_HUES = ["#F87171", "#FB923C", "#60A5FA"];
+  function mixBar(title, names, counts, hues) {
+    var tot = counts.reduce(function (a, b) { return a + b; }, 0);
+    if (!tot) return "";
+    var parts = counts.map(function (c, i) { return [names[i], c, hues[i]]; }).filter(function (p) { return p[1] > 0; });
+    var bar = parts.map(function (p) { return '<span style="--w:' + (100 * p[1] / tot).toFixed(2) + "%;--c:" + p[2] + '"></span>'; }).join("");
+    var leg = parts.map(function (p) { return '<li style="--c:' + p[2] + '"><i></i>' + esc(p[0]) + " <b>" + Math.round(100 * p[1] / tot) + "%</b></li>"; }).join("");
+    return '<div class="ab-mix"><span class="ttl">' + esc(title) + '</span><span class="bar" role="img" aria-label="' + esc(title + ": " + parts.map(function (p) { return p[0] + " " + Math.round(100 * p[1] / tot) + "%"; }).join(", ")) + '">' + bar + '</span><ul>' + leg + "</ul></div>";
+  }
+  function mixBars(x) {
+    var out = "";
+    if (state.level !== "seg") out += mixBar("Its homes by segment", D.seg_names, x.mix.seg, SEG_HUES);
+    if (state.level !== "host") out += mixBar("Its homes by host type", D.host_types, x.mix.host, HOST_HUES);
+    return '<div class="ab-mixes">' + out + "</div>";
+  }
   function tile(x, k, hero) {
     var d = M[k], v = x.m[k], z = zOf(state.level, k, v), r = d.plain || v == null ? null : rankOf(state.level, k, v);
     var rk = r ? "rank " + r.rank.toLocaleString("en-US") + " of " + r.of.toLocaleString("en-US") : "";
@@ -155,7 +171,7 @@
     function hd(small) { return '<div class="ab-th"><i></i><span class="t">' + esc(d.l) + "</span>" + (small ? "<small>" + esc(small) + "</small>" : "") + '<span class="ab-fh" aria-hidden="true">↻</span></div>'; }
     var head = hd(rk);
     var q = x.q && x.q[k] ? "middle half " + fmt(k, x.q[k][0]) + " to " + fmt(k, x.q[k][1]) : "";
-    var extra = hero ? '<div class="ab-hx"><div><span>Expected revenue a year</span><b>' + fmt("rev", x.m.rev) + "</b></div><div><span>County median RevPAR</span><b>" + fmt("revpar", D.county.revpar) + "</b></div></div>" : "";
+    var extra = hero ? (x.mix ? mixBars(x) : '<div class="ab-hx"><div><span>Expected revenue a year</span><b>' + fmt("rev", x.m.rev) + "</b></div><div><span>County median RevPAR</span><b>" + fmt("revpar", D.county.revpar) + "</b></div></div>") : "";
     var front = '<div class="ab-face ab-f">' + head + '<div class="ab-tv"><b>' + fmt(k, v) + "</b>" + (d.per ? '<span class="per">' + esc(d.per) + "</span>" : "") + medal + gem(z) + "</div>"
       + slider(z) + (hero ? strip(x, k, false) + extra : M[k].share ? shareBar(k, v) : strip(x, k, false)) + "</div>";
     var back = '<div class="ab-face ab-b" aria-hidden="true">' + hd(x.h ? (M[k].share ? "" : "median ") + fmt(k, v) : "this home " + fmt(k, v))
@@ -207,7 +223,7 @@
   function badges(x, r) {
     var out = [];
     if (r && r.rank <= 3 && r.of >= 4) out.push(emblem(MEDAL[r.rank - 1][0], String(r.rank), "RevPAR", MEDAL[r.rank - 1][1] + " on RevPAR, " + MEDAL[r.rank - 1][0] + " badge"));
-    out.push(emblem("data", "CAL", "Measured", "Measured from calendar data"));
+    out.push(emblem("data", "CAL", "Data", "Measured from calendar data"));
     return out.join("");
   }
   function band(x) {
@@ -215,10 +231,10 @@
     var lvl = LEVELS.filter(function (l) { return l[0] === state.level; })[0][1];
     return '<div class="ab-disc" aria-hidden="true">' + (state.level === "listing" ? "L" : state.level === "host" ? "H" : state.level === "seg" ? "ML" : "N") + "</div>"
       + '<div class="ab-id"><span class="eyebrow">' + esc(lvl + ", Broward County, " + D.asof) + '</span><p id="ab-title" class="ab-name' + (x.name.length > 18 ? " long" : "") + '" role="heading" aria-level="2">' + esc(x.name) + '</p>' + subLine(x) + '<p class="ab-deck">' + deck(x) + "</p></div>"
-      + '<div class="ab-badges" aria-label="Badges">' + badges(x, r) + "</div>"
-      + '<div class="ab-chips"><span class="ab-chip rk ' + heat(z) + '"><i>Rank</i><b>' + r.rank.toLocaleString("en-US") + "</b><small>of " + r.of.toLocaleString("en-US") + "</small></span>"
-      + '<span class="ab-chip"><i>Priced homes</i><b>' + x.n.toLocaleString("en-US") + "</b></span>"
-      + '<span class="ab-chip"><i>Share of county</i><b>' + share(x.n) + "</b><small>%</small></span></div>";
+      + '<div class="ab-tray"><div class="ab-badges" aria-label="Badges">' + badges(x, r) + "</div>"
+      + '<div class="ab-chips"><span class="ab-chip rk ' + heat(z) + '"><i>Rank</i><b>' + r.rank.toLocaleString("en-US") + "<small>/" + r.of.toLocaleString("en-US") + "</small></b></span>"
+      + '<span class="ab-chip"><i>Homes</i><b>' + x.n.toLocaleString("en-US") + "</b></span>"
+      + '<span class="ab-chip"><i>Of county</i><b>' + share(x.n) + "<small>%</small></b></span></div></div>";
   }
 
   function cardView() {

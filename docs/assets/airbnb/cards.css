@@ -410,3 +410,67 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   .ab-badge { width: 76px; } .ab-badge .em { width: 64px; height: 72px; } .ab-badge .em b { font-size: 2rem; }
   .ab-badge .rib { padding: 3px 12px 4px; letter-spacing: .05em; }
 }
+
+/* the band, laid out again (the owner: "horrible spacing and layout"): disc | name | one recessed tray under the view
+   buttons. In the tray the badges and three capsules share one height and one baseline; ribbons stay inside their badge */
+.ab-band { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 20px; }
+.ab-tray { align-self: end; display: flex; align-items: stretch; gap: 10px; margin-top: 58px; padding: 8px;
+  border-radius: 18px; background: rgba(0, 0, 0, .42); box-shadow: inset 0 2px 8px rgba(0, 0, 0, .75), 0 1px 0 rgba(255, 255, 255, .1); }
+.ab-badges { display: flex; flex-direction: row; align-items: center; gap: 8px; min-height: 0; margin: 0; padding: 0 4px; border: 0; background: none; }
+.ab-badge { width: 92px; height: 92px; align-content: start; }
+.ab-badge .em { width: 64px; height: 72px; }
+.ab-badge .em b { font-size: 2rem; }
+.ab-badge.data .em b { font-size: 1.125rem; }
+.ab-badge .rib { width: 92px; box-sizing: border-box; margin-top: -12px; padding: 3px 10px; text-align: center; letter-spacing: .04em; }
+.ab-chips { display: flex; gap: 10px; margin: 0; }
+.ab-chip { display: grid; grid-template-columns: none; grid-template-areas: none; align-content: center; justify-items: center; gap: 4px;
+  width: 116px; min-height: 92px; height: 92px; padding: 8px 10px; box-sizing: border-box; }
+.ab-chip i { grid-area: auto; font-size: 1rem; line-height: 1.1; letter-spacing: .08em; white-space: nowrap; }
+.ab-chip b { grid-area: auto; display: inline-flex; align-items: baseline; gap: 2px; font: 900 2rem/1 var(--num); white-space: nowrap; }
+.ab-chip b small { font: 800 1rem var(--num); color: inherit; opacity: .8; }
+.ab-chip.rk b small { opacity: .75; }
+@media (max-width: 1599px) {
+  .ab-band { gap: 14px; }
+  .ab-tray { gap: 8px; padding: 6px; }
+  .ab-badge { width: 84px; height: 86px; } .ab-badge .rib { width: 84px; }
+  .ab-chip { width: 100px; height: 86px; min-height: 86px; } .ab-chip b { font-size: 1.7rem; }
+}
+@media (max-width: 1279px) { .ab-band { grid-template-columns: auto minmax(0, 1fr); } .ab-tray { grid-column: 1 / -1; margin-top: 0; justify-self: start; flex-wrap: wrap; } }
+
+/* the mix (the owner: "distribution by moniker type for each area, like corp, value"): 100% bars in the hero tile */
+.ab-mixes { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; margin: 12px 14px 0; }
+.ab-mix { display: grid; gap: 6px; padding: 10px 12px; border-radius: 12px; background: var(--well); box-shadow: var(--sink); }
+.ab-mix .ttl { font-size: 1rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
+.ab-mix .bar { display: flex; height: 18px; border-radius: 9px; overflow: hidden; box-shadow: 0 0 0 2px rgba(0, 0, 0, .5); }
+.ab-mix .bar span { width: var(--w); background: linear-gradient(180deg, rgba(255, 255, 255, .4), rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, .2)), var(--c); }
+.ab-mix .bar span + span { box-shadow: inset 2px 0 0 rgba(0, 0, 0, .55); }
+.ab-mix ul { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; padding: 0; list-style: none; }
+.ab-mix li { display: inline-flex; align-items: center; gap: 6px; font-size: 1rem; font-weight: 700; color: #D5D9E1; }
+.ab-mix li i { width: 12px; height: 12px; border-radius: 3px; background: var(--c); box-shadow: 0 0 8px -2px var(--c); }
+.ab-mix li b { color: #fff; font-family: var(--num); }
+.ab-t.hero .ab-mini { min-height: 50px; }
+
+/* capsules size to their number; the data ribbon fits its word; the hero's strip yields height to the mix bars */
+.ab-chip { width: auto; min-width: 104px; padding: 8px 16px; overflow: visible; }
+.ab-chip b { font-size: 1.85rem; }
+.ab-badge, .ab-badge .rib { width: 100px; }
+.ab-badge .rib { padding: 3px 6px; letter-spacing: .02em; }
+.ab-t.hero:has(.ab-mixes) .ab-mini { flex: 0 0 44px; min-height: 0; }
+.ab-t.hero:has(.ab-mixes) .ab-zm { padding-top: 10px; }
+.ab-mixes { gap: 8px; margin-top: 10px; }
+.ab-mix { padding: 8px 12px; gap: 5px; }
+.ab-mix ul { gap: 2px 12px; }
+@media (max-width: 1599px) {
+  .ab-chip { min-width: 92px; padding: 6px 12px; height: 86px; } .ab-chip b { font-size: 1.55rem; }
+  .ab-badge, .ab-badge .rib { width: 92px; }
+}
+.ab-chip { grid-auto-flow: row; }
+.ab-badge .rib { font-size: 1rem; letter-spacing: 0; padding: 3px 4px; }
+@media (max-width: 1599px) {
+  .ab-badge, .ab-badge .rib { width: 100px; }
+  .ab-tiles { height: auto; grid-template-rows: repeat(2, minmax(260px, auto)); }
+}
+.ab-t.hero:has(.ab-mixes) .ab-mini { flex-basis: 30px; }
+.ab-t.hero:has(.ab-mixes) .ab-tv { padding-top: 6px; }
+.ab-badge .rib { padding: 3px 14px; letter-spacing: .1em; }
+@media (max-width: 1599px) { .ab-th { font-size: 1rem; letter-spacing: .02em; gap: 6px; } .ab-th > i { width: 10px; height: 10px; } }

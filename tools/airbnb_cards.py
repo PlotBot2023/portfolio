@@ -114,6 +114,13 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
         e = np.array(edges[m]); v = v.dropna().clip(e[0], e[-1])
         return np.histogram(v, bins=e)[0].astype(int).tolist()
 
+    # host type by how many active listings the host runs (all room types): the same 10+ line as the page's multi-host
+    h["htype"] = np.select([h["host_n"] >= 10, h["host_n"] >= 2], ["corp", "small"], "single")
+
+    def mix(g: pd.DataFrame) -> dict:
+        return {"seg": [int((g["seg"] == i).sum()) for i in range(len(seg_names))],
+                "host": [int((g["htype"] == t).sum()) for t in ("corp", "small", "single")]}
+
     def group(g: pd.DataFrame, name: str, sub: str) -> dict:
         m = {k: num(g[k].median()) for k in HM} | {"clear50": num(g["clear50"].mean(), 1), "super": num(g["super"].mean(), 1)}
         if have_models:
@@ -123,6 +130,7 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
                "h": {k: hist(g[k], k) for k in HM}}
         if have_models:
             out["matched"] = int(g["matched"].sum())
+        out["mix"] = mix(g)
         return out
 
     nb_ok = nb_all[nb_all >= min_n].index
@@ -159,7 +167,8 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
                                "an XGBoost occupancy model (its residual is actual minus predicted RevPAR), IsolationForest anomalies, "
                                "VADER review sentiment, and NOI against a ZIP home value"}
                        if have_models else None),
-            "levels": {"nb": nbs, "seg": segs, "host": hosts}, "seg_meta": seg_meta, "host_min": HOST_MIN,
+            "levels": {"nb": nbs, "seg": segs, "host": hosts}, "seg_names": seg_names,
+            "host_types": ["Corporate, 10+ listings", "Small operator, 2 to 9", "Single home"], "seg_meta": seg_meta, "host_min": HOST_MIN,
             "listing_cols": ["nb", "seg", "host", "bedrooms", "superhost", "revpar", "adr", "occ", "rev", "rev_bed"]
                             + (["churn", "resid", "mood", "cap", "noi", "anom"] if have_models else []),
             "listings": rows}
