@@ -1,7 +1,7 @@
 """Post-render hardening for the static site in docs/ (run by Quarto after every render; see _quarto.yml).
 
 GitHub Pages serves files only and cannot send response headers, so this does what a static site can:
-  - removes every script loaded from another site (Quarto adds jQuery, RequireJS and MathJax from CDNs; no page here
+  - removes every script and stylesheet import loaded from another site (Quarto adds jQuery, RequireJS and MathJax from CDNs; no page here
     needs them), so nothing third-party runs and nothing tracks a visitor;
   - adds a Content-Security-Policy <meta> per page: scripts only from this site plus the exact inline scripts the page
     holds (by SHA-256 hash), no plugins, no forms, no outside connections; plus no-referrer and noai / noimageai;
@@ -82,9 +82,21 @@ def audit():
     return problems
 
 
+# @import "https://...";  @import url(https://...);  @import url('https://...') screen;  (a font URL can hold semicolons)
+OUTSIDE_IMPORT = re.compile(r"""@import\s*(?:url\(\s*)?(?:"https?://[^"]*"|'https?://[^']*'|https?://[^)\s]*)\s*\)?[^;{]*;""", re.I)
+
+
 def main():
     for p in DOCS.rglob("*.html"):
         harden_page(p)
+    # the Darkly theme imports Lato from Google Fonts; the site uses system fonts, so no visitor request leaves the site
+    for p in DOCS.rglob("*.css"):
+        t = p.read_text(encoding="utf-8")
+        if OUTSIDE_IMPORT.search(t):
+            p.write_text(OUTSIDE_IMPORT.sub("", t), encoding="utf-8")
+    # Quarto's page script asks for listings.json; with no listing on the site, an empty one saves a 404
+    if not (DOCS / "listings.json").exists():
+        (DOCS / "listings.json").write_text("[]", encoding="utf-8")
     (DOCS / "robots.txt").write_text(ROBOTS, encoding="utf-8")
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
     problems = audit() + [f"image metadata in {f}" for f in image_metadata()]
