@@ -1,9 +1,14 @@
 project:
   type: website
   output-dir: docs
+  # The Broward Airbnb series is the only notebook set published; the others stay in the repo, unpublished.
   render:
     - "*.qmd"
-    - "notebooks/*.ipynb"
+    - "notebooks/broward-*.ipynb"
+  # strips outside scripts, sets a Content-Security-Policy per page, writes robots.txt, restores .nojekyll, audits
+  post-render: tools/harden_docs.py
+  resources:
+    - "assets/**"
 
 # Notebooks are NOT re-executed at render time: they read from a local Postgres
 # instance and local CSV exports that CI (and any other machine) cannot reach.
@@ -15,7 +20,7 @@ execute:
 
 website:
   title: "Richard Chute"
-  description: "Data analysis, pipelines, and applied modeling — Fort Lauderdale, FL"
+  description: "Data analysis, pipelines and applied modelling, Fort Lauderdale, Florida"
   site-url: "https://plotbot2023.github.io/portfolio"
   favicon: assets/favicon.svg
   open-graph: true
@@ -28,22 +33,10 @@ website:
         text: Projects
       - href: about.qmd
         text: About
+      - href: airbnb.qmd
+        text: Airbnb case study
       - href: resume.qmd
-        text: Résumé
-    right:
-      - icon: github
-        href: https://github.com/PlotBot2023
-        aria-label: GitHub
-      - icon: envelope
-        href: mailto:plotbot2023@gmail.com
-        aria-label: Email
-  page-footer:
-    left: "© 2026 Richard Chute"
-    right:
-      - icon: github
-        href: https://github.com/PlotBot2023
-      - icon: envelope
-        href: mailto:plotbot2023@gmail.com
+        text: Resume
 
 format:
   html:
@@ -52,14 +45,14 @@ format:
     highlight-style: github-dark
     css: styles.css
     toc: true
-    code-fold: true
-    code-summary: "Show code"
+    # no code on the public site (the owner, 2026-11-15): notebook pages show their charts, tables and write-up only
+    echo: false
     code-tools: false
     code-overflow: wrap
     df-print: paged
     fig-align: center
     link-external-newwindow: true
     smooth-scroll: true
-    html-math-method: mathjax
+    html-math-method: plain
     anchor-sections: true
     fig-responsive: true

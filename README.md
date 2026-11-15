@@ -5,17 +5,31 @@ Source for **https://plotbot2023.github.io/portfolio** — a Quarto site that pu
 ## Layout
 
 ```
-_quarto.yml        site config (nav, theme, output dir, execution policy)
-index.qmd          landing page
-projects.qmd       listing page (auto-populated from notebooks/)
-about.qmd          bio
-resume.qmd         résumé + PDF download
-styles.scss        light theme
-styles-dark.scss   dark theme
-styles.css         shared layout rules
-notebooks/*.ipynb  the published work
-assets/            résumé PDF, favicon
-docs/              rendered site — this is what GitHub Pages serves
+_quarto.yml          site config (nav, theme, output dir, execution policy)
+index.qmd            home         projects.qmd         projects      | each one screen at 1920x1080, 1536x864 and 1366x768
+about.qmd            about         | (no scrolling on a desktop); they stack and scroll on a phone
+resume.qmd           résumé       /
+_notebooks.ejs       the Notebooks tab on Projects, drawn from notebooks/ automatically
+styles.scss          theme: the Hub's field-matchup navy palette and finishes, plus the 16 px floor
+styles.css           the single-view layout and components (panels, tiles, stage, chips, notes)
+assets/sv.js         tabs, tile picking and #links on Projects and Résumé
+assets/notebooks/    one chart per notebook for the Projects tiles (tools/notebook_thumbs.py)
+tools/               notebook_thumbs.py, measure_pages.py (the standards check, below)
+notebooks/*.ipynb    the published work
+docs/                rendered site, what GitHub Pages serves (keep docs/.nojekyll)
+```
+
+## Standards
+
+The four main pages follow the owner's standards (SportsAnalytics `docs/RULES_OF_CLAUDE.md` rules 29 to 34): no text
+under 16 px, contrast at least 7:1 for body text and 4.5:1 for secondary text, every target at least 44 px, status
+as a shape plus a word, no symbols a screen reader announces (`&`, middle dots, dashes, arrows, slashes, emoji) in
+visible text or accessible names, real alt text, no motion, and each page one view. Longer text sits one click away
+in a note (a native `popover`). Check a change in a browser before publishing:
+
+```bash
+python -m http.server 8765 --bind 127.0.0.1 --directory docs
+python tools/measure_pages.py
 ```
 
 ## First-time setup
@@ -64,7 +78,9 @@ GitHub Pages serves `docs/` on the `main` branch. The site is live a minute or s
    ---
    ```
 
-3. `quarto render`, then commit and push. The Projects listing picks it up automatically.
+3. Add a line for it in `tools/notebook_thumbs.py` (which saved chart to use) and its alt text in `_notebooks.ejs`,
+   run `python tools/notebook_thumbs.py`, then `quarto render`. The Notebooks tab picks it up automatically.
+   `quarto render` deletes `docs/.nojekyll`; put it back before committing.
 
 `order` controls position on the Projects page (lower = higher up).
 

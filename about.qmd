@@ -1,56 +1,124 @@
 ---
-title: "About"
-description: "Career-changer into data, with fifteen years of operations behind it."
-toc: true
+pagetitle: "About, Richard Chute"
+description-meta: "Career-changer into data, with fifteen years of operations behind it."
+toc: false
+page-layout: custom
+body-classes: sv-page
 ---
 
-## The short version
+```{=html}
+<div class="sv v-about">
 
-I'm an analyst and pipeline builder in Fort Lauderdale. I work in Python and PostgreSQL, structure my analysis in Jupyter, and publish it where people can read it.
+  <div class="left">
+    <section class="panel hero-glass brk" aria-labelledby="about-title" style="display:grid;gap:.6rem">
+      <span class="eyebrow">About</span>
+      <h1 id="about-title" class="page-title">From operations to data</h1>
+      <p class="lede">Fifteen years running the operations the numbers describe.</p>
+      <div class="btn-row"><button class="btn" type="button" popovertarget="n-career">The through-line</button><button class="btn" type="button" popovertarget="n-training">Training</button></div>
+    </section>
 
-I came to this from the other side. For fifteen years I ran field-service and distribution operations — a pool service company I own and operate, and before that a distributor where I was general manager. Those jobs were data jobs before I knew how to write the code: SKU-level demand forecasting, vendor scorecards, technician performance metrics, route optimization, daily KPI dashboards. I built them in spreadsheets and ERP exports, and I made payroll on whether they were right.
+    <section class="panel rail-top career" aria-labelledby="career-title">
+      <h2 id="career-title" class="sec-title">Career, 2012 to now</h2>
+      <div class="gantt inlay" role="list">
+        <div class="who" role="listitem">Pool Pros of Hollywood<small>General manager, 2012 to 2022</small></div>
+        <div class="track" aria-hidden="true"><span class="bar" style="left:2.2%;width:65.8%;background-color:var(--vi)"></span></div>
+        <div class="who" role="listitem">Blue Turtle Pool Co.<small>Owner and operator, 2018 to 2026</small></div>
+        <div class="track" aria-hidden="true"><span class="bar" style="left:41.1%;width:55.9%;background-color:var(--cy)"></span></div>
+        <div class="who" role="listitem">Stats Over Fiction<small>Analytics practice, 2025 to now</small></div>
+        <div class="track" aria-hidden="true"><span class="bar" style="left:86.7%;width:12.4%;background-color:var(--pk)"></span></div>
+        <div class="who" role="listitem">The Taverna Collection<small>Sales executive, 2026</small></div>
+        <div class="track" aria-hidden="true"><span class="bar" style="left:95.6%;width:2.4%;background-color:var(--or)"></span></div>
+        <div class="axis" aria-hidden="true"><span>2012</span><span>2015</span><span>2018</span><span>2021</span><span>2024</span><span>2027</span></div>
+      </div>
+    </section>
 
-That's the part I'd point a hiring manager at. I've never had the luxury of an analysis being interesting but wrong.
+  </div>
 
-## What I actually do
+  <div class="right">
+    <section class="panel rail-top results" aria-labelledby="results-title" style="display:grid;gap:.7rem">
+      <div class="cardhead" style="justify-content:space-between;flex-wrap:wrap"><h2 id="results-title" class="sec-title">Results from the field</h2><button class="btn" type="button" popovertarget="n-results">Where they come from</button></div>
+      <ul class="stats">
+        <li class="stat"><span class="n">20%</span><span class="l">less travel time</span></li>
+        <li class="stat"><span class="n">30%</span><span class="l">fewer emergency parts buys</span></li>
+        <li class="stat"><span class="n">25%</span><span class="l">fewer stockouts and rush freight</span></li>
+        <li class="stat"><span class="n">10%</span><span class="l">lower cost of goods</span></li>
+      </ul>
+    </section>
 
-::: {.cols2}
-::: {}
-### Pipelines and data engineering
+    <div class="duo">
+      <section class="panel" aria-labelledby="do-pipes">
+        <div class="cardhead">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="5" cy="6" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="7" r="2.2"/><circle cx="19" cy="17" r="2.2"/><path d="M7 7l3 3.5M7 17l3-3.5M14 11l3-3M14 13l3 3"/></svg>
+          <h2 id="do-pipes" class="sec-title">Pipelines</h2><button class="btn" type="button" popovertarget="n-pipes" style="margin-left:auto" aria-label="Notes on pipelines">Notes</button>
+        </div>
+        <ul class="tray slim" aria-label="Pipeline tools">
+          <li>Python 3.11</li><li>PostgreSQL</li><li>Docker</li><li>Alembic</li><li>pytest</li>
+        </ul>
+      </section>
+      <section class="panel" aria-labelledby="do-model">
+        <div class="cardhead">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20V4M4 20h16"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+          <h2 id="do-model" class="sec-title">Analysis</h2><button class="btn" type="button" popovertarget="n-model" style="margin-left:auto" aria-label="Notes on analysis">Notes</button>
+        </div>
+        <ul class="tray slim" aria-label="Methods">
+          <li>Monte Carlo</li><li>XGBoost</li><li>CatBoost</li><li>Mixture models</li><li>Bayesian priors</li><li>Causal models</li>
+        </ul>
+      </section>
+    </div>
 
-I maintain a private multi-sport projections platform: Python 3.11, PostgreSQL, Docker Compose for local dev, Alembic migrations, a pytest suite, and daily pipelines that run unattended.
+    <section class="panel hero-glass brk seek" aria-labelledby="seek-title">
+      <div class="cardhead" style="justify-content:space-between;flex-wrap:wrap">
+        <h2 id="seek-title" class="sec-title">Looking for</h2>
+        <div class="btn-row">
+          <a class="btn primary" href="projects.html">See the projects</a>
+          <a class="btn" href="resume.html">Resume</a>
+        </div>
+      </div>
+      <ul class="tray" aria-label="Roles and places">
+        <li>Data analyst</li><li>Analytics engineer</li><li>Data engineer</li><li>Remote or South Florida</li>
+      </ul>
+    </section>
+  </div>
 
-It runs on rules I learned the expensive way — append-only writes, explicit casts on every column, load-timestamped JSONL run logs, and calibration checks that fail loudly rather than quietly.
-:::
+</div>
 
-::: {}
-### Analysis and modeling
-
-Monte Carlo simulation, XGBoost and CatBoost, Gaussian Mixture Models for segmentation, Bayesian priors for calibration, and structural causal models when the question is whether a signal is real or just correlated.
-
-The Broward Airbnb series is the clearest example of the whole loop: raw Inside Airbnb snapshots in R, metrics in SQL, analysis in Python, and a written answer a non-technical investor can act on.
-:::
-:::
-
-## Operations background
-
-The résumé has the detail, but the through-line is this:
-
-- **Blue Turtle Pool Co.** (owner/operator, 2018–present) — turned field operations into a logged dataset: every job, part, travel leg, and incident. Built the dashboards that track utilization, response time, recurring revenue, and churn. Route rules cut travel time 20%; demand forecasting from historical service logs cut emergency parts purchases 30%.
-- **Pool Pros of Hollywood** (general manager, 2012–2022) — centralized order, receiving, pick/pack/ship, and inventory events into one analytics dataset. SKU-level forecasting and automated reorder rules cut stockouts and emergency freight 25%. Vendor scorecards on fill rate, lead time, and price variance; price-volume modeling that lowered COGS 10%.
-
-## Training
-
-Self-directed, and ongoing: **SQL** and **Machine Learning** (IBM), **Python** (University of Michigan), **Data Analytics** and **Data Analysis with R Studio** (Google), plus Google Analytics certification.
-
-I'll say plainly that I don't have a CS or statistics degree. What I have instead is a decade and a half of owning the consequences of an operational number being wrong, and a working system I built and maintain that you can read the source of.
-
-## What I'm looking for
-
-Analyst, analytics engineer, or data engineer roles where the work reaches a decision — ideally somewhere the data describes a physical operation, since that's the domain I know in my hands. Open to remote or South Florida.
-
-::: {.cta}
-[Email me](mailto:plotbot2023@gmail.com){.primary}
-[GitHub](https://github.com/PlotBot2023)
-[Résumé](resume.qmd)
-:::
+<div id="n-career" popover class="note">
+  <h3>The through-line</h3>
+  <p>For fifteen years I ran field-service and distribution operations: a pool service company I owned and operated, and before that a distributor where I was general manager. Those were data jobs before I knew how to write the code: SKU-level demand forecasts, vendor scorecards, technician metrics, route rules and daily KPI dashboards, built in spreadsheets and ERP exports. I made payroll on whether they were right.</p>
+  <ul>
+    <li><b>Blue Turtle Pool Co.</b>, 2018 to 2026: every job, part, travel leg and incident logged as a dataset, with dashboards for utilization, response time, recurring revenue and churn.</li>
+    <li><b>Pool Pros of Hollywood</b>, 2012 to 2022: order, receiving, pick, pack, ship and inventory events in one analytics dataset, with SKU forecasting, reorder rules and vendor scorecards.</li>
+  </ul>
+  <p>I have never had the luxury of an analysis being interesting but wrong.</p>
+  <button class="btn" popovertarget="n-career" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-results" popover class="note">
+  <h3>Where the results come from</h3>
+  <ul>
+    <li><b>20 percent less travel time</b>: routing and schedule rules, Blue Turtle Pool Co.</li>
+    <li><b>30 percent fewer emergency parts buys</b>: inventory and seasonal demand forecasts from service logs, Blue Turtle Pool Co.</li>
+    <li><b>25 percent fewer stockouts and rush freight</b>: SKU-level forecasts and automated reorder rules, Pool Pros of Hollywood.</li>
+    <li><b>10 percent lower cost of goods</b>: seasonal buys with volume and early-buy discounts, Pool Pros of Hollywood.</li>
+  </ul>
+  <button class="btn" popovertarget="n-results" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-training" popover class="note">
+  <h3>A plain word on degrees</h3>
+  <p>I do not have a CS or statistics degree. My training is self-directed and ongoing: SQL and Machine Learning from IBM, Python from the University of Michigan, Data Analytics and Data Analysis with R Studio from Google, and the Google Analytics certification.</p>
+  <p>What I have instead is fifteen years of owning the consequences of an operational number being wrong, and working systems I built and maintain.</p>
+  <button class="btn" popovertarget="n-training" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-pipes" popover class="note">
+  <h3>How I build pipelines</h3>
+  <p>I build and run a private multi-sport projections platform whose daily pipelines run unattended.</p>
+  <p>It runs on rules learned the expensive way: append-only writes, explicit casts on every column, load-timestamped run logs, and calibration checks that fail loudly rather than quietly.</p>
+  <button class="btn" popovertarget="n-pipes" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-model" popover class="note">
+  <h3>Where the analysis shows</h3>
+  <p>Monte Carlo simulation, XGBoost and CatBoost, Gaussian mixture models for segmentation, Bayesian priors for calibration, and structural causal models when the question is whether a signal is real or only correlated.</p>
+  <p>The Broward Airbnb series is the clearest example of the whole loop: raw Inside Airbnb snapshots in R, metrics in SQL, analysis in Python, and a written answer a non-technical investor can act on.</p>
+  <a class="btn primary" href="airbnb.html">See the Airbnb case study</a>
+  <button class="btn" popovertarget="n-model" popovertargetaction="hide">Close</button>
+</div>
+```

@@ -1,89 +1,93 @@
 ---
-pagetitle: "Richard Chute — Data Analysis & Pipelines"
-description-meta: "Analyst and pipeline builder in Fort Lauderdale. Postgres, Python, and applied modeling — with fifteen years of running the operations the numbers describe."
+pagetitle: "Richard Chute, data analysis and pipelines"
+description-meta: "Analyst and pipeline builder in Fort Lauderdale. Postgres, Python and applied modelling, with fifteen years of running the operations the numbers describe."
 toc: false
-page-layout: full
+page-layout: custom
+body-classes: sv-page
 ---
 
-::: {.hero}
-::: {.kicker}
-Fort Lauderdale, FL
-:::
+```{=html}
+<div class="sv v-home">
 
-# Richard Chute
+  <section class="panel hero-glass brk who" aria-labelledby="home-name">
+    <span class="eyebrow">Fort Lauderdale, Florida</span>
+    <div>
+      <h1 id="home-name" class="big-title">Richard Chute</h1>
+      <p class="lede" style="margin-top:.6rem">Data pipelines and analysis people decide from.</p>
+    </div>
+    <ul class="stats" aria-label="At a glance">
+      <li class="stat"><span class="n">15</span><span class="l">years running operations</span></li>
+      <li class="stat"><span class="n">11</span><span class="l">sports on my leaderboards</span></li>
+      <li class="stat"><span class="n">4</span><span class="l">snapshots in the Airbnb study</span></li>
+    </ul>
+    <ul class="tray" aria-label="Tools and methods">
+      <li>Python</li><li>PostgreSQL</li><li>SQL</li><li>pandas</li><li>scikit-learn</li><li>XGBoost</li><li>CatBoost</li>
+      <li>Monte Carlo</li><li>Causal inference</li><li>Docker</li><li>R</li><li>Tableau</li><li>Power BI</li>
+    </ul>
+    <div class="ways" aria-label="How I work">
+      <button class="way" popovertarget="n-append" aria-label="How I work: append-only data. Open the note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg>
+        <span>Append-only data</span>
+      </button>
+      <button class="way" popovertarget="n-labelled" aria-label="How I work: modelled is labelled. Open the note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8" r="1.5"/></svg>
+        <span>Modelled is labelled</span>
+      </button>
+      <button class="way" popovertarget="n-instrument" aria-label="How I work: instruments, not tables. Open the note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M3 20h18"/></svg>
+        <span>Instruments, not tables</span>
+      </button>
+    </div>
+    <div class="btn-row">
+      <a class="btn primary" href="projects.html">See the projects</a>
+      <a class="btn" href="airbnb.html">The Airbnb case study</a>
+      <a class="btn" href="resume.html">Resume</a>
+    </div>
+  </section>
 
-::: {.tagline}
-I build data pipelines and analyses that people actually make decisions from — Python and PostgreSQL on the back end, plain answers on the front. Fifteen years running field-service and distribution operations before I wrote the code, which is mostly why I care whether the number is right.
-:::
+  <section class="work" aria-labelledby="home-work">
+    <div class="work-head">
+      <h2 id="home-work" class="sec-title">Selected work</h2>
+      <a class="btn" href="projects.html">All projects</a>
+    </div>
+```
 
-::: {.cta}
-[View the projects](projects.qmd){.primary}
-[About me](about.qmd)
-[Résumé](resume.qmd)
-[GitHub](https://github.com/PlotBot2023)
-:::
+{{< include _airbnb_home.qmd >}}
 
-::: {.chips}
-- Python
-- PostgreSQL
-- SQL
-- pandas
-- scikit-learn
-- XGBoost / CatBoost
-- Monte Carlo simulation
-- Causal inference
-- Docker
-- R
-- Jupyter
-- Tableau / Power BI
-:::
-:::
+```{=html}
+    <div class="row2">
+      <a class="feature" href="projects.html#leaders">
+        <div class="pic scoreline" aria-hidden="true">
+          <div class="sl-row"><span class="sl-bar"><span style="width:82%"></span></span><span class="sl-chip hot">Elite</span></div>
+          <div class="sl-row"><span class="sl-bar"><span style="width:60%"></span></span><span class="sl-chip warm">Good</span></div>
+          <div class="sl-row"><span class="sl-bar base"><span style="width:46%"></span></span><span class="sl-chip">Average</span></div>
+          <div class="sl-row"><span class="sl-bar"><span style="width:22%"></span></span><span class="sl-chip cold">Poor</span></div>
+        </div>
+        <div class="cap"><b>Leaderboards and experiments</b><span class="status live">Live</span></div>
+      </a>
+      <a class="feature" href="projects.html#hotwheels">
+        <div class="pic poster" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></div>
+        <div class="cap"><b>Hot Wheels value guide</b><span class="status live">Live</span></div>
+      </a>
+    </div>
+  </section>
 
-## Selected work
+</div>
 
-A pipeline rebuilt from an audit of itself, a sourced map of a fast-moving legal market, and four quarters of Airbnb data turned into an investment answer. The first two run in a private platform, so they're described here; the notebook is public with its outputs intact.
-
-::: {.cols2}
-::: {}
-![](assets/projects/target-const.webp){fig-alt="A dark constellation map of pipeline files grouped into labelled layers."}
-
-### [The Target pipeline rebuild](projects.qmd#systems)
-
-An audit of my own production pipeline turned into a plan, then into code: one intake engine, one typing gate, a fact store with declared grains, and calibration as a loop. Each layer has a live meter that climbs planned, coded, tested, live.
-
-*Python · PostgreSQL · data contracts · 15 of 89 nodes live, 2026-11-08*
-:::
-
-::: {}
-![](assets/projects/markets-map.webp){fig-alt="A dark dashboard with headline tiles and a tile map of US states."}
-
-### [Markets: a sourced legal map](projects.qmd#systems)
-
-Where each kind of betting is legal, state by state, with 31 operator scorecards and every free finance API graded on its limits and terms. Every fact carries its source and a grade, and only verified facts are scored.
-
-*Research · data governance · API terms review*
-:::
-
-::: {}
-### [The Best and Worst Bets in the Broward Airbnb Market](notebooks/broward-investor-guide.ipynb)
-
-17,000+ listings across four quarterly snapshots, reduced to a straight answer for an individual investor: what a Broward short-term rental actually earns, which neighborhoods clear their cost basis, and how much of the market is already corporate.
-
-*Python · pandas · Inside Airbnb · four-snapshot panel*
-:::
-
-:::
-
-[See every system, study and notebook →](projects.qmd)
-
-## How I work
-
-**Data is append-only.** Never `DROP`, never `TRUNCATE` — upsert and keep the history. A silent corruption costs more than a crash, because a crash tells you.
-
-**Modelled is labelled modelled.** A metric that didn't exist in an era is "not measured," never zero-filled to look observed. A chart that reads well but overstates what was measured is a defect, not a rough edge.
-
-**The output is an instrument, not a table.** The deliverable isn't the number — it's the thing someone opens, reads, and decides from.
-
-::: {.note-box}
-**A note on the code.** These notebooks are published with their saved outputs rather than re-executed on render — several of them read from a local PostgreSQL instance and licensed data exports that don't travel. Every page has its source available under "Show code," and the repository is [on GitHub](https://github.com/PlotBot2023/portfolio).
-:::
+<div id="n-append" popover class="note">
+  <h3>Append-only data</h3>
+  <p>Never drop, never truncate. Upsert and keep the history. A silent corruption costs more than a crash, because a crash tells you.</p>
+  <button class="btn" popovertarget="n-append" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-labelled" popover class="note">
+  <h3>Modelled is labelled modelled</h3>
+  <p>A metric that did not exist in an era reads "not measured", never zero-filled to look observed. A chart that reads well but overstates what was measured is a defect, not a rough edge.</p>
+  <button class="btn" popovertarget="n-labelled" popovertargetaction="hide">Close</button>
+</div>
+<div id="n-instrument" popover class="note">
+  <h3>The output is an instrument, not a table</h3>
+  <p>The deliverable is not the number. It is the thing someone opens, reads and decides from.</p>
+  <p>The notebooks are published with their saved outputs, charts and tables only; the code behind them stays private.</p>
+  <button class="btn" popovertarget="n-instrument" popovertargetaction="hide">Close</button>
+</div>
+```
