@@ -197,6 +197,9 @@ main h2 .anchorjs-link { color: $st-accent; }
 #TOC ul { border-left: 2px solid rgba(110, 231, 245, .18); }
 #TOC .nav-link, #TOC a { color: $st-mute; padding-top: .3rem; padding-bottom: .3rem; }
 #TOC .nav-link:hover, #TOC a:hover { color: $st-ink; }
+// a column or table name in a heading reads as plain text in the contents list: in the code font it ran wider than the rail
+// and broke mid-word (airbnb_features.lis / ting_quality_flags)
+#TOC code { font: inherit; color: inherit; background: none; padding: 0; white-space: normal !important; word-break: normal; overflow-wrap: break-word; }
 #TOC .nav-link.active, #TOC a.active { color: $st-cy !important; border-left-color: $st-cy !important; font-weight: 700; }
 
 // ── code: recessed wells; tokens recoloured inside the Studies palette, each at least 7:1 on the well ──
@@ -211,7 +214,11 @@ div.sourceCode pre code, div.sourceCode pre code span, .cell-output pre, .cell-o
 // long identifiers in prose, wide markdown tables and heading anchors stay inside the column on a phone
 :not(pre) > code { white-space: pre-wrap !important; overflow-wrap: anywhere; word-break: break-word; }
 #quarto-document-content p, #quarto-document-content li { overflow-wrap: anywhere; }
-#quarto-document-content table { display: block; max-width: 100%; overflow-x: auto; }
+#quarto-document-content table { display: block; max-width: 100%; overflow-x: auto;
+  // a wide table scrolls inside its well on a dark track; the browser default is a white bar across the dark page
+  scrollbar-color: rgba(124, 245, 255, .55) $st-inlay; scrollbar-width: thin; }
+#quarto-document-content table::-webkit-scrollbar { height: 10px; background: $st-inlay; }
+#quarto-document-content table::-webkit-scrollbar-thumb { background: rgba(124, 245, 255, .45); border-radius: 999px; }
 h1, h2, h3, h4 { overflow-wrap: anywhere; }
 @media (max-width: 640px) { .anchorjs-link { display: none !important; } }
 mjx-container[display="true"] { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
@@ -255,6 +262,9 @@ table th, .dataframe thead th {
   color: $st-accent !important; font-weight: 750; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase;
   border-bottom: 1.5px solid rgba(110, 231, 245, .35) !important;
 }
+// dataframe headers are snake_case column names: in capitals with tracking they ran a third wider than the data and pushed
+// the last columns out of view, so they stay in their own case, tracked lightly
+.dataframe thead th, .cell-output-display table thead th { text-transform: none; letter-spacing: .01em; }
 table td { font-variant-numeric: tabular-nums; border-color: rgba(110, 231, 245, .12) !important; }
 .dataframe td { font-family: $st-num; font-size: 1rem; color: $st-ink; }
 .table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-accent-bg: rgba(255, 255, 255, .035); color: $st-ink2; }
