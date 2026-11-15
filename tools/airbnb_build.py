@@ -43,6 +43,42 @@ def load(src):
     return cal.merge(lst, on="listing_id", how="left")
 
 
+NOW_COLS = ["Snapshot Date", "Host ID", "Listing ID", "Room Type", "Price ($)", "Occupancy Rate (365d)", "ADR (365d)"]
+
+
+def market_now(listings_csv):
+    """The newest snapshot from the pipeline's listings export (one row per listing per snapshot).
+
+    Inside Airbnb stopped publishing calendar prices after March 2025, so revenue per night can no longer be measured
+    from the calendar. What still can: active listings, hosts, the listing price, and occupancy (booked nights need no
+    price). The RevPAR shown for the newest snapshot is an ESTIMATE, the listing price times 365-day occupancy per
+    entire home, and the page labels it so."""
+    d = pd.read_csv(listings_csv, usecols=NOW_COLS)
+    d["Snapshot Date"] = pd.to_datetime(d["Snapshot Date"])
+    snaps = sorted(d["Snapshot Date"].unique())
+    priced = d.loc[d["ADR (365d)"].notna(), "Snapshot Date"]
+    last_cal_price = pd.Timestamp(priced.max()) if len(priced) else None
+    last = d[d["Snapshot Date"] == snaps[-1]]
+    homes = last[last["Room Type"].str.lower().eq("entire home/apt")]
+    both = homes.dropna(subset=["Price ($)", "Occupancy Rate (365d)"])
+    est = both["Price ($)"] * both["Occupancy Rate (365d)"]
+    return {
+        "asof": pd.Timestamp(snaps[-1]).strftime("%d %B %Y").lstrip("0"),
+        "asof_iso": pd.Timestamp(snaps[-1]).strftime("%Y-%m-%d"),
+        "listings": int(last["Listing ID"].nunique()),
+        "hosts": int(last["Host ID"].nunique()),
+        "homes": int(homes["Listing ID"].nunique()),
+        "price": float(homes["Price ($)"].median()),
+        "price_n": int(homes["Price ($)"].notna().sum()),
+        "occ": 100 * float(homes["Occupancy Rate (365d)"].median()),
+        "occ_n": int(homes["Occupancy Rate (365d)"].notna().sum()),
+        "revpar_est": float(est.median()) if len(est) else float("nan"),
+        "est_n": int(len(est)),
+        "last_cal_price": last_cal_price.strftime("%B %Y") if last_cal_price is not None else "not measured",
+        "n_snaps": len(snaps),
+    }
+
+
 def build(df):
     snaps = sorted(df["snapshot_date"].unique())
     last = df[df["snapshot_date"] == snaps[-1]].copy()
@@ -117,10 +153,14 @@ def draw_map(pts, out):
     return [(qs[i], qs[i + 1]) for i in range(len(RAMP))]
 
 
-def bars(rows, vmax, cls=""):
-    """rows: (label, value, shown text, sub text or ''). An HTML bar chart: real text, scales, reads in a screen reader."""
-    out = [f'<ul class="hbars {cls}">']
-    for lab, v, txt, sub in rows:
+def bars(rows, vmax, cls="", split=None):
+    """rows: (label, value, shown text, sub text or ''). An HTML bar chart: real text, scales, reads in a screen reader.
+    split: (row index, label) puts a labelled divider before that row, e.g. where the strongest end and the weakest begin."""
+    focus = ' tabindex="0"' if "dense" in cls else ""   # a list that may scroll must be reachable by keyboard
+    out = [f'<ul class="hbars {cls}"{focus}>']
+    for i, (lab, v, txt, sub) in enumerate(rows):
+        if split and i == split[0]:
+            out.append(f'<li class="hb-split"><span>{html.escape(split[1])}</span></li>')
         w = max(1.5, 100 * v / vmax)
         out.append(f'<li><span class="hb-l">{html.escape(lab)}{f"<small>{html.escape(sub)}</small>" if sub else ""}</span>'
                    f'<span class="hb-t" aria-hidden="true"><span class="hb-f" style="width:{w:.1f}%"></span></span>'
@@ -140,11 +180,11 @@ def note(id_, title, body):
             f'<button class="btn" popovertarget="{id_}" popovertargetaction="hide">Close</button></div>')
 
 
-def page(s, legend):
+def page(s, legend, now=None):
     nb = s["nb"]
     top, bot = nb.head(6), nb.tail(4)
     best, worst = nb.index[0], nb.index[-1]
-    nb_rows = [(n, r.revpar, money(r.revpar), f"{r.n:,} homes") for n, r in pd.concat([top, bot]).iterrows()]
+    nb_rows = [(n, r.revpar, money(r.revpar), f"{int(r.n):,} homes") for n, r in pd.concat([top, bot]).iterrows()]
     t_rows = [(f"{money(t, True)} a year", p, pct(p), "") for t, p in s["targets"]]
     g_rows = [(lab, n, f"{n:,}", f"{new:,} new" if new is not None else "first snapshot") for lab, n, new in s["growth"]]
     reach50 = dict(s["targets"])[50_000]
@@ -170,6 +210,7 @@ def page(s, legend):
       <button class="tab" role="tab" id="t-nb" aria-controls="v-nb" aria-selected="false">Neighbourhoods</button>
       <button class="tab" role="tab" id="t-tg" aria-controls="v-tg" aria-selected="false">Revenue targets</button>
       <button class="tab" role="tab" id="t-gr" aria-controls="v-gr" aria-selected="false">Growth</button>
+      {'<button class="tab" role="tab" id="t-now" aria-controls="v-now" aria-selected="false">Market now</button>' if now else ''}
     </div>
     <div class="tabpanel cv" role="tabpanel" id="v-map" aria-labelledby="t-map">
       <div class="mapwrap inlay"><img src="assets/airbnb/revpar-map.webp" alt="Map of {s['homes']:,} Broward County entire-home listings as dots, coloured by RevPAR from blue for the lowest sixth to yellow for the highest. Listings crowd the coast in a dense band, where most of the yellow sits; inland they thin out."></div>
@@ -180,7 +221,7 @@ def page(s, legend):
       </div>
     </div>
     <div class="tabpanel cv" role="tabpanel" id="v-nb" aria-labelledby="t-nb" hidden>
-      <div class="cv-chart"><span class="eyebrow">Median RevPAR, the 6 strongest and 4 weakest of {s['nb_ranked']} neighbourhoods</span>{bars(nb_rows, float(nb['revpar'].max()))}</div>
+      <div class="cv-chart"><span class="eyebrow">Median RevPAR, the 6 strongest and 4 weakest of {s['nb_ranked']} neighbourhoods</span>{bars(nb_rows, float(nb['revpar'].max()), 'dense', (len(top), f"The {len(bot)} weakest"))}</div>
       <div class="cv-side"><button class="btn" type="button" popovertarget="tw-nb">Table</button></div>
     </div>
     <div class="tabpanel cv" role="tabpanel" id="v-tg" aria-labelledby="t-tg" hidden>
@@ -191,12 +232,29 @@ def page(s, legend):
       <div class="cv-chart"><span class="eyebrow">Active listings in each snapshot</span>{bars(g_rows, max(n for _, n, _ in s['growth']), 'tall')}</div>
       <div class="cv-side"><button class="btn" type="button" popovertarget="tw-gr">Table</button></div>
     </div>"""
+    if now:
+        views += f"""
+    <div class="tabpanel cv" role="tabpanel" id="v-now" aria-labelledby="t-now" hidden>
+      <div class="cv-chart">
+        <span class="eyebrow">The newest snapshot, {html.escape(now['asof'])}</span>
+        <ul class="stats" aria-label="Key numbers, snapshot of {html.escape(now['asof'])}">
+          <li class="stat"><span class="n">{now['listings']:,}</span><span class="l">active listings</span></li>
+          <li class="stat"><span class="n">{now['hosts']:,}</span><span class="l">hosts</span></li>
+          <li class="stat"><span class="n">{money(now['price'])}</span><span class="l">median listing price a night, entire homes</span></li>
+          <li class="stat"><span class="n">{pct(now['occ'])}</span><span class="l">median occupancy, entire homes, next 365 days</span></li>
+          <li class="stat est"><span class="n">{money(now['revpar_est'])}</span><span class="l">RevPAR a night, an estimate</span></li>
+        </ul>
+        <p class="cv-note">Revenue on the other views stops at {html.escape(now['last_cal_price'])}: Inside Airbnb stopped publishing
+          calendar prices after it. The estimate is each entire home's listing price times its occupancy, a model, not a measurement.</p>
+      </div>
+      <div class="cv-side"><button class="btn" type="button" popovertarget="tw-now">Table</button></div>
+    </div>"""
 
     answer = f"""
     <ul class="verdicts">
       <li><span class="vk up" aria-hidden="true"></span><span><b>Best bet:</b> {html.escape(best)}, median RevPAR {money(nb.iloc[0].revpar)}</span></li>
       <li><span class="vk dn" aria-hidden="true"></span><span><b>Toughest:</b> {html.escape(worst)}, median RevPAR {money(nb.iloc[-1].revpar)}</span></li>
-      <li><span class="vk ev" aria-hidden="true"></span><span><b>Typical home:</b> {money(s['adr'])} a night at {pct(s['occ'])} occupancy</span></li>
+      <li><span class="vk ev" aria-hidden="true"></span><span><b>Typical home:</b> RevPAR {money(s['revpar'])}, {money(s['adr'])} a night, {pct(s['occ'])} booked</span></li>
       <li><span class="vk ev" aria-hidden="true"></span><span><b>Only {pct(reach50)}</b> clear {money(50_000, True)} a year</span></li>
     </ul>"""
 
@@ -204,22 +262,29 @@ def page(s, legend):
         note("tw-map", "The map as a table", table(["RevPAR band", "Colour"], [(band(i, lo, hi), f"step {i + 1} of {len(RAMP)}, {'darkest' if i == 0 else 'lightest' if i == len(RAMP) - 1 else 'lighter'}") for i, (lo, hi) in enumerate(legend)],
                                                    f"Each band holds one sixth of the {s['homes']:,} entire homes, snapshot of {s['asof']}.")),
         note("tw-nb", "Neighbourhoods as a table", table(["Neighbourhood", "Homes", "Median RevPAR", "Median ADR", "Median occupancy"],
-                                                          [(n, f"{r.n:,}", money(r.revpar), money(r.adr), pct(100 * r.occ)) for n, r in nb.iterrows()],
+                                                          [(n, f"{int(r.n):,}", money(r.revpar), money(r.adr), pct(100 * r.occ)) for n, r in nb.iterrows()],
                                                           f"Every neighbourhood with at least {MIN_N} entire homes, snapshot of {s['asof']}.")),
         note("tw-tg", "Revenue targets as a table", table(["Expected revenue a year", "Share of entire homes"], [(f"{money(t)} or more", pct(p)) for t, p in s["targets"]],
                                                            f"{s['homes']:,} entire homes, snapshot of {s['asof']}.")),
         note("tw-gr", "Growth as a table", table(["Snapshot", "Active listings", "New since the last snapshot"], [(lab, f"{n:,}", f"{new:,}" if new is not None else "first snapshot") for lab, n, new in s["growth"]],
                                                   "Listings active in each Inside Airbnb snapshot, all room types.")),
+        (note("tw-now", "Market now as a table", table(["Measure", "Value", "Measured on"],
+              [("Active listings", f"{now['listings']:,}", "every listing"), ("Hosts", f"{now['hosts']:,}", "every listing"),
+               ("Median listing price a night, entire homes", money(now["price"]), f"{now['price_n']:,} priced entire homes"),
+               ("Median occupancy, next 365 days, entire homes", pct(now["occ"]), f"{now['occ_n']:,} entire homes"),
+               ("RevPAR a night, estimate", money(now["revpar_est"]), f"{now['est_n']:,} entire homes, listing price times occupancy")],
+              f"Inside Airbnb snapshot of {now['asof']}; calendar prices last published {now['last_cal_price']}.")) if now else ""),
         note("n-method", "Method", f"""<p>Four quarterly Inside Airbnb snapshots of Broward County, {s['first']} to {s['asof']}. For each listing the
           study reads the 365-day calendar after a snapshot: booked nights, the average daily rate (ADR), occupancy, RevPAR (revenue per available
           night) and expected annual revenue. Headline numbers are medians over entire homes in the latest snapshot ({s['homes']:,} of {s['active']:,}
-          active listings). A neighbourhood is ranked only with at least {MIN_N} entire homes. A multi-listing host holds {MULTI} or more active listings.</p>
+          active listings). Each median is taken on its own, so the median ADR times the median occupancy
+          ({money(s['adr'] * s['occ'] / 100)}) is close to, but not the same as, the median RevPAR ({money(s['revpar'])}). A neighbourhood is ranked only with at least {MIN_N} entire homes. A multi-listing host holds {MULTI} or more active listings.</p>
           <p>Calendar availability is a proxy for bookings: a blocked night can be a stay or an owner's hold, so occupancy is an estimate, labelled as such.</p>"""),
     ])
 
     rail = f"""
     <ul class="rail" aria-label="About this data">
-      <li>Inside Airbnb</li><li>As of {s['asof']}</li><li>{s['n_snaps']} snapshots</li><li>{s['active']:,} active listings</li><li>{s['hosts']:,} hosts</li>
+      <li>Inside Airbnb</li><li>Revenue as of {s['asof']}</li>{f"<li>Market now as of {now['asof']}</li>" if now else ""}<li>{s['n_snaps']} snapshots with prices</li><li>{s['active']:,} active listings</li><li>{s['hosts']:,} hosts</li>
     </ul>"""
     return stats, views, answer, twins, rail
 
@@ -227,10 +292,12 @@ def page(s, legend):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--src", required=True, type=pathlib.Path)
+    ap.add_argument("--now", type=pathlib.Path, help="the pipeline's tableau_listings.csv, for the newest snapshot")
     a = ap.parse_args()
     s = build(load(a.src))
+    now = market_now(a.now) if a.now else None
     legend = draw_map(s["map"], ROOT / "assets" / "airbnb" / "revpar-map.webp")
-    stats, views, answer, twins, rail = page(s, legend)
+    stats, views, answer, twins, rail = page(s, legend, now)
     out = f"""<!-- generated by tools/airbnb_build.py from the study's processed outputs; do not edit by hand -->
 ```{{=html}}
 <div class="sv v-case">

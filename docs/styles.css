@@ -31,6 +31,15 @@ body.sv-page #quarto-content { padding: 0; }
   body.sv-page main.content { height: 100%; }
   body.sv-page .sv { height: 100%; min-height: 0; }
 }
+/* the case study holds ten bars and a four-line answer: below 860 tall (1366x768, 1280x720 laptops) it grows and
+   the page scrolls like a normal page, rather than squeezing each panel into a scroll box of three rows */
+@media (min-width: 900px) and (min-height: 600px) and (max-height: 859.98px) {
+  html:has(body.sv-page .v-case) { overflow: auto; }
+  body.sv-page:has(.v-case) { height: auto; overflow: visible; display: block; }
+  body.sv-page:has(.v-case) main.content, body.sv-page .sv.v-case { height: auto; }
+  .v-case .cv-chart > .hbars, .v-case .case-answer { overflow: visible; }
+  .v-case .mapwrap { height: 30rem; }
+}
 
 /* ══ surfaces: glass panels a level above the ground, inlays recessed below, chips raised above ══ */
 .panel {
@@ -268,7 +277,10 @@ body.sv-page #quarto-content { padding: 0; }
 .case-hero .ch-text { display: grid; gap: .45rem; }
 .case-hero .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .case-view { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--gap); min-height: 0; }
-.case-view .tabs { justify-self: start; }
+.case-view .tabs { justify-self: start; gap: .2rem; }
+/* five tabs must stay on one row on a 1366-wide laptop, or the wrapped row takes the chart's height */
+@media (max-width: 1599px) { .case-view .tabs .tab { padding: 0 .75rem; } }
+@media (max-width: 1365px) { .case-view .tabs .tab { padding: 0 .55rem; font-size: 1rem; } }
 .cv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--gap); min-height: 0; }
 .cv-side { display: grid; align-content: start; justify-items: start; gap: .6rem; }
 .cv-chart { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: .5rem; min-height: 0; }
@@ -284,8 +296,18 @@ body.sv-page #quarto-content { padding: 0; }
 .hb-t { position: relative; height: clamp(16px, 2.4vh, 24px); border-radius: 999px; background: var(--inlay); box-shadow: var(--st-sink); overflow: hidden; }
 .hb-f { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--fin-polish), linear-gradient(90deg, #2E9BD6, var(--cy)); box-shadow: 0 0 12px -2px rgba(124, 245, 255, .55); }
 .hbars.tall .hb-t { height: clamp(22px, 3.6vh, 36px); }
+/* the neighbourhood list: one line a row (count beside the name), a labelled divider before the weakest, and a scroll
+   rather than an overflow if a short window still cannot hold every row */
+.cv-chart > .hbars { overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; padding-right: .3rem; }
+.hbars.dense { align-content: start; gap: clamp(.15rem, .8vh, .5rem); }
+.hbars.dense li { grid-template-columns: minmax(13rem, 19rem) minmax(0, 1fr) 4.6rem; }
+.hbars.dense .hb-l { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+.hbars.dense .hb-l small { display: inline; }
+.hbars li.hb-split { display: flex; align-items: center; gap: .7rem; margin-top: .3rem; font-size: 1rem; font-weight: 800; color: var(--ink2);
+  letter-spacing: .04em; text-transform: uppercase; }
+.hbars li.hb-split::after { content: ""; flex: 1; border-top: 2px dashed rgba(124, 245, 255, .45); }
 .hb-v { font-family: var(--num); font-size: 1.0625rem; font-weight: 800; color: var(--ink); text-align: right; }
-.case-answer { display: flex; flex-direction: column; gap: .8rem; min-height: 0; }
+.case-answer { display: flex; flex-direction: column; gap: clamp(.5rem, 1.2vh, .8rem); min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .case-answer > .eyebrow { margin-top: auto; }
 .verdicts { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
 .verdicts li { display: flex; align-items: center; gap: .7rem; padding: .45rem .75rem; border-radius: 14px; background: var(--inlay); box-shadow: var(--st-sink); font-size: 1.0625rem; color: var(--ink2); line-height: 1.3; }
@@ -360,6 +382,7 @@ table.twin td { padding: .45rem .7rem; border-bottom: 1px solid rgba(124, 245, 2
   .tab { padding: 0 .8rem; }
   .hbars li { grid-template-columns: minmax(0, 1fr) 4.6rem; }
   .hbars .hb-t { grid-column: 1 / -1; grid-row: 2; }
+  .hbars.dense li { grid-template-columns: minmax(0, 1fr) 4.6rem; }
 }
 
 /* Home's feature pictures: the map shown whole, glyph posters for work without a public picture */
