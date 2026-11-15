@@ -198,13 +198,27 @@
     }
     return '<span class="ab-sub">' + esc(x.sub) + "</span>";
   }
+  function share(n) { var v = 100 * n / D.homes; return v < 1 ? v.toFixed(2) : v.toFixed(1); }
+  // the badge slot: the metal medal for the first three on RevPAR today; later badges (an archetype, a trend) join here
+  // a badge is an emblem: a hexagonal medallion (a big mark inside) over a notched ribbon (its word)
+  function emblem(cls, mark, word, spoken) {
+    return '<span class="ab-badge ' + cls + '" role="img" aria-label="' + esc(spoken) + '"><span class="em"><b>' + esc(mark) + '</b></span><span class="rib">' + esc(word) + "</span></span>";
+  }
+  function badges(x, r) {
+    var out = [];
+    if (r && r.rank <= 3 && r.of >= 4) out.push(emblem(MEDAL[r.rank - 1][0], String(r.rank), "RevPAR", MEDAL[r.rank - 1][1] + " on RevPAR, " + MEDAL[r.rank - 1][0] + " badge"));
+    out.push(emblem("data", "CAL", "Measured", "Measured from calendar data"));
+    return out.join("");
+  }
   function band(x) {
     var r = rankOf(state.level, "revpar", x.m.revpar), z = zOf(state.level, "revpar", x.m.revpar);
     var lvl = LEVELS.filter(function (l) { return l[0] === state.level; })[0][1];
     return '<div class="ab-disc" aria-hidden="true">' + (state.level === "listing" ? "L" : state.level === "host" ? "H" : state.level === "seg" ? "ML" : "N") + "</div>"
       + '<div class="ab-id"><span class="eyebrow">' + esc(lvl + ", Broward County, " + D.asof) + '</span><p id="ab-title" class="ab-name' + (x.name.length > 18 ? " long" : "") + '" role="heading" aria-level="2">' + esc(x.name) + '</p>' + subLine(x) + '<p class="ab-deck">' + deck(x) + "</p></div>"
+      + '<div class="ab-badges" aria-label="Badges">' + badges(x, r) + "</div>"
       + '<div class="ab-chips"><span class="ab-chip rk ' + heat(z) + '"><i>Rank</i><b>' + r.rank.toLocaleString("en-US") + "</b><small>of " + r.of.toLocaleString("en-US") + "</small></span>"
-      + '<span class="ab-chip"><i>Priced</i><b>' + x.n.toLocaleString("en-US") + '</b></span><span class="ab-chip gold"><i>Data</i><b>Measured</b></span></div>';
+      + '<span class="ab-chip"><i>Priced homes</i><b>' + x.n.toLocaleString("en-US") + "</b></span>"
+      + '<span class="ab-chip"><i>Share of county</i><b>' + share(x.n) + "</b><small>%</small></span></div>";
   }
 
   function cardView() {
