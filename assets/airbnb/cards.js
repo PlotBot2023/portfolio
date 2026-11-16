@@ -34,7 +34,9 @@
   };
   var TILES = { group: ["adr", "occ", "rev", "rev_bed", "clear50", "super"], listing: ["adr", "occ", "rev", "rev_bed", "bedrooms", "superhost"],
     models: ["churn", "resid", "pred", "mood", "dsr", "anom"], invest: ["hv", "gy", "noi", "cap", "coc", "dscr"] };
-  var FAMS = [["rev", "Revenue"], ["invest", "Investment"], ["models", "Models"]];
+  // Investment and Models rest on the 2026-09-22 asking price (a new price basis, fees included) and the old income
+  // definition; they come back with the Investment Package on the measured income model (bnbscope experiments, E1)
+  var FAMS = [["rev", "Revenue"]];
   var MEDAL = [["gold", "1st"], ["silver", "2nd"], ["bronze", "3rd"]];
   var ROWS = ["revpar", "adr", "occ", "rev", "rev_bed", "clear50", "super"], MROWS = ["revpar", "churn", "resid", "pred", "mood", "dsr", "anom"],
     IROWS = ["revpar", "hv", "gy", "noi", "cap", "coc", "dscr"];
@@ -301,7 +303,7 @@
     var tier = rr && rr.rank <= 3 && rr.of >= 4 ? MEDAL[rr.rank - 1][0] : "";
     ["gold", "silver", "bronze"].forEach(function (t) { DLG.querySelector(".ab-top").classList.toggle(t, t === tier); });
     var lv = LEVELS.map(function (l) { return '<button type="button" class="ab-seg" data-level="' + l[0] + '" aria-pressed="' + (l[0] === state.level) + '">' + l[1] + "</button>"; }).join("");
-    var fams = D.models ? '<div class="ab-segs ab-fam" role="group" aria-label="Stat family">' + FAMS.map(function (f) { return '<button type="button" class="ab-seg" data-fam="' + f[0] + '" aria-pressed="' + (f[0] === state.fam) + '">' + f[1] + "</button>"; }).join("") + "</div>" : "";
+    var fams = D.models && FAMS.length > 1 ? '<div class="ab-segs ab-fam" role="group" aria-label="Stat family">' + FAMS.map(function (f) { return '<button type="button" class="ab-seg" data-fam="' + f[0] + '" aria-pressed="' + (f[0] === state.fam) + '">' + f[1] + "</button>"; }).join("") + "</div>" : "";
     var pick = fams + (state.level === "listing" ? nbFilter() : "") + picker("ab-a", state.a, state.view === "h2h" ? "Left" : "Card") + (state.view === "h2h" ? picker("ab-b", state.b, "Right") : "");
     DLG.querySelector(".ab-fs").innerHTML = '<div class="ab-segs" role="group" aria-label="Level">' + lv + "</div>" + pick
       + '<span class="ab-count"><b>' + items(state.level).length.toLocaleString("en-US") + "</b> " + LWORD[state.level] + "</span>";
