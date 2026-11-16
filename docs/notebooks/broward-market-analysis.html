@@ -52,7 +52,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d87f8aa919d9cd326c82f4d5ce1d0762.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-78bc8e05f5c5663edab11c7bcce6126f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-e8e310544d0251463ba6c5d6acbeada4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -200,14 +200,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><strong>Standalone analysis notebook</strong> — reads from exported CSVs in <code>data/processed/</code>, no database required.</p>
-<p>This notebook analyzes the Fort Lauderdale / Broward County short-term rental market using data from <a href="https://insideairbnb.com/">Inside Airbnb</a>. The dataset covers <strong>4 quarterly snapshots</strong> (June 2024 – March 2025) with ~17,000 active listings per snapshot.</p>
+<p><strong>Standalone analysis notebook</strong>: reads from exported CSVs in <code>data/processed/</code>, no database required.</p>
+<p>This notebook analyzes the Fort Lauderdale / Broward County short-term rental market using data from <a href="https://insideairbnb.com/">Inside Airbnb</a>. The dataset covers <strong>4 quarterly snapshots</strong> (June 2024 to March 2025) with ~17,000 active listings per snapshot.</p>
 <p><strong>Metrics calculated from calendar availability data:</strong></p>
 <ul>
-<li><strong>ADR</strong> (Average Daily Rate) — mean nightly price on booked days</li>
-<li><strong>Occupancy</strong> — booked days / available days, capped at 70%</li>
-<li><strong>RevPAR</strong> (Revenue Per Available Room) — ADR × occupancy rate</li>
-<li><strong>Expected Revenue</strong> — projected annual gross revenue per listing</li>
+<li><strong>ADR</strong> (Average Daily Rate): mean nightly price on booked days</li>
+<li><strong>Occupancy</strong>: booked days / available days, capped at 70%</li>
+<li><strong>RevPAR</strong> (Revenue Per Available Room): ADR × occupancy rate</li>
+<li><strong>Expected Revenue</strong>: projected annual gross revenue per listing</li>
 </ul>
 <div id="cell-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T17:08:19.842090Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T17:08:19.842090Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T17:08:20.570491Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T17:08:20.570491Z&quot;}}" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
@@ -425,14 +425,14 @@ Median market RevPAR: $55/night</code></pre>
 <section id="key-findings" class="level2">
 <h2 class="anchored" data-anchor-id="key-findings">Key Findings</h2>
 <ol type="1">
-<li><p><strong>Steady market growth</strong> — Broward County added ~550 net new listings over 9 months (+3.3%), suggesting continued STR investment despite regulatory uncertainty.</p></li>
-<li><p><strong>Pricing is heavily right-skewed</strong> — Median ADR of ~$192 vs.&nbsp;mean of ~$370 indicates a long tail of luxury properties pulling averages up. Median is the better benchmark for market entry analysis.</p></li>
-<li><p><strong>Low median occupancy signals oversupply</strong> — At ~30% median occupancy, the majority of listings sit empty most of the year. Only ~20% of listings exceed 60% occupancy.</p></li>
-<li><p><strong>Superhost status correlates with higher occupancy</strong> — Superhosts achieve meaningfully higher occupancy and RevPAR, though the ADR gap is smaller. The value of the badge appears to be in booking volume, not pricing power.</p></li>
-<li><p><strong>Coastal neighborhoods command premiums</strong> — Lighthouse Point and Southwest Ranches lead in RevPAR, while the largest markets (Fort Lauderdale, Hollywood) show moderate per-listing performance due to saturation.</p></li>
+<li><p><strong>Steady market growth</strong>: Broward County added ~550 net new listings over 9 months (+3.3%), suggesting continued STR investment despite regulatory uncertainty.</p></li>
+<li><p><strong>Pricing is heavily right-skewed</strong>: Median ADR of ~$192 vs.&nbsp;mean of ~$370 indicates a long tail of luxury properties pulling averages up. Median is the better benchmark for market entry analysis.</p></li>
+<li><p><strong>Low median occupancy signals oversupply</strong>: At ~30% median occupancy, the majority of listings sit empty most of the year. Only ~20% of listings exceed 60% occupancy.</p></li>
+<li><p><strong>Superhost status correlates with higher occupancy</strong>: Superhosts achieve meaningfully higher occupancy and RevPAR, though the ADR gap is smaller. The value of the badge appears to be in booking volume, not pricing power.</p></li>
+<li><p><strong>Coastal neighborhoods command premiums</strong>: Lighthouse Point and Southwest Ranches lead in RevPAR, while the largest markets (Fort Lauderdale, Hollywood) show moderate per-listing performance due to saturation.</p></li>
 </ol>
 <hr>
-<p><em>Data: <a href="https://insideairbnb.com/">Inside Airbnb</a> | Broward County, FL | June 2024 — March 2025</em></p>
+<p><em>Data: <a href="https://insideairbnb.com/">Inside Airbnb</a> | Broward County, FL | June 2024 to March 2025</em></p>
 
 
 </section>

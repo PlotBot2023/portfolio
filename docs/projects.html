@@ -51,7 +51,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d87f8aa919d9cd326c82f4d5ce1d0762.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-78bc8e05f5c5663edab11c7bcce6126f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-e8e310544d0251463ba6c5d6acbeada4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -193,10 +193,10 @@ ul.task-list li input[type="checkbox"] {
 
       <article class="panel rail-top" data-item="leaders" aria-label="Sports leaderboards and experiments">
         <div class="media inlay poster scoreline" aria-hidden="true">
-          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:78%"></span></span><span class="sl-chip hot">Elite</span></div>
-          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:56%"></span></span><span class="sl-chip warm">Good</span></div>
+          <div class="sl-row"><span class="sl-k">Team A</span><span class="sl-bar"><span style="width:78%"></span></span><span class="sl-chip hot">Elite</span></div>
+          <div class="sl-row"><span class="sl-k">Team B</span><span class="sl-bar"><span style="width:56%"></span></span><span class="sl-chip warm">Good</span></div>
           <div class="sl-row"><span class="sl-k">Baseline</span><span class="sl-bar base"><span style="width:44%"></span></span><span class="sl-chip">Average</span></div>
-          <div class="sl-row"><span class="sl-k">Value</span><span class="sl-bar"><span style="width:24%"></span></span><span class="sl-chip cold">Poor</span></div>
+          <div class="sl-row"><span class="sl-k">Team C</span><span class="sl-bar"><span style="width:24%"></span></span><span class="sl-chip cold">Poor</span></div>
         </div>
         <div class="info">
           <div class="head"><h2>Sports leaderboards and experiments</h2><span class="status live">Live</span></div>
@@ -207,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
           </ul>
           <div class="foot">
             <ul class="tray slim" aria-label="Methods"><li>z-scores</li><li>Pre-registration</li><li>Holdout tests</li></ul>
-            <div class="btn-row"><button class="btn" type="button" popovertarget="n-leaders">Leaderboards</button><button class="btn" type="button" popovertarget="n-experiments">Experiments</button></div>
+            <div class="btn-row"><button class="btn" type="button" popovertarget="n-leaders">Leaderboards</button><button class="btn" type="button" popovertarget="n-experiments">Experiments</button><a class="btn primary" href="guides/leaderboards/nfl.html">Open the leaderboards</a></div>
           </div>
         </div>
       </article>
@@ -222,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
           </ul>
           <div class="foot">
             <ul class="tray slim" aria-label="Methods"><li>Market research</li><li>Pricing</li><li>Reference design</li></ul>
-            <div class="btn-row"><button class="btn" type="button" popovertarget="n-hotwheels">Notes</button></div>
+            <div class="btn-row"><button class="btn" type="button" popovertarget="n-hotwheels">Notes</button><a class="btn primary" href="guides/hot-wheels-field-guide.html">Open the guide</a></div>
           </div>
         </div>
       </article>
@@ -248,7 +248,8 @@ ul.task-list li input[type="checkbox"] {
   <h3>Leaderboards</h3>
   <p>Every sport gets its own leaderboards: basic stats, advanced stats, betting, accuracy and results. Each row is scored against a stated baseline (the league mean, a coin flip, break-even, or the market) and its z-score sets the heat colour, so a number always reads against something.</p>
   <p>Small samples are held back: a row under 30 games is never ranked or coloured. Early in a season the board shows early leaders instead, labelled as early. Every board has a table twin with every row and its notes.</p>
-  <button class="btn" popovertarget="n-leaders" popovertargetaction="hide">Close</button>
+  <p>The leaderboards run live on my own machine; the link opens a dated snapshot of them, built from the same code.</p>
+  <div class="btn-row"><a class="btn primary" href="guides/leaderboards/nfl.html">Open the leaderboards</a><button class="btn" popovertarget="n-leaders" popovertargetaction="hide">Close</button></div>
 </div>
 <div id="n-experiments" popover="" class="note">
   <h3>Pre-registered experiments</h3>
@@ -259,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="n-hotwheels" popover="" class="note">
   <h3>Hot Wheels value field guide</h3>
   <p>How to identify, authenticate, grade and price a collectible car, generation by generation. Every feature is drawn and zoomed, the fake and restoration tells are listed, and a ranked watch list covers 500 rare pieces. Every value carries its source, basis and date.</p>
-  <button class="btn" popovertarget="n-hotwheels" popovertargetaction="hide">Close</button>
+  <div class="btn-row"><a class="btn primary" href="guides/hot-wheels-field-guide.html">Open the guide</a><button class="btn" popovertarget="n-hotwheels" popovertargetaction="hide">Close</button></div>
 </div>
 
 <script src="assets/sv.js"></script>

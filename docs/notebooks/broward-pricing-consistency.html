@@ -52,7 +52,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d87f8aa919d9cd326c82f4d5ce1d0762.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-78bc8e05f5c5663edab11c7bcce6126f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-e8e310544d0251463ba6c5d6acbeada4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -153,15 +153,15 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#null-rate-confirmation-by-snapshot" id="toc-null-rate-confirmation-by-snapshot" class="nav-link active" data-scroll-target="#null-rate-confirmation-by-snapshot">1 Null-rate confirmation by snapshot</a></li>
-  <li><a href="#imputable-universe-listings-in-snaps-56-with-price-history-in-snaps-14" id="toc-imputable-universe-listings-in-snaps-56-with-price-history-in-snaps-14" class="nav-link" data-scroll-target="#imputable-universe-listings-in-snaps-56-with-price-history-in-snaps-14">2 Imputable universe – listings in snaps 5–6 with price history in snaps 1–4</a></li>
-  <li><a href="#beds-and-bathrooms-stability-across-snaps-14" id="toc-beds-and-bathrooms-stability-across-snaps-14" class="nav-link" data-scroll-target="#beds-and-bathrooms-stability-across-snaps-14">3 <code>beds</code> and <code>bathrooms</code> stability across snaps 1–4</a></li>
-  <li><a href="#price-consistency-cv-across-snaps-14" id="toc-price-consistency-cv-across-snaps-14" class="nav-link" data-scroll-target="#price-consistency-cv-across-snaps-14">4 Price consistency (CV) across snaps 1–4</a></li>
+  <li><a href="#imputable-universe-listings-in-snaps-5-to-6-with-price-history-in-snaps-1-to-4" id="toc-imputable-universe-listings-in-snaps-5-to-6-with-price-history-in-snaps-1-to-4" class="nav-link" data-scroll-target="#imputable-universe-listings-in-snaps-5-to-6-with-price-history-in-snaps-1-to-4">2 Imputable universe, listings in snaps 5 to 6 with price history in snaps 1 to 4</a></li>
+  <li><a href="#beds-and-bathrooms-stability-across-snaps-1-to-4" id="toc-beds-and-bathrooms-stability-across-snaps-1-to-4" class="nav-link" data-scroll-target="#beds-and-bathrooms-stability-across-snaps-1-to-4">3 <code>beds</code> and <code>bathrooms</code> stability across snaps 1 to 4</a></li>
+  <li><a href="#price-consistency-cv-across-snaps-1-to-4" id="toc-price-consistency-cv-across-snaps-1-to-4" class="nav-link" data-scroll-target="#price-consistency-cv-across-snaps-1-to-4">4 Price consistency (CV) across snaps 1 to 4</a></li>
   <li><a href="#decision-summary" id="toc-decision-summary" class="nav-link" data-scroll-target="#decision-summary">5 Decision summary</a></li>
   <li><a href="#write-imputation-table-to-db" id="toc-write-imputation-table-to-db" class="nav-link" data-scroll-target="#write-imputation-table-to-db">6 Write imputation table to DB</a></li>
   <li><a href="#adr-outlier-detection" id="toc-adr-outlier-detection" class="nav-link" data-scroll-target="#adr-outlier-detection">7 ADR outlier detection</a></li>
   <li><a href="#occupancy-anomalies" id="toc-occupancy-anomalies" class="nav-link" data-scroll-target="#occupancy-anomalies">8 Occupancy anomalies</a></li>
   <li><a href="#data-gap-analysis" id="toc-data-gap-analysis" class="nav-link" data-scroll-target="#data-gap-analysis">9 Data gap analysis</a></li>
-  <li><a href="#combined-quality-flags-airbnb_features.listing_quality_flags" id="toc-combined-quality-flags-airbnb_features.listing_quality_flags" class="nav-link" data-scroll-target="#combined-quality-flags-airbnb_features.listing_quality_flags">10 Combined quality flags → <code>airbnb_features.listing_quality_flags</code></a></li>
+  <li><a href="#combined-quality-flags-into-airbnb_features.listing_quality_flags" id="toc-combined-quality-flags-into-airbnb_features.listing_quality_flags" class="nav-link" data-scroll-target="#combined-quality-flags-into-airbnb_features.listing_quality_flags">10 Combined quality flags into <code>airbnb_features.listing_quality_flags</code></a></li>
   <li><a href="#impact-analysis-all-listings-vs.-clean-unflagged-subset" id="toc-impact-analysis-all-listings-vs.-clean-unflagged-subset" class="nav-link" data-scroll-target="#impact-analysis-all-listings-vs.-clean-unflagged-subset">11 Impact analysis: all listings vs.&nbsp;clean (unflagged) subset</a></li>
   </ul>
 </nav>
@@ -208,15 +208,15 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Plan</strong></p>
 <ol type="1">
 <li>Confirm null rates by snapshot for all three columns</li>
-<li>Size the imputable universe (listings in snaps 5–6 with history in snaps 1–4)</li>
-<li>Test <code>beds</code> / <code>bathrooms</code> stability – are they constant across snaps 1–4?</li>
+<li>Size the imputable universe (listings in snaps 5 to 6 with history in snaps 1 to 4)</li>
+<li>Test <code>beds</code> / <code>bathrooms</code> stability, are they constant across snaps 1 to 4?</li>
 <li>Measure <code>price</code> consistency via coefficient of variation (CV)</li>
 <li>Summarise the decision</li>
 <li>Write imputation table to DB</li>
 <li>ADR outlier detection (IQR cross-sectional + temporal spikes)</li>
 <li>Occupancy anomalies (saturated / zero flags)</li>
 <li>Data gap analysis (calendar coverage, missing prices, listing churn)</li>
-<li>Combined quality flags → <code>airbnb_features.listing_quality_flags</code></li>
+<li>Combined quality flags into <code>airbnb_features.listing_quality_flags</code></li>
 <li>Impact analysis: all listings vs.&nbsp;clean (unflagged) subset</li>
 </ol>
 <section id="null-rate-confirmation-by-snapshot" class="level2">
@@ -231,8 +231,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="imputable-universe-listings-in-snaps-56-with-price-history-in-snaps-14" class="level2">
-<h2 class="anchored" data-anchor-id="imputable-universe-listings-in-snaps-56-with-price-history-in-snaps-14">2 Imputable universe – listings in snaps 5–6 with price history in snaps 1–4</h2>
+<section id="imputable-universe-listings-in-snaps-5-to-6-with-price-history-in-snaps-1-to-4" class="level2">
+<h2 class="anchored" data-anchor-id="imputable-universe-listings-in-snaps-5-to-6-with-price-history-in-snaps-1-to-4">2 Imputable universe, listings in snaps 5 to 6 with price history in snaps 1 to 4</h2>
 <div id="adb1c9c1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-24T21:25:51.668965Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-24T21:25:51.668965Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-24T21:25:51.754332Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-24T21:25:51.754332Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
@@ -301,8 +301,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="beds-and-bathrooms-stability-across-snaps-14" class="level2">
-<h2 class="anchored" data-anchor-id="beds-and-bathrooms-stability-across-snaps-14">3 <code>beds</code> and <code>bathrooms</code> stability across snaps 1–4</h2>
+<section id="beds-and-bathrooms-stability-across-snaps-1-to-4" class="level2">
+<h2 class="anchored" data-anchor-id="beds-and-bathrooms-stability-across-snaps-1-to-4">3 <code>beds</code> and <code>bathrooms</code> stability across snaps 1 to 4</h2>
 <div id="d7ed6f8a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-24T21:25:51.802485Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-24T21:25:51.802030Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-24T21:25:51.882193Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-24T21:25:51.881566Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -355,9 +355,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="price-consistency-cv-across-snaps-14" class="level2">
-<h2 class="anchored" data-anchor-id="price-consistency-cv-across-snaps-14">4 Price consistency (CV) across snaps 1–4</h2>
-<p>Uses <strong>calendar price</strong> (daily rate from calendar_cleaned), aggregated to a per-snapshot ADR for each listing, then CV measured across those 4 snapshot ADRs. Restricted to listings also present in snaps 5–6 (the imputable universe).</p>
+<section id="price-consistency-cv-across-snaps-1-to-4" class="level2">
+<h2 class="anchored" data-anchor-id="price-consistency-cv-across-snaps-1-to-4">4 Price consistency (CV) across snaps 1 to 4</h2>
+<p>Uses <strong>calendar price</strong> (daily rate from calendar_cleaned), aggregated to a per-snapshot ADR for each listing, then CV measured across those 4 snapshot ADRs. Restricted to listings also present in snaps 5 to 6 (the imputable universe).</p>
 <p>CV = stddev(snapshot_ADR) / mean(snapshot_ADR).</p>
 <div id="1ca98fbe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-24T21:25:51.884780Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-24T21:25:51.883628Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-24T21:26:02.329489Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-24T21:26:02.329489Z&quot;}}" data-execution_count="6">
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -480,7 +480,7 @@ Decision thresholds:
 </section>
 <section id="write-imputation-table-to-db" class="level2">
 <h2 class="anchored" data-anchor-id="write-imputation-table-to-db">6 Write imputation table to DB</h2>
-<p>Creates <code>airbnb_features.listing_snapshot_imputed</code> – one row per (snapshot_date, listing_id) across all 6 snapshots.</p>
+<p>Creates <code>airbnb_features.listing_snapshot_imputed</code>, one row per (snapshot_date, listing_id) across all 6 snapshots.</p>
 <ul>
 <li><p><strong>adr</strong>: actual from <code>overall_listing_metrics.adr_365</code> (snaps 1-4) or carried forward from the most recent non-null snapshot (snaps 5-6).</p></li>
 <li><p><strong>beds / bathrooms</strong>: same carry-forward logic from <code>listings_property_cleaned</code>.</p></li>
@@ -623,7 +623,7 @@ Spikes (|change| &gt; 50%): 685 (1.7%)</code></pre>
 <p>Two extremes worth flagging:</p>
 <ul>
 <li><p><strong>Saturated (occ_90 &gt;= 0.95):</strong> Near-100 % occupancy likely reflects a host-blocked calendar rather than genuine bookings.</p></li>
-<li><p><strong>Zero (occ_90 == 0 with data present):</strong> Listing has calendar data but zero booked days — inactive or withdrawn from market.</p></li>
+<li><p><strong>Zero (occ_90 == 0 with data present):</strong> Listing has calendar data but zero booked days, inactive or withdrawn from market.</p></li>
 </ul>
 <div id="5suwu2ex3wv" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-24T21:27:15.893821Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-24T21:27:15.893821Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-24T21:27:16.827352Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-24T21:27:16.826835Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-stdout">
@@ -714,7 +714,7 @@ Refined flag definitions:
 <h2 class="anchored" data-anchor-id="data-gap-analysis">9 Data gap analysis</h2>
 <p>Three dimensions of data completeness:</p>
 <ul>
-<li><p><strong>9a Calendar coverage:</strong> Ratio of actual calendar rows to 365 expected days. Listings below 80 % coverage are flagged — metrics built on sparse data are unreliable.</p></li>
+<li><p><strong>9a Calendar coverage:</strong> Ratio of actual calendar rows to 365 expected days. Listings below 80 % coverage are flagged, metrics built on sparse data are unreliable.</p></li>
 <li><p><strong>9b Missing price on booked days:</strong> Booked (<code>available = 0</code>) but <code>price IS NULL</code>. ADR / RevPAR are understated when booked-day prices are missing.</p></li>
 <li><p><strong>9c Listing churn:</strong> Listings that appear or disappear across snapshots. Churn complicates longitudinal analysis and imputation.</p></li>
 </ul>
@@ -759,8 +759,8 @@ snapshot_date
 </div>
 </div>
 </section>
-<section id="combined-quality-flags-airbnb_features.listing_quality_flags" class="level2">
-<h2 class="anchored" data-anchor-id="combined-quality-flags-airbnb_features.listing_quality_flags">10 Combined quality flags → <code>airbnb_features.listing_quality_flags</code></h2>
+<section id="combined-quality-flags-into-airbnb_features.listing_quality_flags" class="level2">
+<h2 class="anchored" data-anchor-id="combined-quality-flags-into-airbnb_features.listing_quality_flags">10 Combined quality flags into <code>airbnb_features.listing_quality_flags</code></h2>
 <p>Materialise a single boolean-flag table combining all anomaly detections above. One row per (snapshot_date, listing_id). Downstream consumers can filter or weight listings by flag status.</p>
 <table class="caption-top table">
 <colgroup>
@@ -826,7 +826,7 @@ snapshot_date  listings  adr_outlier  adr_spike  occ_saturated  occ_zero  low_co
 </section>
 <section id="impact-analysis-all-listings-vs.-clean-unflagged-subset" class="level2">
 <h2 class="anchored" data-anchor-id="impact-analysis-all-listings-vs.-clean-unflagged-subset">11 Impact analysis: all listings vs.&nbsp;clean (unflagged) subset</h2>
-<p>Join metrics with <code>listing_quality_flags</code> and compare key distributional statistics — ADR, occupancy, RevPAR — across cohorts. <strong>Restricted to the 4 early snapshots</strong> (2024-06-26 … 2025-03-19) where ADR is actual, not carry-forward.</p>
+<p>Join metrics with <code>listing_quality_flags</code> and compare key distributional statistics, ADR, occupancy, RevPAR, across cohorts. <strong>Restricted to the 4 early snapshots</strong> (2024-06-26 … 2025-03-19) where ADR is actual, not carry-forward.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
