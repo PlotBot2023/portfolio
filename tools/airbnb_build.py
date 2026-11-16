@@ -55,6 +55,37 @@ def load(src):
 NOW_COLS = ["Snapshot Date", "Host ID", "Listing ID", "Room Type", "Price ($)", "Occupancy Rate (365d)", "ADR (365d)"]
 
 
+def price_break(d, snaps):
+    """Is the newest snapshot's listing price on the same footing as the snapshot about a year before it?
+
+    Found 2026-11-15 (bnbscope experiments, E8): at the 2026-09-22 snapshot the same listing's price is about 1.7 times
+    its price a year before, the cheapest homes rose most, and about half the prices carry cents where no earlier
+    snapshot had any. That looks like a change in what the price includes (fees or taxes), not hosts charging 70%
+    more. Measured here on the data each time the page is built, so a later snapshot is judged on its own."""
+    out = {"price_ratio_yoy": None, "price_ratio_n": 0, "cents_share_now": None, "cents_share_before": None, "price_break": False}
+    if len(snaps) < 2:
+        return out
+    newest = pd.Timestamp(snaps[-1])
+    gaps = [(abs((newest - pd.Timestamp(x)).days - 365), x) for x in snaps[:-1]]
+    gap, before = min(gaps)
+    if gap > 45:
+        return out
+    e = d[d["Room Type"].str.lower().eq("entire home/apt")].dropna(subset=["Price ($)"])
+    now_p = e[e["Snapshot Date"] == newest].groupby("Listing ID")["Price ($)"].first()
+    old_p = e[e["Snapshot Date"] == before].groupby("Listing ID")["Price ($)"].first()
+    pair = pd.concat([now_p, old_p], axis=1, keys=["now", "old"]).dropna()
+    pair = pair[(pair["old"] > 0) & (pair["now"] > 0)]
+    def cents(x):
+        return float((x.round(2) != x.round(0)).mean()) if len(x) else None
+    ratio = float((pair["now"] / pair["old"]).median()) if len(pair) else None
+    out.update(price_ratio_yoy=ratio, price_ratio_n=int(len(pair)), cents_share_now=cents(now_p), cents_share_before=cents(old_p),
+               price_before=pd.Timestamp(before).strftime("%B %Y"))
+    # a jump of a third or more in a year for the same homes, or cents appearing on a fifth of prices, is a change of basis
+    out["price_break"] = bool((ratio is not None and ratio >= 1.33) or
+                              ((out["cents_share_now"] or 0) >= 0.20 and (out["cents_share_before"] or 0) < 0.02))
+    return out
+
+
 def market_now(listings_csv):
     """The newest snapshot from the pipeline's listings export (one row per listing per snapshot).
 
@@ -71,7 +102,9 @@ def market_now(listings_csv):
     homes = last[last["Room Type"].str.lower().eq("entire home/apt")]
     both = homes.dropna(subset=["Price ($)", "Occupancy Rate (365d)"])
     est = both["Price ($)"] * both["Occupancy Rate (365d)"]
+    brk = price_break(d, snaps)
     return {
+        **brk,
         "asof": pd.Timestamp(snaps[-1]).strftime("%d %B %Y").lstrip("0"),
         "asof_iso": pd.Timestamp(snaps[-1]).strftime("%Y-%m-%d"),
         "listings": int(last["Listing ID"].nunique()),
@@ -264,6 +297,13 @@ def page(s, legend, now=None):
       <div class="cv-side"><button class="btn" type="button" popovertarget="tw-gr">Table</button></div>
     </div>"""
     if now:
+        break_note = ""
+        if now["price_break"]:
+            break_note = (f'<p class="cv-note"><b>Price basis changed.</b> The same homes list at {now["price_ratio_yoy"]:.2f} times their price of '
+                          f'{html.escape(now.get("price_before", "a year before"))} ({now["price_ratio_n"]:,} entire homes), and '
+                          f'{100 * now["cents_share_now"]:.0f}% of prices now carry cents, against {100 * now["cents_share_before"]:.0f}% before: '
+                          "the price most likely now includes fees. So this snapshot's price is not compared with earlier ones here, "
+                          "and no revenue is estimated from it.</p>")
         views += f"""
     <div class="tabpanel cv" role="tabpanel" id="v-now" aria-labelledby="t-now" hidden>
       <div class="cv-chart">
@@ -271,12 +311,13 @@ def page(s, legend, now=None):
         <ul class="stats" aria-label="Key numbers, snapshot of {html.escape(now['asof'])}">
           <li class="stat"><span class="n">{now['listings']:,}</span><span class="l">active listings</span></li>
           <li class="stat"><span class="n">{now['hosts']:,}</span><span class="l">hosts</span></li>
-          <li class="stat"><span class="n">{money(now['price'])}</span><span class="l">median listing price a night, entire homes</span></li>
+          <li class="stat{' est' if now['price_break'] else ''}"><span class="n">{money(now['price'])}</span><span class="l">median listing price a night, entire homes{', a new price basis' if now['price_break'] else ''}</span></li>
           <li class="stat"><span class="n">{pct(now['occ'])}</span><span class="l">median occupancy, entire homes, next 365 days</span></li>
-          <li class="stat est"><span class="n">{money(now['revpar_est'])}</span><span class="l">RevPAR a night, an estimate</span></li>
+          {'' if now['price_break'] else f'<li class="stat est"><span class="n">{money(now["revpar_est"])}</span><span class="l">RevPAR a night, an estimate</span></li>'}
         </ul>
+        {break_note}
         <p class="cv-note">Revenue on the other views stops at {html.escape(now['last_cal_price'])}: Inside Airbnb stopped publishing
-          calendar prices after it. The estimate is each entire home's listing price times its occupancy, a model, not a measurement.</p>
+          calendar prices after it.{'' if now['price_break'] else " The estimate is each entire home's listing price times its occupancy, a model, not a measurement."}</p>
       </div>
       <div class="cv-side"><button class="btn" type="button" popovertarget="tw-now">Table</button></div>
     </div>"""
@@ -303,7 +344,7 @@ def page(s, legend, now=None):
               [("Active listings", f"{now['listings']:,}", "every listing"), ("Hosts", f"{now['hosts']:,}", "every listing"),
                ("Median listing price a night, entire homes", money(now["price"]), f"{now['price_n']:,} priced entire homes"),
                ("Median occupancy, next 365 days, entire homes", pct(now["occ"]), f"{now['occ_n']:,} entire homes"),
-               ("RevPAR a night, estimate", money(now["revpar_est"]), f"{now['est_n']:,} entire homes, listing price times occupancy")],
+               *([] if now["price_break"] else [("RevPAR a night, estimate", money(now["revpar_est"]), f"{now['est_n']:,} entire homes, listing price times occupancy")])],
               f"Inside Airbnb snapshot of {now['asof']}; calendar prices last published {now['last_cal_price']}.")) if now else ""),
         note("n-method", "Method", f"""<p>Four quarterly Inside Airbnb snapshots of Broward County, {s['first']} to {s['asof']}. For each listing the
           study reads the 365-day calendar after a snapshot: booked nights, the average daily rate (ADR), occupancy, RevPAR (revenue per available
