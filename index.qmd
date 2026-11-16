@@ -40,7 +40,7 @@ body-classes: sv-page
     </div>
     <div class="btn-row">
       <a class="btn primary" href="projects.html">See the projects</a>
-      <a class="btn" href="airbnb.html">The Airbnb case study</a>
+      <a class="btn" href="https://plotbot2023.github.io/rentals-archetypes/">Rentals Archetypes</a>
       <a class="btn" href="resume.html">Resume</a>
     </div>
   </section>
@@ -52,7 +52,7 @@ body-classes: sv-page
     </div>
 ```
 
-{{< include _airbnb_home.qmd >}}
+{{< include _rentals_home.qmd >}}
 
 ```{=html}
     <div class="row2">

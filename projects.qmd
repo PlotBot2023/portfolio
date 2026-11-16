@@ -22,8 +22,8 @@ body-classes: sv-page
   <div class="bs">
     <div class="board one" data-stage="stage-pj" aria-label="Projects, pick one to show it">
       <button class="tile" type="button" data-item="airbnb" aria-pressed="true">
-        <span class="mark"><img src="assets/airbnb/revpar-map.webp" alt=""></span>
-        <span class="tt"><span class="name">Broward Airbnb market study</span><span class="status live">Published</span></span>
+        <span class="mark"><img src="assets/rentals/surface-map.webp" alt=""></span>
+        <span class="tt"><span class="name">Rentals Archetypes, worldwide</span><span class="status live">Live</span></span>
       </button>
       <button class="tile" type="button" data-item="leaders" aria-pressed="false">
         <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/><path d="M19 4l1.2 2.4 2.6.4-1.9 1.8.5 2.6L19 10l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/></svg></span>
@@ -40,18 +40,18 @@ body-classes: sv-page
     </div>
 
     <div class="stage" id="stage-pj">
-      <article class="panel rail-top" data-item="airbnb" aria-label="Broward Airbnb market study">
-        <div class="media inlay"><img src="assets/airbnb/revpar-map.webp" alt="Map of Broward County entire-home listings as dots coloured by revenue per available night, blue for the lowest to yellow for the highest, crowded in a dense band along the coast."></div>
+      <article class="panel rail-top" data-item="airbnb" aria-label="Rentals Archetypes, worldwide">
+        <div class="media inlay"><img src="assets/rentals/surface-map.webp" alt="Map of southern Europe with the land coloured in bands by nights booked, green for the busiest markets to red for the quietest, over shaded mountains, each market a named point."></div>
         <div class="info">
-          <div class="head"><h2>Broward Airbnb market study</h2><span class="status live">Published</span></div>
+          <div class="head"><h2>Rentals Archetypes, worldwide</h2><span class="status live">Live</span></div>
           <ul class="stats">
-            <li class="stat"><span class="n">4</span><span class="l">quarterly snapshots</span></li>
-            <li class="stat"><span class="n">4</span><span class="l">notebooks, end to end</span></li>
-            <li class="stat"><span class="n">1</span><span class="l">straight answer for an investor</span></li>
+            <li class="stat"><span class="n">1.7M</span><span class="l">listings read and mapped</span></li>
+            <li class="stat"><span class="n">124</span><span class="l">markets in 37 countries</span></li>
+            <li class="stat"><span class="n">16</span><span class="l">types of listing, host and market</span></li>
           </ul>
           <div class="foot">
-            <ul class="tray slim" aria-label="Methods"><li>Market analysis</li><li>Data quality</li><li>Clustering</li></ul>
-            <div class="btn-row"><button class="btn" type="button" popovertarget="n-airbnb">Notes</button><a class="btn primary" href="airbnb.html">Open the case study</a></div>
+            <ul class="tray slim" aria-label="Methods"><li>Clustering</li><li>Mapping</li><li>Data quality</li></ul>
+            <div class="btn-row"><button class="btn" type="button" popovertarget="n-airbnb">Notes</button><a class="btn primary" href="https://plotbot2023.github.io/rentals-archetypes/">Open the project</a></div>
           </div>
         </div>
       </article>
@@ -104,10 +104,10 @@ body-classes: sv-page
 </div>
 
 <div id="n-airbnb" popover class="note">
-  <h3>Broward Airbnb market study</h3>
-  <p>Four quarterly Inside Airbnb snapshots of Broward County, reduced to a straight answer for an individual investor: what an entire-home rental actually earns, which neighbourhoods clear their cost basis, and how much of the market multi-listing hosts already hold.</p>
-  <p>Four notebooks carry it end to end: the market itself, a data-quality decision memo, a segmentation by mixture models, and the investor guide.</p>
-  <div class="btn-row"><a class="btn primary" href="airbnb.html">Open the case study</a><button class="btn" popovertarget="n-airbnb" popovertargetaction="hide">Close</button></div>
+  <h3>Rentals Archetypes, worldwide</h3>
+  <p>Every listing, host and market in 124 Inside Airbnb markets, sorted into named types by clustering, then mapped: by region, by climate belt, by distance to a shore, an airport and a seaport, and, in Broward County, by which canals reach the open ocean.</p>
+  <p>It grew out of the earlier Broward case study, four notebooks that answer what an entire home there earns. That study is still published.</p>
+  <div class="btn-row"><a class="btn primary" href="https://plotbot2023.github.io/rentals-archetypes/">Open the project</a><a class="btn" href="airbnb.html">The Broward case study</a><button class="btn" popovertarget="n-airbnb" popovertargetaction="hide">Close</button></div>
 </div>
 <div id="n-leaders" popover class="note">
   <h3>Leaderboards</h3>
