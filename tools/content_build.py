@@ -128,8 +128,8 @@ FIELDS = {
                  {"group": "Card", "key": "picture", "label": "Picture", "kind": "image", "hint": "your own image, or leave it on the icon"},
                  {"group": "Numbers", "key": "stats", "label": "Headline numbers", "kind": "stats", "max": 3},
                  {"group": "Numbers", "key": "methods", "label": "Methods", "kind": "chips"},
-                 {"group": "Card", "key": "link.label", "label": "Main button words", "kind": "line"},
-                 {"group": "Card", "key": "link.href", "label": "Main button opens", "kind": "line", "hint": "a web address, or a page on this site"},
+                 {"group": "Button", "key": "link.label", "label": "Main button words", "kind": "line"},
+                 {"group": "Button", "key": "link.href", "label": "Main button opens", "kind": "line", "hint": "a web address, or a page on this site"},
                  {"group": "Notes", "key": "notes", "label": "Notes", "kind": "list", "name": "button", "add": "Add a note", "item": "note", "fields": [
                      {"key": "button", "label": "Button words", "kind": "line"}, *NOTE]}]}]},
     ]},
