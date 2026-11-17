@@ -317,9 +317,9 @@
     fetch(DLG.dataset.src).then(function (r) { return r.json(); }).then(function (j) { D = j; then(); })
       .catch(function (err) { if (window.console) console.error("cards:", err); DLG.querySelector(".ab-body").innerHTML = '<p class="ab-note">The cards did not load. Reload the page to try again.</p>'; });
   }
-  function open(level, name) {
+  function open(level, name, view) {
     load(function () {
-      state.level = level || "nb"; state.view = "card";
+      state.level = level || "nb"; state.view = view === "h2h" ? "h2h" : "card";
       var list = items(state.level), i = name ? list.map(function (x) { return x.name; }).indexOf(name) : -1;
       if (i < 0) i = list.map(function (x, j) { return [x.m.revpar || 0, j]; }).sort(function (a, b) { return b[0] - a[0]; })[0][1];
       state.a = i;
@@ -332,8 +332,13 @@
 
   document.addEventListener("click", function (e) {
     var o = e.target.closest("[data-card-open]");
-    if (o) { e.preventDefault(); open(o.dataset.level, o.dataset.name); return; }
-    if (!DLG.contains(e.target)) return;
+    if (o) { e.preventDefault(); open(o.dataset.level, o.dataset.name, o.dataset.view); return; }
+    if (!DLG.contains(e.target)) {
+      // the page's own tiles (the case study drawn as a card) turn over the same way
+      var pt = e.target.closest(".ab-sheet [data-flip]");
+      if (pt && !e.target.closest("select, button, a")) flip(pt);
+      return;
+    }
     if (e.target.closest(".ab-close")) { DLG.close(); return; }
     var lv = e.target.closest("[data-level]");
     if (lv && DLG.contains(lv)) { state.level = lv.dataset.level; state.a = 0; state.b = 1; if (state.level === "listing") { state.a = -1; state.b = -1; } else { var l = items(state.level); var s = l.map(function (x, j) { return [x.m.revpar || 0, j]; }).sort(function (a, b) { return b[0] - a[0]; }); state.a = s[0][1]; state.b = s[s.length - 1][1]; } render(); return; }
@@ -345,8 +350,9 @@
     var t = e.target.closest("[data-flip]");
     if (t) flip(t);
   });
-  DLG.addEventListener("keydown", function (e) {
+  document.addEventListener("keydown", function (e) {
     var t = e.target.closest && e.target.closest("[data-flip]");
+    if (t && !DLG.contains(t) && !t.closest(".ab-sheet")) return;
     if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); flip(t); }
   });
   DLG.addEventListener("change", function (e) {
