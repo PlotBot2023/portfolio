@@ -12,7 +12,7 @@ Definitions (also shown on the page's Method note):
   - "entire homes" are room_type "Entire home/apt";
   - a "multi-listing host" holds 10 or more active listings in the latest snapshot.
 """
-import argparse, html, json, pathlib
+import argparse, html, json, pathlib, re, subprocess
 import numpy as np
 import pandas as pd
 
@@ -25,7 +25,19 @@ MULTI = 10          # listings that make a multi-listing host
 # revenue is not measured: ADR, RevPAR and expected revenue become missing; occupancy stays (it needs no price).
 PRICE_MIN, PRICE_MAX = 10, 2_500
 PLACEHOLDER_PRICES = {999, 1_000, 9_999, 10_000}
-RAMP = ["#4A7BE0", "#2E9BD6", "#33C2C9", "#6FDDA6", "#B9EE7E", "#FFF27A"]   # one ramp, each step lighter; the first still 3:1 on the well
+# The map's dots wear the page's one heat scale (RevPAR is a result: red worst, green best), by each home's rank z among
+# the entire homes, on the cards' own cuts (heat_cls). The colours are read from assets/airbnb/cards.css, the file the
+# cards and the bars already draw from, so the map can never drift from them.
+HEAT_STEPS = ["hs-n4", "hs-n3", "hs-n2", "hs-n1", "hs-0", "hs-p1", "hs-p2", "hs-p3", "hs-p4"]
+
+
+def heat_colours():
+    css = (ROOT / "assets" / "airbnb" / "cards.css").read_text(encoding="utf-8")
+    found = dict(re.findall(r"\.(hs-[a-z0-9]+)\s*\{\s*--hc:\s*(#[0-9A-Fa-f]{6})", css))
+    missing = [k for k in HEAT_STEPS if k not in found]
+    if missing:
+        raise SystemExit(f"cards.css has no colour for {missing}")
+    return [found[k] for k in HEAT_STEPS]
 
 
 def money(v, k=False):
@@ -171,23 +183,31 @@ def build(df):
 
 
 def draw_map(pts, out):
+    """The RevPAR map: one glowing dot per entire home in its heat step. Returns one row per step, low to high:
+    (class, colour, lowest RevPAR, highest RevPAR, homes)."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from matplotlib.colors import ListedColormap, BoundaryNorm
-    qs = np.quantile(pts["revpar"], np.linspace(0, 1, len(RAMP) + 1))
-    qs[0], qs[-1] = qs[0] - 1e-9, qs[-1] + 1e-9
-    cmap, norm = ListedColormap(RAMP), BoundaryNorm(qs, len(RAMP))
-    pts = pts.sort_values("revpar")      # brightest dots on top
+    cols = heat_colours()
+    pts = pts.copy()
+    pts["k"] = [HEAT_STEPS.index(heat_cls(z)) for z in rank_z(pts["revpar"].values)]
+    steps = []
+    for k, (cls, c) in enumerate(zip(HEAT_STEPS, cols)):
+        v = pts.loc[pts["k"] == k, "revpar"]
+        if len(v):
+            steps.append((cls, c, float(v.min()), float(v.max()), int(len(v))))
+    pts = pts.assign(d=(pts["k"] - 4).abs()).sort_values("d")      # the strongest both ways drawn last, on top
     # frame on where the listings are: the few far-inland ones (the outer 0.5 percent west) would shrink the coast
     lon_lo, lat_lo, lat_hi = pts["longitude"].quantile(.005), pts["latitude"].quantile(.002), pts["latitude"].quantile(.998)
     lat0 = np.deg2rad(pts["latitude"].mean())
     x, y = pts["longitude"] * np.cos(lat0), pts["latitude"]
     xr = (lon_lo * np.cos(lat0), x.max()); yr = (lat_lo, lat_hi)
-    h = 9.0; w = h * (xr[1] - xr[0]) / (yr[1] - yr[0])
-    fig = plt.figure(figsize=(w, h), dpi=150)
+    h = 10.0; w = h * (xr[1] - xr[0]) / (yr[1] - yr[0])
+    fig = plt.figure(figsize=(w, h), dpi=160)
     ax = fig.add_axes([0, 0, 1, 1])
-    ax.scatter(x, y, c=pts["revpar"], cmap=cmap, norm=norm, s=5, linewidths=0, alpha=.95)
+    c = [cols[k] for k in pts["k"]]
+    ax.scatter(x, y, c=c, s=30, linewidths=0, alpha=.09)          # the glow
+    ax.scatter(x, y, c=c, s=5, linewidths=0, alpha=.95)
     ax.set_xlim(*xr); ax.set_ylim(*yr); ax.set_aspect("equal"); ax.axis("off")
     fig.patch.set_alpha(0); ax.patch.set_alpha(0)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -195,7 +215,16 @@ def draw_map(pts, out):
     fig.savefig(tmp, transparent=True, bbox_inches="tight", pad_inches=0.04); plt.close(fig)
     from PIL import Image
     im = Image.open(tmp); im.save(out, quality=88, method=6); tmp.unlink()   # webp keeps no EXIF from matplotlib
-    return [(qs[i], qs[i + 1]) for i in range(len(RAMP))]
+    return steps
+
+
+def site_commit():
+    """The portfolio commit the page is built on, short; None outside a git checkout."""
+    try:
+        r = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--short=7", "HEAD"], capture_output=True, text=True, timeout=10)
+        return r.stdout.strip() or None
+    except Exception:  # noqa: BLE001 - no git: the rail says not measured
+        return None
 
 
 def rank_z(vals):
@@ -262,11 +291,15 @@ def page(s, legend, now=None):
     </ul>"""
 
     def band(i, lo, hi):
-        if i == 0: return f"under {money(hi)}"
-        if i == len(RAMP) - 1: return f"{money(lo)} and up"
+        if i == len(legend) - 1: return f"{money(lo)} and up"
         return f"{money(lo)} to {money(hi)}"
-    leg = "".join(f'<li><span class="sw" style="background:{c}" aria-hidden="true"></span>{band(i, lo, hi)}</li>'
-                  for i, (c, (lo, hi)) in enumerate(zip(RAMP, legend)))
+    word = {0: "far below the middle", 4: "about the middle", 8: "far above the middle"}
+    top_n = max(n for *_, n in legend)
+    leg = "".join(
+        f'<li><span class="sw {cls}" aria-hidden="true"></span><span class="lg-b">{band(i, lo, hi)}</span>'
+        f'<span class="hb-t" aria-hidden="true"><span class="hb-f {cls}" style="width:{100 * n / top_n:.1f}%"></span></span>'
+        f'<span class="lg-n">{n:,}</span></li>'
+        for i, (cls, c, lo, hi, n) in enumerate(legend))
 
     views = f"""
     <div class="tabs" role="tablist" aria-label="Chart">
@@ -277,10 +310,11 @@ def page(s, legend, now=None):
       {'<button class="tab" role="tab" id="t-now" aria-controls="v-now" aria-selected="false">Market now</button>' if now else ''}
     </div>
     <div class="tabpanel cv" role="tabpanel" id="v-map" aria-labelledby="t-map">
-      <div class="mapwrap inlay"><img src="assets/airbnb/revpar-map.webp" alt="Map of {s['homes']:,} Broward County entire-home listings as dots, coloured by RevPAR from blue for the lowest sixth to yellow for the highest. Listings crowd the coast in a dense band, where most of the yellow sits; inland they thin out."></div>
-      <div class="cv-side">
-        <span class="eyebrow">RevPAR a night, each colour a sixth of homes</span>
-        <ul class="legend">{leg}</ul>
+      <div class="mapwrap inlay brk"><img src="assets/airbnb/revpar-map.webp" alt="Map of {len(s['map']):,} Broward County entire homes as dots, coloured by RevPAR on the page's heat scale: red for the lowest, white for the middle, green for the highest. Listings crowd the coast in a dense band; inland they thin out."></div>
+      <div class="cv-side map-side">
+        <span class="eyebrow">RevPAR a night, entire homes</span>
+        <p class="lg-axis"><span>Red: lowest</span><span>White: the middle</span><span>Green: highest</span></p>
+        <ul class="legend lg-hist" aria-label="Homes in each colour, lowest RevPAR first">{leg}</ul>
         <div class="btn-row"><button class="btn primary" type="button" data-card-open data-level="nb">Cards</button><button class="btn" type="button" popovertarget="tw-map">Table</button><button class="btn" type="button" popovertarget="n-method">Method</button></div>
       </div>
     </div>
@@ -324,15 +358,15 @@ def page(s, legend, now=None):
 
     answer = f"""
     <ul class="verdicts">
-      <li><span class="vk up" aria-hidden="true"></span><span><b>Best bet:</b> {html.escape(best)}, median RevPAR {money(nb.iloc[0].revpar)}</span></li>
-      <li><span class="vk dn" aria-hidden="true"></span><span><b>Toughest:</b> {html.escape(worst)}, median RevPAR {money(nb.iloc[-1].revpar)}</span></li>
-      <li><span class="vk ev" aria-hidden="true"></span><span><b>Typical home:</b> RevPAR {money(s['revpar'])}, {money(s['adr'])} a night, {pct(s['occ'])} booked</span></li>
-      <li><span class="vk ev" aria-hidden="true"></span><span><b>Only {pct(reach50)}</b> clear {money(50_000, True)} a year</span></li>
+      <li><span class="vk up" aria-hidden="true"></span><span class="vb"><span class="vt">Best bet</span><b class="vv">{html.escape(best)}</b><span class="vs">median RevPAR {money(nb.iloc[0].revpar)}</span></span></li>
+      <li><span class="vk dn" aria-hidden="true"></span><span class="vb"><span class="vt">Toughest</span><b class="vv">{html.escape(worst)}</b><span class="vs">median RevPAR {money(nb.iloc[-1].revpar)}</span></span></li>
+      <li><span class="vk ev" aria-hidden="true"></span><span class="vb"><span class="vt">Typical home</span><b class="vv">RevPAR {money(s['revpar'])}</b><span class="vs">{money(s['adr'])} a night, {pct(s['occ'])} booked</span></span></li>
     </ul>"""
 
     twins = "\n".join([
-        note("tw-map", "The map as a table", table(["RevPAR band", "Colour"], [(band(i, lo, hi), f"step {i + 1} of {len(RAMP)}, {'darkest' if i == 0 else 'lightest' if i == len(RAMP) - 1 else 'lighter'}") for i, (lo, hi) in enumerate(legend)],
-                                                   f"Each band holds one sixth of the {s['homes']:,} entire homes, snapshot of {s['asof']}.")),
+        note("tw-map", "The map as a table", table(["RevPAR a night", "Colour", "Homes"],
+                                                   [(band(i, lo, hi), f"step {i + 1} of {len(legend)}, {word.get(i, 'below the middle' if i < 4 else 'above the middle')}", f"{n:,}") for i, (cls, c, lo, hi, n) in enumerate(legend)],
+                                                   f"{len(s['map']):,} entire homes with a measured RevPAR, snapshot of {s['asof']}. Each home's colour is its rank among them, as a z score, on the cards' cuts: within 0.25 of the middle is white.")),
         note("tw-nb", "Neighbourhoods as a table", table(["Neighbourhood", "Homes", "Median RevPAR", "Median ADR", "Median occupancy"],
                                                           [(n, f"{int(r.n):,}", money(r.revpar), money(r.adr), pct(100 * r.occ)) for n, r in nb.iterrows()],
                                                           f"Every neighbourhood with at least {MIN_N} entire homes, snapshot of {s['asof']}.")),
@@ -356,11 +390,165 @@ def page(s, legend, now=None):
           <p>Calendar availability is a proxy for bookings: a blocked night can be a stay or an owner's hold, so occupancy is an estimate, labelled as such.</p>"""),
     ])
 
+    commit = site_commit()
     rail = f"""
     <ul class="rail" aria-label="About this data">
-      <li>Inside Airbnb</li><li>Revenue as of {s['asof']}</li>{f"<li>Market now as of {now['asof']}</li>" if now else ""}<li>{s['n_snaps']} snapshots with prices</li><li>{s['active']:,} active listings</li><li>{s['hosts']:,} hosts</li>
+      <li>Inside Airbnb, {s['n_snaps']} priced snapshots</li><li>Revenue as of {s['asof_iso']}</li>{f"<li>Market now as of {now['asof_iso']}</li>" if now else ""}<li>{s['active']:,} listings, {s['hosts']:,} hosts</li><li>{f"Site commit {commit}" if commit else "Site commit: not measured"}</li>
     </ul>"""
     return stats, views, answer, twins, rail
+
+
+
+# ── the case study as a player card (the owner, 2026-11-17: "More like the nfl/nba player cards") ──
+# The page wears the card's anatomy from assets/airbnb/cards.css: a banner (disc, eyebrow, huge name, deck, chips), a
+# tool strip, then a hero tile two rows tall and six tiles beside it, each with its hue rail and header strip, the big
+# number, a heat gem and bead slider where the number has peers, a mini chart, and a back face with its table.
+def _zx(z):
+    return 50 + 50 * max(-3.0, min(3.0, z)) / 3
+
+
+def slider(z, mid=""):
+    x, h = _zx(z), heat_cls(z)
+    lo, w = min(50, x), abs(x - 50)
+    return (f'<div class="ab-zm"><span class="trk"><span class="fill {h}" style="left:{lo:.1f}%;width:{w:.1f}%"></span><span class="mid"></span>'
+            f'<span class="dot {h}" style="left:{x:.1f}%"></span></span><span class="ends"><i>weaker</i><i>{html.escape(mid)}</i><i>stronger</i></span></div>')
+
+
+def gem(z):
+    g = "▲" if z >= .25 else "▼" if z <= -.25 else "≈"
+    return f'<span class="ab-gem {heat_cls(z)}"><span aria-hidden="true">{g}</span> {abs(z):.1f} z</span>'
+
+
+def mini(vals, mark=None, label=""):
+    mx = max(vals) or 1
+    cols = "".join(f'<i class="{"on mk" if i == mark else "on"}" style="--hf:{max(.04, v / mx):.3f}"></i>' for i, v in enumerate(vals))
+    return f'<div class="ab-mini" role="img" aria-label="{html.escape(label)}">{cols}</div>'
+
+
+def ctile(cls, hue, head, small, value, per, body, back_head, back, label, extra=""):
+    def hd(sm):
+        sm_html = f"<small>{html.escape(sm)}</small>" if sm else ""
+        return (f'<div class="ab-th"><i></i><span class="t">{html.escape(head)}</span>{sm_html}'
+                '<span class="ab-fh" aria-hidden="true">↻</span></div>')
+    per_html = f'<span class="per">{html.escape(per)}</span>' if per else ""
+    tv = f'<div class="ab-tv"><b>{html.escape(value)}</b>{per_html}{extra}</div>' if value else ""
+    return (f'<div class="ab-t {cls}" style="--sh:{hue}" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="{html.escape(label)}. Turn over for its table.">'
+            f'<div class="ab-in"><div class="ab-face ab-f">{hd(small)}{tv}{body}</div>'
+            f'<div class="ab-face ab-b" aria-hidden="true">{hd(back_head)}<div class="cs-back">{back}</div></div></div></div>')
+
+
+def sheet(s, legend, now, commit):
+    nb = s["nb"]
+    zmap = dict(zip(nb.index, rank_z(nb["revpar"].tolist())))
+    best, worst = nb.index[0], nb.index[-1]
+    rb, rw = nb.loc[best], nb.loc[worst]
+    order = list(nb["revpar"])                     # strongest first, so the best is the first column
+    reach50 = dict(s["targets"])[50_000]
+    n_nb = len(nb)
+
+    def nb_list(rows, start):
+        return "".join(
+            f'<li><span class="cs-r">{start + i}</span><span class="cs-nm">{html.escape(n)}</span>'
+            f'<b class="cs-v {heat_cls(zmap[n])}">{money(r.revpar)}</b></li>'
+            for i, (n, r) in enumerate(rows.iterrows()))
+
+    def band_txt(i, lo, hi):
+        return f"{money(lo)} and up" if i == len(legend) - 1 else f"{money(lo)} to {money(hi)}"
+    top_n = max(n for *_, n in legend)
+    leg = "".join(
+        f'<li><span class="sw {cls}" aria-hidden="true"></span><span class="lg-b">{band_txt(i, lo, hi)}</span>'
+        f'<span class="hb-t" aria-hidden="true"><span class="hb-f {cls}" style="width:{100 * n / top_n:.1f}%"></span></span>'
+        f'<span class="lg-n">{n:,}</span></li>' for i, (cls, c, lo, hi, n) in enumerate(legend))
+    map_rows = "".join(f'<li><span class="sw {cls}" aria-hidden="true"></span><span class="cs-nm">{band_txt(i, lo, hi)}</span><b class="cs-n">{n:,}</b></li>'
+                       for i, (cls, c, lo, hi, n) in enumerate(legend))
+    n_map = len(s["map"])
+
+    hero = (f'<div class="ab-t hero cs-map" style="--sh:#7CF5FF" data-flip role="button" tabindex="0" aria-pressed="false" '
+            f'aria-label="The map: {n_map:,} entire homes coloured by RevPAR, red lowest, white the middle, green highest. Turn over for its table.">'
+            '<div class="ab-in"><div class="ab-face ab-f"><div class="ab-th"><i></i><span class="t">Where it earns</span><small>RevPAR a night</small><span class="ab-fh" aria-hidden="true">↻</span></div>'
+            f'<div class="cs-mapbody"><div class="mapwrap inlay"><img src="assets/airbnb/revpar-map.webp" alt="Map of {n_map:,} Broward County entire homes as dots, '
+            "coloured by RevPAR on the page's heat scale: red for the lowest, white for the middle, green for the highest. Listings crowd the coast in a dense band; inland they thin out.\"></div>"
+            f'<div class="cs-leg"><p class="lg-axis"><span>Red: lowest</span><span>Green: highest</span></p><ul class="legend lg-hist" aria-label="Homes in each colour, lowest RevPAR first">{leg}</ul></div></div></div>'
+            '<div class="ab-face ab-b" aria-hidden="true"><div class="ab-th"><i></i><span class="t">The map as a table</span><span class="ab-fh" aria-hidden="true">↻</span></div>'
+            f'<div class="cs-back"><ol class="cs-list cs-steps">{map_rows}</ol>'
+            '<p class="cs-q cs-mapq">Nine RevPAR steps, red lowest to green highest, each home placed by its rank.</p>'
+            '</div></div></div></div>')
+
+    t_best = ctile("medal m1", "#FFC72C", "Best bet", f"1st of {n_nb}", money(rb.revpar), "RevPAR",
+                   f'<p class="cs-who">{html.escape(best)}</p>{slider(zmap[best])}'
+                   + mini(order, 0, f"Median RevPAR of the {n_nb} neighbourhoods, strongest first, {best} marked"),
+                   f"top {min(3, n_nb)}", f'<ol class="cs-list">{nb_list(nb.head(3), 1)}</ol>',
+                   f"Best bet: {best}, median RevPAR {money(rb.revpar)} a night, rank 1 of {n_nb}, z {zmap[best]:.1f}",
+                   gem(zmap[best]))
+    t_worst = ctile("", "#60A5FA", "Toughest", f"{n_nb}th of {n_nb}", money(rw.revpar), "RevPAR",
+                    f'<p class="cs-who">{html.escape(worst)}</p>{slider(zmap[worst])}'
+                    + mini(order, n_nb - 1, f"Median RevPAR of the {n_nb} neighbourhoods, strongest first, {worst} marked"),
+                    f"bottom {min(3, n_nb)}", f'<ol class="cs-list">{nb_list(nb.tail(3), n_nb - 2)}</ol>',
+                    f"Toughest: {worst}, median RevPAR {money(rw.revpar)} a night, rank {n_nb} of {n_nb}, z {zmap[worst]:.1f}",
+                    gem(zmap[worst]))
+    t_typ = ctile("", "#2DD4BF", "Typical home", "", money(s["revpar"]), "RevPAR",
+                  mini([n for *_, n in legend], 4, "Entire homes in each of the map's nine RevPAR steps, the middle step marked") + f'<div class="ab-hx"><div><span>Nightly rate</span><b>{money(s["adr"])}</b></div><div><span>Nights booked</span><b>{pct(s["occ"])}</b></div></div>',
+                  "how it is measured",
+                  f'<p class="cs-q">Each median stands alone: rate times nights booked is {money(s["adr"] * s["occ"] / 100)}, near {money(s["revpar"])}.</p>'
+                  '',
+                  f"Typical home: median RevPAR {money(s['revpar'])} a night, {money(s['adr'])} a night, {pct(s['occ'])} booked")
+    tg_vals = [p for _, p in s["targets"]]
+    t_tg = ctile("", "#FB923C", f"Clear {money(50_000, True)}", "a year", pct(reach50), "of entire homes",
+                 mini(tg_vals, TARGETS.index(50_000), "Share of entire homes reaching $10k, $25k, $50k, $75k and $100k a year, $50k marked")
+                 + f'<p class="cs-axis"><span>{money(TARGETS[0], True)}</span><span>{money(TARGETS[-1], True)} a year</span></p>',
+                 "every target", '<p class="cs-q">' + ", ".join(f"<b>{pct(p)}</b> {money(t, True)}" for t, p in s["targets"]) + '</p>',
+                 f"{pct(reach50)} of entire homes expected to clear {money(50_000, True)} a year")
+    g = s["growth"]
+    t_gr = ctile("", "#F472B6", "Growth", g[-1][0], f"{g[-1][1]:,}", "listings",
+                 f'<p class="cs-who">{g[-1][2]:,} new<small>since {g[-2][0]}</small></p>'
+                 + mini([n for _, n, _ in g], len(g) - 1, "Active listings in each snapshot, the latest marked")
+                 + f'<p class="cs-axis"><span>{g[0][0]}</span><span>{g[-1][0]}</span></p>',
+                 "every snapshot", f'<p class="cs-q"><b>{g[0][1]:,}</b> to <b>{g[-1][1]:,}</b>; new each quarter: '
+                 + ", ".join(f"{new:,}" for _, _, new in g[1:]) + '</p>',
+                 f"Growth: {g[-1][1]:,} active listings in {g[-1][0]}, {g[-1][2]:,} new since {g[-2][0]}")
+    t_now = ""
+    if now:
+        why = (f'<p class="cs-q"><b>New price basis:</b> {now["price_ratio_yoy"]:.2f} times last year, fees most likely included; no revenue is estimated.</p>'
+               ) if now["price_break"] else ""
+        price_lab = "Price, new basis" if now["price_break"] else "Price a night"
+        t_now = ctile("", "#CBD5E1", "Market now", "", f"{now['listings']:,}", "listings",
+                      f'<div class="ab-hx"><div><span>Hosts</span><b>{now["hosts"]:,}</b></div><div><span>Booked</span><b>{pct(now["occ"])}</b></div>'
+                      f'<div><span>{price_lab}</span><b>{money(now["price"])}</b></div></div>',
+                      "the newest snapshot",
+                      why or '<p class="cs-q">The price is on the same basis as before.</p>',
+                      f"Market now, {now['asof']}: {now['listings']:,} active listings, {now['hosts']:,} hosts")
+
+    nbk = [("Market", "broward-market-analysis"), ("Data quality", "broward-pricing-consistency"), ("Segments", "broward-segmentation"), ("Investor guide", "broward-investor-guide")]
+    links = "".join(f'<a class="ab-seg{" gold" if i == 3 else ""}" href="notebooks/{f}.html">{html.escape(n)}</a>' for i, (n, f) in enumerate(nbk))
+    commit_li = f"Site commit {commit}" if commit else "Site commit: not measured"
+    asof_li = f'Revenue as of {s["asof_iso"]}' + (f', market now {now["asof_iso"]}' if now else "")
+    rail = (f'<ul class="rail" aria-label="About this data"><li>Inside Airbnb, {s["n_snaps"]} priced snapshots</li><li>{asof_li}</li>'
+            f'<li>{s["active"]:,} listings, {s["hosts"]:,} hosts</li><li>{commit_li}</li></ul>')
+    return f"""
+<div class="sv v-sheet ab-sheet">
+  <div class="ab-top">
+    <header class="ab-band">
+      <div class="ab-disc" aria-hidden="true">B</div>
+      <div class="ab-id"><span class="eyebrow">Case study, Broward County, Florida, {html.escape(s['asof'])}</span>
+        <h1 id="case-title" class="ab-name">The best and worst bets in Broward Airbnb</h1>
+        <p class="ab-deck"><b class="fig">{money(s['revpar'])}</b> RevPAR a night for the <em class="how">typical</em> entire home, <b class="fig">{money(rb.revpar)}</b> at the best and <b class="fig">{money(rw.revpar)}</b> at the toughest.</p></div>
+      <div class="ab-chips"><span class="ab-chip"><i>Homes</i><b>{s['homes']:,}</b></span><span class="ab-chip"><i>Revenue</i><b>{money(s['revenue'], True)}</b><small>a year</small></span>
+        <span class="ab-chip"><i>10+ hosts</i><b>{pct(s['multi_share'])}</b><small>of listings</small></span></div>
+    </header>
+  </div>
+  <div class="ab-fs"><span class="cs-lab">Notebooks</span><div class="ab-segs cs-nbw">{links}</div><button type="button" class="ab-seg cs-nbn" popovertarget="n-nbk">Open a notebook</button>
+    <div class="ab-segs cs-open"><button type="button" class="ab-seg cs-cards" data-card-open data-level="nb">Cards</button><button type="button" class="ab-seg" data-card-open data-level="nb" data-view="h2h">Head to head</button>
+      <button type="button" class="ab-seg" popovertarget="n-tables">Tables and method</button></div></div>
+  <div id="n-tables" popover class="note"><h3>Every number as a table</h3><div class="btn-row">
+    <button class="btn" type="button" popovertarget="tw-map">The map</button><button class="btn" type="button" popovertarget="tw-nb">All {n_nb} neighbourhoods</button>
+    <button class="btn" type="button" popovertarget="tw-tg">Revenue targets</button><button class="btn" type="button" popovertarget="tw-gr">Growth</button>
+    {'<button class="btn" type="button" popovertarget="tw-now">Market now</button>' if now else ''}<button class="btn primary" type="button" popovertarget="n-method">Method</button></div>
+    <button class="btn" popovertarget="n-tables" popovertargetaction="hide">Close</button></div>
+  <div id="n-nbk" popover class="note"><h3>The notebooks</h3><div class="btn-row">{links.replace('class="ab-seg', 'class="btn')}</div>
+    <button class="btn" popovertarget="n-nbk" popovertargetaction="hide">Close</button></div>
+  <div class="ab-tiles cs-tiles">{hero}{t_best}{t_worst}{t_typ}{t_tg}{t_gr}{t_now}</div>
+  {rail}
+</div>"""
 
 
 def main():
@@ -373,33 +561,10 @@ def main():
     now = market_now(a.now) if a.now else None
     legend = draw_map(s["map"], ROOT / "assets" / "airbnb" / "revpar-map.webp")
     stats, views, answer, twins, rail = page(s, legend, now)
+    body = sheet(s, legend, now, site_commit())
     out = f"""<!-- generated by tools/airbnb_build.py from the study's processed outputs; do not edit by hand -->
 ```{{=html}}
-<div class="sv v-case">
-  <section class="panel hero-glass brk case-hero" aria-labelledby="case-title">
-    <div class="ch-text">
-      <span class="eyebrow">Case study, Broward County, Florida</span>
-      <h1 id="case-title" class="page-title">The best and worst bets in Broward Airbnb</h1>
-      <p class="lede">What an entire-home rental really earns, and where.</p>
-    </div>
-    {stats}
-  </section>
-  <section class="panel rail-top case-view" aria-label="Charts">
-    {views}
-  </section>
-  <section class="panel case-answer" aria-labelledby="ans-title">
-    <h2 id="ans-title" class="sec-title">The answer</h2>
-    {answer}
-    <span class="eyebrow">Open a notebook</span>
-    <div class="nb-links">
-      <a class="btn" href="notebooks/broward-market-analysis.html">Market</a>
-      <a class="btn" href="notebooks/broward-pricing-consistency.html">Data quality</a>
-      <a class="btn" href="notebooks/broward-segmentation.html">Segments</a>
-      <a class="btn primary" href="notebooks/broward-investor-guide.html">Investor guide</a>
-    </div>
-  </section>
-  {rail}
-</div>
+{body}
 {twins}
 <link rel="stylesheet" href="assets/airbnb/cards.css">
 <dialog id="ab-cards" class="ab-card" data-src="assets/airbnb/cards.json" aria-labelledby="ab-title">
@@ -424,7 +589,7 @@ def main():
 ```{{=html}}
     <a class="feature case-feature" href="airbnb.html">
       <div class="cf-body">
-        <div class="pic map"><img src="assets/airbnb/revpar-map.webp" alt="Map of Broward County entire-home listings as dots coloured by revenue per available night, blue for the lowest to yellow for the highest, crowded in a dense band along the coast."></div>
+        <div class="pic map"><img src="assets/airbnb/revpar-map.webp" alt="Map of Broward County entire homes as dots coloured by revenue per available night, red for the lowest, white for the middle and green for the highest, crowded in a dense band along the coast."></div>
         <ul class="stats cf-stats" aria-label="Key numbers, entire homes, as of {s['asof']}">
           <li class="stat"><span class="n">{money(s['revpar'])}</span><span class="l">median RevPAR a night</span></li>
           <li class="stat"><span class="n">{money(s['revenue'], True)}</span><span class="l">median revenue a year</span></li>

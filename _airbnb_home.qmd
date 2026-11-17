@@ -2,7 +2,7 @@
 ```{=html}
     <a class="feature case-feature" href="airbnb.html">
       <div class="cf-body">
-        <div class="pic map"><img src="assets/airbnb/revpar-map.webp" alt="Map of Broward County entire-home listings as dots coloured by revenue per available night, blue for the lowest to yellow for the highest, crowded in a dense band along the coast."></div>
+        <div class="pic map"><img src="assets/airbnb/revpar-map.webp" alt="Map of Broward County entire homes as dots coloured by revenue per available night, red for the lowest, white for the middle and green for the highest, crowded in a dense band along the coast."></div>
         <ul class="stats cf-stats" aria-label="Key numbers, entire homes, as of 19 March 2025">
           <li class="stat"><span class="n">$57</span><span class="l">median RevPAR a night</span></li>
           <li class="stat"><span class="n">$21k</span><span class="l">median revenue a year</span></li>
