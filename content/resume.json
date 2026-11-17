@@ -6,62 +6,215 @@
   "eyebrow": "Resume, Fort Lauderdale, Florida",
   "headline": "Operations leader turned data engineer",
   "summary": "",
-  "pdf": {"offer": false},
+  "pdf": {
+    "offer": false
+  },
   "skills_title": "Skills",
   "skills": [
-    {"k": "Languages", "items": ["Python", "SQL", "R"]},
-    {"k": "Databases", "items": ["PostgreSQL", "MySQL", "SQLite"]},
-    {"k": "Analysis", "items": ["pandas", "NumPy", "scikit-learn", "XGBoost", "CatBoost", "statsmodels"]},
-    {"k": "Methods", "items": ["Monte Carlo", "Regression", "Time series", "Bayesian priors", "Clustering", "Causal models"]},
-    {"k": "Engineering", "items": ["Docker", "Alembic", "pytest", "FastAPI", "Git", "uv"]},
-    {"k": "Visuals", "items": ["matplotlib", "Quarto", "Tableau", "Power BI", "Excel"]}
+    {
+      "k": "Languages",
+      "items": [
+        "Python",
+        "SQL",
+        "R"
+      ]
+    },
+    {
+      "k": "Databases",
+      "items": [
+        "PostgreSQL",
+        "MySQL",
+        "SQLite"
+      ]
+    },
+    {
+      "k": "Analysis",
+      "items": [
+        "pandas",
+        "NumPy",
+        "scikit-learn",
+        "XGBoost",
+        "CatBoost",
+        "statsmodels"
+      ]
+    },
+    {
+      "k": "Methods",
+      "items": [
+        "Monte Carlo",
+        "Regression",
+        "Time series",
+        "Bayesian priors",
+        "Clustering",
+        "Causal models"
+      ]
+    },
+    {
+      "k": "Engineering",
+      "items": [
+        "Docker",
+        "Alembic",
+        "pytest",
+        "FastAPI",
+        "Git",
+        "uv"
+      ]
+    },
+    {
+      "k": "Visuals",
+      "items": [
+        "matplotlib",
+        "Quarto",
+        "Tableau",
+        "Power BI",
+        "Excel"
+      ]
+    }
   ],
   "roles": [
-    {"id": "sof", "mark": "sof", "icon": "chart", "hue": "",
-     "name": "Stats Over Fiction", "sub": "Analytics practice, 2025 to now",
-     "role": "Independent analytics practice", "when": "2025 to now",
-     "stats": [
-       {"n": "11", "l": "sports with leaderboards"},
-       {"n": "20,575", "l": "rental listings clustered for an investor"},
-       {"n": "Daily", "l": "pipelines, ingestion to calibration"},
-       {"n": "1", "l": "causal audit of a live NBA pipeline"}
-     ],
-     "tray_label": "Stack", "tray": ["PostgreSQL", "Python 3.11", "Docker", "FastAPI"],
-     "details": "- Build and run a private multi-sport projections platform, PostgreSQL-backed, with daily ingestion through projection and calibration.\n- Leaderboards for eleven sports, every row scored against a stated baseline; pre-registered experiments that score their holdout once.\n- Append-only data design with explicit casting and timestamped run logs; calibration and backtests check model output against results.\n- Broward County rental study: 20,575 entire-home listings across four quarterly snapshots, clustered with Gaussian mixture models and profiled by revenue.\n- Structural causal model audit of a production NBA pipeline, using d-separation to separate causal signals from merely correlated ones."},
-    {"id": "taverna", "mark": "icon", "icon": "case", "hue": "or",
-     "name": "The Taverna Collection", "sub": "Sales executive, 2026",
-     "role": "Sales executive", "when": "May to July 2026",
-     "stats": [
-       {"n": "Finance", "l": "deals structured"},
-       {"n": "Monthly", "l": "inventory against targets"}
-     ],
-     "tray_label": "Where", "tray": ["Plantation, Florida"],
-     "details": "Plantation, Florida, May 2026 to July 2026. Brand expert and sales executive: structured finance deals and managed inventory availability against monthly targets."},
-    {"id": "blueturtle", "mark": "icon", "icon": "waves", "hue": "",
-     "name": "Blue Turtle Pool Co.", "sub": "Owner and operator, 2018 to 2026",
-     "role": "Owner and operator", "when": "March 2018 to 2026",
-     "stats": [
-       {"n": "20%", "l": "less travel time"},
-       {"n": "30%", "l": "fewer emergency parts buys"},
-       {"n": "50%", "l": "less billing time"},
-       {"n": "15%", "l": "better conversion, from pricing tests"}
-     ],
-     "tray_label": "Built", "tray": ["Job logs", "Dashboards", "Scorecards", "Experiments"],
-     "details": "- Turned field operations into a structured data pipeline, logging every job, part, travel leg and incident.\n- Daily and weekly dashboards for utilization, response time, recurring revenue and churn drivers.\n- Routing and schedule rules that cut travel time 20 percent.\n- Inventory and seasonal demand forecasts from service logs, cutting stockouts and emergency parts buys 30 percent.\n- Automated recurring invoicing and reconciliation, cutting billing time in half.\n- QA metrics and technician scorecards tied to repeat repairs and customer satisfaction.\n- Pricing and service-package experiments that lifted conversion 15 percent."},
-    {"id": "poolpros", "mark": "icon", "icon": "building", "hue": "vi",
-     "name": "Pool Pros of Hollywood", "sub": "General manager, 2012 to 2022",
-     "role": "General manager", "when": "May 2012 to March 2022",
-     "stats": [
-       {"n": "25%", "l": "fewer stockouts and rush freight"},
-       {"n": "20%", "l": "fewer suppliers"},
-       {"n": "10%", "l": "lower cost of goods"},
-       {"n": "15%", "l": "lower freight per order"}
-     ],
-     "tray_label": "Built", "tray": ["One dataset", "Daily KPIs", "SKU forecasts", "Vendor scorecards"],
-     "details": "- Brought order, receiving, pick, pack, ship and inventory events into a single analytics dataset.\n- Daily KPIs for orders per hour, pick accuracy, on-time fulfilment and inventory turns.\n- SKU-level demand forecasts and automated reorder rules, cutting stockouts and emergency freight 25 percent.\n- Vendor scorecards on fill rate, lead time, price variance and contract compliance; consolidated suppliers 20 percent with price-volume modelling.\n- Seasonal buys negotiated with volume and early-buy discounts, lowering cost of goods 10 percent.\n- PO batching and consolidated shipments, cutting freight cost per order 15 percent."}
+    {
+      "id": "sof",
+      "mark": "sof",
+      "icon": "chart",
+      "hue": "",
+      "name": "Stats Over Fiction",
+      "sub": "Analytics practice, 2025 to now",
+      "role": "Independent analytics practice",
+      "when": "2025 to now",
+      "stats": [
+        {
+          "n": "11",
+          "l": "sports with leaderboards"
+        },
+        {
+          "n": "20,575",
+          "l": "rental listings clustered for an investor"
+        },
+        {
+          "n": "Daily",
+          "l": "pipelines, ingestion to calibration"
+        },
+        {
+          "n": "1",
+          "l": "causal audit of a live NBA pipeline"
+        }
+      ],
+      "tray_label": "Stack",
+      "tray": [
+        "PostgreSQL",
+        "Python 3.11",
+        "Docker",
+        "FastAPI"
+      ],
+      "details": "- Build and run a private multi-sport projections platform, PostgreSQL-backed, with daily ingestion through projection and calibration.\n- Leaderboards for eleven sports, every row scored against a stated baseline; pre-registered experiments that score their holdout once.\n- Append-only data design with explicit casting and timestamped run logs; calibration and backtests check model output against results.\n- Broward County rental study: 20,575 entire-home listings across four quarterly snapshots, clustered with Gaussian mixture models and profiled by revenue.\n- Structural causal model audit of a production NBA pipeline, using d-separation to separate causal signals from merely correlated ones."
+    },
+    {
+      "id": "taverna",
+      "mark": "icon",
+      "icon": "case",
+      "hue": "or",
+      "name": "The Taverna Collection",
+      "sub": "Sales executive, 2026",
+      "role": "Sales executive",
+      "when": "May to July 2026",
+      "stats": [
+        {
+          "n": "Finance",
+          "l": "deals structured"
+        },
+        {
+          "n": "Monthly",
+          "l": "inventory against targets"
+        }
+      ],
+      "tray_label": "Where",
+      "tray": [
+        "Plantation, Florida"
+      ],
+      "details": "Plantation, Florida, May 2026 to July 2026. Brand expert and sales executive: structured finance deals and managed inventory availability against monthly targets."
+    },
+    {
+      "id": "blueturtle",
+      "mark": "icon",
+      "icon": "waves",
+      "hue": "",
+      "name": "Blue Turtle Pool Co.",
+      "sub": "Owner and operator, 2018 to 2026",
+      "role": "Owner and operator",
+      "when": "March 2018 to 2026",
+      "stats": [
+        {
+          "n": "20%",
+          "l": "less travel time"
+        },
+        {
+          "n": "30%",
+          "l": "fewer emergency parts buys"
+        },
+        {
+          "n": "50%",
+          "l": "less billing time"
+        },
+        {
+          "n": "15%",
+          "l": "better conversion, from pricing tests"
+        }
+      ],
+      "tray_label": "Built",
+      "tray": [
+        "Job logs",
+        "Dashboards",
+        "Scorecards",
+        "Experiments"
+      ],
+      "details": "- Turned field operations into a structured data pipeline, logging every job, part, travel leg and incident.\n- Daily and weekly dashboards for utilization, response time, recurring revenue and churn drivers.\n- Routing and schedule rules that cut travel time 20 percent.\n- Inventory and seasonal demand forecasts from service logs, cutting stockouts and emergency parts buys 30 percent.\n- Automated recurring invoicing and reconciliation, cutting billing time in half.\n- QA metrics and technician scorecards tied to repeat repairs and customer satisfaction.\n- Pricing and service-package experiments that lifted conversion 15 percent."
+    },
+    {
+      "id": "poolpros",
+      "mark": "icon",
+      "icon": "building",
+      "hue": "vi",
+      "name": "Pool Pros of Hollywood",
+      "sub": "General manager, 2012 to 2022",
+      "role": "General manager",
+      "when": "May 2012 to March 2022",
+      "stats": [
+        {
+          "n": "25%",
+          "l": "fewer stockouts and rush freight"
+        },
+        {
+          "n": "20%",
+          "l": "fewer suppliers"
+        },
+        {
+          "n": "10%",
+          "l": "lower cost of goods"
+        },
+        {
+          "n": "15%",
+          "l": "lower freight per order"
+        }
+      ],
+      "tray_label": "Built",
+      "tray": [
+        "One dataset",
+        "Daily KPIs",
+        "SKU forecasts",
+        "Vendor scorecards"
+      ],
+      "details": "- Brought order, receiving, pick, pack, ship and inventory events into a single analytics dataset.\n- Daily KPIs for orders per hour, pick accuracy, on-time fulfilment and inventory turns.\n- SKU-level demand forecasts and automated reorder rules, cutting stockouts and emergency freight 25 percent.\n- Vendor scorecards on fill rate, lead time, price variance and contract compliance; consolidated suppliers 20 percent with price-volume modelling.\n- Seasonal buys negotiated with volume and early-buy discounts, lowering cost of goods 10 percent.\n- PO batching and consolidated shipments, cutting freight cost per order 15 percent."
+    }
   ],
   "training": {
     "title": "Courses and certificates",
-    "items": ["SQL, IBM, online", "Machine Learning, IBM, online", "Python, University of Michigan, online", "Data Analytics, Google, online", "Data Analysis with R Studio, Google, online", "Google Analytics certification"]
+    "items": [
+      "SQL, IBM, online",
+      "Machine Learning, IBM, online",
+      "Python, University of Michigan, online",
+      "Data Analytics, Google, online",
+      "Data Analysis with R Studio, Google, online",
+      "Google Analytics certification"
+    ]
   }
 }
