@@ -7,7 +7,9 @@ The study itself (SportsAnalytics, personal/netflix_moods) is private: it keeps 
 title's tag under %LOCALAPPDATA%\\SportsAnalytics\\netflix_moods, outside git. This script publishes only what cannot
 identify a title or a viewing habit:
 
-    * the mood tags the model wrote, as words, with no title beside them (the WALL most confident ones)
+    * Netflix original series and films with the mood tag the model wrote for each (the WALL most confident ones). These
+      are public titles from Wikipedia's lists of Netflix originals, read for everyone alike: they say nothing about
+      what the household watched. Before that pool exists, the household's tags are shown as words with no title.
     * counts: titles on the list, titles tagged, how many were read from critics' reception and how many from the plot
       alone, how many feelings are scored, how many tags a person has corrected
     * the date the text was read and the model's name
@@ -52,13 +54,23 @@ def summarise(st: dict) -> dict:
             wall.append(words)
         if len(wall) == WALL:
             break
+    # the pool of Netflix originals: public titles, each with its tag; at most two per leading feeling, so the wall varies
+    pool, lead_count, picked = (st.get("catalogue") or {}).get("tagged") or [], {}, []
+    for item in pool:
+        lead = item["tag"].split(" ")[0].lower()
+        if lead_count.get(lead, 0) < 2:
+            lead_count[lead] = lead_count.get(lead, 0) + 1
+            picked.append({"name": item["name"], "tag": item["tag"]})
+        if len(picked) == WALL:
+            break
     c, k = st["coverage"], st["kpi"]["shown"]
     judged = sum(1 for t in st["titles"] if t.get("judged"))
     return {
         "titles": c["titles"], "tagged": len(tagged), "from_reception": c["from_reception"], "from_plot": c["from_plot"],
         "feelings": len(st["feelings"]), "judged": judged,
         "kept": k["kept"] if k["shown"] >= MIN_N else None, "shown": k["shown"] if k["shown"] >= MIN_N else None,
-        "asof": (st.get("asof") or "")[:10], "model": st.get("model", ""), "wall": wall,
+        "asof": (st.get("asof") or "")[:10], "model": st.get("model", ""), "wall": wall, "originals": picked,
+        "pool": (st.get("catalogue") or {}).get("scored", 0),
         "source": "English Wikipedia, CC BY-SA 4.0",
     }
 
@@ -75,17 +87,23 @@ def blocks(s: dict) -> dict:
     live = s["tagged"] > 0
     status = '<span class="status live">First results</span>' if live else '<span class="status building">Coming next</span>'
     tile = f'<span class="tt"><span class="name">Netflix mood tags</span>{status}</span>'
-    chips = "".join(f"<li>{e(w)}</li>" for w in s["wall"])
+    public = bool(s.get("originals"))
+    chips = ("".join(f"<li><b>{e(o['name'])}</b><span>{e(o['tag'])}</span></li>" for o in s["originals"]) if public
+             else "".join(f"<li>{e(w)}</li>" for w in s["wall"]))
+    wall_label = ("Netflix originals and the mood tag the model wrote for each, most confident first" if public
+                  else "Mood tags the model wrote, most confident first")
+    first = (f'<li class="stat"><span class="n">{s["pool"]}</span><span class="l">Netflix originals given a mood tag</span></li>' if public else
+             f'<li class="stat"><span class="n">{s["tagged"]} of {s["titles"]}</span><span class="l">most-watched titles given a mood tag</span></li>')
     third = (f'<li class="stat"><span class="n">{s["kept"]} of {s["shown"]}</span><span class="l">proposed feelings a person kept</span></li>'
              if s["kept"] is not None else
              '<li class="stat"><span class="n">First pass</span><span class="l">the model\'s tags, before a person corrects them</span></li>')
     panel = (
         '<article class="panel rail-top" data-item="netflix" aria-label="Netflix mood tags">\n'
-        f'        <div class="media inlay moods"><ul class="tray wall" aria-label="Mood tags the model wrote, most confident first">{chips}</ul></div>\n'
+        f'        <div class="media inlay moods"><ul class="tray wall" aria-label="{wall_label}">{chips}</ul></div>\n'
         '        <div class="info">\n'
         f'          <div class="head"><h2>Netflix mood tags</h2>{status}</div>\n'
         '          <ul class="stats">\n'
-        f'            <li class="stat"><span class="n">{s["tagged"]} of {s["titles"]}</span><span class="l">most-watched titles given a mood tag</span></li>\n'
+        f'            {first}\n'
         f'            <li class="stat"><span class="n">{s["feelings"]}</span><span class="l">feelings scored for every title</span></li>\n'
         f'            {third}\n'
         '          </ul>\n'
@@ -100,15 +118,19 @@ def blocks(s: dict) -> dict:
         '<div id="n-netflix" popover class="note">\n'
         '  <h3>Netflix mood tags</h3>\n'
         '  <p>A mood tag says more than a genre: tear-jerky comedy, chilling fantasy, nail-biting relationship murder thriller. '
-        f'This project writes one for each of a household\'s {s["titles"]} most-watched Netflix titles. The titles and the viewing '
-        'history are private and are not shown here; only the tags are.</p>\n'
+        + (f'This project writes one for every title it reads: {s["pool"]} Netflix original series and films, and a household\'s own '
+           f'{s["titles"]} most-watched titles. The tags shown here are for the Netflix originals. The household\'s titles and viewing '
+           'history are private and are not shown.</p>\n' if public else
+           f'This project writes one for each of a household\'s {s["titles"]} most-watched Netflix titles. The titles and the viewing '
+           'history are private and are not shown here; only the tags are.</p>\n') +
         '  <p>Each title\'s English Wikipedia article is read by a sentence model that runs on my own machine. Every sentence is '
         f'scored for {s["feelings"]} feelings by its closeness to anchor phrases, each feeling is z-scored across the titles, and the '
         'strongest one or two join a story type taken from the article\'s own description.</p>\n'
-        f'  <p>Where it stands: {s["tagged"]} of {s["titles"]} titles matched an article. {s["from_reception"]} had at least 8 sentences of '
+        f'  <p>Where it stands: {s["tagged"]} of {s["titles"]} household titles matched an article. {s["from_reception"]} had at least 8 sentences of '
         f'critics\' reception; {s["from_plot"]} were read mostly from the plot. These are the model\'s first-pass tags. {checked}, so no '
-        'accuracy is measured. Next is a review page where each correction refits the model.</p>\n'
-        f'  <p>Text from {e(s["source"])}, read on {day(s["asof"])}. Model: {e(s["model"].split("/")[-1])}.</p>\n'
+        'accuracy is measured. The same engine builds a private scorecard and five watch-next picks for each viewer, which learn '
+        'from a thumbs up or down.</p>\n'
+        f'  <p>Text and the list of Netflix originals from {e(s["source"])}, read on {day(s["asof"])}. Model: {e(s["model"].split("/")[-1])}.</p>\n'
         '  <button class="btn" popovertarget="n-netflix" popovertargetaction="hide">Close</button>\n'
         '</div>')
     count = "<li>1 with first results</li>" if live else "<li>1 on the way</li>"

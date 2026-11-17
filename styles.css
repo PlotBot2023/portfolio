@@ -169,12 +169,14 @@ body.sv-page #quarto-content { padding: 0; }
 .stage .media.moods { place-items: stretch; }
 .stage .media.moods .wall { align-content: center; justify-content: center; gap: .7rem; padding: .7rem; border: 0; box-shadow: none; background: none; }
 .stage .media.moods .wall li { min-height: 44px; padding: .2rem 1.1rem; font-size: clamp(1rem, 2.4vh, 1.4rem); font-weight: 800; white-space: normal; text-align: center; }
+.stage .media.moods .wall li b { font-weight: 900; margin-right: .55em; }
+.stage .media.moods .wall li span { font-weight: 700; color: var(--ink2); }
 .stage .media.moods .wall li:nth-child(4n+2) { border-color: var(--gold); }
 .stage .media.moods .wall li:nth-child(4n+3) { border-color: var(--live); }
 .stage .media.moods .wall li:nth-child(4n+4) { border-color: var(--pk); }
 /* the wall never cuts a tag: it shows as many as the window holds */
 @media (max-height: 900px) { .stage .media.moods .wall li:nth-child(n+9) { display: none; } }
-@media (max-height: 800px) { .stage .media.moods .wall { gap: .5rem; padding: .4rem; } .stage .media.moods .wall li:nth-child(n+7) { display: none; } }
+@media (max-height: 800px) { .stage .media.moods .wall { gap: .5rem; padding: .4rem; } .stage .media.moods .wall li:nth-child(n+6) { display: none; } }
 @media (max-width: 900px) { .stage .media.moods { aspect-ratio: auto; } .stage .media.moods .wall li:nth-child(n+7) { display: none; } }
 .stage .info { display: grid; gap: .7rem; min-width: 0; }
 .stage .head { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; }

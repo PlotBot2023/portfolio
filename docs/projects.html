@@ -228,11 +228,11 @@ ul.task-list li input[type="checkbox"] {
       </article>
 
       <!-- netflix:panel --><article class="panel rail-top" data-item="netflix" aria-label="Netflix mood tags">
-        <div class="media inlay moods"><ul class="tray wall" aria-label="Mood tags the model wrote, most confident first"><li>Swoony and comforting relationship comedy</li><li>Chilling murder comedy</li><li>Chilling horror</li><li>Laugh-out-loud and tear-jerky relationship coming-of-age comedy</li><li>Thought-provoking and uplifting animation</li><li>Charismatic and nail-biting comedy</li><li>Adrenaline-fuelled animation</li><li>Nail-biting and adrenaline-fuelled murder comedy</li><li>Wry and bleak drama</li><li>Wry and laugh-out-loud comedy</li></ul></div>
+        <div class="media inlay moods"><ul class="tray wall" aria-label="Netflix originals and the mood tag the model wrote for each, most confident first"><li><b>Cold as Balls</b><span>Laugh-out-loud and wry story</span></li><li><b>Tires</b><span>Laugh-out-loud and wry comedy</span></li><li><b>Haunted Hotel</b><span>Chilling comedy</span></li><li><b>Age of Attraction</b><span>Carnal and swoony relationship reality show</span></li><li><b>Perfect Match</b><span>Comforting and carnal relationship reality show</span></li><li><b>Michael Jackson: The Verdict</b><span>Nail-biting and uplifting documentary</span></li><li><b>The Boyfriend</b><span>Carnal relationship reality show</span></li><li><b>The Watcher</b><span>Chilling and bleak horror</span></li><li><b>Worst Neighbor Ever</b><span>Bleak and chilling true-crime story</span></li><li><b>The Dinosaurs</b><span>Thought-provoking and chilling documentary</span></li></ul></div>
         <div class="info">
           <div class="head"><h2>Netflix mood tags</h2><span class="status live">First results</span></div>
           <ul class="stats">
-            <li class="stat"><span class="n">49 of 50</span><span class="l">most-watched titles given a mood tag</span></li>
+            <li class="stat"><span class="n">236</span><span class="l">Netflix originals given a mood tag</span></li>
             <li class="stat"><span class="n">15</span><span class="l">feelings scored for every title</span></li>
             <li class="stat"><span class="n">First pass</span><span class="l">the model's tags, before a person corrects them</span></li>
           </ul>
@@ -273,10 +273,10 @@ ul.task-list li input[type="checkbox"] {
 
 <!-- netflix:note --><div id="n-netflix" popover="" class="note">
   <h3>Netflix mood tags</h3>
-  <p>A mood tag says more than a genre: tear-jerky comedy, chilling fantasy, nail-biting relationship murder thriller. This project writes one for each of a household's 50 most-watched Netflix titles. The titles and the viewing history are private and are not shown here; only the tags are.</p>
+  <p>A mood tag says more than a genre: tear-jerky comedy, chilling fantasy, nail-biting relationship murder thriller. This project writes one for every title it reads: 236 Netflix original series and films, and a household's own 66 most-watched titles. The tags shown here are for the Netflix originals. The household's titles and viewing history are private and are not shown.</p>
   <p>Each title's English Wikipedia article is read by a sentence model that runs on my own machine. Every sentence is scored for 15 feelings by its closeness to anchor phrases, each feeling is z-scored across the titles, and the strongest one or two join a story type taken from the article's own description.</p>
-  <p>Where it stands: 49 of 50 titles matched an article. 25 had at least 8 sentences of critics' reception; 24 were read mostly from the plot. These are the model's first-pass tags. No tag has been corrected by a person yet, so no accuracy is measured. Next is a review page where each correction refits the model.</p>
-  <p>Text from English Wikipedia, CC BY-SA 4.0, read on 17 November 2026. Model: all-MiniLM-L6-v2.</p>
+  <p>Where it stands: 63 of 66 household titles matched an article. 27 had at least 8 sentences of critics' reception; 36 were read mostly from the plot. These are the model's first-pass tags. No tag has been corrected by a person yet, so no accuracy is measured. The same engine builds a private scorecard and five watch-next picks for each viewer, which learn from a thumbs up or down.</p>
+  <p>Text and the list of Netflix originals from English Wikipedia, CC BY-SA 4.0, read on 17 November 2026. Model: all-MiniLM-L6-v2.</p>
   <button class="btn" popovertarget="n-netflix" popovertargetaction="hide">Close</button>
 </div><!-- /netflix:note -->
 
