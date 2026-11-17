@@ -1,0 +1,25 @@
+{
+ "titles": 50,
+ "tagged": 49,
+ "from_reception": 25,
+ "from_plot": 24,
+ "feelings": 15,
+ "judged": 0,
+ "kept": null,
+ "shown": null,
+ "asof": "2026-11-17",
+ "model": "sentence-transformers/all-MiniLM-L6-v2",
+ "wall": [
+  "Swoony and comforting relationship comedy",
+  "Chilling murder comedy",
+  "Chilling horror",
+  "Laugh-out-loud and tear-jerky relationship coming-of-age comedy",
+  "Thought-provoking and uplifting animation",
+  "Charismatic and nail-biting comedy",
+  "Adrenaline-fuelled animation",
+  "Nail-biting and adrenaline-fuelled murder comedy",
+  "Wry and bleak drama",
+  "Wry and laugh-out-loud comedy"
+ ],
+ "source": "English Wikipedia, CC BY-SA 4.0"
+}
