@@ -1,0 +1,11 @@
+```{=html}
+    <a class="feature case-feature" href="https://plotbot2023.github.io/rentals-archetypes/">
+      <div class="cf-body">
+        <div class="pic map"><img src="assets/rentals/surface-map.webp" alt="{{rentals.alt|attr}}"></div>
+        <ul class="stats cf-stats" aria-label="Key numbers, {{rentals.as_of|lower1|attr}}">{{#rentals.stats}}
+          <li class="stat"><span class="n">{{n}}</span><span class="l">{{l}}</span></li>{{/rentals.stats}}
+        </ul>
+      </div>
+      <div class="cap"><b>{{rentals.title}}</b><span class="chip">{{rentals.as_of}}</span></div>
+    </a>
+```

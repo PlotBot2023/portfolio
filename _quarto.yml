@@ -5,6 +5,9 @@ project:
   render:
     - "*.qmd"
     - "notebooks/broward-*.ipynb"
+  # Home, Projects, About and Resume are built from their words in content/ (tools/content_build.py); this fails the
+  # render if one was edited by hand instead, so a hand edit is never silently overwritten
+  pre-render: tools/content_build.py --check
   # strips outside scripts, sets a Content-Security-Policy per page, writes robots.txt, restores .nojekyll, audits
   post-render: tools/harden_docs.py
   resources:

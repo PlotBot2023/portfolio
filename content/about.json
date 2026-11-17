@@ -1,0 +1,134 @@
+{
+  "page": {
+    "title": "About, Richard Chute",
+    "description": "Career-changer into data, with fifteen years of operations behind it."
+  },
+  "eyebrow": "About",
+  "title": "From operations to data",
+  "lede": "Fifteen years running the operations the numbers describe.",
+  "notes": [
+    {
+      "id": "career",
+      "button": "The through-line",
+      "title": "The through-line",
+      "body": "For fifteen years I ran field-service and distribution operations: a pool service company I owned and operated, and before that a distributor where I was general manager. Those were data jobs before I knew how to write the code: SKU-level demand forecasts, vendor scorecards, technician metrics, route rules and daily KPI dashboards, built in spreadsheets and ERP exports. I made payroll on whether they were right.\n\n- **Blue Turtle Pool Co.**, 2018 to 2026: every job, part, travel leg and incident logged as a dataset, with dashboards for utilization, response time, recurring revenue and churn.\n- **Pool Pros of Hollywood**, 2012 to 2022: order, receiving, pick, pack, ship and inventory events in one analytics dataset, with SKU forecasting, reorder rules and vendor scorecards.\n\nI have never had the luxury of an analysis being interesting but wrong."
+    },
+    {
+      "id": "training",
+      "button": "Training",
+      "title": "A plain word on degrees",
+      "body": "I do not have a CS or statistics degree. My training is self-directed and ongoing: SQL and Machine Learning from IBM, Python from the University of Michigan, Data Analytics and Data Analysis with R Studio from Google, and the Google Analytics certification.\n\nWhat I have instead is fifteen years of owning the consequences of an operational number being wrong, and working systems I built and maintain."
+    }
+  ],
+  "career_title": "Career, 2012 to now",
+  "career": [
+    {
+      "name": "Pool Pros of Hollywood",
+      "sub": "General manager, 2012 to 2022",
+      "from": "2012-05",
+      "to": "2022-03",
+      "hue": "vi",
+      "left": "2.2",
+      "width": "65.8"
+    },
+    {
+      "name": "Blue Turtle Pool Co.",
+      "sub": "Owner and operator, 2018 to 2026",
+      "from": "2018-03",
+      "to": "2026-07",
+      "hue": "cy",
+      "left": "41.1",
+      "width": "55.9"
+    },
+    {
+      "name": "Stats Over Fiction",
+      "sub": "Analytics practice, 2025 to now",
+      "from": "2025-01",
+      "to": "now",
+      "hue": "pk",
+      "left": "86.7",
+      "width": "12.4"
+    },
+    {
+      "name": "The Taverna Collection",
+      "sub": "Sales executive, 2026",
+      "from": "2026-05",
+      "to": "2026-07",
+      "hue": "or",
+      "left": "95.6",
+      "width": "2.4"
+    }
+  ],
+  "results": {
+    "title": "Results from the field",
+    "button": "Where they come from",
+    "stats": [
+      {
+        "n": "20%",
+        "l": "less travel time"
+      },
+      {
+        "n": "30%",
+        "l": "fewer emergency parts buys"
+      },
+      {
+        "n": "25%",
+        "l": "fewer stockouts and rush freight"
+      },
+      {
+        "n": "10%",
+        "l": "lower cost of goods"
+      }
+    ],
+    "note": {
+      "title": "Where the results come from",
+      "body": "- **20 percent less travel time**: routing and schedule rules, Blue Turtle Pool Co.\n- **30 percent fewer emergency parts buys**: inventory and seasonal demand forecasts from service logs, Blue Turtle Pool Co.\n- **25 percent fewer stockouts and rush freight**: SKU-level forecasts and automated reorder rules, Pool Pros of Hollywood.\n- **10 percent lower cost of goods**: seasonal buys with volume and early-buy discounts, Pool Pros of Hollywood."
+    }
+  },
+  "skills": [
+    {
+      "id": "pipes",
+      "title": "Pipelines",
+      "tools_label": "Pipeline tools",
+      "tools": [
+        "Python 3.11",
+        "PostgreSQL",
+        "Docker",
+        "Alembic",
+        "pytest"
+      ],
+      "note_title": "How I build pipelines",
+      "body": "I build and run a private multi-sport projections platform whose daily pipelines run unattended.\n\nIt runs on rules learned the expensive way: append-only writes, explicit casts on every column, load-timestamped run logs, and calibration checks that fail loudly rather than quietly.",
+      "icon": "network"
+    },
+    {
+      "id": "model",
+      "title": "Analysis",
+      "tools_label": "Methods",
+      "tools": [
+        "Monte Carlo",
+        "XGBoost",
+        "CatBoost",
+        "Mixture models",
+        "Bayesian priors",
+        "Causal models"
+      ],
+      "note_title": "Where the analysis shows",
+      "body": "Monte Carlo simulation, XGBoost and CatBoost, Gaussian mixture models for segmentation, Bayesian priors for calibration, and structural causal models when the question is whether a signal is real or only correlated.\n\nThe Broward Airbnb series is the clearest example of the whole loop: raw Inside Airbnb snapshots in R, metrics in SQL, analysis in Python, and a written answer a non-technical investor can act on.",
+      "link": {
+        "label": "See the Airbnb case study",
+        "href": "airbnb.html"
+      },
+      "icon": "trend"
+    }
+  ],
+  "seek": {
+    "title": "Looking for",
+    "items": [
+      "Data analyst",
+      "Analytics engineer",
+      "Data engineer",
+      "Remote or South Florida"
+    ]
+  }
+}
