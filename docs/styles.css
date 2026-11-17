@@ -165,6 +165,17 @@ body.sv-page #quarto-content { padding: 0; }
 .stage .media.poster { background: radial-gradient(60% 70% at 50% 40%, rgba(56, 104, 230, .34), transparent 70%), var(--inlay); color: var(--cy); }
 .stage .media.poster svg { width: min(38%, 220px); height: auto; max-height: 70%; filter: drop-shadow(0 0 18px rgba(124, 245, 255, .45)); }
 .stage .media.white { background: #F4F2FA; }
+/* Netflix mood tags: a wall of the model's tags fills the media inlay, each a raised chip (tools/netflix_build.py) */
+.stage .media.moods { place-items: stretch; }
+.stage .media.moods .wall { align-content: center; justify-content: center; gap: .7rem; padding: .7rem; border: 0; box-shadow: none; background: none; }
+.stage .media.moods .wall li { min-height: 44px; padding: .2rem 1.1rem; font-size: clamp(1rem, 2.4vh, 1.4rem); font-weight: 800; white-space: normal; text-align: center; }
+.stage .media.moods .wall li:nth-child(4n+2) { border-color: var(--gold); }
+.stage .media.moods .wall li:nth-child(4n+3) { border-color: var(--live); }
+.stage .media.moods .wall li:nth-child(4n+4) { border-color: var(--pk); }
+/* the wall never cuts a tag: it shows as many as the window holds */
+@media (max-height: 900px) { .stage .media.moods .wall li:nth-child(n+9) { display: none; } }
+@media (max-height: 800px) { .stage .media.moods .wall { gap: .5rem; padding: .4rem; } .stage .media.moods .wall li:nth-child(n+7) { display: none; } }
+@media (max-width: 900px) { .stage .media.moods { aspect-ratio: auto; } .stage .media.moods .wall li:nth-child(n+7) { display: none; } }
 .stage .info { display: grid; gap: .7rem; min-width: 0; }
 .stage .head { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; }
 .stage .head h2 { font-size: clamp(1.35rem, 3vh, 2rem); line-height: 1.12; font-weight: 850; color: var(--ink); letter-spacing: -.02em; flex: 1 1 18rem; }
