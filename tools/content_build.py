@@ -44,13 +44,13 @@ PAGE_HTML = {"home": "index.html", "projects": "projects.html", "about": "about.
 
 # Pages the editor shows read only, and who writes them.
 OWNED = [
-    {"name": "Airbnb case study", "by": "tools/airbnb_build.py",
+    {"name": "Airbnb case study", "page": "airbnb.html", "by": "tools/airbnb_build.py",
      "why": "Its numbers, maps and words are written from the Inside Airbnb data each time it is rebuilt."},
-    {"name": "Leaderboards", "by": "tools/leaderboards_snapshot.py",
+    {"name": "Leaderboards", "page": "guides/leaderboards/nfl.html", "by": "tools/leaderboards_snapshot.py",
      "why": "A dated snapshot of the live leaderboards, built from the same code that runs them."},
-    {"name": "Hot Wheels guide", "by": "tools/hotwheels_guide.py",
+    {"name": "Hot Wheels guide", "page": "guides/hot-wheels-field-guide.html", "by": "tools/hotwheels_guide.py",
      "why": "Copied in whole from the Collectibles project, where the guide is written."},
-    {"name": "Notebooks", "by": "the notebooks themselves",
+    {"name": "Notebooks", "page": "notebooks/broward-market-analysis.html", "by": "the notebooks themselves",
      "why": "Each notebook page is its saved charts and write-up, published as it was last run."},
 ]
 
@@ -122,15 +122,15 @@ FIELDS = {
         {"label": "Projects", "fields": [
             {"key": "projects", "label": "Projects", "kind": "list", "name": "name", "add": "Add a project", "item": "project",
              "fields": [
-                 {"key": "name", "label": "Project name", "kind": "line"},
-                 {"key": "status", "label": "Status", "kind": "choice", "options": ["Live", "Coming next"]},
-                 {"key": "icon", "label": "Icon", "kind": "choice", "options": list(ICONS), "labels": {k: v[0] for k, v in ICONS.items()}},
-                 {"key": "picture", "label": "Picture", "kind": "image", "hint": "your own image, or leave it on the icon"},
-                 {"key": "stats", "label": "Headline numbers", "kind": "stats", "max": 3},
-                 {"key": "methods", "label": "Methods", "kind": "chips"},
-                 {"key": "link.label", "label": "Main button words", "kind": "line"},
-                 {"key": "link.href", "label": "Main button opens", "kind": "line", "hint": "a web address, or a page on this site"},
-                 {"key": "notes", "label": "Notes", "kind": "list", "name": "button", "add": "Add a note", "item": "note", "fields": [
+                 {"group": "Card", "key": "name", "label": "Project name", "kind": "line"},
+                 {"group": "Card", "key": "status", "label": "Status", "kind": "choice", "options": ["Live", "Coming next"]},
+                 {"group": "Card", "key": "icon", "label": "Icon", "kind": "choice", "options": list(ICONS), "labels": {k: v[0] for k, v in ICONS.items()}},
+                 {"group": "Card", "key": "picture", "label": "Picture", "kind": "image", "hint": "your own image, or leave it on the icon"},
+                 {"group": "Numbers", "key": "stats", "label": "Headline numbers", "kind": "stats", "max": 3},
+                 {"group": "Numbers", "key": "methods", "label": "Methods", "kind": "chips"},
+                 {"group": "Card", "key": "link.label", "label": "Main button words", "kind": "line"},
+                 {"group": "Card", "key": "link.href", "label": "Main button opens", "kind": "line", "hint": "a web address, or a page on this site"},
+                 {"group": "Notes", "key": "notes", "label": "Notes", "kind": "list", "name": "button", "add": "Add a note", "item": "note", "fields": [
                      {"key": "button", "label": "Button words", "kind": "line"}, *NOTE]}]}]},
     ]},
     "about": {"label": "About", "hue": "pk", "tabs": [
@@ -179,14 +179,14 @@ FIELDS = {
                 {"key": "items", "label": "Skills", "kind": "chips"}]}]},
         {"label": "Experience", "fields": [
             {"key": "roles", "label": "Roles, newest first", "kind": "list", "name": "name", "add": "Add a role", "item": "role", "fields": [
-                {"key": "name", "label": "Where", "kind": "line"},
-                {"key": "sub", "label": "Tile line", "kind": "line", "hint": "short, under the name on the tile"},
-                {"key": "role", "label": "Role", "kind": "line"},
-                {"key": "when", "label": "When", "kind": "line"},
-                {"key": "stats", "label": "Headline numbers", "kind": "stats", "max": 4},
-                {"key": "tray_label", "label": "Chip row name", "kind": "line", "hint": "read aloud, for example Stack or Built"},
-                {"key": "tray", "label": "Chips", "kind": "chips"},
-                {"key": "details", "label": "Details", "kind": "note", "hint": "start a line with - for a bullet"}]}]},
+                {"group": "Card", "key": "name", "label": "Where", "kind": "line"},
+                {"group": "Card", "key": "sub", "label": "Tile line", "kind": "line", "hint": "short, under the name on the tile"},
+                {"group": "Card", "key": "role", "label": "Role", "kind": "line"},
+                {"group": "Card", "key": "when", "label": "When", "kind": "line"},
+                {"group": "Numbers", "key": "stats", "label": "Headline numbers", "kind": "stats", "max": 4},
+                {"group": "Numbers", "key": "tray_label", "label": "Chip row name", "kind": "line", "hint": "read aloud, for example Stack or Built"},
+                {"group": "Numbers", "key": "tray", "label": "Chips", "kind": "chips"},
+                {"group": "Details", "key": "details", "label": "Details", "kind": "note", "hint": "start a line with - for a bullet"}]}]},
         {"label": "Training", "fields": [
             {"key": "training.title", "label": "Note title", "kind": "line"},
             {"key": "training.items", "label": "Courses and certificates", "kind": "chips"}]},
@@ -194,6 +194,17 @@ FIELDS = {
             {"key": "pdf.offer", "label": "Offer a PDF of this resume", "kind": "toggle",
              "hint": "built from these same words, with no contact details, as a Download as PDF button on the page"}]},
     ]},
+}
+
+
+# what a new entry starts with, by the list's "item" word; the editor gives each an id of its own
+NEW = {
+    "project": {"name": "New project", "status": "Coming next", "icon": "chart", "picture": {"kind": "icon"}, "stats": [],
+                "methods_label": "Methods", "methods": [], "link": {"label": "", "href": ""}, "notes": []},
+    "note": {"button": "Notes", "title": "", "body": "", "links": []},
+    "role": {"mark": "icon", "icon": "case", "hue": "", "name": "New role", "sub": "", "role": "", "when": "", "stats": [],
+             "tray_label": "Built", "tray": [], "details": ""},
+    "row": {"k": "New row", "items": [], "name": "", "sub": "", "from": "", "to": "now", "hue": "cy"},
 }
 
 
@@ -496,6 +507,18 @@ def validate(content):
     ids = [p.get("id") for p in content["projects"].get("projects", [])]
     if len(ids) != len(set(ids)):
         problems.append("Two projects share a name; give each its own.")
+    nids = [n.get("id") for p in content["projects"].get("projects", []) for n in p.get("notes", [])]
+    if len(nids) != len(set(nids)) or any(not re.fullmatch(r"[a-z0-9-]{1,60}", str(i or "")) for i in ids + nids):
+        problems.append("Two notes on the Projects page share an id; remove one and add it again.")
+    for p in content["projects"].get("projects", []):
+        pic = p.get("picture") or {}
+        if pic.get("kind") == "image" and not (pic.get("alt") or "").strip():
+            problems.append(f"The picture on {p.get('name') or 'a project'} needs a description for people who cannot see it.")
+        if pic.get("kind") == "image" and not re.fullmatch(r"assets/[\w./-]+\.(webp|png|jpg|jpeg)", pic.get("src") or ""):
+            problems.append(f"The picture on {p.get('name') or 'a project'} is missing; add it again.")
+    rids = [x.get("id") for x in content["resume"].get("roles", [])]
+    if len(rids) != len(set(rids)) or any(not re.fullmatch(r"[a-z0-9-]{1,60}", str(i or "")) or i == "edu" for i in rids):
+        problems.append("Two roles share an id; remove one and add it again.")
     for p in content["projects"].get("projects", []):
         if not (p.get("name") or "").strip():
             problems.append("A project has no name.")
