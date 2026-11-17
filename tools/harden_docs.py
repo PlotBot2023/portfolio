@@ -8,7 +8,10 @@ GitHub Pages serves files only and cannot send response headers, so this does wh
   - writes robots.txt that turns away AI and scraper crawlers;
   - fails if any image under docs/ carries EXIF, XMP or GPS metadata;
   - restores docs/.nojekyll (a full render deletes it);
-  - fails the build if contact details, local addresses, source files or stray artifacts are in docs/.
+  - fails the build if contact details, local addresses, source files or stray artifacts are in docs/;
+  - allows exactly one PDF, assets/resume.pdf, and only as tools/resume_pdf.py makes it (Typst, no author in its
+    metadata). A PDF's text cannot be scanned reliably, so its words are checked before it is made: they are the
+    resume's words in content/resume.json, which tools/content_build.py refuses when they hold a contact detail.
 """
 import base64, hashlib, pathlib, re, sys
 
@@ -33,6 +36,20 @@ FORBIDDEN = {
     "a social profile link": re.compile(r"(github\.com/PlotBot2023|linkedin\.com|twitter\.com|x\.com/|substack\.com/@)", re.I),
 }
 STRAY = re.compile(r"\.(qmd|ipynb|py|map|ejs|scss|env|pdf)$|(^|/)(\.git|_freeze|\.quarto)(/|$)", re.I)
+RESUME_PDF = "assets/resume.pdf"   # the one PDF allowed, made by tools/resume_pdf.py from the resume's own words
+
+
+def resume_pdf_problems(p):
+    """Why the resume PDF is not the one tools/resume_pdf.py makes, or [] when it is."""
+    b = p.read_bytes()
+    out = []
+    if not b.startswith(b"%PDF-"):
+        out.append("assets/resume.pdf is not a PDF")
+    if b"/Author" in b or b"<dc:creator>" in b:
+        out.append("assets/resume.pdf names an author in its metadata (tools/resume_pdf.py makes it without one)")
+    if b"Typst" not in b:
+        out.append("assets/resume.pdf was not made by tools/resume_pdf.py (an uploaded PDF cannot be checked for contact details)")
+    return out
 
 
 def csp_for(page_html):
@@ -69,7 +86,9 @@ def audit():
     problems = []
     for p in DOCS.rglob("*"):
         rel = p.relative_to(DOCS).as_posix()
-        if p.is_file() and STRAY.search(rel):
+        if p.is_file() and rel == RESUME_PDF:
+            problems += resume_pdf_problems(p)
+        elif p.is_file() and STRAY.search(rel):
             problems.append(f"stray file published: {rel}")
         if p.is_file() and p.suffix.lower() in (".html", ".json", ".xml", ".txt", ".js", ".css"):
             t = p.read_text(encoding="utf-8", errors="ignore")

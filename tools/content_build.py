@@ -538,8 +538,19 @@ def main(argv):
     if problems:
         print("content_build: the words cannot be built:", *problems, sep="\n  ")
         return 1
+    private = check_private(content)
+    if private:
+        print("content_build: these words look like contact details, which the site never publishes:",
+              *[f"{pg}: {path}: {what} ({m})" for pg, path, what, m in private], sep="\n  ")
+        return 1
     built = build(content)
     if "--check" in argv:
+        offered = bool((content["resume"].get("pdf") or {}).get("offer"))
+        have = (ROOT / "assets" / "resume.pdf").exists()
+        if offered != have:
+            print("content_build: the resume " + ("offers a PDF but assets/resume.pdf is missing" if offered else
+                  "offers no PDF but assets/resume.pdf is there") + "; run: python tools/resume_pdf.py")
+            return 1
         bad = differs(built)
         if bad:
             print("content_build: these pages differ from what content/ builds (a page was edited by hand?):",
