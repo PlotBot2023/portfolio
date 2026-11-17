@@ -487,8 +487,8 @@ def sheet(s, legend, now, commit):
                     f"Toughest: {worst}, median RevPAR {money(rw.revpar)} a night, rank {n_nb} of {n_nb}, z {zmap[worst]:.1f}",
                     gem(zmap[worst]))
     t_typ = ctile("", "#2DD4BF", "Typical home", "", money(s["revpar"]), "RevPAR",
-                  mini([n for *_, n in legend], 4, "Entire homes in each of the map's nine RevPAR steps, the middle step marked") + f'<div class="ab-hx"><div><span>Nightly rate</span><b>{money(s["adr"])}</b></div><div><span>Nights booked</span><b>{pct(s["occ"])}</b></div></div>',
-                  "how it is measured",
+                  mini([n for *_, n in legend], 4, "Entire homes in each of the map's nine RevPAR steps, the middle step marked") + f'<div class="ab-hx"><div><span>Rate</span><b>{money(s["adr"])}</b></div><div><span>Booked</span><b>{pct(s["occ"])}</b></div></div>',
+                  "method",
                   f'<p class="cs-q">Each median stands alone: rate times nights booked is {money(s["adr"] * s["occ"] / 100)}, near {money(s["revpar"])}.</p>'
                   '',
                   f"Typical home: median RevPAR {money(s['revpar'])} a night, {money(s['adr'])} a night, {pct(s['occ'])} booked")
@@ -514,7 +514,7 @@ def sheet(s, legend, now, commit):
         t_now = ctile("", "#CBD5E1", "Market now", "", f"{now['listings']:,}", "listings",
                       f'<div class="ab-hx"><div><span>Hosts</span><b>{now["hosts"]:,}</b></div><div><span>Booked</span><b>{pct(now["occ"])}</b></div>'
                       f'<div><span>{price_lab}</span><b>{money(now["price"])}</b></div></div>',
-                      "the newest snapshot",
+                      "newest",
                       why or '<p class="cs-q">The price is on the same basis as before.</p>',
                       f"Market now, {now['asof']}: {now['listings']:,} active listings, {now['hosts']:,} hosts")
 
