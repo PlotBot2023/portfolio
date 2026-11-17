@@ -5,7 +5,7 @@
   "use strict";
   var DLG = document.getElementById("ab-cards");
   if (!DLG) return;
-  var D = null, state = { level: "nb", a: 0, b: 1, view: "card", nbf: 0, fam: "rev" };
+  var D = null, state = { level: "nb", a: 0, b: 1, view: "card", nbf: 0, fam: "succ" };
   var LEVELS = [["nb", "Neighbourhood"], ["seg", "ML segment"], ["host", "Host"], ["listing", "Listing"]];
   var LWORD = { nb: "neighbourhoods", seg: "segments", host: "hosts", listing: "listings" };
   // each tile's own hue: identity only (a rail and a header strip), never a value; values wear the heat scale
@@ -18,13 +18,18 @@
     clear50: { l: "Clear $50k", full: "Share of its homes expected to earn $50k or more a year", per: "of homes", f: "pct", hue: "#60A5FA", src: "CAL", share: true },
     super: { l: "Superhost", full: "Share of its homes run by a Superhost", per: "of homes", f: "pct", hue: "#CBD5E1", src: "LST", share: true },
     churn: { l: "Churn risk", full: "Model churn risk: chance of no review in 180 days (XGBoost, AUC 0.818)", per: "", f: "pct", hue: "#F87171", src: "MDL", dir: -1 },
-    resid: { l: "Beats model", full: "Actual RevPAR minus the model's prediction (XGBoost occupancy model)", per: "a night", f: "smoney", hue: "#34D399", src: "MDL" },
+    resid: { l: "Beats model", full: "Actual RevPAR minus the model's prediction (XGBoost occupancy model), on the old price basis", per: "a night", f: "smoney", hue: "#34D399", src: "MDL" },
     mood: { l: "Review mood", full: "Mean VADER sentiment of its reviews, minus 1 to plus 1", per: "", f: "mood", hue: "#FBBF24", src: "NLP" },
     cap: { l: "Cap rate", full: "Net operating income over the ZIP's home value", per: "", f: "pct1", hue: "#38BDF8", src: "MDL" },
     noi: { l: "NOI", full: "Net operating income a year, after operating costs", per: "a year", f: "moneyk", hue: "#A78BFA", src: "MDL" },
-    pred: { l: "Model RevPAR", full: "RevPAR the XGBoost occupancy model expects for a home like this", per: "a night", f: "money", hue: "#2DD4BF", src: "MDL" },
+    pred: { l: "Model RevPAR", full: "RevPAR the XGBoost occupancy model expects for a home like this, on the old price basis", per: "a night", f: "money", hue: "#2DD4BF", src: "MDL" },
     dsr: { l: "Last review", full: "Days since the last review", per: "days ago", f: "int", hue: "#94A3B8", src: "LST", dir: -1 },
-    hv: { l: "Home value", full: "Zillow home value index (ZHVI) of the home's ZIP: a typical value, not this home's price", per: "", f: "moneyk", hue: "#38BDF8", src: "ZHVI" },
+    hv: { l: "Home value", full: "Zillow home value index (ZHVI) of the home's ZIP: a typical value, not this home's price", per: "", f: "moneyk", hue: "#38BDF8", src: "ZHVI", tend: true },
+    rating: { l: "Review score", full: "Guests' overall review score, out of 5", per: "of 5", f: "x2", hue: "#FBBF24", src: "LST" },
+    rpm: { l: "Reviews a month", full: "Reviews a month: how often a stay ends in a review", per: "a month", f: "x2", hue: "#2DD4BF", src: "LST" },
+    nrev: { l: "Reviews", full: "Reviews in all, since the listing began", per: "in all", f: "int", hue: "#A78BFA", src: "LST" },
+    years: { l: "Years hosting", full: "Years since the host joined Airbnb", per: "years", f: "y1", hue: "#60A5FA", src: "LST" },
+    snaps: { l: "Staying power", full: "Inside Airbnb snapshots it appears in, of 10 since April 2024", per: "of 10", f: "int", hue: "#34D399", src: "LST" },
     gy: { l: "Gross yield", full: "Revenue a year over the ZIP's home value", per: "", f: "pct1", hue: "#34D399", src: "INV" },
     coc: { l: "Cash on cash", full: "Cash flow after the mortgage over the cash put in (25% down, 2% closing, 7% 30-year)", per: "", f: "pct1", hue: "#FFC72C", src: "INV" },
     dscr: { l: "DSCR", full: "Debt service coverage: NOI over the year's mortgage payments; 1.25 is a lender's usual floor", per: "x", f: "x2", hue: "#C084FC", src: "INV" },
@@ -32,11 +37,21 @@
     bedrooms: { l: "Bedrooms", full: "Bedrooms", per: "", f: "int", hue: "#60A5FA", src: "LST", plain: true },
     superhost: { l: "Superhost", full: "Run by a Superhost", per: "", f: "yes", hue: "#CBD5E1", src: "LST", plain: true }
   };
+  // the four groups the owner measures by (2026-11-17: "opportunity, efficiency, success and longevity"); a tile may sit in two
+  var GROUPS = { opp: ["gy", "cap", "coc", "dscr", "noi", "hv"], eff: ["occ", "adr", "rev_bed", "pred", "rpm", "anom"],
+    succ: ["rev", "clear50", "super", "rating", "mood", "resid"], long: ["churn", "dsr", "years", "snaps", "nrev", "super"] };
+  function groupKeys(fam) {
+    var ks = GROUPS[fam] || GROUPS.succ;
+    if (state.level !== "listing") return ks;
+    return ks.map(function (k) { return k === "super" ? "superhost" : k === "clear50" ? "bedrooms" : k; });
+  }
   var TILES = { group: ["adr", "occ", "rev", "rev_bed", "clear50", "super"], listing: ["adr", "occ", "rev", "rev_bed", "bedrooms", "superhost"],
     models: ["churn", "resid", "pred", "mood", "dsr", "anom"], invest: ["hv", "gy", "noi", "cap", "coc", "dscr"] };
   // Investment and Models rest on the 2026-09-22 asking price (a new price basis, fees included) and the old income
   // definition; they come back with the Investment Package on the measured income model (bnbscope experiments, E1)
-  var FAMS = [["rev", "Revenue"]];
+  // the price-based figures are back (the owner, 2026-11-17: "the price modeling"): the investment figures are from
+  // the 27 November 2025 snapshot, on the old basis; the RevPAR model's are divided by the measured price rise
+  var FAMS = [["opp", "Opportunity"], ["eff", "Efficiency"], ["succ", "Success"], ["long", "Longevity"]];
   var MEDAL = [["gold", "1st"], ["silver", "2nd"], ["bronze", "3rd"]];
   var ROWS = ["revpar", "adr", "occ", "rev", "rev_bed", "clear50", "super"], MROWS = ["revpar", "churn", "resid", "pred", "mood", "dsr", "anom"],
     IROWS = ["revpar", "hv", "gy", "noi", "cap", "coc", "dscr"];
@@ -47,10 +62,11 @@
     var f = M[k].f;
     if (f === "money") return "$" + Math.round(v).toLocaleString("en-US");
     if (f === "moneyk") return Math.abs(v) >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : Math.abs(v) >= 1000 ? "$" + (v / 1000).toFixed(Math.abs(v) >= 10000 ? 0 : 1) + "k" : "$" + Math.round(v);
-    if (f === "smoney") return (v > 0 ? "+" : v < 0 ? "-" : "") + "$" + Math.abs(Math.round(v)).toLocaleString("en-US");
+    if (f === "smoney") { var rv = Math.round(v); return (rv > 0 ? "+" : rv < 0 ? "-" : "") + "$" + Math.abs(rv).toLocaleString("en-US"); }
     if (f === "mood") return (v > 0 ? "+" : "") + v.toFixed(2);
     if (f === "pct1") return v.toFixed(1) + "%";
     if (f === "x2") return v.toFixed(2);
+    if (f === "y1") return v.toFixed(1);
     if (f === "pct") return Math.round(v) + "%";
     if (f === "yes") return v ? "Yes" : "No";
     return String(Math.round(v));
@@ -67,6 +83,8 @@
     for (var i = 0; i < s.length; i++) if (z < s[i][0]) return "hs-" + s[i][1];
     return "hs-p4";
   }
+  // a tendency (more or less, not better or worse) wears the cyan-to-pink scale, never red or green
+  function hk(k, z) { var h = heat(z); return M[k] && M[k].tend ? h.replace("hs-", "ts-") : h; }
   function glyph(z) { return z == null ? "" : z >= .25 ? "▲" : z <= -.25 ? "▼" : "≈"; }
   function zText(z) { return (Math.abs(z) < .05 ? "0.0" : Math.abs(z).toFixed(1)) + " z"; }
 
@@ -189,6 +207,7 @@
     var back = '<div class="ab-face ab-b" aria-hidden="true">' + hd(x.h ? (M[k].share ? "" : "median ") + fmt(k, v) : "this home " + fmt(k, v))
       + (D.edges[k] ? strip(x, k, true) : '<div class="ab-cols"><p>' + esc(M[k].full) + ": " + esc(fmt(k, v)) + (D.county[k] != null ? ", against " + esc(fmt(k, D.county[k])) + " across the county" : "") + ".</p>" + (M[k].share ? shareBar(k, v) : "") + "</div>")
       + (q ? '<p class="q">' + esc(q) + "</p>" : "") + "</div>";
+    if (d.tend) front = front.replace(/hs-/g, "ts-").replace(/<i>weaker<\/i>/, "<i>less</i>").replace(/<i>stronger<\/i>/, "<i>more</i>");
     var label = d.full + ", " + fmt(k, v) + (z == null ? "" : ", " + (z >= .25 ? "above" : z <= -.25 ? "below" : "near") + " the " + LWORD[state.level] + " average, z " + z.toFixed(1)) + (r ? ", rank " + r.rank + " of " + r.of : "") + (place ? ", a " + MEDAL[place - 1][0] + " medal" : "") + ". Turn over for the homes behind it.";
     return '<div class="ab-t' + (hero ? " hero" : "") + (place ? " medal m" + place : "") + '" style="--sh:' + d.hue + '" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="' + esc(label) + '"><div class="ab-in">' + front + back + "</div></div>";
   }
@@ -250,12 +269,20 @@
   }
 
   function cardView() {
-    var list = items(state.level), x = list[state.a] || list[0], fam = D.models ? state.fam : "rev";
-    var keys = fam === "models" ? TILES.models : fam === "invest" ? TILES.invest : state.level === "listing" ? TILES.listing : TILES.group;
+    var list = items(state.level), x = list[state.a] || list[0], fam = D.models ? state.fam : "succ";
+    var keys = D.models ? groupKeys(fam) : state.level === "listing" ? TILES.listing : TILES.group;
     var notes = state.level === "seg" ? '<p class="ab-note">' + esc(D.seg_meta.method) + ". Titles follow a rule on each group's rate and calendar against the county's medians, so a refit renames itself. Homes whose nightly price was a placeholder are not segmented.</p>"
       : state.level === "host" ? '<p class="ab-note">Hosts with ' + D.host_min + " or more entire homes, coded by size. No names or Airbnb ids: most hosts are private people.</p>"
       : state.level === "listing" ? '<p class="ab-note">Each listing is coded by its RevPAR rank. No names, ids or links. Its tiles turn over to the county with this home marked.</p>' : "";
-    if (fam === "invest") notes = '<p class="ab-note">Investment: bnbscope\'s calculator, same formulas and defaults: ' + D.finance.down + "% down, " + D.finance.closing + "% closing, a "
+    var B = D.models && D.models.basis, basisNote = B ? " The model's RevPAR is put on the old price basis: the same " + B.pairs.toLocaleString("en-US")
+      + " homes list at " + B.median.toFixed(2) + " times their " + "September 2025 price, so each prediction is divided by its price decile's ratio ("
+      + B.ratio[0].toFixed(2) + " to " + Math.max.apply(null, B.ratio).toFixed(2) + "); on held-out homes the corrected price sits " + (100 * B.spread).toFixed(0) + "% from last year's, against " + (100 * B.raw_spread).toFixed(0) + "% uncorrected." : "";
+    if (fam === "opp") notes = '<p class="ab-note">Investment, from the ' + esc(D.models.invest_asof) + " snapshot (the old price basis): bnbscope\'s calculator, " + D.finance.down + "% down, " + D.finance.closing + "% closing, a "
+      + D.finance.rate + "% " + D.finance.term + "-year loan. Home value is the ZIP's Zillow index, a typical value, not this home's price; it is a cost of entry, so it wears the more-or-less scale.</p>";
+    else if (fam === "eff") notes = '<p class="ab-note">Occupancy, rate and per bedroom read the 19 March 2025 calendar. ' + esc(D.models.src.split(":")[0]) + "." + esc(basisNote) + "</p>";
+    else if (fam === "succ") notes = '<p class="ab-note">Review score is the guests\' overall score out of 5; review mood is the mean VADER sentiment of the review text. Beats model is actual minus predicted RevPAR on the old price basis.</p>';
+    else if (fam === "long") notes = '<p class="ab-note">Churn risk is bnbscope\'s XGBoost classifier (held-out AUC 0.818) for no review in 180 days. Staying power counts the 10 Inside Airbnb snapshots since April 2024 a home appears in.</p>';
+    else if (fam === "invest") notes = '<p class="ab-note">Investment: bnbscope\'s calculator, same formulas and defaults: ' + D.finance.down + "% down, " + D.finance.closing + "% closing, a "
       + D.finance.rate + "% " + D.finance.term + "-year loan. Home value is the ZIP's Zillow index, a typical value, not this home's price. Revenue and NOI come from the 22 September 2026 run, an estimate.</p>";
     else if (fam === "models") notes = '<p class="ab-note">' + esc(D.models.src) + ". Matched by listing id to " + D.models.matched.toLocaleString("en-US") + " of these " + D.models.of.toLocaleString("en-US")
       + " homes" + (x.matched != null ? "; this card, " + x.matched.toLocaleString("en-US") + " of its " + x.n.toLocaleString("en-US") : "") + ". Model revenue there is the asking price times occupancy, an estimate; RevPAR on the hero tile is measured.</p>";
@@ -264,12 +291,12 @@
 
   function h2hView() {
     var list = items(state.level), A = list[state.a] || list[0], B = list[state.b] || list[1] || list[0];
-    var keys = D.models && state.fam === "models" ? MROWS : D.models && state.fam === "invest" ? IROWS : state.level === "listing" ? ROWS.slice(0, 5) : ROWS;
+    var keys = D.models ? ["revpar"].concat(groupKeys(state.fam)) : state.level === "listing" ? ROWS.slice(0, 5) : ROWS;
     function side(x, k, right) {
       var v = x.m[k], z = zOf(state.level, k, v), r = v == null ? null : rankOf(state.level, k, v);
       var bar = z == null ? '<span class="vl"><span class="mid"></span></span>' : (function () {
         var w = Math.min(50, 50 * Math.abs(z) / 3), left = z >= 0 ? 50 : 50 - w;
-        return '<span class="vl"><span class="mid"></span><span class="fill ' + heat(z) + '" style="left:' + left.toFixed(1) + "%;width:" + w.toFixed(1) + '%"></span></span>';
+        return '<span class="vl"><span class="mid"></span><span class="fill ' + hk(k, z) + '" style="left:' + left.toFixed(1) + "%;width:" + w.toFixed(1) + '%"></span></span>';
       })();
       var parts = [strip(x, k, false) || '<span class="ab-mini" aria-hidden="true"></span>', '<span class="pill">' + fmt(k, v) + "</span>", bar, '<span class="rk">' + (r ? r.rank.toLocaleString("en-US") : "") + "</span>"];
       if (right) parts.reverse();
