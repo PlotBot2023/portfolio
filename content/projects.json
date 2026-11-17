@@ -6,56 +6,174 @@
   "eyebrow": "Projects",
   "title": "What I build and measure",
   "projects": [
-    {"id": "airbnb", "name": "Rentals Archetypes, worldwide", "status": "Live", "icon": "map",
-     "picture": {"kind": "image", "src": "assets/rentals/surface-map.webp",
-                 "alt": "Map of southern Europe with the land coloured in bands by nights booked, green for the busiest markets to red for the quietest, over shaded mountains, each market a named point."},
-     "stats": [
-       {"n": "1.7M", "l": "listings read and mapped"},
-       {"n": "124", "l": "markets in 37 countries"},
-       {"n": "16", "l": "types of listing, host and market"}
-     ],
-     "methods_label": "Methods", "methods": ["Clustering", "Mapping", "Data quality"],
-     "link": {"label": "Open the project", "href": "https://plotbot2023.github.io/rentals-archetypes/"},
-     "notes": [
-       {"id": "airbnb", "button": "Notes", "title": "Rentals Archetypes, worldwide",
-        "body": "Every listing, host and market in 124 Inside Airbnb markets, sorted into named types by clustering, then mapped: by region, by climate belt, by distance to a shore, an airport and a seaport, and, in Broward County, by which canals reach the open ocean.\n\nIt grew out of the earlier Broward case study, four notebooks that answer what an entire home there earns. That study is still published.",
-        "links": [{"label": "Open the project", "href": "https://plotbot2023.github.io/rentals-archetypes/"}, {"label": "The Broward case study", "href": "airbnb.html"}]}
-     ]},
-    {"id": "leaders", "name": "Sports leaderboards and experiments", "status": "Live", "icon": "chart",
-     "picture": {"kind": "scoreline"},
-     "stats": [
-       {"n": "11", "l": "sports, each with its own boards"},
-       {"n": "5", "l": "boards a sport: basic, advanced, betting, accuracy, results"},
-       {"n": "30", "l": "games before a row is ranked"}
-     ],
-     "methods_label": "Methods", "methods": ["z-scores", "Pre-registration", "Holdout tests"],
-     "link": {"label": "Open the leaderboards", "href": "guides/leaderboards/nfl.html"},
-     "notes": [
-       {"id": "leaders", "button": "Leaderboards", "title": "Leaderboards",
-        "body": "Every sport gets its own leaderboards: basic stats, advanced stats, betting, accuracy and results. Each row is scored against a stated baseline (the league mean, a coin flip, break-even, or the market) and its z-score sets the heat colour, so a number always reads against something.\n\nSmall samples are held back: a row under 30 games is never ranked or coloured. Early in a season the board shows early leaders instead, labelled as early. Every board has a table twin with every row and its notes.\n\nThe leaderboards run live on my own machine; the link opens a dated snapshot of them, built from the same code.",
-        "links": [{"label": "Open the leaderboards", "href": "guides/leaderboards/nfl.html"}]},
-       {"id": "experiments", "button": "Experiments", "title": "Pre-registered experiments",
-        "body": "Each test writes down its question, data, seasons and pass mark before it runs, and scores its holdout once. A test passes only if it beats its baseline and the market by enough to matter.\n\nEach one ships as a report: the question and verdict with one hero number, what was tested, the results, the checks against the baseline, the market and the holdout, what it means, the limits, and a table twin for every chart. Recent questions: whether pass-rush pressure adds points beyond the box score, and whether a starter's share of production moves with him after a trade or injury.",
-        "links": []}
-     ]},
-    {"id": "hotwheels", "name": "Hot Wheels value field guide", "status": "Live", "icon": "car",
-     "picture": {"kind": "icon"},
-     "stats": [
-       {"n": "500", "l": "rare pieces on the watch list"},
-       {"n": "Every value", "l": "with its source, basis and date"}
-     ],
-     "methods_label": "Methods", "methods": ["Market research", "Pricing", "Reference design"],
-     "link": {"label": "Open the guide", "href": "guides/hot-wheels-field-guide.html"},
-     "notes": [
-       {"id": "hotwheels", "button": "Notes", "title": "Hot Wheels value field guide",
-        "body": "How to identify, authenticate, grade and price a collectible car, generation by generation. Every feature is drawn and zoomed, the fake and restoration tells are listed, and a ranked watch list covers 500 rare pieces. Every value carries its source, basis and date.",
-        "links": [{"label": "Open the guide", "href": "guides/hot-wheels-field-guide.html"}]}
-     ]},
-    {"id": "netflix", "name": "Netflix analysis", "status": "Coming next", "icon": "screen",
-     "picture": {"kind": "icon"},
-     "stats": [],
-     "methods_label": "Status", "methods": ["In progress"],
-     "link": {"label": "", "href": ""},
-     "notes": []}
+    {
+      "id": "airbnb",
+      "name": "Rentals Archetypes, worldwide",
+      "status": "Live",
+      "icon": "map",
+      "picture": {
+        "kind": "image",
+        "src": "assets/rentals/surface-map.webp",
+        "alt": "Map of southern Europe with the land coloured in bands by nights booked, green for the busiest markets to red for the quietest, over shaded mountains, each market a named point."
+      },
+      "stats": [
+        {
+          "n": "1.7M",
+          "l": "listings read and mapped"
+        },
+        {
+          "n": "124",
+          "l": "markets in 37 countries"
+        },
+        {
+          "n": "16",
+          "l": "types of listing, host and market"
+        }
+      ],
+      "methods_label": "Methods",
+      "methods": [
+        "Clustering",
+        "Mapping",
+        "Data quality"
+      ],
+      "link": {
+        "label": "Open the project",
+        "href": "https://plotbot2023.github.io/rentals-archetypes/"
+      },
+      "notes": [
+        {
+          "id": "airbnb",
+          "button": "Notes",
+          "title": "Rentals Archetypes, worldwide",
+          "body": "Every listing, host and market in 124 Inside Airbnb markets, sorted into named types by clustering, then mapped: by region, by climate belt, by distance to a shore, an airport and a seaport, and, in Broward County, by which canals reach the open ocean.\n\nIt grew out of the earlier Broward case study, four notebooks that answer what an entire home there earns. That study is still published.",
+          "links": [
+            {
+              "label": "Open the project",
+              "href": "https://plotbot2023.github.io/rentals-archetypes/"
+            },
+            {
+              "label": "The Broward case study",
+              "href": "airbnb.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "leaders",
+      "name": "Sports leaderboards and experiments",
+      "status": "Live",
+      "icon": "chart",
+      "picture": {
+        "kind": "scoreline"
+      },
+      "stats": [
+        {
+          "n": "11",
+          "l": "sports, each with its own boards"
+        },
+        {
+          "n": "5",
+          "l": "boards a sport: basic, advanced, betting, accuracy, results"
+        },
+        {
+          "n": "30",
+          "l": "games before a row is ranked"
+        }
+      ],
+      "methods_label": "Methods",
+      "methods": [
+        "z-scores",
+        "Pre-registration",
+        "Holdout tests"
+      ],
+      "link": {
+        "label": "Open the leaderboards",
+        "href": "guides/leaderboards/nfl.html"
+      },
+      "notes": [
+        {
+          "id": "leaders",
+          "button": "Leaderboards",
+          "title": "Leaderboards",
+          "body": "Every sport gets its own leaderboards: basic stats, advanced stats, betting, accuracy and results. Each row is scored against a stated baseline (the league mean, a coin flip, break-even, or the market) and its z-score sets the heat colour, so a number always reads against something.\n\nSmall samples are held back: a row under 30 games is never ranked or coloured. Early in a season the board shows early leaders instead, labelled as early. Every board has a table twin with every row and its notes.\n\nThe leaderboards run live on my own machine; the link opens a dated snapshot of them, built from the same code.",
+          "links": [
+            {
+              "label": "Open the leaderboards",
+              "href": "guides/leaderboards/nfl.html"
+            }
+          ]
+        },
+        {
+          "id": "experiments",
+          "button": "Experiments",
+          "title": "Pre-registered experiments",
+          "body": "Each test writes down its question, data, seasons and pass mark before it runs, and scores its holdout once. A test passes only if it beats its baseline and the market by enough to matter.\n\nEach one ships as a report: the question and verdict with one hero number, what was tested, the results, the checks against the baseline, the market and the holdout, what it means, the limits, and a table twin for every chart. Recent questions: whether pass-rush pressure adds points beyond the box score, and whether a starter's share of production moves with him after a trade or injury.",
+          "links": []
+        }
+      ]
+    },
+    {
+      "id": "hotwheels",
+      "name": "Hot Wheels value field guide",
+      "status": "Live",
+      "icon": "car",
+      "picture": {
+        "kind": "icon"
+      },
+      "stats": [
+        {
+          "n": "500",
+          "l": "rare pieces on the watch list"
+        },
+        {
+          "n": "Every value",
+          "l": "with its source, basis and date"
+        }
+      ],
+      "methods_label": "Methods",
+      "methods": [
+        "Market research",
+        "Pricing",
+        "Reference design"
+      ],
+      "link": {
+        "label": "Open the guide",
+        "href": "guides/hot-wheels-field-guide.html"
+      },
+      "notes": [
+        {
+          "id": "hotwheels",
+          "button": "Notes",
+          "title": "Hot Wheels value field guide",
+          "body": "How to identify, authenticate, grade and price a collectible car, generation by generation. Every feature is drawn and zoomed, the fake and restoration tells are listed, and a ranked watch list covers 500 rare pieces. Every value carries its source, basis and date.",
+          "links": [
+            {
+              "label": "Open the guide",
+              "href": "guides/hot-wheels-field-guide.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "netflix",
+      "name": "Netflix analysis",
+      "status": "Coming next",
+      "icon": "screen",
+      "picture": {
+        "kind": "icon"
+      },
+      "stats": [],
+      "methods_label": "Status",
+      "methods": [
+        "In progress"
+      ],
+      "link": {
+        "label": "",
+        "href": ""
+      },
+      "notes": []
+    }
   ]
 }
