@@ -15,7 +15,7 @@ body-classes: sv-page
       <h1 class="page-title">{{title}}</h1>
     </div>
     <ul class="rail" aria-label="On this page" style="grid-column:auto">
-      {{#rail}}<li>{{.}}</li>{{/rail}}
+      {{#rail}}<li>{{.}}</li>{{/rail}}{{#projects}}{{#generated}}<!-- {{id}}:count --><!-- /{{id}}:count -->{{/generated}}{{/projects}}
     </ul>
   </div>
 
@@ -23,12 +23,13 @@ body-classes: sv-page
     <div class="board one" data-stage="stage-pj" aria-label="Projects, pick one to show it">{{#projects}}
       <button class="tile" type="button" data-item="{{id}}" aria-pressed="{{#@first}}true{{/@first}}{{^@first}}false{{/@first}}">
         {{tile_mark|raw}}
-        <span class="tt"><span class="name">{{name}}</span><span class="status {{kind}}">{{status}}</span></span>
+        {{#generated}}<!-- {{id}}:tile --><!-- /{{id}}:tile -->{{/generated}}{{^generated}}<span class="tt"><span class="name">{{name}}</span><span class="status {{kind}}">{{status}}</span></span>{{/generated}}
       </button>{{/projects}}
     </div>
 
     <div class="stage" id="stage-pj">{{#projects}}{{^@first}}
-{{/@first}}
+{{/@first}}{{#generated}}
+      <!-- {{id}}:panel --><!-- /{{id}}:panel -->{{/generated}}{{^generated}}
       <article class="panel rail-top" data-item="{{id}}" aria-label="{{name|attr}}{{#building}}, {{status|lower1|attr}}{{/building}}">
         {{media|raw}}
         <div class="info">
@@ -42,7 +43,7 @@ body-classes: sv-page
           </div>{{/has_buttons}}{{^has_buttons}}
           <div class="foot"><ul class="tray slim" aria-label="{{methods_label|attr}}">{{#methods}}<li>{{.}}</li>{{/methods}}</ul></div>{{/has_buttons}}
         </div>
-      </article>{{/projects}}
+      </article>{{/generated}}{{/projects}}
     </div>
   </div>
 </div>
@@ -51,7 +52,9 @@ body-classes: sv-page
   <h3>{{title}}</h3>
 {{body|note}}
   {{#has_links}}<div class="btn-row">{{#links}}<a class="btn{{#@first}} primary{{/@first}}" href="{{href|attr}}">{{label}}</a>{{/links}}<button class="btn" popovertarget="n-{{id}}" popovertargetaction="hide">Close</button></div>{{/has_links}}{{^has_links}}<button class="btn" popovertarget="n-{{id}}" popovertargetaction="hide">Close</button>{{/has_links}}
-</div>{{/notes}}{{/projects}}
+</div>{{/notes}}{{/projects}}{{#projects}}{{#generated}}
+
+<!-- {{id}}:note --><!-- /{{id}}:note -->{{/generated}}{{/projects}}
 
 <script src="assets/sv.js"></script>
 ```

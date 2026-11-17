@@ -158,22 +158,13 @@
     },
     {
       "id": "netflix",
-      "name": "Netflix analysis",
-      "status": "Coming next",
+      "name": "Netflix mood tags",
+      "generated": "tools/netflix_build.py",
       "icon": "screen",
       "picture": {
         "kind": "icon"
       },
-      "stats": [],
-      "methods_label": "Status",
-      "methods": [
-        "In progress"
-      ],
-      "link": {
-        "label": "",
-        "href": ""
-      },
-      "notes": []
+      "why": "Its tile, panel, note and count are written by tools/netflix_build.py from the mood-tag results."
     }
   ]
 }

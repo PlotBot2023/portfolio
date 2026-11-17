@@ -50,6 +50,8 @@ OWNED = [
      "why": "A dated snapshot of the live leaderboards, built from the same code that runs them."},
     {"name": "Hot Wheels guide", "page": "guides/hot-wheels-field-guide.html", "by": "tools/hotwheels_guide.py",
      "why": "Copied in whole from the Collectibles project, where the guide is written."},
+    {"name": "Netflix mood tags", "page": "projects.html", "by": "tools/netflix_build.py",
+     "why": "Its tile, panel and note on the Projects page are written from the mood-tag results each time they are rebuilt."},
     {"name": "Notebooks", "page": "notebooks/broward-market-analysis.html", "by": "the notebooks themselves",
      "why": "Each notebook page is its saved charts and write-up, published as it was last run."},
 ]
@@ -195,6 +197,16 @@ FIELDS = {
              "hint": "built from these same words, with no contact details, as a Download as PDF button on the page"}]},
     ]},
 }
+
+
+def site_hues(root=None):
+    """The site's own identity hues (styles.css :root), so the editor's colour swatches show what the page paints."""
+    root = pathlib.Path(root or ROOT)
+    try:
+        css = (root / "styles.css").read_text(encoding="utf-8")
+    except OSError:
+        return {}
+    return {k: v for k, v in re.findall(r"--(cy|or|vi|pk):\s*(#[0-9A-Fa-f]{6})", css.split("}", 1)[0])}
 
 
 # what a new entry starts with, by the list's "item" word; the editor gives each an id of its own
@@ -383,11 +395,13 @@ def prepare(page, c, today=None):
         for row in c.get("career", []):
             row["bar_left"], row["bar_width"] = bar(row, today)
     if page == "projects":
-        live = sum(1 for p in c.get("projects", []) if p.get("status") != "Coming next")
-        soon = len(c.get("projects", [])) - live
+        own = [p for p in c.get("projects", []) if not p.get("generated")]   # a tool's project counts itself (its :count region)
+        live = sum(1 for p in own if p.get("status") != "Coming next")
+        soon = len(own) - live
         c["rail"] = [x for x in (_plural(live, "project", "projects") if live else "",
                                  f"{soon} on the way" if soon else "") if x]
         for p in c.get("projects", []):
+            p["generated"] = p.get("generated") or ""
             p["building"] = p.get("status") == "Coming next"
             p["kind"] = "building" if p["building"] else "live"
             pic = p.get("picture") or {}
@@ -424,14 +438,29 @@ def load(root=None):
     return {k: json.loads((root / "content" / f).read_text(encoding="utf-8")) for k, (f, _) in PAGES.items()}
 
 
+REGION = re.compile(r"<!-- ([a-z0-9-]+):([a-z0-9-]+) -->(.*?)<!-- /\1:\2 -->", re.S)
+
+
+def keep_regions(new, old):
+    """A region another tool writes (<!-- netflix:tile -->...<!-- /netflix:tile -->, tools/netflix_build.py) keeps
+    what that tool last put there: the words' build never rewrites it."""
+    kept = {(m.group(1), m.group(2)): m.group(3) for m in REGION.finditer(old or "")}
+    return REGION.sub(lambda m: f"<!-- {m.group(1)}:{m.group(2)} -->{kept.get((m.group(1), m.group(2)), m.group(3))}"
+                                f"<!-- /{m.group(1)}:{m.group(2)} -->", new)
+
+
 def build(content, root=None, today=None):
-    """{output file: text} for every page built from content (a dict page -> words)."""
+    """{output file: text} for every page built from content (a dict page -> words); a generator's regions keep what
+    the page on disk holds."""
     root = pathlib.Path(root or ROOT)
     out = {}
     for page, (_, outs) in PAGES.items():
         ctx = prepare(page, content[page], today)
         for tpl, dest in outs:
-            out[dest] = render((root / "content" / "templates" / tpl).read_text(encoding="utf-8"), ctx)
+            txt = render((root / "content" / "templates" / tpl).read_text(encoding="utf-8"), ctx)
+            if REGION.search(txt) and (root / dest).exists():
+                txt = keep_regions(txt, (root / dest).read_text(encoding="utf-8"))
+            out[dest] = txt
     return out
 
 
@@ -511,6 +540,8 @@ def validate(content):
     if len(nids) != len(set(nids)) or any(not re.fullmatch(r"[a-z0-9-]{1,60}", str(i or "")) for i in ids + nids):
         problems.append("Two notes on the Projects page share an id; remove one and add it again.")
     for p in content["projects"].get("projects", []):
+        if p.get("generated"):
+            continue
         pic = p.get("picture") or {}
         if pic.get("kind") == "image" and not (pic.get("alt") or "").strip():
             problems.append(f"The picture on {p.get('name') or 'a project'} needs a description for people who cannot see it.")
@@ -520,6 +551,8 @@ def validate(content):
     if len(rids) != len(set(rids)) or any(not re.fullmatch(r"[a-z0-9-]{1,60}", str(i or "")) or i == "edu" for i in rids):
         problems.append("Two roles share an id; remove one and add it again.")
     for p in content["projects"].get("projects", []):
+        if p.get("generated"):
+            continue
         if not (p.get("name") or "").strip():
             problems.append("A project has no name.")
         href = ((p.get("link") or {}).get("href") or "").strip()

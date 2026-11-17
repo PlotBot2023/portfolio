@@ -5,10 +5,13 @@
 
 Typst lays it out; it ships inside Quarto (quarto typst compile), so nothing new is installed. The PDF carries the
 words of the page and nothing else: no contact details (the site has none by design, and tools/harden_docs.py fails
-the build on any), and no author in its metadata, only its title. A PDF is checked by harden_docs.py like the pages.
+the build on any), and no author in its metadata, only its title. Its words are checked before it is made
+(tools/content_build.py check_private, the same rules as tools/harden_docs.py); harden_docs.py then checks the PDF's
+origin and metadata, since a PDF's text cannot be scanned reliably. Its footer says when it was made.
 """
 from __future__ import annotations
 
+import datetime
 import json
 import os
 import pathlib
@@ -46,9 +49,11 @@ def lines(body):
     return out
 
 
-def typst_source(r, name="Richard Chute"):
+def typst_source(r, name="Richard Chute", made=None):
+    made = made or datetime.date.today()
     t = ['#set document(title: "' + esc(r.get("page", {}).get("title") or "Resume") + '")',
-         '#set page(paper: "us-letter", margin: (x: 0.7in, y: 0.6in))',
+         '#set page(paper: "us-letter", margin: (x: 0.7in, y: 0.6in), footer: align(right)[#text(size: 8.5pt, fill: rgb("#5A6680"))['
+         + esc(f"Updated {made.strftime('%B')} {made.year}") + ']])',
          '#set text(font: ("Segoe UI", "Arial", "Liberation Sans"), size: 10.5pt, fill: rgb("#1B2333"))',
          '#set par(justify: false, leading: 0.55em)',
          '#show heading.where(level: 2): it => block(above: 1.1em, below: 0.5em)[#text(size: 11pt, weight: "bold", '
