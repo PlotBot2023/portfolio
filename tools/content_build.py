@@ -522,7 +522,8 @@ def write(built, root=None):
     for dest, txt in built.items():
         p = root / dest
         if not p.exists() or p.read_text(encoding="utf-8") != txt:
-            p.write_text(txt, encoding="utf-8", newline="\n")
+            crlf = p.exists() and b"\r\n" in p.read_bytes()      # keep the file's own line endings (git autocrlf)
+            p.write_text(txt, encoding="utf-8", newline="\r\n" if crlf else "\n")
             changed.append(dest)
     return changed
 
