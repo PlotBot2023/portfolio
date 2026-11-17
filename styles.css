@@ -180,10 +180,60 @@ body.sv-page #quarto-content { padding: 0; }
 }
 
 /* ══ Home ══ */
-.v-home { grid-template-columns: minmax(0, 47fr) minmax(0, 53fr); }
-.v-home .who { display: grid; grid-template-rows: auto auto auto auto 1fr auto; gap: clamp(.8rem, 2vh, 1.4rem); }
-.v-home .who .stats .n { font-size: clamp(1.8rem, 5vh, 3rem); }
-.v-home .ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; align-self: end; }
+/* home (the owner, 2026-11-17: "some info at the top and then the projects three wide in a series of chips below"):
+   a slim band of who, numbers, tools and ways, then the projects as three badge cards, each in its own identity hue */
+.v-home { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+.v-home .who { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr) minmax(0, 1.3fr); align-items: center; gap: clamp(.8rem, 1.6vw, 1.6rem); }
+.v-home .who-id { display: grid; gap: .45rem; align-content: center; }
+.v-home .who-id .big-title { font-size: clamp(2.4rem, 6vh, 3.8rem); }
+/* the numbers as stat capsules: the big number on the left, its words beside it, one a row */
+.v-home .who .stats { grid-template-columns: minmax(0, 1fr); grid-auto-rows: minmax(0, 1fr); gap: .45rem; align-self: stretch; }
+.v-home .who .stats .stat { display: flex; align-items: center; gap: .8rem; padding: .35rem .9rem; border-top: 0; border-left: 4px solid var(--cy); }
+.v-home .who .stats .stat:nth-child(2) { border-left-color: var(--pk); }
+.v-home .who .stats .stat:nth-child(3) { border-left-color: var(--gold); }
+.v-home .who .stats .n { flex: none; min-width: 3.2ch; font-size: clamp(1.6rem, 4vh, 2.4rem); }
+.v-home .who .stats .l { margin-top: 0; line-height: 1.2; }
+.v-home .who-side { display: grid; gap: .6rem; align-content: center; min-width: 0; }
+.v-home .ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.v-home .way { grid-auto-flow: column; justify-content: start; align-items: center; gap: .5rem; padding: .45rem .7rem; }
+.v-home .way svg { width: 24px; height: 24px; flex: none; }
+.v-home .work { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--gap); min-height: 0; }
+@media (min-width: 900px) and (max-height: 759.98px) {
+  .v-home { --gap: .6rem; }
+  .v-home .who { padding-top: .7rem; padding-bottom: .7rem; }
+  .v-home .who-id .big-title { font-size: clamp(2rem, 6vh, 2.6rem); }
+  .v-home .tray li { min-height: 34px; padding: 0 .65rem; }
+  .v-home .way { padding: .25rem .6rem; }
+  .pchip { padding: .7rem .9rem; gap: .45rem; }
+  .pbadge { height: min(100%, clamp(5rem, 17vh, 8rem)); }
+  .v-home .who { grid-template-columns: minmax(0, 1fr) minmax(0, .85fr) minmax(0, 1.6fr); }
+}
+@media (min-width: 900px) and (max-height: 659.98px) { .pdesc { font-size: 1rem; line-height: 1.25; } .pbadge { height: min(100%, clamp(4.5rem, 14vh, 6rem)); } }
+/* the cards share one row grid (subgrid), so the badges, titles and number trays line up across all three */
+.pchips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr) auto auto auto; column-gap: var(--gap); row-gap: 0; min-height: 0; height: 100%; }
+.pchips > .pchip { grid-row: span 4; grid-template-rows: subgrid; }
+.pchip { --ph: #7CF5FF; position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto auto auto; align-content: stretch; gap: .7rem; min-height: 0; height: 100%; box-sizing: border-box;
+  padding: clamp(.9rem, 2vh, 1.4rem) clamp(.9rem, 1.4vw, 1.4rem); border-radius: 22px; text-decoration: none; color: var(--ink2);
+  border: 1.5px solid color-mix(in srgb, var(--ph) 55%, transparent);
+  background: radial-gradient(70% 55% at 50% 0%, color-mix(in srgb, var(--ph) 24%, transparent), transparent 72%), var(--fin-matte), var(--glass);
+  box-shadow: var(--st-lift), 0 0 34px -18px var(--ph); transition: border-color .12s ease, box-shadow .12s ease; }
+.pchip::before { content: ""; position: absolute; inset: 0 22px auto 22px; height: 4px; border-radius: 0 0 4px 4px; background: var(--ph); box-shadow: 0 0 14px var(--ph); }
+.pchip:hover { text-decoration: none; color: var(--ink2); border-color: var(--ph); box-shadow: var(--st-lift), 0 0 40px -10px var(--ph); }
+.pchip:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.pbadge { justify-self: center; align-self: center; display: grid; place-items: center; height: min(100%, clamp(6rem, 24vh, 15rem)); aspect-ratio: 1; min-height: 0; border-radius: 50%;
+  color: var(--ph); background: radial-gradient(circle at 40% 32%, #1E3260, #0B1426 62%, #050A14);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--ph) 70%, #fff 10%), 0 0 0 9px rgba(0, 0, 0, .6), 0 0 0 11px color-mix(in srgb, var(--ph) 35%, transparent),
+    0 14px 30px -8px rgba(0, 0, 0, .8), 0 0 40px -6px var(--ph); }
+.pbadge svg { width: 54%; height: 54%; filter: drop-shadow(0 0 12px var(--ph)); }
+.pbadge.img { background: none; box-shadow: 0 14px 30px -8px rgba(0, 0, 0, .8), 0 0 44px -10px var(--ph); }
+.pbadge.img img { width: 100%; height: 100%; display: block; }
+.ptitle { display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap; }
+.ptitle b { font-size: clamp(1.15rem, 2.4vh, 1.45rem); font-weight: 800; color: var(--ink); line-height: 1.15; }
+.pdesc { font-size: 1.0625rem; line-height: 1.35; color: var(--ink2); }
+.pstats { display: flex; flex-wrap: wrap; align-items: center; align-content: center; gap: .45rem; padding: .45rem; border-radius: 22px; background: var(--inlay); box-shadow: var(--st-sink); }
+.pstats > span { display: inline-flex; align-items: baseline; gap: .35rem; min-height: 34px; padding: .2rem .8rem; border-radius: 999px; font-size: 1rem; font-weight: 700; color: var(--ink2);
+  border: 1.5px solid color-mix(in srgb, var(--ph) 55%, transparent); background: var(--fin-polish), var(--pill); box-shadow: 0 0 0 2px rgba(0, 0, 0, .5); align-items: center; }
+.pstats b { font-family: var(--num); font-size: 1.125rem; color: var(--ink); }
 .way {
   display: grid; justify-items: start; gap: .35rem; text-align: left; padding: .6rem .8rem; min-height: 44px; cursor: pointer;
   font: inherit; color: var(--ink); border-radius: 14px; border: 1.5px solid rgba(124, 245, 255, .35); background: var(--inlay); box-shadow: var(--st-sink);
@@ -191,8 +241,6 @@ body.sv-page #quarto-content { padding: 0; }
 .way:hover { border-color: var(--cy); }
 .way svg { width: 28px; height: 28px; color: var(--cy); }
 .way span { font-size: 1rem; font-weight: 750; line-height: 1.2; }
-.v-home .work { display: grid; grid-template-rows: auto minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--gap); min-height: 0; }
-.v-home .work .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); min-height: 0; }
 .feature {
   position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: .6rem; min-height: 0; padding: .7rem; border-radius: 20px;
   text-decoration: none; color: var(--ink2); border: 1.5px solid var(--edge); background: var(--fin-matte), var(--glass); box-shadow: var(--st-lift);
@@ -308,7 +356,8 @@ table.twin td { padding: .45rem .7rem; border-bottom: 1px solid rgba(124, 245, 2
 @media (max-width: 899.98px), (max-height: 599.98px) {
   .sv { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: none !important; height: auto; }
   .v-home .work { grid-template-rows: auto; }
-  .v-home .work .row2, .duo { grid-template-columns: minmax(0, 1fr); }
+  .v-home .who, .pchips, .duo { grid-template-columns: minmax(0, 1fr); }
+  .pbadge { height: 12rem; }
   .feature .pic { aspect-ratio: 16 / 9; }
   .bs { grid-template-columns: minmax(0, 1fr); }
   .v-resume .xp { grid-template-rows: none; }
