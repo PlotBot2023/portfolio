@@ -51,24 +51,24 @@ body-classes: sv-page
       <h2 id="home-work" class="sec-title">Selected work</h2>
       <a class="btn" href="projects.html">All projects</a>
     </div>
-    <div class="pchips">
-      <a class="pchip" style="--ph:#FFC72C" href="https://plotbot2023.github.io/rentals-archetypes/">
-        <span class="pbadge img"><img src="assets/rentals/bnb-scope-badge.svg" alt="The Rentals Archetypes badge: a brass telescope whose lens reads BnB"></span>
-        <span class="ptitle"><b>Rentals Archetypes</b><span class="status live">Live</span></span>
-        <span class="pdesc">Every Airbnb listing, host and market, sorted into named types worldwide.</span>
-        <span class="pstats"><span><b>1.7M</b> listings</span><span><b>124</b> markets</span><span><b>16</b> types</span></span>
+    <div class="pcards">
+      <a class="pcard" style="--ph:#FFC72C" href="https://plotbot2023.github.io/rentals-archetypes/" aria-label="Rentals Archetypes: 1.7 million listings in 124 markets sorted into 16 named types. Open the project.">
+        <span class="pc-top"><span class="pc-disc"><img src="assets/rentals/bnb-scope-badge.svg" alt=""></span><span class="pc-id"><span class="pc-eye">37 countries</span><b class="pc-name">Rentals Archetypes</b></span></span>
+        <span class="pc-sub">Every Airbnb listing, host and market, sorted into named types.</span>
+        <span class="pc-chips"><span class="pc-c" style="--th:#FFC72C"><b>1.7M</b> listings</span><span class="pc-c" style="--th:#2DD4BF"><b>124</b> markets</span><span class="pc-c" style="--th:#F472B6"><b>16</b> types</span></span>
+        <span class="pc-foot"><span class="status live">Live</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
       </a>
-      <a class="pchip" style="--ph:#FF7AE0" href="projects.html#leaders">
-        <span class="pbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg></span>
-        <span class="ptitle"><b>Leaderboards and experiments</b><span class="status live">Live</span></span>
-        <span class="pdesc">Every sport's players and teams ranked on z-scores, with pre-registered tests.</span>
-        <span class="pstats"><span><b>11</b> sports</span><span><b>5</b> boards each</span><span><b>30</b> games to rank</span></span>
+      <a class="pcard" style="--ph:#FF7AE0" href="projects.html#leaders" aria-label="Leaderboards and experiments: 11 sports, 5 boards a sport, ranked from 30 games. Open the project.">
+        <span class="pc-top"><span class="pc-disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg></span><span class="pc-id"><span class="pc-eye">11 sports</span><b class="pc-name">Leaderboards</b></span></span>
+        <span class="pc-sub">Every sport's players and teams ranked on z-scores, with pre-registered experiments.</span>
+        <span class="pc-chips"><span class="pc-c" style="--th:#FF7AE0"><b>11</b> sports</span><span class="pc-c" style="--th:#60A5FA"><b>5</b> boards</span><span class="pc-c" style="--th:#4ADE9C"><b>30</b> games minimum</span></span>
+        <span class="pc-foot"><span class="status live">Live</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
       </a>
-      <a class="pchip" style="--ph:#FB923C" href="projects.html#hotwheels">
-        <span class="pbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></span>
-        <span class="ptitle"><b>Hot Wheels value guide</b><span class="status live">Live</span></span>
-        <span class="pdesc">A collector's field guide: which pieces are rare and what each is worth.</span>
-        <span class="pstats"><span><b>500</b> rare pieces</span><span><b>Every</b> value sourced</span></span>
+      <a class="pcard" style="--ph:#FB923C" href="projects.html#hotwheels" aria-label="Hot Wheels value guide: 500 rare pieces, every value with its source and date. Open the guide.">
+        <span class="pc-top"><span class="pc-disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></span><span class="pc-id"><span class="pc-eye">Collecting</span><b class="pc-name">Hot Wheels guide</b></span></span>
+        <span class="pc-sub">A collector's field guide: which pieces are rare and what each is worth.</span>
+        <span class="pc-chips"><span class="pc-c" style="--th:#FB923C"><b>500</b> rare pieces</span><span class="pc-c" style="--th:#FFC72C"><b>Every</b> value sourced</span></span>
+        <span class="pc-foot"><span class="status live">Live</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
       </a>
     </div>
   </section>
