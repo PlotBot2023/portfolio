@@ -10,38 +10,39 @@ body-classes: sv-page
 <div class="sv v-home">
 
   <section class="panel hero-glass brk who" aria-labelledby="home-name">
-    <span class="eyebrow">Fort Lauderdale, Florida</span>
-    <div>
+    <div class="who-id">
+      <span class="eyebrow">Fort Lauderdale, Florida</span>
       <h1 id="home-name" class="big-title">Richard Chute</h1>
-      <p class="lede" style="margin-top:.6rem">Data pipelines and analysis people decide from.</p>
+      <p class="lede">Data pipelines and analysis people decide from.</p>
+      <div class="btn-row">
+        <a class="btn primary" href="projects.html">See the projects</a>
+        <a class="btn" href="resume.html">Resume</a>
+      </div>
     </div>
     <ul class="stats" aria-label="At a glance">
       <li class="stat"><span class="n">15</span><span class="l">years running operations</span></li>
       <li class="stat"><span class="n">11</span><span class="l">sports on my leaderboards</span></li>
-      <li class="stat"><span class="n">4</span><span class="l">snapshots in the Airbnb study</span></li>
+      <li class="stat"><span class="n">124</span><span class="l">rental markets mapped</span></li>
     </ul>
-    <ul class="tray" aria-label="Tools and methods">
-      <li>Python</li><li>PostgreSQL</li><li>SQL</li><li>pandas</li><li>scikit-learn</li><li>XGBoost</li><li>CatBoost</li>
-      <li>Monte Carlo</li><li>Causal inference</li><li>Docker</li><li>R</li><li>Tableau</li><li>Power BI</li>
-    </ul>
-    <div class="ways" aria-label="How I work">
-      <button class="way" popovertarget="n-append" aria-label="How I work: append-only data. Open the note">
+    <div class="who-side">
+      <ul class="tray" aria-label="Tools and methods">
+        <li>Python</li><li>PostgreSQL</li><li>SQL</li><li>pandas</li><li>scikit-learn</li><li>XGBoost</li><li>CatBoost</li>
+        <li>Monte Carlo</li><li>Causal inference</li><li>Docker</li><li>R</li><li>Tableau</li><li>Power BI</li>
+      </ul>
+      <div class="ways" aria-label="How I work">
+        <button class="way" popovertarget="n-append" aria-label="How I work: append-only data. Open the note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg>
         <span>Append-only data</span>
       </button>
-      <button class="way" popovertarget="n-labelled" aria-label="How I work: modelled is labelled. Open the note">
+        <button class="way" popovertarget="n-labelled" aria-label="How I work: modelled is labelled. Open the note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8" r="1.5"/></svg>
         <span>Modelled is labelled</span>
       </button>
-      <button class="way" popovertarget="n-instrument" aria-label="How I work: instruments, not tables. Open the note">
+        <button class="way" popovertarget="n-instrument" aria-label="How I work: instruments, not tables. Open the note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/><path d="M3 20h18"/></svg>
         <span>Instruments, not tables</span>
       </button>
-    </div>
-    <div class="btn-row">
-      <a class="btn primary" href="projects.html">See the projects</a>
-      <a class="btn" href="https://plotbot2023.github.io/rentals-archetypes/">Rentals Archetypes</a>
-      <a class="btn" href="resume.html">Resume</a>
+      </div>
     </div>
   </section>
 
@@ -50,24 +51,24 @@ body-classes: sv-page
       <h2 id="home-work" class="sec-title">Selected work</h2>
       <a class="btn" href="projects.html">All projects</a>
     </div>
-```
-
-{{< include _rentals_home.qmd >}}
-
-```{=html}
-    <div class="row2">
-      <a class="feature" href="projects.html#leaders">
-        <div class="pic scoreline" aria-hidden="true">
-          <div class="sl-row"><span class="sl-bar"><span style="width:82%"></span></span><span class="sl-chip hot">Elite</span></div>
-          <div class="sl-row"><span class="sl-bar"><span style="width:60%"></span></span><span class="sl-chip warm">Good</span></div>
-          <div class="sl-row"><span class="sl-bar base"><span style="width:46%"></span></span><span class="sl-chip">Average</span></div>
-          <div class="sl-row"><span class="sl-bar"><span style="width:22%"></span></span><span class="sl-chip cold">Poor</span></div>
-        </div>
-        <div class="cap"><b>Leaderboards and experiments</b><span class="status live">Live</span></div>
+    <div class="pcards">
+      <a class="pcard" style="--ph:#FFC72C" href="https://plotbot2023.github.io/rentals-archetypes/" aria-label="Rentals Archetypes: 1.7 million listings in 124 markets sorted into 16 named types. Open the project.">
+        <span class="pc-top"><span class="pc-disc"><img src="assets/rentals/bnb-scope-badge.svg" alt=""></span><span class="pc-id"><span class="pc-eye">37 countries</span><b class="pc-name">Rentals Archetypes</b></span></span>
+        <span class="pc-sub">Every Airbnb listing, host and market, sorted into named types.</span>
+        <span class="pc-chips"><span class="pc-c" style="--th:#FFC72C"><b>1.7M</b> listings</span><span class="pc-c" style="--th:#2DD4BF"><b>124</b> markets</span><span class="pc-c" style="--th:#F472B6"><b>16</b> types</span></span>
+        <span class="pc-foot"><span class="status live">Live</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
       </a>
-      <a class="feature" href="projects.html#hotwheels">
-        <div class="pic poster" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></div>
-        <div class="cap"><b>Hot Wheels value guide</b><span class="status live">Live</span></div>
+      <a class="pcard" style="--ph:#FF7AE0" href="projects.html#leaders" aria-label="Leaderboards and experiments: 11 sports, 5 boards a sport, ranked from 30 games. Open the project.">
+        <span class="pc-top"><span class="pc-disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg></span><span class="pc-id"><span class="pc-eye">11 sports</span><b class="pc-name">Leaderboards</b></span></span>
+        <span class="pc-sub">Every sport's players and teams ranked on z-scores, with pre-registered experiments.</span>
+        <span class="pc-chips"><span class="pc-c" style="--th:#FF7AE0"><b>11</b> sports</span><span class="pc-c" style="--th:#60A5FA"><b>5</b> boards</span><span class="pc-c" style="--th:#4ADE9C"><b>30</b> games minimum</span></span>
+        <span class="pc-foot"><span class="status live">Live</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
+      </a>
+      <a class="pcard" style="--ph:#FB923C" href="projects.html#hotwheels" aria-label="Hot Wheels value guide: 500 rare pieces, every value with its source and date. Open the guide.">
+        <span class="pc-top"><span class="pc-disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></span><span class="pc-id"><span class="pc-eye">Collecting</span><b class="pc-name">Hot Wheels guide</b></span></span>
+        <span class="pc-sub">A collector's field guide: which pieces are rare and what each is worth.</span>
+        <span class="pc-chips"><span class="pc-c" style="--th:#FB923C"><b>500</b> rare pieces</span><span class="pc-c" style="--th:#FFC72C"><b>Every</b> value sourced</span></span>
+        <span class="pc-foot"><span class="status live">Live</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
       </a>
     </div>
   </section>

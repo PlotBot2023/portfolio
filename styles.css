@@ -191,10 +191,92 @@ body.sv-page #quarto-content { padding: 0; }
 }
 
 /* ══ Home ══ */
-.v-home { grid-template-columns: minmax(0, 47fr) minmax(0, 53fr); }
-.v-home .who { display: grid; grid-template-rows: auto auto auto auto 1fr auto; gap: clamp(.8rem, 2vh, 1.4rem); }
-.v-home .who .stats .n { font-size: clamp(1.8rem, 5vh, 3rem); }
-.v-home .ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; align-self: end; }
+/* home (the owner, 2026-11-17: "some info at the top and then the projects three wide in a series of chips below"):
+   a slim band of who, numbers, tools and ways, then the projects as three badge cards, each in its own identity hue */
+.v-home { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+.v-home .who { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr) minmax(0, 1.3fr); align-items: center; gap: clamp(.8rem, 1.6vw, 1.6rem); }
+.v-home .who-id { display: grid; gap: .45rem; align-content: center; }
+.v-home .who-id .big-title { font-size: clamp(2.4rem, 6vh, 3.8rem); }
+/* the numbers as stat capsules: the big number on the left, its words beside it, one a row */
+.v-home .who .stats { grid-template-columns: minmax(0, 1fr); grid-auto-rows: minmax(0, 1fr); gap: .45rem; align-self: stretch; }
+.v-home .who .stats .stat { display: flex; align-items: center; gap: .8rem; padding: .35rem .9rem; border-top: 0; border-left: 4px solid var(--cy); }
+.v-home .who .stats .stat:nth-child(2) { border-left-color: var(--pk); }
+.v-home .who .stats .stat:nth-child(3) { border-left-color: var(--gold); }
+.v-home .who .stats .n { flex: none; min-width: 3.2ch; font-size: clamp(1.6rem, 4vh, 2.4rem); }
+.v-home .who .stats .l { margin-top: 0; line-height: 1.2; }
+.v-home .who-side { display: grid; gap: .6rem; align-content: center; min-width: 0; }
+.v-home .ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.v-home .way { grid-auto-flow: column; justify-content: start; align-items: center; gap: .5rem; padding: .45rem .7rem; }
+.v-home .way svg { width: 24px; height: 24px; flex: none; }
+.v-home .work { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--gap); min-height: 0; }
+@media (min-width: 900px) and (max-height: 859.98px) {
+  .v-home { --gap: .6rem; }
+  .v-home .who { padding-top: .7rem; padding-bottom: .7rem; }
+  .v-home .who-id .big-title { font-size: clamp(2rem, 6vh, 2.6rem); }
+  .v-home .tray li { min-height: 34px; padding: 0 .65rem; }
+  .v-home .way { padding: .25rem .6rem; }
+  .v-home .pcard { row-gap: .4rem; padding: .5rem; }
+  .v-home .pc-top { padding: .5rem .8rem; }
+  .v-home .pc-disc { height: clamp(3.6rem, 12vh, 5.5rem); }
+  .v-home .pc-name { font-size: clamp(1.35rem, 4.2vh, 1.9rem); }
+  .v-home .pc-sub { font-size: 1rem; line-height: 1.25; }
+  .v-home .pc-chips { padding: .3rem; }
+  .v-home .pc-c { padding: .1rem .6rem; }
+  .v-home .who { grid-template-columns: minmax(0, 1fr) minmax(0, .85fr) minmax(0, 1.6fr); }
+}
+@media (min-width: 900px) and (max-height: 679.98px) {
+  .v-home .tray { gap: .3rem; padding: .35rem; }
+  .v-home .tray li { min-height: 30px; padding: 0 .55rem; }
+  .v-home .who-id .big-title { font-size: 2rem; }
+  .v-home .who .stats .stat { padding: .2rem .8rem; }
+  .v-home .pc-disc { height: 3.4rem; }
+  .v-home .pc-name { font-size: 1.4rem; }
+  .v-home.sv { padding-top: .35rem; padding-bottom: .35rem; --gap: .4rem; }
+  .v-home .pc-chips { padding: .2rem; }
+  .v-home .pc-c { min-height: 30px; }
+  .v-home .pcard { row-gap: .3rem; padding: .4rem; }
+  .v-home .pc-top { padding: .25rem .7rem; }
+  .v-home .who .stats .n { font-size: 1.4rem; }
+  .v-home .who { padding-top: .5rem; padding-bottom: .5rem; }
+}
+
+/* the projects as player cards (the owner, 2026-11-17: "nba/nfl player card inspiration please"): the NFL and NBA card's
+   anatomy, a banner in the project's hue with a diagonal hatch, the badge as the disc, the name in display caps over a
+   one-line deck, then stat tiles with a hue header strip and the big number in the mono face, and an OPEN foot.
+   The three share one subgrid, so banners, tiles and feet line up across the row. */
+.pcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(auto, 1fr) auto auto auto; column-gap: var(--gap); row-gap: 0; min-height: 0; height: 100%; }
+.pcard { --ph: #7CF5FF; grid-row: span 4; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: subgrid; row-gap: .7rem; min-height: 0; padding: .7rem; border-radius: 22px;
+  text-decoration: none; color: var(--ink2); border: 1.5px solid color-mix(in srgb, var(--ph) 60%, transparent);
+  background: linear-gradient(180deg, #17294B, #0D1A31); box-shadow: 0 18px 38px -12px rgba(0, 0, 0, .75), inset 0 1px 0 rgba(255, 255, 255, .14), 0 0 30px -16px var(--ph);
+  transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease; }
+.pcard:hover { text-decoration: none; color: var(--ink2); border-color: var(--ph); box-shadow: 0 22px 44px -12px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .18), 0 0 40px -8px var(--ph); }
+.pcard:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) { .pcard:hover { transform: translateY(-2px); } }
+.pc-top { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; align-self: stretch; gap: clamp(.7rem, 1.2vw, 1.1rem);
+  padding: clamp(.7rem, 1.8vh, 1.2rem) clamp(.8rem, 1.2vw, 1.2rem); border-radius: 16px; border-bottom: 3px solid var(--ph);
+  background: repeating-linear-gradient(118deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 18px),
+    linear-gradient(115deg, color-mix(in srgb, var(--ph) 46%, #0B1426), #0E1A30 62%, color-mix(in srgb, var(--ph) 16%, #0B1426));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2); }
+.pc-disc { display: grid; place-items: center; height: clamp(4.5rem, 19vh, 11rem); aspect-ratio: 1; border-radius: 50%; color: var(--ph);
+  background: radial-gradient(circle at 38% 30%, #22386A, #0B1426 64%, #050A14);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--ph) 75%, #fff 10%), 0 0 0 8px rgba(0, 0, 0, .6), 0 10px 24px -6px rgba(0, 0, 0, .8), 0 0 32px -6px var(--ph); }
+.pc-disc svg { width: 56%; height: 56%; filter: drop-shadow(0 0 10px var(--ph)); }
+.pc-disc:has(img) { background: none; box-shadow: 0 10px 24px -6px rgba(0, 0, 0, .8), 0 0 36px -8px var(--ph); }
+.pc-disc img { width: 100%; height: 100%; display: block; }
+.pc-id { display: grid; gap: .25rem; min-width: 0; }
+.pc-eye { font-size: 1rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.pc-name { font-size: clamp(1.5rem, min(4.6vh, 2.1vw), 3rem); font-weight: 900; line-height: .98; letter-spacing: -.01em; -webkit-text-stroke: .6px #fff; text-transform: uppercase; color: #fff; text-shadow: 0 3px 12px rgba(0, 0, 0, .6); }
+/* the subtitle: the one-line deck under the title area; then the numbers as small raised chips on a recessed tray */
+.pc-sub { padding: 0 .4rem; font-size: 1.0625rem; line-height: 1.35; color: #E4E8F0; }
+.pc-chips { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; padding: .4rem; border-radius: 999px; background: var(--inlay); box-shadow: var(--st-sink); }
+.pc-c { --th: var(--ph); display: inline-flex; align-items: baseline; gap: .3rem; min-height: 32px; padding: .15rem .75rem; border-radius: 999px; align-items: center;
+  font-size: 1rem; font-weight: 700; color: #D5D9E1; border: 1.5px solid color-mix(in srgb, var(--th) 70%, transparent);
+  background: var(--fin-polish), var(--pill); box-shadow: 0 0 0 2px rgba(0, 0, 0, .5), 0 0 12px -6px var(--th); }
+.pc-c b { font: 900 1.0625rem var(--num); color: #fff; }
+.pc-foot { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: 0 .3rem .1rem; }
+.pc-open { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem; border-radius: 999px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--ph) 70%, transparent); background: var(--fin-polish), var(--pill); box-shadow: 0 0 0 2px rgba(0, 0, 0, .5); }
+.pcard:hover .pc-open { background: var(--ph); color: #14110A; border-color: var(--ph); }
 .way {
   display: grid; justify-items: start; gap: .35rem; text-align: left; padding: .6rem .8rem; min-height: 44px; cursor: pointer;
   font: inherit; color: var(--ink); border-radius: 14px; border: 1.5px solid rgba(124, 245, 255, .35); background: var(--inlay); box-shadow: var(--st-sink);
@@ -202,8 +284,6 @@ body.sv-page #quarto-content { padding: 0; }
 .way:hover { border-color: var(--cy); }
 .way svg { width: 28px; height: 28px; color: var(--cy); }
 .way span { font-size: 1rem; font-weight: 750; line-height: 1.2; }
-.v-home .work { display: grid; grid-template-rows: auto minmax(0, 1.25fr) minmax(0, 1fr); gap: var(--gap); min-height: 0; }
-.v-home .work .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); min-height: 0; }
 .feature {
   position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: .6rem; min-height: 0; padding: .7rem; border-radius: 20px;
   text-decoration: none; color: var(--ink2); border: 1.5px solid var(--edge); background: var(--fin-matte), var(--glass); box-shadow: var(--st-lift);
@@ -319,7 +399,11 @@ table.twin td { padding: .45rem .7rem; border-bottom: 1px solid rgba(124, 245, 2
 @media (max-width: 899.98px), (max-height: 599.98px) {
   .sv { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: none !important; height: auto; }
   .v-home .work { grid-template-rows: auto; }
-  .v-home .work .row2, .duo { grid-template-columns: minmax(0, 1fr); }
+  .v-home .who, .pcards, .duo { grid-template-columns: minmax(0, 1fr); }
+  .pcards { grid-template-rows: none; }
+  .pcard { grid-row: auto; grid-template-rows: auto; }
+  .pc-disc { height: 4.5rem; }
+  .pc-name { font-size: 1.5rem; overflow-wrap: anywhere; }
   .feature .pic { aspect-ratio: 16 / 9; }
   .bs { grid-template-columns: minmax(0, 1fr); }
   .v-resume .xp { grid-template-rows: none; }
