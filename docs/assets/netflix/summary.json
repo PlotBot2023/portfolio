@@ -1,8 +1,8 @@
 {
- "titles": 50,
- "tagged": 49,
- "from_reception": 25,
- "from_plot": 24,
+ "titles": 66,
+ "tagged": 63,
+ "from_reception": 27,
+ "from_plot": 36,
  "feelings": 15,
  "judged": 0,
  "kept": null,
@@ -10,16 +10,59 @@
  "asof": "2026-11-17",
  "model": "sentence-transformers/all-MiniLM-L6-v2",
  "wall": [
-  "Swoony and comforting relationship comedy",
-  "Chilling murder comedy",
-  "Chilling horror",
+  "Uplifting comedy",
+  "Chilling relationship murder horror",
+  "Swoony and carnal relationship comedy",
+  "Charismatic comedy",
   "Laugh-out-loud and tear-jerky relationship coming-of-age comedy",
+  "Wry and vengeful crime drama",
   "Thought-provoking and uplifting animation",
-  "Charismatic and nail-biting comedy",
-  "Adrenaline-fuelled animation",
-  "Nail-biting and adrenaline-fuelled murder comedy",
-  "Wry and bleak drama",
-  "Wry and laugh-out-loud comedy"
+  "Bleak and adrenaline-fuelled animation",
+  "Chilling horror",
+  "Bleak and nail-biting drama"
  ],
+ "originals": [
+  {
+   "name": "Cold as Balls",
+   "tag": "Laugh-out-loud and wry story"
+  },
+  {
+   "name": "Tires",
+   "tag": "Laugh-out-loud and wry comedy"
+  },
+  {
+   "name": "Haunted Hotel",
+   "tag": "Chilling comedy"
+  },
+  {
+   "name": "Age of Attraction",
+   "tag": "Carnal and swoony relationship reality show"
+  },
+  {
+   "name": "Perfect Match",
+   "tag": "Comforting and carnal relationship reality show"
+  },
+  {
+   "name": "Michael Jackson: The Verdict",
+   "tag": "Nail-biting and uplifting documentary"
+  },
+  {
+   "name": "The Boyfriend",
+   "tag": "Carnal relationship reality show"
+  },
+  {
+   "name": "The Watcher",
+   "tag": "Chilling and bleak horror"
+  },
+  {
+   "name": "Worst Neighbor Ever",
+   "tag": "Bleak and chilling true-crime story"
+  },
+  {
+   "name": "The Dinosaurs",
+   "tag": "Thought-provoking and chilling documentary"
+  }
+ ],
+ "pool": 236,
  "source": "English Wikipedia, CC BY-SA 4.0"
 }
