@@ -16,8 +16,8 @@
       "l": "sports on my leaderboards"
     },
     {
-      "n": "4",
-      "l": "snapshots in the Airbnb study"
+      "n": "124",
+      "l": "rental markets mapped"
     }
   ],
   "tools": [
@@ -59,25 +59,88 @@
     }
   ],
   "work_title": "Selected work",
-  "rentals": {
-    "title": "Rentals Archetypes, worldwide",
-    "as_of": "As of 9 November 2026",
-    "alt": "Map of southern Europe with the land coloured in bands by nights booked, green for the busiest markets to red for the quietest, over shaded mountains, each market a named point.",
-    "stats": [
-      {
-        "n": "1.7M",
-        "l": "listings read and mapped"
-      },
-      {
-        "n": "124",
-        "l": "markets in 37 countries"
-      },
-      {
-        "n": "16",
-        "l": "types of listing, host and market"
-      }
-    ]
-  },
-  "leaders_title": "Leaderboards and experiments",
-  "hotwheels_title": "Hot Wheels value guide"
+  "cards": [
+    {
+      "id": "rentals",
+      "hue": "#FFC72C",
+      "href": "https://plotbot2023.github.io/rentals-archetypes/",
+      "spoken": "Rentals Archetypes: 1.7 million listings in 124 markets sorted into 16 named types. Open the project.",
+      "picture": "assets/rentals/bnb-scope-badge.svg",
+      "icon": "map",
+      "eyebrow": "37 countries",
+      "name": "Rentals Archetypes",
+      "sub": "Every Airbnb listing, host and market, sorted into named types.",
+      "chips": [
+        {
+          "n": "1.7M",
+          "l": "listings",
+          "th": "#FFC72C"
+        },
+        {
+          "n": "124",
+          "l": "markets",
+          "th": "#2DD4BF"
+        },
+        {
+          "n": "16",
+          "l": "types",
+          "th": "#F472B6"
+        }
+      ],
+      "status": "Live"
+    },
+    {
+      "id": "leaders",
+      "hue": "#FF7AE0",
+      "href": "projects.html#leaders",
+      "spoken": "Leaderboards and experiments: 11 sports, 5 boards a sport, ranked from 30 games. Open the project.",
+      "picture": "",
+      "icon": "trophy",
+      "eyebrow": "11 sports",
+      "name": "Leaderboards",
+      "sub": "Every sport's players and teams ranked on z-scores, with pre-registered experiments.",
+      "chips": [
+        {
+          "n": "11",
+          "l": "sports",
+          "th": "#FF7AE0"
+        },
+        {
+          "n": "5",
+          "l": "boards",
+          "th": "#60A5FA"
+        },
+        {
+          "n": "30",
+          "l": "games minimum",
+          "th": "#4ADE9C"
+        }
+      ],
+      "status": "Live"
+    },
+    {
+      "id": "hotwheels",
+      "hue": "#FB923C",
+      "href": "projects.html#hotwheels",
+      "spoken": "Hot Wheels value guide: 500 rare pieces, every value with its source and date. Open the guide.",
+      "picture": "",
+      "icon": "car",
+      "eyebrow": "Collecting",
+      "name": "Hot Wheels guide",
+      "sub": "A collector's field guide: which pieces are rare and what each is worth.",
+      "chips": [
+        {
+          "n": "500",
+          "l": "rare pieces",
+          "th": "#FB923C"
+        },
+        {
+          "n": "Every",
+          "l": "value sourced",
+          "th": "#FFC72C"
+        }
+      ],
+      "status": "Live"
+    }
+  ]
 }

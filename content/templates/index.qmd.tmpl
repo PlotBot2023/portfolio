@@ -10,27 +10,28 @@ body-classes: sv-page
 <div class="sv v-home">
 
   <section class="panel hero-glass brk who" aria-labelledby="home-name">
-    <span class="eyebrow">{{eyebrow}}</span>
-    <div>
+    <div class="who-id">
+      <span class="eyebrow">{{eyebrow}}</span>
       <h1 id="home-name" class="big-title">{{name}}</h1>
-      <p class="lede" style="margin-top:.6rem">{{lede}}</p>
+      <p class="lede">{{lede}}</p>
+      <div class="btn-row">
+        <a class="btn primary" href="projects.html">See the projects</a>
+        <a class="btn" href="resume.html">Resume</a>
+      </div>
     </div>
     <ul class="stats" aria-label="At a glance">{{#stats}}
       <li class="stat"><span class="n">{{n}}</span><span class="l">{{l}}</span></li>{{/stats}}
     </ul>
-    <ul class="tray" aria-label="Tools and methods">
-      {{tools|lis:7:6}}
-    </ul>
-    <div class="ways" aria-label="How I work">{{#ways}}
-      <button class="way" popovertarget="n-{{id}}" aria-label="How I work: {{label|lower1|attr}}. Open the note">
+    <div class="who-side">
+      <ul class="tray" aria-label="Tools and methods">
+        {{tools|lis:7:8}}
+      </ul>
+      <div class="ways" aria-label="How I work">{{#ways}}
+        <button class="way" popovertarget="n-{{id}}" aria-label="How I work: {{label|lower1|attr}}. Open the note">
         {{icon|svg:1.8}}
         <span>{{label}}</span>
       </button>{{/ways}}
-    </div>
-    <div class="btn-row">
-      <a class="btn primary" href="projects.html">See the projects</a>
-      <a class="btn" href="https://plotbot2023.github.io/rentals-archetypes/">Rentals Archetypes</a>
-      <a class="btn" href="resume.html">Resume</a>
+      </div>
     </div>
   </section>
 
@@ -39,25 +40,13 @@ body-classes: sv-page
       <h2 id="home-work" class="sec-title">{{work_title}}</h2>
       <a class="btn" href="projects.html">All projects</a>
     </div>
-```
-
-{{< include _rentals_home.qmd >}}
-
-```{=html}
-    <div class="row2">
-      <a class="feature" href="projects.html#leaders">
-        <div class="pic scoreline" aria-hidden="true">
-          <div class="sl-row"><span class="sl-bar"><span style="width:82%"></span></span><span class="sl-chip hot">Elite</span></div>
-          <div class="sl-row"><span class="sl-bar"><span style="width:60%"></span></span><span class="sl-chip warm">Good</span></div>
-          <div class="sl-row"><span class="sl-bar base"><span style="width:46%"></span></span><span class="sl-chip">Average</span></div>
-          <div class="sl-row"><span class="sl-bar"><span style="width:22%"></span></span><span class="sl-chip cold">Poor</span></div>
-        </div>
-        <div class="cap"><b>{{leaders_title}}</b><span class="status live">Live</span></div>
-      </a>
-      <a class="feature" href="projects.html#hotwheels">
-        <div class="pic poster" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 15v-3l2-4h9l4 4h3v3z"/><circle cx="7.5" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg></div>
-        <div class="cap"><b>{{hotwheels_title}}</b><span class="status live">Live</span></div>
-      </a>
+    <div class="pcards">{{#cards}}
+      <a class="pcard" style="--ph:{{hue|attr}}" href="{{href|attr}}" aria-label="{{spoken|attr}}">
+        <span class="pc-top"><span class="pc-disc">{{disc_html|raw}}</span><span class="pc-id"><span class="pc-eye">{{eyebrow}}</span><b class="pc-name">{{name}}</b></span></span>
+        <span class="pc-sub">{{sub}}</span>
+        <span class="pc-chips">{{#chips}}<span class="pc-c" style="--th:{{th|attr}}"><b>{{n}}</b> {{l}}</span>{{/chips}}</span>
+        <span class="pc-foot"><span class="status {{kind}}">{{status}}</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
+      </a>{{/cards}}
     </div>
   </section>
 

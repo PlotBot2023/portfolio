@@ -35,7 +35,7 @@ TEMPLATES = CONTENT / "templates"
 
 # page key -> (content file, [(template, output file), ...])
 PAGES = {
-    "home": ("home.json", [("index.qmd.tmpl", "index.qmd"), ("_rentals_home.qmd.tmpl", "_rentals_home.qmd")]),
+    "home": ("home.json", [("index.qmd.tmpl", "index.qmd")]),
     "projects": ("projects.json", [("projects.qmd.tmpl", "projects.qmd")]),
     "about": ("about.json", [("about.qmd.tmpl", "about.qmd")]),
     "resume": ("resume.json", [("resume.qmd.tmpl", "resume.qmd")]),
@@ -71,6 +71,7 @@ ICONS = {
     "people": ("People", '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c3 .2 5.5 2.6 5.5 5.8"/>'),
     "network": ("Network", '<circle cx="5" cy="6" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="7" r="2.2"/><circle cx="19" cy="17" r="2.2"/><path d="M7 7l3 3.5M7 17l3-3.5M14 11l3-3M14 13l3 3"/>'),
     "trend": ("Trend", '<path d="M4 20V4M4 20h16"/><path d="M7 15l4-4 3 3 5-6"/>'),
+    "trophy": ("Trophy", '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/>'),
     "flask": ("Flask", '<path d="M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4A1.5 1.5 0 0 0 20 19l-6-10V3"/><path d="M7 15h10"/>'),
 }
 HUES = {"": "Cyan", "or": "Gold", "vi": "Blue", "pk": "Pink"}            # a resume tile's icon colour
@@ -110,11 +111,14 @@ FIELDS = {
                 {"key": "label", "label": "Button words", "kind": "line"}, *NOTE]}]},
         {"label": "Selected work", "fields": [
             {"key": "work_title", "label": "Section title", "kind": "line"},
-            {"key": "rentals.title", "label": "Rentals card title", "kind": "line"},
-            {"key": "rentals.as_of", "label": "Rentals card date", "kind": "line", "hint": "for example: As of 9 November 2026"},
-            {"key": "rentals.stats", "label": "Rentals card numbers", "kind": "stats", "max": 3},
-            {"key": "leaders_title", "label": "Leaderboards card title", "kind": "line"},
-            {"key": "hotwheels_title", "label": "Hot Wheels card title", "kind": "line"}]},
+            {"key": "cards", "label": "The three project cards", "kind": "list", "fixed": True, "name": "name", "fields": [
+                {"group": "Card", "key": "name", "label": "Project name", "kind": "line"},
+                {"group": "Card", "key": "eyebrow", "label": "Small line above the name", "kind": "line"},
+                {"group": "Card", "key": "sub", "label": "One line about it", "kind": "text"},
+                {"group": "Numbers", "key": "chips", "label": "Number chips", "kind": "stats", "max": 3},
+                {"group": "Reading", "key": "spoken", "label": "Read aloud", "kind": "text",
+                 "hint": "what a screen reader says for the whole card"},
+                {"group": "Reading", "key": "href", "label": "The card opens", "kind": "line", "hint": "a web address, or a page on this site"}]}]},
     ]},
     "projects": {"label": "Projects", "hue": "gold", "tabs": [
         {"label": "Top", "fields": [
@@ -391,6 +395,13 @@ def _plural(n, one, many):
 def prepare(page, c, today=None):
     """The context a page's templates read: its words plus the few values worked out from them."""
     c = json.loads(json.dumps(c))
+    if page == "home":
+        for card in c.get("cards", []):
+            pic = card.get("picture") or ""
+            card["disc_html"] = f'<img src="{html.escape(pic)}" alt="">' if pic else svg(card.get("icon"), "1.6")
+            card["kind"] = "building" if card.get("status") == "Coming next" else "live"
+            for chip in card.get("chips", []):
+                chip["th"] = chip.get("th") or card.get("hue") or "#7CF5FF"
     if page == "about":
         for row in c.get("career", []):
             row["bar_left"], row["bar_width"] = bar(row, today)
