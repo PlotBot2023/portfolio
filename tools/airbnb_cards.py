@@ -20,7 +20,13 @@ HOST_MIN = 5
 BINS = 16
 METRICS = ["revpar", "adr", "occ", "rev", "rev_bed"]          # the histogram metrics (a home has one value of each)
 # the earlier bnbscope models (its 22 September 2026 run), joined by listing id; a separate family on the cards
-MODEL_METRICS = ["churn", "resid", "mood", "cap", "noi", "pred", "dsr", "hv", "gy", "coc", "dscr"]
+MODEL_METRICS = ["churn", "resid", "mood", "cap", "noi", "pred", "dsr", "hv", "gy", "coc", "dscr", "rating", "rpm", "nrev", "years", "snaps"]
+# The price basis: Inside Airbnb's 22 September 2026 asking prices carry fees (52% with cents against 0% in every earlier
+# snapshot). bnbscope's RevPAR model was trained on that snapshot, so its prediction and residual are divided by the
+# measured ratio of the same homes' price to their 26 September 2025 price, by price decile, to put them on the old basis
+# (a year of genuine price change goes with it). The investment figures come from the 27 November 2025 snapshot, on the
+# old basis already, and are used as they are.
+BASIS_NEW, BASIS_OLD = "2026-09-22", "2025-09-26"
 # bnbscope's Investment Calculator defaults (dashboard/pages/04_Investment_Calculator.py), same formulas: the rate is its
 # default because the Freddie Mac PMMS file is not cached on this PC
 RATE_PCT, DOWN_PCT, TERM_YEARS, CLOSING_PCT = 7.0, 25.0, 30, 2.0
@@ -29,6 +35,32 @@ RATE_PCT, DOWN_PCT, TERM_YEARS, CLOSING_PCT = 7.0, 25.0, 30, 2.0
 def monthly_payment(principal, rate_pct=RATE_PCT, term_years=TERM_YEARS):
     r, n = rate_pct / 100 / 12, term_years * 12
     return principal * (r * (1 + r) ** n) / ((1 + r) ** n - 1)
+
+
+def price_basis(listings: pd.DataFrame, k: int = 10, seed: int = 42) -> dict:
+    """The new-to-old price ratio by decile of the new price, from homes priced in both snapshots, with a split-half
+    check: fit on one half of the homes, measure the other half's log error after the correction."""
+    l = listings.assign(s=listings["snapshot_date"].astype(str),
+                        p=pd.to_numeric(listings["price"].astype(str).str.replace(r"[$,]", "", regex=True), errors="coerce"))
+    ok = l["p"].between(10, 2500)
+    old = l[ok & (l["s"] == BASIS_OLD)].drop_duplicates("listing_id").set_index("listing_id")["p"]
+    new = l[ok & (l["s"] == BASIS_NEW)].drop_duplicates("listing_id").set_index("listing_id")["p"]
+    pr = pd.concat([old.rename("old"), new.rename("new")], axis=1).dropna()
+    pr["lr"] = np.log(pr["new"] / pr["old"])
+
+    def fit(df):
+        e = np.quantile(df["new"], np.linspace(0, 1, k + 1))[1:-1]
+        return e, df.groupby(np.digitize(df["new"], e))["lr"].median()
+    fold = np.random.default_rng(seed).random(len(pr)) < .5
+    err = []
+    for tr, te in ((fold, ~fold), (~fold, fold)):
+        e, r = fit(pr[tr])
+        err.append(pr.loc[te, "lr"] - r.reindex(np.digitize(pr.loc[te, "new"], e)).to_numpy())
+    err = pd.concat(err)
+    edges, r = fit(pr)
+    return {"edges": edges, "ratio": np.exp(r.to_numpy()), "pairs": int(len(pr)), "median": float(np.exp(pr["lr"].median())),
+            "bias": float(err.median()), "spread": float(err.abs().median()), "raw_spread": float(pr["lr"].abs().median()),
+            "new_price": new}
 
 
 def load_models(d) -> pd.DataFrame:
@@ -51,11 +83,28 @@ def load_models(d) -> pd.DataFrame:
     cash = hv * (DOWN_PCT + CLOSING_PCT) / 100
     inv["coc"] = 100 * (inv["noi"] - debt) / cash
     inv["dscr"] = inv["noi"] / debt
+    # listings: the review score, review pace, tenure and presence across snapshots (none of them read the price)
+    lst = pd.read_parquet(d / "listings_cleaned.parquet", columns=["listing_id", "snapshot_date", "price", "host_since", "number_of_reviews",
+                                                                    "reviews_per_month", "review_scores_rating"])
+    basis = price_basis(lst)
+    snaps = lst.groupby("listing_id")["snapshot_date"].nunique().rename("snaps")
+    lastl = lst.sort_values("snapshot_date").drop_duplicates("listing_id", keep="last").set_index("listing_id")
+    asof = pd.Timestamp(BASIS_NEW)
+    feat = pd.DataFrame({"rating": pd.to_numeric(lastl["review_scores_rating"], errors="coerce"),
+                         "rpm": pd.to_numeric(lastl["reviews_per_month"], errors="coerce"),
+                         "nrev": pd.to_numeric(lastl["number_of_reviews"], errors="coerce"),
+                         "years": (asof - pd.to_datetime(lastl["host_since"], errors="coerce")).dt.days / 365.25}).join(snaps).reset_index()
+    xgb = xgb.drop_duplicates("listing_id")
+    dec = np.digitize(basis["new_price"].reindex(xgb["listing_id"]).to_numpy(), basis["edges"])
+    f = np.where(np.isnan(basis["new_price"].reindex(xgb["listing_id"]).to_numpy()), basis["median"], basis["ratio"][np.clip(dec, 0, len(basis["ratio"]) - 1)])
+    xgb["residual"] = xgb["residual"] / f
+    xgb["predicted_revpar"] = xgb["predicted_revpar"] / f
+    load_models.basis = {k: v for k, v in basis.items() if k != "new_price"}
     m = churn.drop_duplicates("listing_id").rename(columns={"churn_proba": "churn", "days_since_last_review": "dsr"})
     m["churn"] = 100 * m["churn"]
     an = an.drop_duplicates("listing_id")
     an["anom"] = 100.0 * an["is_anomaly"].astype(float)
-    for t in (xgb.drop_duplicates("listing_id").rename(columns={"residual": "resid", "predicted_revpar": "pred"}), an[["listing_id", "anom"]],
+    for t in (xgb.rename(columns={"residual": "resid", "predicted_revpar": "pred"}), an[["listing_id", "anom"]], feat,
               se.rename(columns={"sentiment_mean": "mood"})[["listing_id", "mood"]], inv[["listing_id", "noi", "cap", "hv", "gy", "coc", "dscr"]]):
         m = m.merge(t, on="listing_id", how="outer")
     return m
@@ -172,7 +221,7 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
                      None if pd.isna(bed) else int(bed), int(r["super"] > 0),
                           *[None if pd.isna(r[c]) else round(float(r[c]), d) for c, d in (("revpar", 2), ("adr", 2), ("occ", 1), ("rev", 0), ("rev_bed", 0))
                        + ((("churn", 1), ("resid", 2), ("mood", 3), ("cap", 2), ("noi", 0), ("anom", 0), ("pred", 2), ("dsr", 0),
-                           ("hv", 0), ("gy", 2), ("coc", 2), ("dscr", 2)) if have_models else ())]])
+                           ("hv", 0), ("gy", 2), ("coc", 2), ("dscr", 2), ("rating", 2), ("rpm", 2), ("nrev", 0), ("years", 1), ("snaps", 0)) if have_models else ())]])
     county = {m: num(h[m].median()) for m in HM} | {"clear50": num(h["clear50"].mean(), 1), "super": num(h["super"].mean(), 1)}
     if have_models:
         county["anom"] = num(h["anom"].mean(), 1)
@@ -181,11 +230,14 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
             "models": ({"asof": "22 September 2026", "matched": int(h["matched"].sum()), "of": int(len(h)),
                         "src": "bnbscope models of the 22 September 2026 snapshot: an XGBoost churn classifier (held-out AUC 0.818), "
                                "an XGBoost occupancy model (its residual is actual minus predicted RevPAR), IsolationForest anomalies, "
-                               "VADER review sentiment, and NOI against a ZIP home value"}
+                               "VADER review sentiment, and NOI against a ZIP home value",
+                        "basis": ({k: (np.round(v, 3).tolist() if isinstance(v, np.ndarray) else round(v, 3) if isinstance(v, float) else v)
+                                   for k, v in getattr(load_models, "basis", {}).items()}),
+                        "basis_new": BASIS_NEW, "basis_old": BASIS_OLD, "invest_asof": "27 November 2025"}
                        if have_models else None),
             "levels": {"nb": nbs, "seg": segs, "host": hosts}, "seg_names": seg_names,
             "host_types": ["Corporate, 10+ listings", "Small operator, 2 to 9", "Single home"], "seg_meta": seg_meta, "host_min": HOST_MIN,
             "listing_cols": ["nb", "seg", "host", "bedrooms", "superhost", "revpar", "adr", "occ", "rev", "rev_bed"]
-                            + (["churn", "resid", "mood", "cap", "noi", "anom", "pred", "dsr", "hv", "gy", "coc", "dscr"] if have_models else []),
+                            + (["churn", "resid", "mood", "cap", "noi", "anom", "pred", "dsr", "hv", "gy", "coc", "dscr", "rating", "rpm", "nrev", "years", "snaps"] if have_models else []),
             "finance": {"rate": RATE_PCT, "down": DOWN_PCT, "term": TERM_YEARS, "closing": CLOSING_PCT},
             "listings": rows}

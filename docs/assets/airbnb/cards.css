@@ -2,6 +2,9 @@
    its matchup board. Deep glass, saturated hue rails for identity, the one GYOR heat scale for values, dark ink on heat. */
 .hs-n4 { --hc: #E5484D; } .hs-n3 { --hc: #F2683C; } .hs-n2 { --hc: #F59E3B; } .hs-n1 { --hc: #F5CB4A; } .hs-0 { --hc: #EEF1F6; }
 .hs-p1 { --hc: #C6E86A; } .hs-p2 { --hc: #8EDB6A; } .hs-p3 { --hc: #4FCB72; } .hs-p4 { --hc: #22B866; } .hs-na { --hc: #8792A8; }
+/* the tendency scale (more or less often than the middle, never better or worse): cyan below, pink above, the kit's TEND tokens */
+.ts-n4 { --hc: #22D3EE; } .ts-n3 { --hc: #67E8F9; } .ts-n2 { --hc: #A5F3FC; } .ts-n1 { --hc: #CFFAFE; } .ts-0 { --hc: #E5E7EB; }
+.ts-p1 { --hc: #FCE7F3; } .ts-p2 { --hc: #FBCFE8; } .ts-p3 { --hc: #F9A8D4; } .ts-p4 { --hc: #F472B6; } .ts-na { --hc: #8792A8; }
 
 dialog.ab-card {
   --g1: #1A1C3A; --g2: #0C0E1E; --well: #05060D; --line: rgba(255, 255, 255, .14);
