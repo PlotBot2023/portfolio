@@ -1,0 +1,88 @@
+---
+pagetitle: "{{page.title|yaml}}"
+description-meta: "{{page.description|yaml}}"
+toc: false
+page-layout: custom
+body-classes: sv-page
+---
+
+```{=html}
+<div class="sv v-about">
+
+  <div class="left">
+    <section class="panel hero-glass brk" aria-labelledby="about-title" style="display:grid;gap:.6rem">
+      <span class="eyebrow">{{eyebrow}}</span>
+      <h1 id="about-title" class="page-title">{{title}}</h1>
+      <p class="lede">{{lede}}</p>
+      <div class="btn-row">{{#notes}}<button class="btn" type="button" popovertarget="n-{{id}}">{{button}}</button>{{/notes}}</div>
+    </section>
+
+    <section class="panel rail-top career" aria-labelledby="career-title">
+      <h2 id="career-title" class="sec-title">{{career_title}}</h2>
+      <div class="gantt inlay" role="list">{{#career}}
+        <div class="who" role="listitem">{{name}}<small>{{sub}}</small></div>
+        <div class="track" aria-hidden="true"><span class="bar" style="left:{{bar_left|attr}}%;width:{{bar_width|attr}}%;background-color:var(--{{hue|attr}})"></span></div>{{/career}}
+        <div class="axis" aria-hidden="true"><span>2012</span><span>2015</span><span>2018</span><span>2021</span><span>2024</span><span>2027</span></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="right">
+    <section class="panel rail-top results" aria-labelledby="results-title" style="display:grid;gap:.7rem">
+      <div class="cardhead" style="justify-content:space-between;flex-wrap:wrap"><h2 id="results-title" class="sec-title">{{results.title}}</h2><button class="btn" type="button" popovertarget="n-results">{{results.button}}</button></div>
+      <ul class="stats">{{#results.stats}}
+        <li class="stat"><span class="n">{{n}}</span><span class="l">{{l}}</span></li>{{/results.stats}}
+      </ul>
+    </section>
+
+    <div class="duo">{{#skills}}
+      <section class="panel" aria-labelledby="do-{{id}}">
+        <div class="cardhead">
+          {{icon|svg:1.8}}
+          <h2 id="do-{{id}}" class="sec-title">{{title}}</h2><button class="btn" type="button" popovertarget="n-{{id}}" style="margin-left:auto" aria-label="Notes on {{title|lower1|attr}}">Notes</button>
+        </div>
+        <ul class="tray slim" aria-label="{{tools_label|attr}}">
+          {{#tools}}<li>{{.}}</li>{{/tools}}
+        </ul>
+      </section>{{/skills}}
+    </div>
+
+    <section class="panel hero-glass brk seek" aria-labelledby="seek-title">
+      <div class="cardhead" style="justify-content:space-between;flex-wrap:wrap">
+        <h2 id="seek-title" class="sec-title">{{seek.title}}</h2>
+        <div class="btn-row">
+          <a class="btn primary" href="projects.html">See the projects</a>
+          <a class="btn" href="resume.html">Resume</a>
+        </div>
+      </div>
+      <ul class="tray" aria-label="Roles and places">
+        {{#seek.items}}<li>{{.}}</li>{{/seek.items}}
+      </ul>
+    </section>
+  </div>
+
+</div>
+
+{{#notes.0}}<div id="n-{{id}}" popover class="note">
+  <h3>{{title}}</h3>
+{{body|note}}
+  <button class="btn" popovertarget="n-{{id}}" popovertargetaction="hide">Close</button>
+</div>{{/notes.0}}
+<div id="n-results" popover class="note">
+  <h3>{{results.note.title}}</h3>
+{{results.note.body|note}}
+  <button class="btn" popovertarget="n-results" popovertargetaction="hide">Close</button>
+</div>
+{{#notes.1}}<div id="n-{{id}}" popover class="note">
+  <h3>{{title}}</h3>
+{{body|note}}
+  <button class="btn" popovertarget="n-{{id}}" popovertargetaction="hide">Close</button>
+</div>{{/notes.1}}{{#skills}}
+<div id="n-{{id}}" popover class="note">
+  <h3>{{note_title}}</h3>
+{{body|note}}{{#link}}
+  <a class="btn primary" href="{{href|attr}}">{{label}}</a>{{/link}}
+  <button class="btn" popovertarget="n-{{id}}" popovertargetaction="hide">Close</button>
+</div>{{/skills}}
+```

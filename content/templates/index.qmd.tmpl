@@ -1,0 +1,60 @@
+---
+pagetitle: "{{page.title|yaml}}"
+description-meta: "{{page.description|yaml}}"
+toc: false
+page-layout: custom
+body-classes: sv-page
+---
+
+```{=html}
+<div class="sv v-home">
+
+  <section class="panel hero-glass brk who" aria-labelledby="home-name">
+    <div class="who-id">
+      <span class="eyebrow">{{eyebrow}}</span>
+      <h1 id="home-name" class="big-title">{{name}}</h1>
+      <p class="lede">{{lede}}</p>
+      <div class="btn-row">
+        <a class="btn primary" href="projects.html">See the projects</a>
+        <a class="btn" href="resume.html">Resume</a>
+      </div>
+    </div>
+    <ul class="stats" aria-label="At a glance">{{#stats}}
+      <li class="stat"><span class="n">{{n}}</span><span class="l">{{l}}</span></li>{{/stats}}
+    </ul>
+    <div class="who-side">
+      <ul class="tray" aria-label="Tools and methods">
+        {{tools|lis:7:8}}
+      </ul>
+      <div class="ways" aria-label="How I work">{{#ways}}
+        <button class="way" popovertarget="n-{{id}}" aria-label="How I work: {{label|lower1|attr}}. Open the note">
+        {{icon|svg:1.8}}
+        <span>{{label}}</span>
+      </button>{{/ways}}
+      </div>
+    </div>
+  </section>
+
+  <section class="work" aria-labelledby="home-work">
+    <div class="work-head">
+      <h2 id="home-work" class="sec-title">{{work_title}}</h2>
+      <a class="btn" href="projects.html">All projects</a>
+    </div>
+    <div class="pcards">{{#cards}}
+      <a class="pcard" style="--ph:{{hue|attr}}" href="{{href|attr}}" aria-label="{{spoken|attr}}">
+        <span class="pc-top"><span class="pc-disc">{{disc_html|raw}}</span><span class="pc-id"><span class="pc-eye">{{eyebrow}}</span><b class="pc-name">{{name}}</b></span></span>
+        <span class="pc-sub">{{sub}}</span>
+        <span class="pc-chips">{{#chips}}<span class="pc-c" style="--th:{{th|attr}}"><b>{{n}}</b> {{l}}</span>{{/chips}}</span>
+        <span class="pc-foot"><span class="status {{kind}}">{{status}}</span><span class="pc-open" aria-hidden="true">Open &#8599;</span></span>
+      </a>{{/cards}}
+    </div>
+  </section>
+
+</div>
+{{#ways}}
+<div id="n-{{id}}" popover class="note">
+  <h3>{{title}}</h3>
+{{body|note}}
+  <button class="btn" popovertarget="n-{{id}}" popovertargetaction="hide">Close</button>
+</div>{{/ways}}
+```

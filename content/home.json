@@ -1,0 +1,146 @@
+{
+  "page": {
+    "title": "Richard Chute, data analysis and pipelines",
+    "description": "Analyst and pipeline builder in Fort Lauderdale. Postgres, Python and applied modelling, with fifteen years of running the operations the numbers describe."
+  },
+  "eyebrow": "Fort Lauderdale, Florida",
+  "name": "Richard Chute",
+  "lede": "Data pipelines and analysis people decide from.",
+  "stats": [
+    {
+      "n": "15",
+      "l": "years running operations"
+    },
+    {
+      "n": "11",
+      "l": "sports on my leaderboards"
+    },
+    {
+      "n": "124",
+      "l": "rental markets mapped"
+    }
+  ],
+  "tools": [
+    "Python",
+    "PostgreSQL",
+    "SQL",
+    "pandas",
+    "scikit-learn",
+    "XGBoost",
+    "CatBoost",
+    "Monte Carlo",
+    "Causal inference",
+    "Docker",
+    "R",
+    "Tableau",
+    "Power BI"
+  ],
+  "ways": [
+    {
+      "id": "append",
+      "icon": "database",
+      "label": "Append-only data",
+      "title": "Append-only data",
+      "body": "Never drop, never truncate. Upsert and keep the history. A silent corruption costs more than a crash, because a crash tells you."
+    },
+    {
+      "id": "labelled",
+      "icon": "tag",
+      "label": "Modelled is labelled",
+      "title": "Modelled is labelled modelled",
+      "body": "A metric that did not exist in an era reads \"not measured\", never zero-filled to look observed. A chart that reads well but overstates what was measured is a defect, not a rough edge."
+    },
+    {
+      "id": "instrument",
+      "icon": "gauge",
+      "label": "Instruments, not tables",
+      "title": "The output is an instrument, not a table",
+      "body": "The deliverable is not the number. It is the thing someone opens, reads and decides from.\n\nThe notebooks are published with their saved outputs, charts and tables only; the code behind them stays private."
+    }
+  ],
+  "work_title": "Selected work",
+  "cards": [
+    {
+      "id": "rentals",
+      "hue": "#FFC72C",
+      "href": "https://plotbot2023.github.io/rentals-archetypes/",
+      "spoken": "Rentals Archetypes: 1.7 million listings in 124 markets sorted into 16 named types. Open the project.",
+      "picture": "assets/rentals/bnb-scope-badge.svg",
+      "icon": "map",
+      "eyebrow": "37 countries",
+      "name": "Rentals Archetypes",
+      "sub": "Every Airbnb listing, host and market, sorted into named types.",
+      "chips": [
+        {
+          "n": "1.7M",
+          "l": "listings",
+          "th": "#FFC72C"
+        },
+        {
+          "n": "124",
+          "l": "markets",
+          "th": "#2DD4BF"
+        },
+        {
+          "n": "16",
+          "l": "types",
+          "th": "#F472B6"
+        }
+      ],
+      "status": "Live"
+    },
+    {
+      "id": "leaders",
+      "hue": "#FF7AE0",
+      "href": "projects.html#leaders",
+      "spoken": "Leaderboards and experiments: 11 sports, 5 boards a sport, ranked from 30 games. Open the project.",
+      "picture": "",
+      "icon": "trophy",
+      "eyebrow": "11 sports",
+      "name": "Leaderboards",
+      "sub": "Every sport's players and teams ranked on z-scores, with pre-registered experiments.",
+      "chips": [
+        {
+          "n": "11",
+          "l": "sports",
+          "th": "#FF7AE0"
+        },
+        {
+          "n": "5",
+          "l": "boards",
+          "th": "#60A5FA"
+        },
+        {
+          "n": "30",
+          "l": "games minimum",
+          "th": "#4ADE9C"
+        }
+      ],
+      "status": "Live"
+    },
+    {
+      "id": "hotwheels",
+      "hue": "#FB923C",
+      "href": "projects.html#hotwheels",
+      "spoken": "Hot Wheels value guide: 500 rare pieces, every value with its source and date. Open the guide.",
+      "picture": "",
+      "icon": "car",
+      "eyebrow": "Collecting",
+      "name": "Hot Wheels guide",
+      "sub": "A collector's field guide: which pieces are rare and what each is worth.",
+      "chips": [
+        {
+          "n": "500",
+          "l": "rare pieces",
+          "th": "#FB923C"
+        },
+        {
+          "n": "Every",
+          "l": "value sourced",
+          "th": "#FFC72C"
+        }
+      ],
+      "status": "Live"
+    }
+  ]
+}

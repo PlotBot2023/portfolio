@@ -1,0 +1,70 @@
+---
+pagetitle: "{{page.title|yaml}}"
+description-meta: "{{page.description|yaml}}"
+toc: false
+page-layout: custom
+body-classes: sv-page
+---
+
+```{=html}
+<div class="sv v-resume">
+
+  <div class="top">
+    <div class="tt">
+      <span class="eyebrow">{{eyebrow}}</span>
+      <h1 class="page-title">{{headline}}</h1>{{#summary}}
+      <p class="lede resume-summary" style="margin:0;max-width:min(70ch,60vw);font-size:clamp(1rem,2vh,1.2rem);line-height:1.35">{{summary}}</p>{{/summary}}
+    </div>
+    <div class="btn-row">
+      <button class="btn" type="button" popovertarget="n-edu">Training</button>{{#pdf_on}}
+      <a class="btn" href="assets/resume.pdf" download>Download as PDF</a>{{/pdf_on}}
+      <a class="btn primary" href="projects.html">See the projects</a>
+    </div>
+  </div>
+
+  <section class="panel rail-top skills" aria-labelledby="skills-title">
+    <h2 id="skills-title" class="sec-title">{{skills_title}}</h2>
+    <div class="skillgrid inlay">{{#skills}}
+      <div class="skillrow"><span class="k">{{k}}</span><ul>{{#items}}<li>{{.}}</li>{{/items}}</ul></div>{{/skills}}
+    </div>
+  </section>
+
+  <section class="xp" aria-label="Experience">
+    <div class="board" data-stage="stage-cv" aria-label="Roles, pick one to show it">{{#roles}}
+      <button class="tile" type="button" data-item="{{id}}" aria-pressed="{{#@first}}true{{/@first}}{{^@first}}false{{/@first}}">
+        {{mark_html|raw}}
+        <span class="tt"><span class="name">{{name}}</span><span class="sub">{{sub}}</span></span>
+      </button>{{/roles}}
+    </div>
+
+    <div class="stage" id="stage-cv">{{#roles}}
+      <article class="panel rail-top" data-item="{{id}}" aria-label="{{name|attr}}, {{role|lower1|attr}}">
+        <div class="head"><h2>{{role}}</h2><span class="role-when">{{when}}</span></div>
+        <ul class="stats wins">{{#stats}}
+          <li class="stat"><span class="n">{{n}}</span><span class="l">{{l}}</span></li>{{/stats}}
+        </ul>
+        <div class="foot">
+          <ul class="tray slim" aria-label="{{tray_label|attr}}">{{#tray}}<li>{{.}}</li>{{/tray}}</ul>
+          <button class="btn" type="button" popovertarget="n-{{id}}">Details</button>
+        </div>
+      </article>{{/roles}}
+    </div>
+  </section>
+
+</div>
+{{#roles}}
+<div id="n-{{id}}" popover class="note">
+  <h3>{{role}}, {{name}}</h3>
+{{details_html|raw}}
+  <button class="btn" popovertarget="n-{{id}}" popovertargetaction="hide">Close</button>
+</div>{{/roles}}
+<div id="n-edu" popover class="note">
+  <h3>{{training.title}}</h3>
+  <ul>{{#training.items}}
+    <li>{{.}}</li>{{/training.items}}
+  </ul>
+  <button class="btn" popovertarget="n-edu" popovertargetaction="hide">Close</button>
+</div>
+
+<script src="assets/sv.js"></script>
+```
