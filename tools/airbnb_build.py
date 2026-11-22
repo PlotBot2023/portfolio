@@ -403,6 +403,10 @@ def page(s, legend, now=None):
 # The page wears the card's anatomy from assets/airbnb/cards.css: a banner (disc, eyebrow, huge name, deck, chips), a
 # tool strip, then a hero tile two rows tall and six tiles beside it, each with its hue rail and header strip, the big
 # number, a heat gem and bead slider where the number has peers, a mini chart, and a back face with its table.
+# the flip hint on every tile: two arrows passing each other (the owner, 2026-11-21), cyan and gold, never a value colour
+FLIP = '<svg class="ab-flip" viewBox="0 0 48 40" aria-hidden="true" focusable="false"><path class="u" d="M8 21C8 12.7 13.2 8 21.5 8H31V2l13 11-13 11v-6h-9.5c-4.6 0-7.4 1.4-8.7 3z"/><path class="d" d="M40 19c0 8.3-5.2 13-13.5 13H17v6L4 27l13-11v6h9.5c4.6 0 7.4-1.4 8.7-3z"/></svg>'
+
+
 def _zx(z):
     return 50 + 50 * max(-3.0, min(3.0, z)) / 3
 
@@ -429,7 +433,7 @@ def ctile(cls, hue, head, small, value, per, body, back_head, back, label, extra
     def hd(sm):
         sm_html = f"<small>{html.escape(sm)}</small>" if sm else ""
         return (f'<div class="ab-th"><i></i><span class="t">{html.escape(head)}</span>{sm_html}'
-                '<span class="ab-fh" aria-hidden="true">↻</span></div>')
+                f'<span class="ab-fh" aria-hidden="true">{FLIP}</span></div>')
     per_html = f'<span class="per">{html.escape(per)}</span>' if per else ""
     tv = f'<div class="ab-tv"><b>{html.escape(value)}</b>{per_html}{extra}</div>' if value else ""
     return (f'<div class="ab-t {cls}" style="--sh:{hue}" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="{html.escape(label)}. Turn over for its table.">'
@@ -465,11 +469,11 @@ def sheet(s, legend, now, commit):
 
     hero = (f'<div class="ab-t hero cs-map" style="--sh:#7CF5FF" data-flip role="button" tabindex="0" aria-pressed="false" '
             f'aria-label="The map: {n_map:,} entire homes coloured by RevPAR, red lowest, white the middle, green highest. Turn over for its table.">'
-            '<div class="ab-in"><div class="ab-face ab-f"><div class="ab-th"><i></i><span class="t">Where it earns</span><small>RevPAR a night</small><span class="ab-fh" aria-hidden="true">↻</span></div>'
+            '<div class="ab-in"><div class="ab-face ab-f"><div class="ab-th"><i></i><span class="t">Where it earns</span><small>RevPAR a night</small><span class="ab-fh" aria-hidden="true">' + FLIP + '</span></div>'
             f'<div class="cs-mapbody"><div class="mapwrap inlay"><img src="assets/airbnb/revpar-map.webp" alt="Map of {n_map:,} Broward County entire homes as dots, '
             "coloured by RevPAR on the page's heat scale: red for the lowest, white for the middle, green for the highest. Listings crowd the coast in a dense band; inland they thin out.\"></div>"
             f'<div class="cs-leg"><p class="lg-axis"><span>Red: lowest</span><span>Green: highest</span></p><ul class="legend lg-hist" aria-label="Homes in each colour, lowest RevPAR first">{leg}</ul></div></div></div>'
-            '<div class="ab-face ab-b" aria-hidden="true"><div class="ab-th"><i></i><span class="t">The map as a table</span><span class="ab-fh" aria-hidden="true">↻</span></div>'
+            '<div class="ab-face ab-b" aria-hidden="true"><div class="ab-th"><i></i><span class="t">The map as a table</span><span class="ab-fh" aria-hidden="true">' + FLIP + '</span></div>'
             f'<div class="cs-back"><ol class="cs-list cs-steps">{map_rows}</ol>'
             '<p class="cs-q cs-mapq">Nine RevPAR steps, red lowest to green highest, each home placed by its rank.</p>'
             '</div></div></div></div>')
@@ -604,6 +608,12 @@ def main():
     (ROOT / "assets" / "airbnb" / "summary.json").write_text(json.dumps({k: v for k, v in s.items() if k not in ("nb", "map", "homes_df")}, indent=1, default=str), encoding="utf-8")
     from airbnb_cards import build_cards
     cards = build_cards(s["homes_df"], s["asof"], MIN_N, a.models)
+    if a.models:
+        # the guest cards (SportsAnalytics issue 808) and each market's review years, from the study's reviews
+        from airbnb_guests import build_guests
+        g = build_guests(a.models)
+        cards["nb_years"] = g.pop("nb_years")
+        cards["guests"] = g
     (ROOT / "assets" / "airbnb" / "cards.json").write_text(json.dumps(cards, separators=(",", ":"), allow_nan=False), encoding="utf-8")
     print("cards:", {k: len(v) for k, v in cards["levels"].items()}, "listings", len(cards["listings"]), "segments", [x["name"] for x in cards["levels"]["seg"]])
     print("as of", s["asof"], "homes", s["homes"], "revpar", s["revpar"], "best", s["nb"].index[0], "worst", s["nb"].index[-1])
