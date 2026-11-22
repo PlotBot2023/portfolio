@@ -236,7 +236,7 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
                         "basis_new": BASIS_NEW, "basis_old": BASIS_OLD, "invest_asof": "27 November 2025"}
                        if have_models else None),
             "levels": {"nb": nbs, "seg": segs, "host": hosts}, "seg_names": seg_names,
-            "host_types": ["Corporate, 10+ listings", "Small operator, 2 to 9", "Single home"], "seg_meta": seg_meta, "host_min": HOST_MIN,
+            "host_types": ["Host of 10 or more", "Host of 2 to 9", "Single home"], "seg_meta": seg_meta, "host_min": HOST_MIN,
             "listing_cols": ["nb", "seg", "host", "bedrooms", "superhost", "revpar", "adr", "occ", "rev", "rev_bed"]
                             + (["churn", "resid", "mood", "cap", "noi", "anom", "pred", "dsr", "hv", "gy", "coc", "dscr", "rating", "rpm", "nrev", "years", "snaps"] if have_models else []),
             "finance": {"rate": RATE_PCT, "down": DOWN_PCT, "term": TERM_YEARS, "closing": CLOSING_PCT},

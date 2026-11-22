@@ -8,8 +8,8 @@
 
 dialog.ab-card {
   --g1: #1A1C3A; --g2: #0C0E1E; --well: #05060D; --line: rgba(255, 255, 255, .14);
-  --gloss: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 46%, rgba(0, 0, 0, .28));
-  --raise: 0 0 0 2px rgba(0, 0, 0, .55), 0 6px 14px -4px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .4);
+  --gloss: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, .12));
+  --raise: 0 0 0 2px rgba(0, 0, 0, .55), 0 6px 14px -4px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .14);
   --sink: inset 0 2px 6px rgba(0, 0, 0, .85), 0 1px 0 rgba(255, 255, 255, .08);
   width: min(1840px, calc(100vw - 2rem)); height: calc(100dvh - 2rem); max-width: none; max-height: none; margin: auto; padding: 0;
   border: 1.5px solid rgba(124, 245, 255, .4); border-radius: 22px; color: #fff; overflow: hidden;
@@ -30,13 +30,13 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-id { display: grid; gap: 2px; min-width: 0; }
 .ab-id .eyebrow { color: #FFC72C; }
 .ab-card .ab-id .ab-name { display: block; margin: 0; font-size: clamp(2.2rem, 5.4vh, 3.6rem); font-weight: 900; line-height: 1.02; letter-spacing: -.01em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ab-sub { font-size: 1rem; font-weight: 700; color: #D5D9E1; }
+.ab-sub { font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
 .ab-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
 .ab-chip { display: inline-grid; grid-auto-flow: column; align-items: baseline; gap: 6px; min-height: 44px; padding: 4px 14px; border-radius: 999px; align-content: center;
   background: var(--gloss), #1E2140; border: 1.5px solid rgba(255, 255, 255, .3); box-shadow: var(--raise); }
-.ab-chip i { font-style: normal; font-size: 1rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
+.ab-chip i { font-style: normal; font-size: 1.0625rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
 .ab-chip b { font: 900 1.35rem/1 var(--num); color: #fff; }
-.ab-chip small { font-size: 1rem; font-weight: 700; color: #D5D9E1; }
+.ab-chip small { font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
 .ab-chip.rk { background: var(--gloss), var(--hc); border-color: rgba(255, 255, 255, .6); }
 .ab-chip.rk i, .ab-chip.rk b, .ab-chip.rk small { color: #0B0D12; }
 .ab-chip.gold { border-color: #FFC72C; }
@@ -51,12 +51,12 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-fs { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 6px 8px; border-radius: 16px; background: linear-gradient(180deg, rgba(0, 0, 0, .6), rgba(20, 22, 32, .6)); box-shadow: var(--sink); }
 .ab-segs { display: flex; gap: 6px; flex-wrap: wrap; }
 .ab-pick { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 6px 0 14px; border-radius: 999px; background: var(--gloss), #1E2140; border: 1.5px solid rgba(255, 255, 255, .22); box-shadow: var(--raise); }
-.ab-pick span { font-size: 1rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
-.ab-pick select { min-height: 36px; max-width: min(34rem, 60vw); border-radius: 999px; padding: 0 12px; font: inherit; font-size: 1rem; font-weight: 700; color: #fff; background: #0B0D1C; border: 1px solid rgba(255, 255, 255, .3); }
+.ab-pick span { font-size: 1.0625rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
+.ab-pick select { min-height: 36px; max-width: min(34rem, 60vw); border-radius: 999px; padding: 0 12px; font: inherit; font-size: 1.0625rem; font-weight: 700; color: #fff; background: #0B0D1C; border: 1px solid rgba(255, 255, 255, .3); }
 .ab-count { margin-left: auto; display: inline-flex; align-items: baseline; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 999px; align-items: center; font-weight: 700; color: #D5D9E1; background: var(--well); box-shadow: var(--sink); }
 .ab-count b { font: 900 1.25rem var(--num); color: #fff; }
 .ab-body { min-height: 0; overflow: auto; overscroll-behavior: contain; }
-.ab-note { margin-top: 10px !important; font-size: 1rem; color: #D5D9E1; }
+.ab-note { margin-top: 10px !important; font-size: 1.0625rem; color: #D5D9E1; }
 
 /* the tiles: a hero two rows tall, six beside it; each turns over */
 .ab-tiles { display: grid; grid-template-columns: 1.35fr 1fr 1fr 1fr; grid-template-rows: repeat(2, minmax(210px, 1fr)); gap: 12px; height: calc(100% - 4.6rem); min-height: 440px; }
@@ -77,19 +77,22 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   background: linear-gradient(90deg, color-mix(in srgb, var(--sh) 38%, transparent), transparent 85%); box-shadow: 0 1px 0 color-mix(in srgb, var(--sh) 55%, transparent); }
 .ab-th .t { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .ab-th > i { flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--sh); box-shadow: 0 0 12px var(--sh); }
-.ab-th small { margin-left: auto; font-size: 1rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: #D5D9E1; }
-.ab-fh { position: absolute; right: 9px; top: 50%; margin-top: -15px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
-  font-size: 1rem; color: #fff; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .34); }
-.ab-t:hover .ab-fh { background: #FFC72C; color: #14110A; border-color: #FFC72C; }
+.ab-th small { margin-left: auto; font-size: 1.0625rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: #D5D9E1; }
+.ab-fh { position: absolute; right: 8px; top: 50%; margin-top: -17px; width: 48px; height: 34px; border-radius: 999px; display: grid; place-items: center;
+  background: rgba(0, 0, 0, .42); border: 1px solid rgba(255, 255, 255, .28); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12); }
+.ab-flip { width: 34px; height: 28px; }
+.ab-flip .u { fill: #7CF5FF; }
+.ab-flip .d { fill: #FFC72C; }
+.ab-t:hover .ab-fh { background: rgba(255, 255, 255, .14); border-color: #FFC72C; }
 .ab-t:hover .ab-face { border-color: rgba(255, 255, 255, .32); }
 .ab-tv { position: relative; flex: none; display: flex; align-items: center; gap: 10px; padding: 10px 14px 0; min-width: 0; flex-wrap: wrap; }
 .ab-tv b { font: 900 clamp(2rem, 4.6vh, 2.8rem)/1 var(--num); color: #fff; text-shadow: 0 4px 16px rgba(0, 0, 0, .6); white-space: nowrap; }
-.ab-tv .per { align-self: flex-end; padding-bottom: 4px; font-size: 1rem; font-weight: 700; color: #D5D9E1; }
+.ab-tv .per { align-self: flex-end; padding-bottom: 4px; font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
 .ab-tv .ab-gem { margin-left: auto; }
 .ab-t.hero .ab-tv b { font-size: clamp(3.6rem, 10vh, 6.4rem); }
 .ab-t.hero .ab-tv .ab-gem { margin-left: 0; min-height: 40px; font-size: 1.25rem; }
 .ab-gem { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 70px; min-height: 34px; padding: 0 12px; border-radius: 999px; white-space: nowrap;
-  font-size: 1rem; font-weight: 900; color: #0B0D12; background: var(--gloss), var(--hc); border: 1px solid rgba(255, 255, 255, .55);
+  font-size: 1.0625rem; font-weight: 900; color: #0B0D12; background: var(--gloss), var(--hc); border: 1px solid rgba(255, 255, 255, .55);
   box-shadow: 0 0 14px rgba(255, 255, 255, .12), 0 4px 10px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .7); }
 .ab-zm { flex: none; padding: 14px 14px 0; }
 .ab-zm .trk { position: relative; display: block; height: 12px; border-radius: 6px; background: var(--well); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .8), 0 1px 0 rgba(255, 255, 255, .08); }
@@ -97,7 +100,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-zm .mid { position: absolute; left: 50%; top: -5px; bottom: -5px; width: 2px; margin-left: -1px; background: rgba(255, 255, 255, .7); }
 .ab-zm .dot { position: absolute; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff 0 22%, var(--hc) 60%);
   border: 3px solid #0B0720; box-shadow: 0 2px 8px rgba(0, 0, 0, .7); }
-.ab-zm .ends { display: flex; justify-content: space-between; margin-top: 6px; font-size: 1rem; font-weight: 700; color: #D5D9E1; }
+.ab-zm .ends { display: flex; justify-content: space-between; margin-top: 6px; font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
 .ab-zm .ends i { font-style: normal; }
 .ab-zm.na .ends { justify-content: center; }
 .ab-t:not(.hero) .ab-zm .ends i:nth-child(2) { display: none; }
@@ -107,16 +110,16 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-mini i.mk { background: #FFC72C; box-shadow: 0 0 10px #FFC72C; }
 .ab-hx { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; margin: 14px 14px 0; }
 .ab-hx > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 10px 14px; border-radius: 12px; background: var(--well); box-shadow: var(--sink); }
-.ab-hx span { font-size: 1rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
+.ab-hx span { font-size: 1.0625rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
 .ab-hx b { font: 900 1.6rem var(--num); color: #fff; }
 .ab-cols { flex: 1 1 auto; display: grid; grid-template-rows: minmax(0, 1fr) auto auto; gap: 6px; margin: 12px 14px 0; min-height: 0; }
 .ab-cols .plot { display: flex; align-items: flex-end; gap: 4px; min-height: 60px; padding: 8px; border-radius: 12px; background: var(--well); box-shadow: var(--sink); }
 .ab-cols .plot i { flex: 1; height: calc(var(--hf) * 100%); min-height: 3px; border-radius: 4px 4px 1px 1px; background: rgba(255, 255, 255, .16); }
 .ab-cols .plot i.on { background: var(--gloss), var(--sh); }
 .ab-cols .plot i.mk { background: var(--gloss), #FFC72C; box-shadow: 0 0 12px #FFC72C; }
-.ab-cols .axis { display: flex; justify-content: space-between; font: 700 1rem var(--num); color: #D5D9E1; }
+.ab-cols .axis { display: flex; justify-content: space-between; font: 700 1.0625rem var(--num); color: #D5D9E1; }
 .ab-cols .axis i { font-style: normal; }
-.ab-cols p, .ab-b .q { font-size: 1rem; color: #D5D9E1; }
+.ab-cols p, .ab-b .q { font-size: 1.0625rem; color: #D5D9E1; }
 .ab-b .q { padding: 6px 14px 0; }
 
 /* head to head: two cards facing each other, a row per stat */
@@ -127,10 +130,10 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-hh .hd.r { flex-direction: row-reverse; text-align: right; }
 .ab-hh .hd > div { display: grid; min-width: 0; }
 .ab-hh .hd b { font-size: clamp(1.3rem, 3vh, 1.9rem); font-weight: 900; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ab-hh .hd small { font-size: 1rem; font-weight: 700; color: #FFC72C; letter-spacing: .04em; }
+.ab-hh .hd small { font-size: 1.0625rem; font-weight: 700; color: #FFC72C; letter-spacing: .04em; }
 .ab-hh .vs { font: 900 1.4rem var(--num); color: #FFC72C; letter-spacing: .2em; }
 .ab-hcols, .ab-row { display: grid; grid-template-columns: minmax(0, 1fr) 15rem minmax(0, 1fr); gap: 8px; }
-.ab-hcols { grid-template-columns: 1fr 6rem 1.6fr 5rem 15rem 5rem 1.6fr 6rem 1fr; padding: 0 10px; font-size: 1rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #FFC72C; }
+.ab-hcols { grid-template-columns: 1fr 6rem 1.6fr 5rem 15rem 5rem 1.6fr 6rem 1fr; padding: 0 10px; font-size: 1.0625rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #FFC72C; }
 .ab-hcols i { font-style: normal; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ab-rows { display: grid; align-content: start; gap: 6px; min-height: 0; overflow: auto; }
 .ab-row { align-items: stretch; }
@@ -145,9 +148,9 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-row .rk { justify-self: center; display: grid; place-items: center; min-width: 4.4rem; min-height: 46px; border-radius: 12px; font: 900 2.1rem/1 var(--num); color: #0B0D12;
   background: linear-gradient(180deg, #fff, #DDE2EE); box-shadow: 0 0 0 2px rgba(0, 0, 0, .5), 0 6px 14px -4px rgba(0, 0, 0, .8); }
 .ab-row .mid { display: grid; justify-items: center; align-content: center; gap: 4px; position: relative; padding: 6px 8px 6px 52px; border-radius: 14px; background: rgba(10, 10, 28, .85); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1); }
-.ab-row .mid .src { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); padding: 4px 8px; border-radius: 8px; font: 900 1rem var(--num); color: #0B0D12; background: #C9D2E8; }
+.ab-row .mid .src { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); padding: 4px 8px; border-radius: 8px; font: 900 1.0625rem var(--num); color: #0B0D12; background: #C9D2E8; }
 .ab-row .mid .lbl { font-size: 1.0625rem; font-weight: 900; color: #fff; text-align: center; }
-.ab-row .mid .apart { padding: 4px 14px; border-radius: 999px; font-weight: 800; font-size: 1rem; color: #fff; background: var(--gloss), #2A2E55; box-shadow: var(--raise); }
+.ab-row .mid .apart { padding: 4px 14px; border-radius: 999px; font-weight: 800; font-size: 1.0625rem; color: #fff; background: var(--gloss), #2A2E55; box-shadow: var(--raise); }
 
 /* the case page's own entry points */
 .hb-open { all: unset; cursor: pointer; display: inline; font: inherit; color: inherit; border-bottom: 1.5px dashed rgba(124, 245, 255, .55); }
@@ -173,7 +176,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-share .trk { position: relative; display: block; height: 26px; border-radius: 13px; background: var(--well); box-shadow: var(--sink); }
 .ab-share .fill { position: absolute; inset: 3px auto 3px 3px; border-radius: 11px; background: var(--gloss), var(--sh); box-shadow: 0 0 14px -2px var(--sh); }
 .ab-share .cty { position: absolute; top: -6px; bottom: -6px; width: 4px; margin-left: -2px; border-radius: 2px; background: #fff; box-shadow: 0 0 8px rgba(255, 255, 255, .8); }
-.ab-share .lg { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; color: #D5D9E1; }
+.ab-share .lg { display: flex; justify-content: space-between; font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
 .ab-share .lg i { font-style: normal; }
 .ab-t.hero .ab-mini { flex: 1 1 auto; min-height: 90px; }
 
@@ -295,7 +298,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 
 /* a tile's medal: a metal badge in its header and a metal trim along its top, for the first three on its measure */
 .ab-medal { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 28px; padding: 0 10px; border-radius: 999px;
-  font: 900 1rem var(--num); letter-spacing: .02em; text-transform: none; color: #1A1204;
+  font: 900 1.0625rem var(--num); letter-spacing: .02em; text-transform: none; color: #1A1204;
   border: 1.5px solid rgba(255, 255, 255, .7); box-shadow: 0 0 14px -2px var(--mc), 0 3px 8px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .85), inset 0 -2px 3px rgba(0, 0, 0, .25);
   background: linear-gradient(180deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, .18)), var(--mc); }
 .ab-medal.m1, .ab-t.m1 { --mc: #FFC72C; }
@@ -345,7 +348,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   border: 1.5px solid var(--bc, rgba(255, 255, 255, .3)); background: linear-gradient(180deg, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, .2)), var(--bg, #23264A);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, .55), 0 6px 14px -6px rgba(0, 0, 0, .8), 0 0 18px -6px var(--bc, transparent), inset 0 1px 0 rgba(255, 255, 255, .5); }
 .ab-badge b { font: 900 1.35rem/1 var(--num); color: var(--bi, #fff); }
-.ab-badge i { font-style: normal; font-size: 1rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--bi, #D5D9E1); }
+.ab-badge i { font-style: normal; font-size: 1.0625rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--bi, #D5D9E1); }
 .ab-badge.gold { --bg: #FFC72C; --bc: #FFE9A8; --bi: #1A1204; }
 .ab-badge.silver { --bg: #D7DEEA; --bc: #FFFFFF; --bi: #12161E; }
 .ab-badge.bronze { --bg: #E0915A; --bc: #FFE1C4; --bi: #1E0F04; }
@@ -362,7 +365,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   .ab-band { grid-template-columns: auto minmax(0, 1.4fr) minmax(10rem, .5fr) minmax(0, 1fr); gap: 12px; }
   .ab-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .ab-chip { min-height: 72px; padding: 8px; }
-  .ab-chip i { font-size: 1rem; letter-spacing: .04em; white-space: normal; text-align: center; }
+  .ab-chip i { font-size: 1.0625rem; letter-spacing: .04em; white-space: normal; text-align: center; }
 }
 @media (max-width: 1279px) { .ab-band { grid-template-columns: auto minmax(0, 1fr); } .ab-badges { flex-direction: row; min-height: 0; } .ab-chips { grid-column: 1 / -1; } }
 
@@ -378,7 +381,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-id .eyebrow { white-space: nowrap; }
 @media (max-width: 1599px) {
   .ab-band { grid-template-columns: auto minmax(0, 1.5fr) minmax(9.5rem, .42fr) minmax(0, 1.1fr); gap: 12px; }
-  .ab-id .eyebrow { font-size: 1rem; letter-spacing: .1em; }
+  .ab-id .eyebrow { font-size: 1.0625rem; letter-spacing: .1em; }
   .ab-id .eyebrow::after { flex-basis: 36px; }
   .ab-disc { width: 92px; height: 92px; font-size: 32px; }
   .ab-badge { padding: 5px 8px; }
@@ -397,7 +400,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   background: radial-gradient(70% 60% at 40% 30%, rgba(255, 255, 255, .35), transparent 70%); border: 0; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .25); }
 .ab-badge .em b { position: relative; z-index: 1; font: 900 2.3rem/1 var(--num); color: var(--ink3); letter-spacing: -.03em; text-shadow: 0 1px 0 rgba(255, 255, 255, .55), 0 -1px 0 rgba(0, 0, 0, .25); }
 .ab-badge .rib { position: relative; z-index: 2; margin-top: -14px; padding: 4px 16px 5px; white-space: nowrap;
-  font-size: 1rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--ribink);
+  font-size: 1.0625rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--ribink);
   clip-path: polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%, 8% 50%);
   background: linear-gradient(180deg, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, .3)), var(--rib);
   filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .7)); }
@@ -428,9 +431,9 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-chips { display: flex; gap: 10px; margin: 0; }
 .ab-chip { display: grid; grid-template-columns: none; grid-template-areas: none; align-content: center; justify-items: center; gap: 4px;
   width: 116px; min-height: 92px; height: 92px; padding: 8px 10px; box-sizing: border-box; }
-.ab-chip i { grid-area: auto; font-size: 1rem; line-height: 1.1; letter-spacing: .08em; white-space: nowrap; }
+.ab-chip i { grid-area: auto; font-size: 1.0625rem; line-height: 1.1; letter-spacing: .08em; white-space: nowrap; }
 .ab-chip b { grid-area: auto; display: inline-flex; align-items: baseline; gap: 2px; font: 900 2rem/1 var(--num); white-space: nowrap; }
-.ab-chip b small { font: 800 1rem var(--num); color: inherit; opacity: .8; }
+.ab-chip b small { font: 800 1.0625rem var(--num); color: inherit; opacity: .8; }
 .ab-chip.rk b small { opacity: .75; }
 @media (max-width: 1599px) {
   .ab-band { gap: 14px; }
@@ -443,12 +446,12 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 /* the mix (the owner: "distribution by moniker type for each area, like corp, value"): 100% bars in the hero tile */
 .ab-mixes { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; margin: 12px 14px 0; }
 .ab-mix { display: grid; gap: 6px; padding: 10px 12px; border-radius: 12px; background: var(--well); box-shadow: var(--sink); }
-.ab-mix .ttl { font-size: 1rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
+.ab-mix .ttl { font-size: 1.0625rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; }
 .ab-mix .bar { display: flex; height: 18px; border-radius: 9px; overflow: hidden; box-shadow: 0 0 0 2px rgba(0, 0, 0, .5); }
 .ab-mix .bar span { width: var(--w); background: linear-gradient(180deg, rgba(255, 255, 255, .4), rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, .2)), var(--c); }
 .ab-mix .bar span + span { box-shadow: inset 2px 0 0 rgba(0, 0, 0, .55); }
 .ab-mix ul { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; padding: 0; list-style: none; }
-.ab-mix li { display: inline-flex; align-items: center; gap: 6px; font-size: 1rem; font-weight: 700; color: #D5D9E1; }
+.ab-mix li { display: inline-flex; align-items: center; gap: 6px; font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
 .ab-mix li i { width: 12px; height: 12px; border-radius: 3px; background: var(--c); box-shadow: 0 0 8px -2px var(--c); }
 .ab-mix li b { color: #fff; font-family: var(--num); }
 .ab-t.hero .ab-mini { min-height: 50px; }
@@ -468,7 +471,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   .ab-badge, .ab-badge .rib { width: 92px; }
 }
 .ab-chip { grid-auto-flow: row; }
-.ab-badge .rib { font-size: 1rem; letter-spacing: 0; padding: 3px 4px; }
+.ab-badge .rib { font-size: 1.0625rem; letter-spacing: 0; padding: 3px 4px; }
 @media (max-width: 1599px) {
   .ab-badge, .ab-badge .rib { width: 100px; }
   .ab-tiles { height: auto; grid-template-rows: repeat(2, minmax(260px, auto)); }
@@ -476,15 +479,15 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .ab-t.hero:has(.ab-mixes) .ab-mini { flex-basis: 30px; }
 .ab-t.hero:has(.ab-mixes) .ab-tv { padding-top: 6px; }
 .ab-badge .rib { padding: 3px 14px; letter-spacing: .1em; }
-@media (max-width: 1599px) { .ab-th { font-size: 1rem; letter-spacing: .02em; gap: 6px; } .ab-th > i { width: 10px; height: 10px; } }
+@media (max-width: 1599px) { .ab-th { font-size: 1.0625rem; letter-spacing: .02em; gap: 6px; } .ab-th > i { width: 10px; height: 10px; } }
 
 /* ══ the case study page as a player card (tools/airbnb_build.py sheet(); the owner, 2026-11-17: "More like the
    nfl/nba player cards"). The same banner, chips, tool strip and flip tiles as the cards above, on the page itself:
    one view at every desktop size, on navy-charcoal glass rather than the dialog's ink (purple is an accent, never a base) ══ */
 .ab-sheet {
   --g1: #18233D; --g2: #0B1426; --well: #050B16; --line: rgba(255, 255, 255, .14);
-  --gloss: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 46%, rgba(0, 0, 0, .28));
-  --raise: 0 0 0 2px rgba(0, 0, 0, .55), 0 6px 14px -4px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .4);
+  --gloss: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, .12));
+  --raise: 0 0 0 2px rgba(0, 0, 0, .55), 0 6px 14px -4px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .14);
   --sink: inset 0 2px 6px rgba(0, 0, 0, .85), 0 1px 0 rgba(255, 255, 255, .08);
   color: #fff;
 }
@@ -499,7 +502,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 @media (max-width: 1279px) { .ab-sheet .ab-band { grid-template-columns: auto minmax(0, 1fr) auto; } .ab-sheet .ab-chips { grid-column: auto; } }
 .ab-sheet .ab-id { flex: 1 1 0; min-width: 0; }
 .ab-sheet .ab-chips { flex: none; flex-wrap: nowrap; }
-.ab-sheet .ab-fs .cs-lab { font-size: 1rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; padding: 0 4px 0 8px; }
+.ab-sheet .ab-fs .cs-lab { font-size: 1.0625rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FFC72C; padding: 0 4px 0 8px; }
 .ab-sheet a.ab-seg, .ab-sheet button.ab-seg { display: inline-flex; align-items: center; text-decoration: none; }
 .ab-sheet .ab-seg.gold { color: #14110A; background: var(--gloss), #FFC72C; border-color: #FFE08A; }
 .ab-sheet .ab-fs .cs-open { margin-left: auto; }
@@ -519,7 +522,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .cs-steps li { grid-template-columns: 20px minmax(0, 1fr) auto; }
 .cs-steps .sw { width: 20px; height: 20px; border-radius: 6px; background: var(--gloss), var(--hc); box-shadow: 0 0 0 2px rgba(0, 0, 0, .55); }
 .cs-steps .cs-nm { font-family: var(--num); }
-.cs-steps .cs-n { font: 800 1rem var(--num); color: #fff; }
+.cs-steps .cs-n { font: 800 1.0625rem var(--num); color: #fff; }
 /* below 1000 tall: no third fact row, no mini above the facts, and the map's back reads in words */
 @media (max-height: 999.98px) {
   .cs-tiles .ab-mini:has(+ .ab-hx), .cs-tiles .ab-hx > div:nth-child(3) { display: none; }
@@ -531,7 +534,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 @media (min-width: 900px) and (max-height: 679.98px) {
   .cs-tiles .ab-hx { display: grid; grid-template-columns: 1fr 1fr; }
   .cs-tiles .ab-hx > div { flex-direction: column; gap: 0; padding: 2px 10px; }
-  .cs-tiles .ab-hx span { font-size: 1rem; letter-spacing: .04em; }
+  .cs-tiles .ab-hx span { font-size: 1.0625rem; letter-spacing: .04em; }
   .cs-tiles .ab-tv b { font-size: 1.4rem; }
   .cs-tiles .ab-hx { margin-top: 4px; }
   .cs-back { padding-top: 6px; gap: 6px; }
@@ -547,7 +550,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 @container (max-height: 175px) {
   .cs-tiles .ab-hx { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
   .cs-tiles .ab-hx > div { flex-direction: column; align-items: flex-start; gap: 0; padding: 2px 8px; }
-  .cs-tiles .ab-hx span { font-size: 1rem; letter-spacing: .03em; }
+  .cs-tiles .ab-hx span { font-size: 1.0625rem; letter-spacing: .03em; }
   .cs-tiles .cs-list li:nth-child(3) { display: none; }
   .cs-tiles .ab-th { padding-top: 4px; padding-bottom: 4px; }
   .cs-tiles .ab-tv { padding-top: 2px; }
@@ -571,34 +574,34 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 .cs-tiles .ab-tv b { font-size: clamp(1.8rem, 4.2vh, 2.6rem); }
 .cs-tiles .ab-tv .ab-medal + .ab-gem { margin-left: 0; }
 .cs-who { margin: 6px 14px 0 !important; font-size: 1.1875rem; font-weight: 800; line-height: 1.15; color: #fff; }
-.cs-who small { margin-left: 8px; font-size: 1rem; font-weight: 700; color: #D5D9E1; }
-.cs-axis { display: flex; justify-content: space-between; margin: 4px 14px 0 !important; font: 700 1rem var(--num); color: #D5D9E1; }
+.cs-who small { margin-left: 8px; font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
+.cs-axis { display: flex; justify-content: space-between; margin: 4px 14px 0 !important; font: 700 1.0625rem var(--num); color: #D5D9E1; }
 .cs-tiles .ab-mini { min-height: 22px; }
-.cs-back { flex: 1 1 auto; min-height: 0; overflow: hidden; display: grid; align-content: start; gap: 8px; padding: 10px 14px 0; font-size: 1rem; color: #E4E8F0; }
+.cs-back { flex: 1 1 auto; min-height: 0; overflow: hidden; display: grid; align-content: start; gap: 8px; padding: 10px 14px 0; font-size: 1.0625rem; color: #E4E8F0; }
 .cs-back .btn { justify-self: start; }
 .cs-back table.twin { margin: 0; }
 .cs-back table.twin td, .cs-back table.twin th { padding: .3rem .6rem; }
-.cs-q { margin: 0 !important; font-size: 1rem; line-height: 1.35; color: #E4E8F0; }
+.cs-q { margin: 0 !important; font-size: 1.0625rem; line-height: 1.35; color: #E4E8F0; }
 .cs-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .cs-list li { display: grid; grid-template-columns: 1.8rem minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 3px 8px; border-radius: 10px; background: var(--well); box-shadow: var(--sink); }
-.cs-list .cs-r { font: 800 1rem var(--num); color: #FFC72C; }
+.cs-list .cs-r { font: 800 1.0625rem var(--num); color: #FFC72C; }
 .cs-list .cs-nm { font-weight: 800; color: #fff; min-width: 0; line-height: 1.15; overflow-wrap: break-word; }
-.cs-list .cs-n { font-size: 1rem; color: #D5D9E1; white-space: nowrap; }
-.cs-list .cs-v { padding: 2px 10px; border-radius: 999px; font: 900 1rem var(--num); color: #0B0D12; background: var(--gloss), var(--hc); }
+.cs-list .cs-n { font-size: 1.0625rem; color: #D5D9E1; white-space: nowrap; }
+.cs-list .cs-v { padding: 2px 10px; border-radius: 999px; font: 900 1.0625rem var(--num); color: #0B0D12; background: var(--gloss), var(--hc); }
 /* the hero: the map at the tile's full height in its own shape, the heat legend beside it, one row a step; the
    step's share of homes is the fill of the tray behind its words */
 .cs-mapbody { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(15.5rem, 42%); gap: 12px; padding: 12px 14px 0; }
 .cs-mapbody .mapwrap { height: 100%; width: 100%; }
 .cs-mapbody .mapwrap img { inset: 10px; width: calc(100% - 20px); height: calc(100% - 20px); }
 .cs-leg { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 6px; min-height: 0; min-width: 0; }
-.cs-leg .lg-axis { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 800; color: #D5D9E1; margin: 0; }
+.cs-leg .lg-axis { display: flex; justify-content: space-between; font-size: 1.0625rem; font-weight: 800; color: #D5D9E1; margin: 0; }
 .cs-leg .legend.lg-hist { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-rows: minmax(0, 1fr); gap: 4px; min-height: 0; }
 .cs-leg .legend.lg-hist li { position: relative; display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 0 10px 0 8px;
   border-radius: 10px; background: var(--well); box-shadow: var(--sink); overflow: hidden; min-height: 0; }
 .cs-leg .lg-hist .hb-t { position: absolute; inset: 0; height: auto; border-radius: 10px; background: none; box-shadow: none; }
 .cs-leg .lg-hist .hb-f[class*="hs-"] { position: absolute; inset: 0 auto 0 0; border-radius: 10px; opacity: .30; background: var(--hc); box-shadow: none; }
 .cs-leg .lg-hist .sw { position: relative; width: 20px; height: 20px; border-radius: 6px; background: var(--gloss), var(--hc); box-shadow: 0 0 0 2px rgba(0, 0, 0, .55), 0 0 10px -2px var(--hc); }
-.cs-leg .lg-hist .lg-b, .cs-leg .lg-hist .lg-n { position: relative; font: 800 1rem var(--num); color: #fff; white-space: nowrap; }
+.cs-leg .lg-hist .lg-b, .cs-leg .lg-hist .lg-n { position: relative; font: 800 1.0625rem var(--num); color: #fff; white-space: nowrap; }
 .cs-leg .lg-hist .lg-b { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 
 /* shorter screens (the owner's zoom: 1477x700, 1280x620): the same parts, tighter */
@@ -608,7 +611,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   .ab-sheet .ab-top { padding: 4px 10px; }
   .ab-sheet .ab-disc { width: 64px; height: 64px; font-size: 28px; }
   .ab-sheet .ab-id .ab-name { font-size: clamp(1.5rem, 4.4vh, 2.2rem); }
-  .ab-sheet .ab-deck { margin-top: 2px !important; font-size: 1rem; }
+  .ab-sheet .ab-deck { margin-top: 2px !important; font-size: 1.0625rem; }
   .ab-sheet .ab-fs { padding: 4px 6px; }
   .cs-tiles { gap: 8px; }
   .cs-tiles .ab-th { padding-top: 5px; padding-bottom: 5px; }
@@ -631,7 +634,7 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
 @media (max-width: 1279px) and (min-width: 900px) {
   .ab-sheet .ab-disc { width: 64px; height: 64px; font-size: 28px; }
   .ab-sheet .ab-id .ab-name { font-size: clamp(1.4rem, 2.6vw, 2.2rem); }
-  .ab-sheet .ab-deck { font-size: 1rem; }
+  .ab-sheet .ab-deck { font-size: 1.0625rem; }
   .ab-sheet .ab-chip { padding: 4px 8px; }
   .ab-sheet .ab-chip b { font-size: 1.1rem; }
   .cs-tiles { grid-template-columns: minmax(0, 1.7fr) repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); height: auto; }
@@ -664,3 +667,291 @@ dialog.ab-card::backdrop { background: rgba(3, 4, 12, .78); backdrop-filter: blu
   .cs-mapbody .mapwrap { height: auto; width: 100%; aspect-ratio: 0.8; }
   .cs-leg .legend.lg-hist { grid-auto-rows: 34px; }
 }
+
+/* the guest card (issue 808): three type rows on the hero, each in its family's identity hue (never a value); the type's
+   share of all guest cards as a bar with this guest's type lit; the words they use more than the county's guests */
+.ab-tchip { border-color: color-mix(in srgb, var(--th) 70%, #fff); box-shadow: var(--raise), 0 0 16px -6px var(--th); }
+.ab-tchip i { color: var(--th); }
+.ab-gtypes { flex: 1 1 auto; display: grid; grid-auto-rows: auto; align-content: space-evenly; gap: 8px; margin: 10px 14px 0; min-height: 0; }
+.ab-gtype { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto; column-gap: 12px; row-gap: 6px; align-content: center;
+  padding: 8px 14px 10px; border-radius: 14px; background: var(--well); box-shadow: var(--sink); border-left: 6px solid var(--th); }
+.ab-gtalk .fam { grid-column: 1 / -1; }
+.ab-gtype .fam, .ab-gtalk .fam { font-size: 1.0625rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--th, #FFC72C); }
+.ab-gtype b { grid-column: 1 / -1; font: 900 clamp(1.5rem, 3.2vh, 2.1rem)/1.1 var(--num); text-shadow: none; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ab-gtype .bar { grid-column: 1 / -1; display: flex; height: 14px; border-radius: 8px; overflow: hidden; align-self: end; box-shadow: 0 0 0 2px rgba(0, 0, 0, .55); }
+.ab-gtype .bar span { width: var(--w); background: color-mix(in srgb, var(--th) 22%, #1A1C3A); }
+.ab-gtype .bar span + span { box-shadow: inset 2px 0 0 rgba(0, 0, 0, .6); }
+.ab-gtype .bar span.on { background: linear-gradient(180deg, rgba(255, 255, 255, .45), rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, .2)), var(--th); box-shadow: 0 0 12px -2px var(--th); }
+.ab-gtype .cnt { grid-column: 2; grid-row: 1; align-self: center; font: 900 1.125rem var(--num); color: var(--th); white-space: nowrap; }
+.ab-gtalk { flex: none; display: grid; gap: 6px; margin: 10px 14px 0; padding: 10px 14px; border-radius: 14px; background: var(--well); box-shadow: var(--sink); }
+.ab-gchips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-gtab { flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 8px 14px 0; }
+.ab-gtab table.twin { margin: 0; }
+.ab-gtab table.twin td, .ab-gtab table.twin th { padding: .25rem .6rem; }
+#ab-cards[data-lvl="guest"] .ab-t:not(.hero) .ab-tv b { font-size: clamp(1.7rem, 3.9vh, 2.4rem); }
+
+/* no scrolling at any desktop size (the owner, 2026-11-21: "No scrolling!"), and nothing hidden to get there ("where did
+   my badges go?!"): the card body is a grid and the tiles share the height that is left. On shorter screens the view
+   buttons move to the end of the filter strip (cards.js), so the banner is one row: disc, name, then badges and chips at
+   the right; and each tile's mini chart takes only the height its tile has left */
+@media (min-width: 900px) {
+  dialog.ab-card .ab-body { display: grid; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
+  dialog.ab-card .ab-tiles { height: auto; min-height: 0; grid-template-rows: repeat(2, minmax(0, 1fr)); }
+  dialog.ab-card .ab-t { min-height: 0; }
+  dialog.ab-card .ab-h2h { height: auto; }
+  dialog.ab-card .ab-note { margin-top: 8px !important; }
+  dialog.ab-card .ab-fs .ab-views { position: static; margin-left: auto; }
+}
+@media (min-width: 900px) and (max-height: 960px) {
+  dialog.ab-card[open] { gap: 8px; padding: 10px 12px 12px; }
+  dialog.ab-card .ab-top { padding: 6px 12px; }
+  dialog.ab-card .ab-band { align-items: center; }
+  dialog.ab-card .ab-disc { width: 72px; height: 72px; font-size: 26px; }
+  dialog.ab-card .ab-id .ab-name { font-size: clamp(1.9rem, 4.6vh, 2.6rem); }
+  dialog.ab-card .ab-deck { margin-top: 2px !important; }
+  dialog.ab-card .ab-tray { margin: 0 0 0 auto; padding: 4px; align-self: center; }
+  dialog.ab-card .ab-fs { padding: 4px 6px; gap: 8px; }
+  dialog.ab-card .ab-mini { min-height: 0; }
+  dialog.ab-card .ab-tv { flex-wrap: nowrap; gap: 6px; }
+  dialog.ab-card .ab-t:not(.hero) .ab-tv b { font-size: clamp(2rem, 4.4vh, 2.8rem); }
+  dialog.ab-card .ab-gem { min-width: 0; padding: 0 9px; }
+}
+@media (min-width: 900px) and (max-height: 800px) {
+  dialog.ab-card .ab-th { padding-top: 6px; padding-bottom: 6px; }
+  dialog.ab-card .ab-tv { padding-top: 6px; }
+  dialog.ab-card .ab-zm { padding-top: 8px; } dialog.ab-card .ab-zm .ends { margin-top: 2px; }
+  dialog.ab-card .ab-t.hero .ab-tv b { font-size: clamp(2.6rem, 8vh, 6.4rem); }
+  dialog.ab-card .ab-mixes { gap: 6px; margin-top: 6px; } dialog.ab-card .ab-mix { padding: 5px 10px; gap: 3px; }
+  dialog.ab-card .ab-gtypes { gap: 6px; margin-top: 8px; } dialog.ab-card .ab-gtype { padding: 6px 12px 8px; row-gap: 3px; }
+  dialog.ab-card .ab-gtype b { font-size: clamp(1.3rem, 3.2vh, 1.8rem); }
+  dialog.ab-card .ab-gtalk { margin-top: 8px; padding: 6px 12px; grid-auto-flow: column; justify-content: start; align-items: center; }
+  dialog.ab-card .ab-row .side { padding-top: 2px; padding-bottom: 2px; } dialog.ab-card .ab-row .rk { min-height: 38px; font-size: 1.6rem; }
+}
+@media (min-width: 900px) and (max-height: 700px) {
+  dialog.ab-card .ab-gtype .bar { height: 10px; }
+}
+@media (min-width: 900px) and (max-width: 1600px) {
+  dialog.ab-card .ab-count { display: none; }
+  dialog.ab-card .ab-tchip i { display: none; }
+}
+dialog.ab-card .ab-pick select { max-width: min(24rem, 28vw); }
+@media (min-width: 900px) and (max-width: 1500px) {
+  dialog.ab-card .ab-pick span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  dialog.ab-card .ab-pick { padding-left: 6px; }
+  dialog.ab-card .ab-seg { padding: 0 14px; }
+}
+
+/* short screens: the tiles' note sits one click away behind Method (rule 33), never cut; narrower windows give the four
+   tile columns equal widths so each small tile's number, unit, medal and z fit on one line */
+.ab-mbtn { display: none; min-height: 44px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 1.0625rem; font-weight: 700; cursor: pointer;
+  color: #D5D9E1; background: transparent; border: 1.5px solid rgba(255, 255, 255, .22); }
+dialog.ab-card .ab-mbtn:hover { color: #fff; border-color: rgba(255, 255, 255, .5); }
+dialog.ab-card .ab-mbtn:focus-visible { outline: 3px solid #FFC72C; outline-offset: 3px; }
+#ab-method { max-width: min(46rem, calc(100vw - 3rem)); }
+#ab-method .ab-note { margin: 0 0 12px !important; }
+@media (min-width: 900px) and (max-height: 800px) {
+  dialog.ab-card .ab-body > .ab-note { display: none; }
+  dialog.ab-card .ab-mbtn { display: inline-flex; align-items: center; }
+}
+@media (min-width: 900px) and (max-width: 1600px) {
+  dialog.ab-card .ab-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  dialog.ab-card .ab-pick select { max-width: 13rem; }
+  dialog.ab-card .ab-tv .per { white-space: nowrap; }
+  dialog.ab-card .ab-chip { padding: 4px 10px; }
+}
+@media (min-width: 900px) and (max-width: 1400px) { dialog.ab-card .ab-pick select { max-width: 10.5rem; } dialog.ab-card .ab-tchip b { font-size: 1.1rem; } }
+
+/* eyes 45 to 65: every label at least 18 px (the page's root is 17 px, so 1.0625rem); the Years line, read first under a
+   name, larger again */
+.ab-card .ab-id .ab-yrs { font-size: 1.1875rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #FFC72C; }
+
+/* shorter screens page the six small tiles three at a time, full size (the owner, 2026-11-21: "Yes, page them"; the
+   single-view rule allows paging inside a view): one row, the hero and three tiles; More stats shows the other three.
+   Head to head pages its rows the same way. cards.js sets .paged and pg0 / pg1 */
+.ab-pgbtn { display: none; }
+dialog.ab-card.is-paged .ab-pgbtn { display: inline-flex; align-items: center; }
+@media (min-width: 900px) {
+  dialog.ab-card .ab-tiles.paged { grid-template-columns: 1.35fr 1fr 1fr 1fr; grid-template-rows: minmax(0, 1fr); }
+  dialog.ab-card .ab-tiles.paged .ab-t.hero { grid-row: auto; grid-column: auto; }
+  dialog.ab-card .ab-tiles.paged.pg0 .ab-t[data-pg="1"], dialog.ab-card .ab-tiles.paged.pg1 .ab-t[data-pg="0"] { display: none; }
+  dialog.ab-card .ab-h2h.paged.pg0 .ab-row[data-pg="1"], dialog.ab-card .ab-h2h.paged.pg1 .ab-row[data-pg="0"] { display: none; }
+}
+@media (min-width: 900px) {
+  /* the hero pages with the rest: first half its number, z and chart; second half its number and its mix of homes */
+  
+  
+  
+  .ab-tiles.paged.pg0 .ab-ghero .ab-gtalk { display: none; }
+  dialog.ab-card .ab-tiles.paged.pg1 .ab-ghero .ab-gtypes { display: none; }
+  dialog.ab-card .ab-tiles.paged.pg1 .ab-ghero .ab-gtalk { flex: 1 1 auto; align-content: center; }
+}
+
+/* head to head: a guest row has no rank (issue 808), so its rank box keeps its place unseen; the guest's header is the
+   code and three type tags. Mix legends sit in two columns (two lines, not three). Short screens: the header tightens, and the hero's second page is its mix of homes alone */
+.ab-row .rk.na { visibility: hidden; }
+dialog.ab-card .ab-hh .hd .ab-tags { flex-wrap: wrap; margin: 4px 0 0; }
+dialog.ab-card .ab-hh .hd.r .ab-tags { justify-content: flex-end; }
+dialog.ab-card .ab-mix ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) {
+  
+}
+@media (min-width: 900px) and (max-height: 800px) {
+  dialog.ab-card .ab-hh { padding: 6px 12px; }
+  dialog.ab-card .ab-hh .hd b { font-size: clamp(1.2rem, 2.8vh, 1.6rem); }
+  dialog.ab-card .ab-hh .hd small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* the hero's number a notch smaller so its z sits beside it, and the header keeps clear of the flip icon */
+.ab-th { padding-right: 66px; }
+dialog.ab-card .ab-t.hero .ab-tv { flex-wrap: nowrap; }
+dialog.ab-card .ab-t.hero .ab-tv b { font-size: clamp(3rem, 7.5vh, 5.2rem); }
+dialog.ab-card .ab-t.hero .ab-tv .ab-gem { margin-left: auto; }
+/* narrow and short windows: the filter strip on one line, the head-to-head header's chips whole */
+@media (min-width: 900px) and (max-width: 1400px) {
+  dialog.ab-card .ab-pick select { max-width: 9rem; }
+  dialog.ab-card .ab-fs .ab-views .ab-view, dialog.ab-card .ab-fs .ab-views .ab-close, dialog.ab-card .ab-fs .ab-views .ab-mbtn { padding: 0 12px; }
+  dialog.ab-card .ab-fs { gap: 6px; }
+}
+dialog.ab-card .ab-hh .ab-gem, dialog.ab-card .ab-hh .ab-chip { flex: none; }
+@media (min-width: 900px) and (max-height: 800px) {
+  dialog.ab-card .ab-hh .ab-chip { min-height: 44px; padding: 2px 10px; }
+  dialog.ab-card .ab-hh .ab-chip b { font-size: 1.35rem; }
+}
+
+/* head to head's header: each side its name, a one-line rank chip and the RevPAR pill, nothing squeezed; on the
+   shortest screens the banner above slims to the name (the owner, 2026-11-21), the header naming both sides */
+.ab-hh { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+dialog.ab-card .ab-hh .hd { gap: 12px; }
+dialog.ab-card .ab-hh .hd > div { flex: 1 1 auto; }
+dialog.ab-card .ab-hh .hd b { white-space: normal; overflow: visible; line-height: 1.05; }
+dialog.ab-card .ab-hh .ab-hrk { display: inline-flex; align-items: baseline; gap: 6px; min-height: 44px; padding: 0 14px; }
+dialog.ab-card .ab-hh .ab-hrk b { font-size: 1.5rem; }
+dialog.ab-card .ab-hh .ab-hrk small { font-size: 1.0625rem; }
+dialog.ab-card .ab-hh .ab-gem { min-height: 44px; padding: 0 14px; font-size: 1.125rem; }
+dialog.ab-card .ab-hcols i { overflow: visible; }
+@media (min-width: 900px) and (max-height: 700px) {
+  dialog.ab-card.is-h2h .ab-id .ab-tags, dialog.ab-card.is-h2h .ab-deck, dialog.ab-card.is-h2h .ab-id .ab-sub, dialog.ab-card.is-h2h .ab-id .eyebrow { display: none; }
+}
+@media (min-width: 900px) {
+  /* a listing's hero pages its two fact boxes: first half its number, z and chart; second half its number and facts */
+  .ab-tiles.paged.pg0 .ab-t.hero .ab-f > .ab-hx { display: none; }
+  dialog.ab-card .ab-tiles.paged.pg1 .ab-t.hero:has(.ab-hx) .ab-f > .ab-zm, dialog.ab-card .ab-tiles.paged.pg1 .ab-t.hero:has(.ab-hx) .ab-f > .ab-mini { display: none; }
+  dialog.ab-card .ab-tiles.paged.pg1 .ab-t.hero .ab-f > .ab-hx { justify-content: flex-start; }
+}
+/* the head-to-head rank chip: one line, its own size, not the banner chip's tall stacked tile */
+dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk { display: inline-flex; grid-template-areas: none; align-items: baseline; justify-content: center; gap: 6px;
+  width: auto; min-width: 0; height: auto; min-height: 44px; padding: 0 14px; }
+dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk::before, dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk::after, dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk b::before, dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk b::after { display: none; }
+dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk b { font-size: 1.5rem; line-height: 1; }
+/* the filter strip stays on one line: the pickers share what the view buttons leave */
+@media (min-width: 900px) {
+  dialog.ab-card .ab-fs { flex-wrap: nowrap; }
+  dialog.ab-card .ab-fs .ab-pick { flex: 0 1 auto; min-width: 0; }
+  dialog.ab-card .ab-fs .ab-pick select { min-width: 0; width: 100%; }
+  dialog.ab-card .ab-fs .ab-segs { flex: none; }
+}
+@media (min-width: 900px) and (max-height: 700px) {
+  dialog.ab-card .ab-hx { gap: 6px; margin-top: 8px; } dialog.ab-card .ab-hx > div { padding: 6px 12px; } dialog.ab-card .ab-hx b { font-size: 1.35rem; }
+}
+/* the rank chip and the RevPAR pill read in dark ink on their heat fill, with a dark ring that stands them off the bar
+   (the owner, 2026-11-21: "washed") */
+dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk small, dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk b { color: #0B0D12; }
+dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk, dialog.ab-card .ab-hh .ab-gem { border: 1px solid rgba(255, 255, 255, .55);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .6), 0 6px 14px -4px rgba(0, 0, 0, .8), inset 0 -2px 0 rgba(0, 0, 0, .18); }
+dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk b, dialog.ab-card .ab-hh .hd .ab-chip.ab-hrk small { text-shadow: none; }
+
+/* head to head in the matchup look (the owner's favourite, the NFL matchup cards): a row a stat, each side a glass pill
+   with HUD corners, a rank disc, the stat's source disc, the stat over a rail in its hue, the number in a dark capsule and
+   a verdict pill in the heat or tendency scale by z, "vs" in a ring between */
+dialog.ab-card .ab-rows { gap: 8px; }
+dialog.ab-card .ab-row.mrow { display: grid; grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr); align-items: center; gap: 10px; }
+dialog.ab-card .mside { position: relative; display: grid; grid-template-columns: 44px 56px minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 76px;
+  padding: 8px 24px 8px 10px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, .16); border-left: 6px solid var(--sh);
+  background: linear-gradient(100deg, color-mix(in srgb, var(--sh) 16%, #1A1D33), #12142A 60%); box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .1); }
+dialog.ab-card .mside::before, dialog.ab-card .mside::after { content: ""; position: absolute; width: 12px; height: 12px; pointer-events: none; }
+dialog.ab-card .mside::before { right: 6px; top: 6px; border-top: 2px solid #7CF5FF; border-right: 2px solid #7CF5FF; }
+dialog.ab-card .mside::after { right: 6px; bottom: 6px; border-bottom: 2px solid #F472B6; border-right: 2px solid #F472B6; }
+dialog.ab-card .mrk { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; font: 900 1.25rem var(--num); color: #fff;
+  background: #0B0D1C; border: 2px solid rgba(255, 255, 255, .55); box-shadow: 0 4px 10px rgba(0, 0, 0, .7); }
+dialog.ab-card .mrk.na { visibility: hidden; }
+dialog.ab-card .mdisc { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--sh) 55%, #fff) 0 10%, color-mix(in srgb, var(--sh) 45%, #1A1D33) 70%);
+  border: 2px solid rgba(255, 255, 255, .5); box-shadow: 0 6px 14px rgba(0, 0, 0, .7); }
+dialog.ab-card .mdisc b { font: 900 1.0625rem var(--num); color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .8); }
+dialog.ab-card .mname { display: grid; gap: 2px; min-width: 0; }
+dialog.ab-card .mname small { font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+dialog.ab-card .mname b { font-size: clamp(1.3rem, 2.6vh, 1.75rem); font-weight: 900; color: #fff; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+dialog.ab-card .mrail { position: relative; display: block; height: 7px; margin-top: 4px; border-radius: 4px; background: rgba(255, 255, 255, .1); }
+dialog.ab-card .mrail i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--sh); box-shadow: 0 0 8px -2px var(--sh); }
+dialog.ab-card .mval { display: grid; justify-items: center; gap: 4px; }
+dialog.ab-card .mcap { min-width: 6.5rem; padding: 4px 14px; border-radius: 12px; text-align: center; font: 900 clamp(1.6rem, 3.4vh, 2.3rem)/1.1 var(--num); color: #fff;
+  background: #07080F; border: 2px solid rgba(255, 255, 255, .7); box-shadow: 0 0 0 2px rgba(0, 0, 0, .6), 0 6px 14px rgba(0, 0, 0, .7); white-space: nowrap; }
+dialog.ab-card .mverd { min-height: 30px; padding: 2px 12px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font-size: 1.0625rem; font-weight: 900; color: #0B0D12; background: var(--hc); border: 1px solid rgba(255, 255, 255, .6); box-shadow: 0 0 0 2px rgba(0, 0, 0, .55); }
+dialog.ab-card .mvs { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; font: 900 1.125rem var(--num); color: #fff;
+  background: #0B0D1C; border: 2px solid #7CF5FF; box-shadow: 0 0 16px -4px #7CF5FF; }
+@media (min-width: 900px) and (max-height: 800px) {
+  dialog.ab-card .mside { min-height: 64px; padding-top: 5px; padding-bottom: 5px; grid-template-columns: 44px 48px minmax(0, 1fr) auto; }
+  dialog.ab-card .mdisc { width: 48px; height: 48px; }
+  dialog.ab-card .mval { grid-auto-flow: column; align-items: center; }
+  dialog.ab-card .mname small { display: none; }
+}
+dialog.ab-card .mrk { width: auto; min-width: 44px; padding: 0 8px; border-radius: 999px; }
+/* the banner's badges and stat chips a size larger (the owner, 2026-11-21: "larger"): the whole tray scales together */
+dialog.ab-card .ab-top .ab-tray { zoom: 1.25; }
+@media (min-width: 900px) and (max-height: 800px) { dialog.ab-card .ab-top .ab-tray { zoom: 1.15; } }
+dialog.ab-card .mverd .vshort { display: none; }
+@media (min-width: 900px) and (max-width: 1600px) {
+  dialog.ab-card .mverd .vlong { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  dialog.ab-card .mverd .vshort { display: inline; }
+}
+@media (min-width: 900px) { dialog.ab-card .ab-tiles.paged.pg1 .ab-t.hero:has(.ab-hx) .ab-f > .ab-tv { display: none; } }
+/* a guest has no rank (issue 808): its row drops the rank column instead of leaving a gap */
+dialog.ab-card .mside:has(.mrk.na) { grid-template-columns: 56px minmax(0, 1fr) auto; }
+dialog.ab-card .mrk.na { display: none; }
+@media (min-width: 900px) and (max-height: 800px) { dialog.ab-card .mside:has(.mrk.na) { grid-template-columns: 48px minmax(0, 1fr) auto; } }
+
+/* the case page's own tiles keep their sizes in this change (the 18 px lift is for the card window; the page's own
+   lift is a change of its own) */
+.ab-sheet .ab-b .q,
+.ab-sheet .ab-badge .rib,
+.ab-sheet .ab-badge i,
+.ab-sheet .ab-chip b small,
+.ab-sheet .ab-chip i,
+.ab-sheet .ab-chip small,
+.ab-sheet .ab-cols .axis,
+.ab-sheet .ab-cols p,
+.ab-sheet .ab-fh,
+.ab-sheet .ab-gem,
+.ab-sheet .ab-hcols,
+.ab-sheet .ab-hh .hd small,
+.ab-sheet .ab-hx span,
+.ab-sheet .ab-id .eyebrow,
+.ab-sheet .ab-medal,
+.ab-sheet .ab-mix .ttl,
+.ab-sheet .ab-mix li,
+.ab-sheet .ab-note,
+.ab-sheet .ab-pick select,
+.ab-sheet .ab-pick span,
+.ab-sheet .ab-row .mid .apart,
+.ab-sheet .ab-row .mid .src,
+.ab-sheet .ab-share .lg,
+.ab-sheet .ab-deck,
+.ab-sheet .ab-fs .cs-lab,
+.ab-sheet .ab-sub,
+.ab-sheet .ab-th,
+.ab-sheet .ab-th small,
+.ab-sheet .ab-tv .per,
+.ab-sheet .ab-zm .ends,
+.ab-sheet .cs-axis,
+.ab-sheet .cs-back,
+.ab-sheet .cs-leg .lg-axis,
+.ab-sheet .cs-leg .lg-hist .lg-b,
+.ab-sheet .cs-leg .lg-hist .lg-n,
+.ab-sheet .cs-list .cs-n,
+.ab-sheet .cs-list .cs-r,
+.ab-sheet .cs-list .cs-v,
+.ab-sheet .cs-q,
+.ab-sheet .cs-steps .cs-n,
+.ab-sheet .cs-tiles .ab-hx span,
+.ab-sheet .cs-who small { font-size: 1rem; }
