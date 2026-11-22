@@ -582,6 +582,7 @@ def main():
     ap.add_argument("--now", type=pathlib.Path, help="the pipeline's tableau_listings.csv, for the newest snapshot")
     ap.add_argument("--models", type=pathlib.Path, help="bnbscope's processed folder for the region, for the cards' Models family")
     ap.add_argument("--rentals", type=pathlib.Path, help="the SportsAnalytics folder: its Rentals Archetypes types join the mix (issue 812)")
+    ap.add_argument("--raw", type=pathlib.Path, help="the Inside Airbnb listings files (<date>_listings.csv.gz): each listing's Airbnb id, cover picture and newest snapshot, on its card")
     a = ap.parse_args()
     s = build(load(a.src))
     now = market_now(a.now) if a.now else None
@@ -629,7 +630,7 @@ def main():
     (ROOT / "_airbnb_home.qmd").write_text(home, encoding="utf-8")
     (ROOT / "assets" / "airbnb" / "summary.json").write_text(json.dumps({k: v for k, v in s.items() if k not in ("nb", "map", "homes_df")}, indent=1, default=str), encoding="utf-8")
     from airbnb_cards import build_cards
-    cards = build_cards(s["homes_df"], s["asof"], MIN_N, a.models)
+    cards = build_cards(s["homes_df"], s["asof"], MIN_N, a.models, a.raw)
     if a.models:
         # the guest cards (SportsAnalytics issue 808) and each market's review years, from the study's reviews
         from airbnb_guests import build_guests
@@ -639,6 +640,9 @@ def main():
         cards["guests"] = g
     (ROOT / "assets" / "airbnb" / "cards.json").write_text(json.dumps(cards, separators=(",", ":"), allow_nan=False), encoding="utf-8")
     print("cards:", {k: len(v) for k, v in cards["levels"].items()}, "listings", len(cards["listings"]), "segments", [x["name"] for x in cards["levels"]["seg"]])
+    if cards.get("links"):
+        L = cards["links"]
+        print(f"links: of {L['of']:,} listings, {L['listed']:,} still listed on {L['snaps'][-1]}, {L['bookable']:,} of them bookable; {L['pics']:,} with a cover picture")
     print("as of", s["asof"], "homes", s["homes"], "revpar", s["revpar"], "best", s["nb"].index[0], "worst", s["nb"].index[-1])
 
 

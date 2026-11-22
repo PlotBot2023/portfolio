@@ -1,6 +1,7 @@
 // The case study's cards: a neighbourhood, an ML segment, a host or a listing as a player card (flip tiles: a number,
 // its z against the cards of its level, a bead slider; turn a tile over for the homes behind the number), and a
-// head-to-head board of two cards of one level. Data: cards.json, built by tools/airbnb_cards.py. No names or ids.
+// head-to-head board of two cards of one level. Data: cards.json, built by tools/airbnb_cards.py. No host names or ids;
+// a listing card shows its Airbnb page and cover picture, and whether the newest snapshot still listed it (2026-11-22).
 (function () {
   "use strict";
   var DLG = document.getElementById("ab-cards");
@@ -153,6 +154,7 @@
       var nb = r[ix.nb] >= 0 ? D.nb_names[r[ix.nb]] : "Broward", bed = r[ix.bedrooms];
       return { name: (bed == null ? "Home" : bed === 0 ? "Studio" : bed + "-bed home") + " in " + nb, code: "L" + String(i + 1).padStart(5, "0"),
         sub: "Listing L" + String(i + 1).padStart(5, "0") + ", RevPAR rank " + (i + 1).toLocaleString("en-US") + " in the county", nb: r[ix.nb], seg: r[ix.seg], host: r[ix.host],
+        id: ix.id != null ? r[ix.id] : null, pic: ix.pic != null ? r[ix.pic] : null, last: ix.last != null ? r[ix.last] : -1, avail: ix.avail != null ? r[ix.avail] : 0,
         n: 1, m: { revpar: r[ix.revpar], adr: r[ix.adr], occ: r[ix.occ], rev: r[ix.rev], rev_bed: r[ix.rev_bed], bedrooms: bed, superhost: r[ix.superhost],
           churn: ix.churn != null ? r[ix.churn] : null, resid: ix.resid != null ? r[ix.resid] : null, mood: ix.mood != null ? r[ix.mood] : null,
           cap: ix.cap != null ? r[ix.cap] : null, noi: ix.noi != null ? r[ix.noi] : null, anom: ix.anom != null ? r[ix.anom] : null,
@@ -362,18 +364,51 @@
     out.push(emblem("data", "CAL", "Data", "Measured from calendar data"));
     return out.join("");
   }
+  // ── a listing's public face (the owner, 2026-11-22): its Airbnb page and cover picture, and whether the newest Inside
+  // Airbnb snapshot still listed it (and open to book), so a reader can open the home and check it. Hosts stay coded. ──
+  // the disc is small, so Airbnb's image host is asked for a 240 px copy (its im/ resizer with im_w; a0.muscache.com's
+  // plain path ignores im_w and serves the multi-megabyte original: 6.6 KB against 6.8 MB for one home, 2026-11-22)
+  function picUrl(x) { if (!D.links || !x.pic) return null; return /^https?:/.test(x.pic) ? x.pic : D.links.pic_host + (x.pic.indexOf("im/") === 0 ? "" : "im/") + x.pic + "?im_w=240"; }
+  function roomUrl(x) { return x.id != null ? "https://www.airbnb.com/rooms/" + x.id : null; }
+  function snapDate(i, opts) { return i == null || i < 0 || !D.links ? "" : new Date(D.links.snaps[i] + "T12:00:00").toLocaleDateString("en-US", opts || { day: "numeric", month: "long", year: "numeric" }); }
+  function monthWord(i) { return snapDate(i, { month: "long", year: "numeric" }); }
+  function isLive(x) { return !!D.links && x.last === D.links.snaps.length - 1; }
+  function listingDisc(x) {
+    var u = picUrl(x);
+    if (!u) return '<div class="ab-disc" aria-hidden="true">L</div>';
+    return '<div class="ab-disc ab-pic"><img src="' + esc(u) + '" alt="Cover picture of listing ' + esc(x.code) + ', as Inside Airbnb last saw it" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div>';
+  }
+  function listingChips(x) {
+    var newest = D.links.snaps.length - 1, live = isLive(x);
+    var cls = live && x.avail ? "on" : live ? "half" : "off", word = live && x.avail ? "Bookable" : live ? "Listed" : "Gone";
+    var when = live ? (x.avail ? "open to book" : "no open dates") : x.last >= 0 ? "last seen " + snapDate(x.last, { month: "short", year: "numeric" }) : "never in a snapshot";
+    var out = '<span class="ab-chip ab-live ' + cls + '"><i>' + esc(monthWord(newest)) + "</i><b>" + word + "</b><small>" + esc(when) + "</small></span>";
+    var u = roomUrl(x);
+    if (u) out += '<a class="ab-chip ab-link" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer external"><i>Airbnb</i><b>Open \u2197</b><small>' + (picUrl(x) ? "picture on file" : "no picture on file") + "</small></a>";
+    return out;
+  }
+  function listingNote() {
+    var base = "Each listing is coded by its RevPAR rank. Its tiles turn over to the county with this home marked.";
+    if (!D.links) return base + " No names, ids or links.";
+    function tally(list) { var t = { n: list.length, live: 0, book: 0, pic: 0 }; list.forEach(function (x) { if (isLive(x)) { t.live++; if (x.avail) t.book++; } if (x.pic) t.pic++; }); return t; }
+    var n = function (v) { return v.toLocaleString("en-US"); }, when = snapDate(D.links.snaps.length - 1);
+    var say = function (t, where) { return n(t.live) + " of " + where + " " + n(t.n) + " were still listed on " + when + ", " + n(t.book) + " of them open to book; " + n(t.pic) + " carry a cover picture"; };
+    return base + " Open goes to the listing's own Airbnb page; the disc is its cover picture as Inside Airbnb last saw it. "
+      + esc(say(tally(listingChoices().map(function (p) { return p[0]; })), D.nb_names[state.nbf] + "'s")) + ". " + esc(say(tally(listingItems()), "the county's")) + ". Hosts stay coded.";
+  }
   function band(x) {
     var r = rankOf(state.level, "revpar", x.m.revpar), z = zOf(state.level, "revpar", x.m.revpar);
     var lvl = LEVELS.filter(function (l) { return l[0] === state.level; })[0][1];
     // a market's own review span (the owner, 2026-11-21: "each market's years"); its homes count is on the Homes chip
     var yrs = state.level === "nb" && D.nb_years ? D.nb_years[x.name] : null;
-    return '<div class="ab-disc" aria-hidden="true">' + (state.level === "listing" ? "L" : state.level === "host" ? "H" : state.level === "seg" ? "ML" : "N") + "</div>"
+    return (state.level === "listing" ? listingDisc(x) : '<div class="ab-disc" aria-hidden="true">' + (state.level === "host" ? "H" : state.level === "seg" ? "ML" : "N") + "</div>")
       + '<div class="ab-id"><span class="eyebrow">' + esc(yrs ? lvl + ": Broward County" : lvl + ", Broward County, " + D.asof) + '</span><p id="ab-title" class="ab-name' + (x.name.length > 18 ? " long" : "") + '" role="heading" aria-level="2">' + esc(x.name) + '</p>'
       + (yrs ? '<span class="ab-sub ab-yrs">Years: ' + yrs[0] + " to " + yrs[1] + "</span>" : subLine(x)) + '<p class="ab-deck">' + deck(x) + "</p></div>"
       + '<div class="ab-tray"><div class="ab-badges" aria-label="Badges">' + badges(x, r) + "</div>"
       + '<div class="ab-chips"><span class="ab-chip rk ' + heat(z) + '"><i>Rank</i><b>' + r.rank.toLocaleString("en-US") + "<small>/" + r.of.toLocaleString("en-US") + "</small></b></span>"
-      + '<span class="ab-chip"><i>Homes</i><b>' + x.n.toLocaleString("en-US") + "</b></span>"
-      + '<span class="ab-chip"><i>Of county</i><b>' + share(x.n) + "<small>%</small></b></span></div></div>";
+      + (state.level === "listing" && D.links ? listingChips(x)
+        : '<span class="ab-chip"><i>Homes</i><b>' + x.n.toLocaleString("en-US") + "</b></span>"
+        + '<span class="ab-chip"><i>Of county</i><b>' + share(x.n) + "<small>%</small></b></span>") + "</div></div>";
   }
 
   // ── the guest card: a banner of three types, a hero of the types and the words, six band tiles ──
@@ -438,7 +473,7 @@
     var keys = D.models ? groupKeys(fam) : state.level === "listing" ? TILES.listing : TILES.group;
     var notes = state.level === "seg" ? '<p class="ab-note">' + esc(D.seg_meta.method) + ". Titles follow a rule on each group's rate and calendar against the county's medians, so a refit renames itself. Homes whose nightly price was a placeholder are not segmented.</p>"
       : state.level === "host" ? '<p class="ab-note">Hosts with ' + D.host_min + " or more entire homes, coded by size. No names or Airbnb ids: most hosts are private people.</p>"
-      : state.level === "listing" ? '<p class="ab-note">Each listing is coded by its RevPAR rank. No names, ids or links. Its tiles turn over to the county with this home marked.</p>' : "";
+      : "";
     var B = D.models && D.models.basis, basisNote = B ? " The model's RevPAR is put on the old price basis: the same " + B.pairs.toLocaleString("en-US")
       + " homes list at " + B.median.toFixed(2) + " times their " + "September 2025 price, so each prediction is divided by its price decile's ratio ("
       + B.ratio[0].toFixed(2) + " to " + Math.max.apply(null, B.ratio).toFixed(2) + "); on held-out homes the corrected price sits " + (100 * B.spread).toFixed(0) + "% from last year's, against " + (100 * B.raw_spread).toFixed(0) + "% uncorrected." : "";
@@ -451,6 +486,8 @@
       + D.finance.rate + "% " + D.finance.term + "-year loan. Home value is the ZIP's Zillow index, a typical value, not this home's price. Revenue and NOI come from the 22 September 2026 run, an estimate.</p>";
     else if (fam === "models") notes = '<p class="ab-note">' + esc(D.models.src) + ". Matched by listing id to " + D.models.matched.toLocaleString("en-US") + " of these " + D.models.of.toLocaleString("en-US")
       + " homes" + (x.matched != null ? "; this card, " + x.matched.toLocaleString("en-US") + " of its " + x.n.toLocaleString("en-US") : "") + ". Model revenue there is the asking price times occupancy, an estimate; RevPAR on the hero tile is measured.</p>";
+    // the listing level's own note (its code, its Airbnb page, how many are still listed) joins the family's note
+    if (state.level === "listing") notes = notes ? notes.replace(/<\/p>$/, " " + listingNote() + "</p>") : '<p class="ab-note">' + listingNote() + "</p>";
     if (state.level === "nb" && D.nb_years) {      // the calendar date left the banner for the Years line, so it is said here
       var cal = "Revenue from the calendar of " + D.asof + ". ";
       notes = notes ? notes.replace('<p class="ab-note">', '<p class="ab-note">' + esc(cal)) : '<p class="ab-note">' + esc(cal) + "</p>";
@@ -513,6 +550,12 @@
     DLG.classList.toggle("is-h2h", state.view === "h2h");      // not data-level: clicks find level buttons by that attribute
     if (state.level === "mix") state.view = "card";      // a mix card has no head to head
     DLG.querySelector(".ab-band").innerHTML = state.level === "mix" ? mixBand(x) : guest ? guestBand(x) : band(x);
+    // a cover picture Airbnb no longer serves: the disc falls back to its letter and the link chip says so
+    var pim = DLG.querySelector(".ab-disc.ab-pic img");
+    if (pim) pim.addEventListener("error", function () {
+      var d = pim.parentNode; d.classList.remove("ab-pic"); d.setAttribute("aria-hidden", "true"); d.textContent = "L";
+      var sm = DLG.querySelector(".ab-link small"); if (sm) sm.textContent = "picture no longer served";
+    });
     // the gold parallel: the card ranked first in its level on RevPAR wears a gold foil banner
     // the banner's metal: gold, silver or bronze for the first three of the level on RevPAR
     var rr = state.view === "card" && x.m.revpar != null ? rankOf(state.level, "revpar", x.m.revpar) : null;
@@ -528,7 +571,8 @@
     var vw0 = DLG.querySelector(".ab-views");
     if (vw0 && vw0.parentNode !== DLG.querySelector(".ab-top")) DLG.querySelector(".ab-top").appendChild(vw0);    // keep it out of the redraw
     DLG.querySelector(".ab-fs").innerHTML = lvBlock + pick
-      + '<span class="ab-count"><b>' + items(state.level).length.toLocaleString("en-US") + "</b> " + LWORD[state.level] + "</span>";
+      + '<span class="ab-count"><b>' + items(state.level).length.toLocaleString("en-US") + "</b> " + LWORD[state.level]
+      + (state.level === "listing" && D.links ? ", <b>" + D.links.listed.toLocaleString("en-US") + "</b> still listed " + esc(monthWord(D.links.snaps.length - 1)) : "") + "</span>";
     // shorter screens: the view buttons sit at the end of the filter strip, so the banner keeps one row
     var vws = DLG.querySelector(".ab-views"), home = window.innerHeight <= 960 ? DLG.querySelector(".ab-fs") : DLG.querySelector(".ab-top");
     if (vws && vws.parentNode !== home) home.appendChild(vws);

@@ -1,8 +1,10 @@
 """The case study's cards: one card per neighbourhood, ML segment, host and listing, from the same measured calendar data
 as the rest of the page (entire homes, the latest snapshot with calendar prices).
 
-Writes `assets/airbnb/cards.json`, read by `assets/airbnb/cards.js`. Privacy: hosts and listings carry codes, never a
-name, an Airbnb id or a link, because most hosts are private people (the site is public and hardened against scraping).
+Writes `assets/airbnb/cards.json`, read by `assets/airbnb/cards.js`. Privacy: hosts carry codes, never a name or an
+Airbnb id, because most hosts are private people (the site is public and hardened against scraping). A listing's card
+carries its Airbnb id (the address of its public page) and its cover picture, so a reader can open the home itself (the
+owner, 2026-11-22), plus the newest Inside Airbnb snapshot it appeared in and whether it was bookable there (load_links).
 
 Levels and pools (a card's z is its rank among the cards of its own level, turned into a normal score):
   - neighbourhood: every neighbourhood with at least MIN_N entire homes;
@@ -30,6 +32,7 @@ BASIS_NEW, BASIS_OLD = "2026-09-22", "2025-09-26"
 # bnbscope's Investment Calculator defaults (dashboard/pages/04_Investment_Calculator.py), same formulas: the rate is its
 # default because the Freddie Mac PMMS file is not cached on this PC
 RATE_PCT, DOWN_PCT, TERM_YEARS, CLOSING_PCT = 7.0, 25.0, 30, 2.0
+PIC_HOST = "https://a0.muscache.com/"     # Airbnb's image host; a picture's address is stored without it (cards.js puts it back)
 
 
 def monthly_payment(principal, rate_pct=RATE_PCT, term_years=TERM_YEARS):
@@ -116,6 +119,27 @@ def num(v, d=2):
     return None if np.isnan(v) else round(v, d)
 
 
+def load_links(raw_dir) -> tuple[pd.DataFrame, list[str]]:
+    """Each listing's public face, from the Inside Airbnb listings files in raw_dir (<date>_listings.csv.gz): its cover
+    picture, the newest snapshot it appears in (an index into the returned snapshot dates), and whether it was bookable
+    there (has_availability). A home missing from the newest snapshot has left Airbnb, or at least Broward's pages; the
+    picture is the newest one on file. The site's CSP lets a page fetch pictures from Airbnb's image hosts only."""
+    import pathlib
+    files = sorted(pathlib.Path(raw_dir).glob("*_listings.csv.gz"))
+    if not files:
+        raise SystemExit(f"no <date>_listings.csv.gz in {raw_dir}")
+    snaps = [f.name[:10] for f in files]
+    out = None
+    for i, f in enumerate(files):
+        d = pd.read_csv(f, usecols=["id", "picture_url", "has_availability"], low_memory=False).drop_duplicates("id")
+        d = pd.DataFrame({"listing_id": d["id"].astype("int64"), "pic": d["picture_url"].astype(object), "last": i,
+                          "avail": d["has_availability"].astype(str).str.lower().eq("t").astype(int)})
+        out = d if out is None else pd.concat([out[~out["listing_id"].isin(d["listing_id"])], d])     # the newest snapshot wins
+    out = out.set_index("listing_id")
+    out["pic"] = out["pic"].map(lambda u: None if not isinstance(u, str) or not u else (u[len(PIC_HOST):] if u.startswith(PIC_HOST) else u))
+    return out, snaps
+
+
 # a segment's title, by its rate and its calendar against the county's medians (a rule, so a refit renames itself)
 MONIKER = {("premium", "busy"): "Gold Mines", ("premium", "quiet"): "Showpieces",
            ("mid-rate", "busy"): "Workhorses", ("mid-rate", "steady"): "Steady Earners", ("mid-rate", "quiet"): "Sleepers",
@@ -152,9 +176,10 @@ def _segments(h: pd.DataFrame, seed: int = 42) -> tuple[pd.Series, list[str], di
     return lab.map(remap), [names[k] for k in order], meta | {"desc": [descs[k] for k in order]}
 
 
-def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> dict:
+def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None, raw_dir=None) -> dict:
     """homes: entire homes of the latest snapshot with listing_id, neighbourhood_cleansed, host_id, adr, occupancy
-    (0 to 1), revpar, expected_revenue, bedrooms, host_is_superhost."""
+    (0 to 1), revpar, expected_revenue, bedrooms, host_is_superhost. raw_dir: the Inside Airbnb listings files, for each
+    listing's id, cover picture and newest snapshot on the cards (load_links); None leaves the listings coded only."""
     # the page's own rules: a neighbourhood is ranked on all its entire homes (n), each median skips a missing value
     nb_all = homes.groupby("neighbourhood_cleansed")["listing_id"].count()
     h = homes.dropna(subset=["revpar"]).copy()
@@ -171,6 +196,12 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
         h = h.merge(load_models(models_dir), on="listing_id", how="left")
         h["matched"] = h[["churn", "resid", "mood", "cap"]].notna().any(axis=1)
     HM = METRICS + (MODEL_METRICS if have_models else [])
+    links = snaps = None
+    if raw_dir is not None:
+        links, snaps = load_links(raw_dir)
+        h = h.join(links, on="listing_id")
+        h["last"] = h["last"].fillna(-1).astype(int)
+        h["avail"] = h["avail"].fillna(0).astype(int)
 
     edges = {m: np.quantile(h[m].dropna(), np.linspace(.02, .98, BINS + 1)).round(2).tolist() for m in HM}
 
@@ -224,7 +255,14 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
                      None if pd.isna(bed) else int(bed), int(r["super"] > 0),
                           *[None if pd.isna(r[c]) else round(float(r[c]), d) for c, d in (("revpar", 2), ("adr", 2), ("occ", 1), ("rev", 0), ("rev_bed", 0))
                        + ((("churn", 1), ("resid", 2), ("mood", 3), ("cap", 2), ("noi", 0), ("anom", 0), ("pred", 2), ("dsr", 0),
-                           ("hv", 0), ("gy", 2), ("coc", 2), ("dscr", 2), ("rating", 2), ("rpm", 2), ("nrev", 0), ("years", 1), ("snaps", 0)) if have_models else ())]])
+                           ("hv", 0), ("gy", 2), ("coc", 2), ("dscr", 2), ("rating", 2), ("rpm", 2), ("nrev", 0), ("years", 1), ("snaps", 0)) if have_models else ())],
+                     *([int(r["listing_id"]), r["pic"] if isinstance(r["pic"], str) else None, int(r["last"]), int(r["avail"])] if links is not None else [])])
+    link_meta = None
+    if links is not None:
+        newest = len(snaps) - 1
+        live = h["last"] == newest
+        link_meta = {"snaps": snaps, "pic_host": PIC_HOST, "listed": int(live.sum()), "bookable": int((live & (h["avail"] == 1)).sum()),
+                     "pics": int(h["pic"].map(lambda u: isinstance(u, str)).sum()), "of": int(len(h))}
     county = {m: num(h[m].median()) for m in HM} | {"clear50": num(h["clear50"].mean(), 1), "super": num(h["super"].mean(), 1)}
     if have_models:
         county["anom"] = num(h["anom"].mean(), 1)
@@ -241,6 +279,8 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
             "levels": {"nb": nbs, "seg": segs, "host": hosts}, "seg_names": seg_names,
             "host_types": ["Host of 10 or more", "Host of 2 to 9", "Single home"], "seg_meta": seg_meta, "host_min": HOST_MIN,
             "listing_cols": ["nb", "seg", "host", "bedrooms", "superhost", "revpar", "adr", "occ", "rev", "rev_bed"]
-                            + (["churn", "resid", "mood", "cap", "noi", "anom", "pred", "dsr", "hv", "gy", "coc", "dscr", "rating", "rpm", "nrev", "years", "snaps"] if have_models else []),
+                            + (["churn", "resid", "mood", "cap", "noi", "anom", "pred", "dsr", "hv", "gy", "coc", "dscr", "rating", "rpm", "nrev", "years", "snaps"] if have_models else [])
+                            + (["id", "pic", "last", "avail"] if links is not None else []),
+            "links": link_meta,
             "finance": {"rate": RATE_PCT, "down": DOWN_PCT, "term": TERM_YEARS, "closing": CLOSING_PCT},
             "listings": rows}

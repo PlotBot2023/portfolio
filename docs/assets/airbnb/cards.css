@@ -1032,3 +1032,15 @@ dialog.ab-card .ab-mixrows .val .pill, dialog.ab-card .ab-mixrows .val .cap { wi
   dialog.ab-card .ab-gtypes { gap: 5px; margin-top: 6px; }
   dialog.ab-card .ab-gtype { padding-top: 5px; padding-bottom: 6px; }
 }
+
+/* a listing's public face (the owner, 2026-11-22): the disc is its Airbnb cover picture; a chip opens its page; a chip says
+   whether the newest snapshot still listed it: green open to book, gold listed without open dates, red gone */
+.ab-disc.ab-pic { padding: 0; overflow: hidden; background: #1B1E3C; }
+.ab-disc.ab-pic img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+a.ab-chip.ab-link { text-decoration: none; color: inherit; cursor: pointer; border-color: #FFC72C; }
+a.ab-chip.ab-link:hover, a.ab-chip.ab-link:focus-visible { background: var(--gloss), #2A2A5A; outline: 3px solid #FFC72C; outline-offset: 3px; }
+a.ab-chip.ab-link b, .ab-chip.ab-live b { font-size: 1.15rem; letter-spacing: .02em; }
+a.ab-chip.ab-link b { color: #FFC72C; }
+.ab-chip.ab-live.on { border-color: #22B866; } .ab-chip.ab-live.on b { color: #8EDB6A; }
+.ab-chip.ab-live.half { border-color: #F5CB4A; } .ab-chip.ab-live.half b { color: #F5CB4A; }
+.ab-chip.ab-live.off { border-color: #E5484D; } .ab-chip.ab-live.off b { color: #F2683C; }

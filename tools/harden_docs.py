@@ -4,7 +4,8 @@ GitHub Pages serves files only and cannot send response headers, so this does wh
   - removes every script and stylesheet import loaded from another site (Quarto adds jQuery, RequireJS and MathJax from CDNs; no page here
     needs them), so nothing third-party runs and nothing tracks a visitor;
   - adds a Content-Security-Policy <meta> per page: scripts only from this site plus the exact inline scripts the page
-    holds (by SHA-256 hash), no plugins, no forms, no outside connections; plus no-referrer and noai / noimageai;
+    holds (by SHA-256 hash), no plugins, no forms, no outside connections but one: a listing card's cover picture
+    from Airbnb's image hosts (assets/airbnb/cards.js, the owner, 2026-11-22); plus no-referrer and noai / noimageai;
   - writes robots.txt that turns away AI and scraper crawlers;
   - fails if any image under docs/ carries EXIF, XMP or GPS metadata;
   - restores docs/.nojekyll (a full render deletes it);
@@ -55,7 +56,8 @@ def resume_pdf_problems(p):
 def csp_for(page_html):
     hashes = sorted({"'sha256-" + base64.b64encode(hashlib.sha256(body.encode("utf-8")).digest()).decode() + "'"
                      for attrs, body in INLINE_SCRIPT.findall(page_html) if "application/json" not in attrs.lower() and "application/ld+json" not in attrs.lower()})
-    return ("default-src 'self'; script-src 'self' " + " ".join(hashes) + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+    # img-src: Airbnb's image hosts, for the listing cards' cover pictures (a0.muscache.com, and z1.muscache.cn for a few homes)
+    return ("default-src 'self'; script-src 'self' " + " ".join(hashes) + "; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://a0.muscache.com https://z1.muscache.cn; "
             "font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests").replace("  ", " ")
 
 
