@@ -986,3 +986,49 @@ dialog.ab-card .ab-mixrows .val i { font-style: normal; font: 900 1.4rem var(--n
 dialog.ab-card .ab-mixrows .val small { font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; white-space: nowrap; }
 dialog.ab-card .ab-mixrows li { grid-template-columns: minmax(8.5rem, 11rem) minmax(0, 1fr) 11.5rem; min-height: 36px; }
 dialog.ab-card .ab-mixrows .val { grid-auto-flow: column; justify-content: end; align-items: baseline; gap: 10px; }
+
+/* the mix rows' numbers in the matchup style: the share in a solid pill in its scale colour (dark ink, the arrow inside),
+   everyone's share in a dark capsule beside it, both a fixed width so the numbers line up down the tile */
+dialog.ab-card .ab-mixrows li { grid-template-columns: minmax(8rem, 11rem) minmax(0, 1fr) 13.4rem; }
+dialog.ab-card .ab-mixrows .val { display: grid; grid-template-columns: 6.4rem 6.4rem; grid-auto-flow: row; gap: 8px; justify-content: end; align-items: center; }
+dialog.ab-card .ab-mixrows .val .pill { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; border-radius: 999px;
+  font: 900 1.25rem var(--num); color: #0B0D12; background: var(--hc); border: 1px solid rgba(255, 255, 255, .6); box-shadow: 0 0 0 2px rgba(0, 0, 0, .55); }
+dialog.ab-card .ab-mixrows .val .pill span { font-size: 1rem; }
+dialog.ab-card .ab-mixrows .val .cap { display: inline-flex; align-items: center; justify-content: center; min-height: 32px; border-radius: 999px;
+  font-size: 1.0625rem; font-weight: 800; color: #fff; background: #07080F; border: 1.5px solid rgba(255, 255, 255, .45); }
+dialog.ab-card .ab-mixrows li.ts-na .val .pill { font-size: 1.0625rem; color: #0B0D12; }
+/* a narrow mix tile (the owner's browser pane is 1024 wide): each row on two lines, the full name with its two number pills
+   above, the bar across the whole row below, so no name is ever cut */
+dialog.ab-card .ab-mixt .ab-face { container-type: inline-size; }
+dialog.ab-card .ab-mixrows b { overflow-wrap: anywhere; }
+@container (max-width: 640px) {
+  dialog.ab-card .ab-mixrows li { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name val" "trk trk"; row-gap: 6px; padding: 6px 12px; }
+  dialog.ab-card .ab-mixrows li > b { grid-area: name; }
+  dialog.ab-card .ab-mixrows li > .val { grid-area: val; }
+  dialog.ab-card .ab-mixrows li > .trk { grid-area: trk; height: 12px; }
+}
+
+/* the mix banner's badges, on the kit's badge variables: the hold badge a cyan medallion with a cyan ribbon, a dim one
+   where the hold could not be tested; the strongest pull as a chip with its two shares */
+dialog.ab-card .ab-badge.hold { --rim2: linear-gradient(180deg, #CFFBFF, #0E7C8A); --face: #0B2A33; --ink3: #7CF5FF; --rib: #7CF5FF; --ribink: #04161A; --glow: rgba(124, 245, 255, .3); }
+dialog.ab-card .ab-badge.hold .em b { font-size: 1.3rem; text-shadow: 0 2px 0 rgba(0, 0, 0, .6); }
+dialog.ab-card .ab-badge.dim { --rim2: linear-gradient(180deg, #D5D9E1, #5A6070); --face: #1B1E3C; --ink3: #D5D9E1; --rib: #3A3F5C; --ribink: #FFFFFF; --glow: rgba(255, 255, 255, .1); }
+dialog.ab-card .ab-chip.ab-pull { display: inline-grid; grid-template-columns: none; grid-template-areas: none; justify-items: center; align-content: center; gap: 2px; width: auto; max-width: 15rem; }
+dialog.ab-card .ab-chip.ab-pull b { font-size: 1.2rem; white-space: normal; text-align: center; line-height: 1.05; }
+dialog.ab-card .ab-chip.ab-pull small { font-size: 1.0625rem; font-weight: 800; color: #FFC72C; white-space: nowrap; }
+dialog.ab-card .ab-mixrows .val .pill, dialog.ab-card .ab-mixrows .val .cap { width: 100%; box-sizing: border-box; }
+
+/* the tendency scale on the kit's new values (the owner, 2026-11-22: "heat mapping is too indistnct", then "Everywhere";
+   SportsAnalytics issue 830, pull request 831: shared/brand/tokens.py TEND_LO, TEND_HI, TEND_MID) */
+.ts-n1 { --hc: #A5F3FC; } .ts-n2 { --hc: #67E8F9; } .ts-n3 { --hc: #22D3EE; } .ts-n4 { --hc: #00BFB2; } .ts-0 { --hc: #BFC5D2; }
+.ts-p1 { --hc: #FBCFE8; } .ts-p2 { --hc: #F9A8D4; } .ts-p3 { --hc: #F57DBF; } .ts-p4 { --hc: #F5559C; }
+/* the tightest windows: six-row mix tiles and the guest-types hero keep every row inside their tile */
+@media (min-width: 900px) and (max-height: 700px) {
+  dialog.ab-card .ab-mixrows { gap: 4px; margin-top: 6px; }
+  dialog.ab-card .ab-mixrows li { min-height: 30px; }
+  dialog.ab-card .ab-mixrows .val .pill, dialog.ab-card .ab-mixrows .val .cap { min-height: 28px; }
+}
+@media (min-width: 900px) and (max-width: 1100px) {
+  dialog.ab-card .ab-gtypes { gap: 5px; margin-top: 6px; }
+  dialog.ab-card .ab-gtype { padding-top: 5px; padding-bottom: 6px; }
+}
