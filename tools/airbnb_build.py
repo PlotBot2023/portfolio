@@ -611,7 +611,7 @@ def main():
     if a.models:
         # the guest cards (SportsAnalytics issue 808) and each market's review years, from the study's reviews
         from airbnb_guests import build_guests
-        g = build_guests(a.models)
+        g = build_guests(a.models, getattr(build_cards, "listing_types", None), cards["seg_names"], cards["host_types"])
         cards["nb_years"] = g.pop("nb_years")
         cards["guests"] = g
     (ROOT / "assets" / "airbnb" / "cards.json").write_text(json.dumps(cards, separators=(",", ":"), allow_nan=False), encoding="utf-8")

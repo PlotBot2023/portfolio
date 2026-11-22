@@ -6,8 +6,8 @@
   var DLG = document.getElementById("ab-cards");
   if (!DLG) return;
   var D = null, state = { level: "nb", a: 0, b: 1, view: "card", nbf: 0, fam: "succ", gpool: "all", gf: -1, cur: null, page: 0 };
-  var LEVELS = [["nb", "Neighbourhood"], ["seg", "ML segment"], ["host", "Host"], ["listing", "Listing"], ["guest", "Guest"]];
-  var LWORD = { nb: "neighbourhoods", seg: "segments", host: "hosts", listing: "listings", guest: "guests" };
+  var LEVELS = [["nb", "Neighbourhood"], ["seg", "ML segment"], ["host", "Host"], ["listing", "Listing"], ["guest", "Guest"], ["mix", "Mix"]];
+  var LWORD = { nb: "neighbourhoods", seg: "segments", host: "hosts", listing: "listings", guest: "guests", mix: "types" };
   // a guest card's measures are bands (issue 808: no exact count, no date), each a tendency, so each wears the
   // cyan-to-pink scale; none is better or worse. Hues are identity only. The bands' words come from cards.json.
   // the flip hint: two arrows passing each other (the owner, 2026-11-21), in the kit's cyan and gold, never a value colour
@@ -185,8 +185,51 @@
       D.county_h[k] = G.hist[d[0]];
     });
   }
+  // ── the archetype mix (SportsAnalytics issue 812): a card per type; a tile per other family, its 100% bar the type's
+  // mix (width the share, colour more or less often than the county on the cyan-to-pink scale by z), its back the table ──
+  var MIX_HUE = { loc: "#2DD4BF", price: "#FFC72C", beh: "#60A5FA", seg: "#C084FC", host: "#FB923C" };
+  var MIX_CACHE = null;
+  function mixItems() {
+    if (MIX_CACHE) return MIX_CACHE;
+    var X = D.guests.mix, out = [];
+    X.fams.forEach(function (f) { f.names.forEach(function (n, i) { out.push({ name: n, fam: f.key, i: i, n: 1, m: {}, sub: f.l }); }); });
+    return (MIX_CACHE = out);
+  }
+  function mixTile(x, f) {
+    var X = D.guests.mix, p = X.pairs[x.fam + "|" + f.key], row = p.share[x.i], zr = p.z[x.i], hidden = 0;
+    // a row a type: its full name, its share as a bar with the county's share as a white tick, the share and the county's
+    var top = Math.max.apply(null, f.names.map(function (n, j) { return Math.max(row[j] || 0, p.county[j] || 0); })) || 1;
+    var rows = f.names.map(function (n, j) {
+      var v = row[j], c = p.county[j], z = zr[j];
+      if (v == null) return '<li class="ts-na"><b>' + esc(n.replace(/^The /, "")) + '</b><span class="trk"></span><span class="val"><i>too few</i></span></li>';
+      var g = Math.abs(z) < .25 ? "\u2248" : z > 0 ? "\u25B2" : "\u25BC";
+      return '<li class="' + heat(z).replace("hs-", "ts-") + '"><b>' + esc(n.replace(/^The /, "")) + '</b><span class="trk"><span class="fill" style="width:' + (100 * v / top).toFixed(1)
+        + '%"></span><span class="cty" style="left:' + (100 * c / top).toFixed(1) + '%"></span></span><span class="val"><i><span aria-hidden="true">' + g + "</span> " + Math.round(v)
+        + "%</i><small>all " + Math.round(c) + "%</small></span></li>";
+    }).join("");
+    var tbl = '<table class="twin"><thead><tr><th scope="col">' + esc(f.l) + '</th><th scope="col">' + esc(x.name.replace(/^The /, "")) + '</th><th scope="col">All</th><th scope="col">' + esc(p.unit) + "</th></tr></thead><tbody>"
+      + f.names.map(function (n, j) { return "<tr><td>" + esc(n) + "</td><td>" + (row[j] == null ? "too few" : row[j].toFixed(1) + "%") + "</td><td>" + p.county[j].toFixed(1) + "%</td><td>" + (p.n[x.i][j] < 0 ? "under " + D.guests.crowd : p.n[x.i][j].toLocaleString("en-US")) + "</td></tr>"; }).join("") + "</tbody></table>";
+    var label = f.l + " among " + x.name + ": " + f.names.map(function (n, j) { return n + " " + (row[j] == null ? "too few" : Math.round(row[j]) + " percent, all " + Math.round(p.county[j]) + " percent"); }).join("; ") + ". Turn over for the table.";
+    var hd = function (small) { return '<div class="ab-th"><i></i><span class="t">' + esc(f.l) + "</span>" + (small ? "<small>" + esc(small) + "</small>" : "") + '<span class="ab-fh" aria-hidden="true">' + FLIP + "</span></div>"; };
+    return '<div class="ab-t ab-mixt" style="--sh:' + MIX_HUE[f.key] + '" data-flip role="button" tabindex="0" aria-pressed="false" aria-label="' + esc(label) + '"><div class="ab-in">'
+      + '<div class="ab-face ab-f">' + hd(p.rows[x.i].toLocaleString("en-US") + " " + p.unit) + '<ul class="ab-mixrows" aria-hidden="true">' + rows + "</ul></div>"
+      + '<div class="ab-face ab-b" aria-hidden="true">' + hd("as a table") + '<div class="ab-gtab">' + tbl + "</div></div></div></div>";
+  }
+  function mixView(x) {
+    var X = D.guests.mix, others = X.fams.filter(function (f) { return f.key !== x.fam; });
+    return '<div class="ab-tiles ab-mixtiles">' + others.map(function (f) { return mixTile(x, f); }).join("") + "</div>"
+      + '<p class="ab-note">Each bar is this type\'s share; the white tick is the share among all of them. Pink: more often than all, cyan: less, by z. Two guest families count guests (2 or more homes); a family of homes counts stays (reviews). Fewer than ' + D.guests.crowd + " is not shown.</p>";
+  }
+  function mixBand(x) {
+    var X = D.guests.mix, f = X.fams.filter(function (q) { return q.key === x.fam; })[0];
+    var any = X.pairs[x.fam + "|" + X.fams.filter(function (q) { return q.key !== x.fam; })[0].key];
+    return '<div class="ab-disc" aria-hidden="true">M</div>'
+      + '<div class="ab-id"><span class="eyebrow">' + esc("Mix: " + f.l) + '</span><p id="ab-title" class="ab-name" role="heading" aria-level="2">' + esc(x.name) + "</p>"
+      + '<span class="ab-sub ab-yrs">' + esc(any.rows[x.i].toLocaleString("en-US") + " " + any.unit) + "</span></div>"
+      + '<div class="ab-tray"><div class="ab-badges" aria-label="Badges">' + emblem("data", "REV", "Data", "Measured from review data") + "</div></div>";
+  }
   function typeName(fam, i) { return i == null ? "not typed" : D.guests.types[fam].names[i]; }
-  function items(level) { return level === "listing" ? listingItems() : level === "guest" ? guestItems() : D.levels[level]; }
+  function items(level) { return level === "listing" ? listingItems() : level === "guest" ? guestItems() : level === "mix" ? mixItems() : D.levels[level]; }
   function listingChoices() {
     var all = listingItems(), nbf = state.nbf;
     return all.map(function (x, i) { return [x, i]; }).filter(function (p) { return p[0].nb === nbf; });
@@ -250,7 +293,8 @@
 
   function picker(id, idx, label) {
     var opts;
-    if (state.level === "guest") opts = guestChoices().map(function (p) { return '<option value="' + p[1] + '"' + (p[1] === idx ? " selected" : "") + ">" + esc(p[0].code + ", " + typeName("price", p[0].t.price) + ", " + typeName("beh", p[0].t.beh)) + "</option>"; });
+    if (state.level === "mix") opts = mixItems().map(function (x, i) { var f = D.guests.mix.fams.filter(function (q) { return q.key === x.fam; })[0]; return '<option value="' + i + '"' + (i === idx ? " selected" : "") + ">" + esc(f.l + ": " + x.name) + "</option>"; });
+    else if (state.level === "guest") opts = guestChoices().map(function (p) { return '<option value="' + p[1] + '"' + (p[1] === idx ? " selected" : "") + ">" + esc(p[0].code + ", " + typeName("price", p[0].t.price) + ", " + typeName("beh", p[0].t.beh)) + "</option>"; });
     else if (state.level === "listing") opts = listingChoices().map(function (p) { return '<option value="' + p[1] + '"' + (p[1] === idx ? " selected" : "") + ">" + esc(p[0].code + ", " + p[0].name + ", " + fmt("revpar", p[0].m.revpar)) + "</option>"; });
     else opts = items(state.level).map(function (x, i) { return [x, i]; }).sort(function (a, b) { return (b[0].m.revpar || 0) - (a[0].m.revpar || 0); })
       .map(function (p) { return '<option value="' + p[1] + '"' + (p[1] === idx ? " selected" : "") + ">" + esc(p[0].name + ", " + fmt("revpar", p[0].m.revpar)) + "</option>"; });
@@ -366,6 +410,7 @@
   function cardView() {
     var list = items(state.level), x = list[state.a] || list[0], fam = D.models ? state.fam : "succ";
     if (state.level === "guest") return guestView(x);
+    if (state.level === "mix") return mixView(x);
     var keys = D.models ? groupKeys(fam) : state.level === "listing" ? TILES.listing : TILES.group;
     var notes = state.level === "seg" ? '<p class="ab-note">' + esc(D.seg_meta.method) + ". Titles follow a rule on each group's rate and calendar against the county's medians, so a refit renames itself. Homes whose nightly price was a placeholder are not segmented.</p>"
       : state.level === "host" ? '<p class="ab-note">Hosts with ' + D.host_min + " or more entire homes, coded by size. No names or Airbnb ids: most hosts are private people.</p>"
@@ -442,14 +487,15 @@
     state.cur = x;
     DLG.dataset.lvl = state.level;
     DLG.classList.toggle("is-h2h", state.view === "h2h");      // not data-level: clicks find level buttons by that attribute
-    DLG.querySelector(".ab-band").innerHTML = guest ? guestBand(x) : band(x);
+    if (state.level === "mix") state.view = "card";      // a mix card has no head to head
+    DLG.querySelector(".ab-band").innerHTML = state.level === "mix" ? mixBand(x) : guest ? guestBand(x) : band(x);
     // the gold parallel: the card ranked first in its level on RevPAR wears a gold foil banner
     // the banner's metal: gold, silver or bronze for the first three of the level on RevPAR
     var rr = state.view === "card" && x.m.revpar != null ? rankOf(state.level, "revpar", x.m.revpar) : null;
     var tier = rr && rr.rank <= 3 && rr.of >= 4 ? MEDAL[rr.rank - 1][0] : "";
     ["gold", "silver", "bronze"].forEach(function (t) { DLG.querySelector(".ab-top").classList.toggle(t, t === tier); });
     var lv = LEVELS.map(function (l) { return '<button type="button" class="ab-seg" data-level="' + l[0] + '" aria-pressed="' + (l[0] === state.level) + '">' + l[1] + "</button>"; }).join("");
-    var fams = guest ? '<label class="ab-pick"><span>Against</span><select id="ab-gp">' + GPOOL.map(function (p) { return '<option value="' + p[0] + '"' + (p[0] === state.gpool ? " selected" : "") + ">" + esc(p[1]) + "</option>"; }).join("") + "</select></label>"
+    var fams = state.level === "mix" ? "" : guest ? '<label class="ab-pick"><span>Against</span><select id="ab-gp">' + GPOOL.map(function (p) { return '<option value="' + p[0] + '"' + (p[0] === state.gpool ? " selected" : "") + ">" + esc(p[1]) + "</option>"; }).join("") + "</select></label>"
       : D.models && FAMS.length > 1 && window.innerWidth < 1600 ? '<label class="ab-pick"><span>Stats</span><select id="ab-fam">' + FAMS.map(function (f) { return '<option value="' + f[0] + '"' + (f[0] === state.fam ? " selected" : "") + ">" + f[1] + "</option>"; }).join("") + "</select></label>"
       : D.models && FAMS.length > 1 ? '<div class="ab-segs ab-fam" role="group" aria-label="Stat family">' + FAMS.map(function (f) { return '<button type="button" class="ab-seg" data-fam="' + f[0] + '" aria-pressed="' + (f[0] === state.fam) + '">' + f[1] + "</button>"; }).join("") + "</div>" : "";
     var pick = fams + (state.level === "listing" ? nbFilter() : guest ? guestFilter() : "") + picker("ab-a", state.a, state.view === "h2h" ? "Left" : "Card") + (state.view === "h2h" ? picker("ab-b", state.b, "Right") : "");
@@ -496,7 +542,8 @@
     DLG.querySelector(".ab-body").innerHTML = '<p class="ab-note">Loading the cards.</p>';
     fetch(DLG.dataset.src).then(function (r) { return r.json(); }).then(function (j) {
       D = j;
-      if (!D.guests) LEVELS = LEVELS.filter(function (l) { return l[0] !== "guest"; }); else guestSetup();
+      if (!D.guests) LEVELS = LEVELS.filter(function (l) { return l[0] !== "guest" && l[0] !== "mix"; }); else guestSetup();
+      if (D.guests && !D.guests.mix) LEVELS = LEVELS.filter(function (l) { return l[0] !== "mix"; });
       then();
     })
       .catch(function (err) { if (window.console) console.error("cards:", err); DLG.querySelector(".ab-body").innerHTML = '<p class="ab-note">The cards did not load. Reload the page to try again.</p>'; });

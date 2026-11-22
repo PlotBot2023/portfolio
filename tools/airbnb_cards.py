@@ -180,6 +180,9 @@ def build_cards(homes: pd.DataFrame, asof: str, min_n: int, models_dir=None) -> 
 
     # host type by how many active listings the host runs (all room types): the same 10+ line as the page's multi-host
     h["htype"] = np.select([h["host_n"] >= 10, h["host_n"] >= 2], ["corp", "small"], "single")
+    # each home's segment and host size, for the archetype mix (airbnb_guests.mix_block; SportsAnalytics issue 812)
+    build_cards.listing_types = h.loc[h["seg"] >= 0, ["listing_id", "seg", "htype"]].assign(
+        host=lambda d: d["htype"].map({"corp": 0, "small": 1, "single": 2}))[["listing_id", "seg", "host"]].copy()
 
     def mix(g: pd.DataFrame) -> dict:
         return {"seg": [int((g["seg"] == i).sum()) for i in range(len(seg_names))],
