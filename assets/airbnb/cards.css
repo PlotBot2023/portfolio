@@ -955,3 +955,34 @@ dialog.ab-card .mrk.na { display: none; }
 .ab-sheet .cs-steps .cs-n,
 .ab-sheet .cs-tiles .ab-hx span,
 .ab-sheet .cs-who small { font-size: 1rem; }
+
+/* the archetype mix (SportsAnalytics issue 812): four tiles, each a family; its 100% bar slices are the type's shares, each
+   wearing the cyan-to-pink scale by its z against the county's share; chips name each slice with its share and the county's */
+dialog.ab-card .ab-tiles.ab-mixtiles { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+dialog.ab-card[data-lvl="mix"] .ab-view[data-view="h2h"] { display: none; }
+dialog.ab-card .ab-mixbar { display: flex; height: 34px; margin: 14px 14px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 2px rgba(0, 0, 0, .6), inset 0 2px 6px rgba(0, 0, 0, .5); }
+dialog.ab-card .ab-mixbar span { width: var(--w); background: var(--hc); }
+dialog.ab-card .ab-mixbar span + span { box-shadow: inset 3px 0 0 rgba(0, 0, 0, .65); }
+dialog.ab-card .ab-mixchips { flex: 1 1 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr)); align-content: center; gap: 8px; margin: 12px 14px 0; padding: 0; list-style: none; }
+dialog.ab-card .ab-mixchips li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 8px; padding: 6px 12px; border-radius: 12px;
+  background: var(--well); box-shadow: var(--sink); border-left: 6px solid var(--hc); }
+dialog.ab-card .ab-mixchips b { font-size: 1.125rem; font-weight: 900; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+dialog.ab-card .ab-mixchips i { font-style: normal; font: 900 1.25rem var(--num); color: #fff; white-space: nowrap; }
+dialog.ab-card .ab-mixchips small { grid-column: 1 / -1; font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; }
+@media (min-width: 900px) {
+  dialog.ab-card .ab-tiles.ab-mixtiles.paged { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
+}
+
+/* the mix tile as rows (read like the matchup rows): name, a bar of the type's share with the county's share as a white
+   tick, the share in the mono face and the county's beside it; the rows share the tile's height */
+dialog.ab-card .ab-mixrows { flex: 1 1 auto; display: grid; grid-auto-rows: minmax(0, 1fr); align-content: stretch; gap: 6px; margin: 10px 14px 0; padding: 0; list-style: none; min-height: 0; }
+dialog.ab-card .ab-mixrows li { display: grid; grid-template-columns: minmax(8.5rem, 11rem) minmax(0, 1fr) 7.6rem; align-items: center; gap: 12px; padding: 0 12px; border-radius: 12px; background: var(--well); box-shadow: var(--sink); min-height: 40px; }
+dialog.ab-card .ab-mixrows b { font-size: 1.125rem; font-weight: 900; color: #fff; line-height: 1.1; }
+dialog.ab-card .ab-mixrows .trk { position: relative; height: 18px; border-radius: 9px; background: rgba(255, 255, 255, .08); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .7); }
+dialog.ab-card .ab-mixrows .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 9px; background: var(--hc); box-shadow: 0 0 10px -3px var(--hc); }
+dialog.ab-card .ab-mixrows .cty { position: absolute; top: -6px; bottom: -6px; width: 4px; margin-left: -2px; border-radius: 2px; background: #fff; box-shadow: 0 0 0 2px rgba(0, 0, 0, .7); }
+dialog.ab-card .ab-mixrows .val { display: grid; justify-items: end; line-height: 1.1; }
+dialog.ab-card .ab-mixrows .val i { font-style: normal; font: 900 1.4rem var(--num); color: #fff; white-space: nowrap; }
+dialog.ab-card .ab-mixrows .val small { font-size: 1.0625rem; font-weight: 700; color: #D5D9E1; white-space: nowrap; }
+dialog.ab-card .ab-mixrows li { grid-template-columns: minmax(8.5rem, 11rem) minmax(0, 1fr) 11.5rem; min-height: 36px; }
+dialog.ab-card .ab-mixrows .val { grid-auto-flow: column; justify-content: end; align-items: baseline; gap: 10px; }

@@ -154,7 +154,46 @@ def behaviour_features(t: pd.DataFrame) -> pd.DataFrame:
                          "compl": t["complaint"].fillna(0).clip(upper=.5), "detail": np.log1p(t["sent"].fillna(0))}, index=t.index)
 
 
-def build_guests(models_dir) -> dict:
+def mix_block(r: pd.DataFrame, t: pd.DataFrame, lt: pd.DataFrame, loc_names, price_names, beh_names, seg_names, host_names) -> dict:
+    """Every type across every other type (SportsAnalytics issue 812). Families: the guest's place, price and travel types
+    (guests of 2 or more homes) and the home's ML segment and host size (the homes of the cards' calendar snapshot).
+    A pair of guest families counts guests; a pair with a home family counts stays (reviews by typed guests of typed
+    homes). Each cell: its count, its share of the row type, the share of all (the county's), and a z of its log lift over
+    the pair's spread (0 at the county's own share), for the cyan-to-pink tendency scale. A cell under CROWD is not shown (null)."""
+    fams = [("loc", "Where guests stay", list(loc_names), "guest"), ("price", "What guests pay", list(price_names), "guest"),
+            ("beh", "How guests travel", list(beh_names), "guest"), ("seg", "Home segment", list(seg_names), "home"),
+            ("host", "Host size", list(host_names), "home")]
+    g = t[["t_loc", "t_price", "t_beh"]].rename(columns=lambda c: c[2:])
+    stays = r[["reviewer_id", "listing_id"]].merge(g, left_on="reviewer_id", right_index=True).merge(lt, on="listing_id")
+    out = {"fams": [{"key": k, "l": l, "names": n, "unit": u} for k, l, n, u in fams], "pairs": {}}
+    for a, _, an, au in fams:
+        for b, _, bn, bu in fams:
+            if a == b:
+                continue
+            src = g if au == "guest" and bu == "guest" else stays
+            d = src[[a, b]].dropna().astype(int)
+            ct = pd.crosstab(d[a], d[b]).reindex(index=range(len(an)), columns=range(len(bn)), fill_value=0)
+            n = ct.to_numpy()
+            county = n.sum(0) / max(n.sum(), 1)
+            share = n / np.maximum(n.sum(1, keepdims=True), 1)
+            lift = np.log(np.where((n >= CROWD) & (county > 0), share / np.where(county > 0, county, 1), np.nan))
+            rms = float(np.sqrt(np.nanmean(lift ** 2))) if np.isfinite(lift).any() else 0.0
+            z = lift / rms if rms > 0 else lift * 0      # 0 at the county's own share; the pair's spread sets the steps
+            keep = n >= CROWD
+            out["pairs"][f"{a}|{b}"] = {
+                "unit": "guests" if src is g else "stays", "rows": n.sum(1).astype(int).tolist(),
+                "n": np.where(keep, n, -1).astype(int).tolist(),
+                "share": np.where(keep, np.round(100 * share, 1), np.nan).tolist(),
+                "county": np.round(100 * county, 1).tolist(),
+                "z": np.where(keep, np.round(z, 2), np.nan).tolist()}
+    # JSON has no NaN: a hidden cell is null
+    for v in out["pairs"].values():
+        for k in ("share", "z"):
+            v[k] = [[None if (x != x) else x for x in row] for row in v[k]]
+    return out
+
+
+def build_guests(models_dir, listing_types: pd.DataFrame | None = None, seg_names=None, host_names=None) -> dict:
     from sklearn.cluster import KMeans
     from sklearn.metrics import silhouette_score
     proc = pathlib.Path(models_dir)
@@ -282,6 +321,9 @@ def build_guests(models_dir) -> dict:
                               f"fitted on {len(fit_rows):,} guests of 2 or more homes; silhouette {sil:.2f}"},
         },
         "pool_all": int(len(t)),
+        "mix": (mix_block(r, t.assign(t_loc=loc_type(t), t_price=price_type(t), t_beh=behaviour(t)), listing_types,
+                          [n for n, _ in LOC_TYPES], [n for n, _ in PRICE_TYPES], beh_names, seg_names, host_names)
+                if listing_types is not None else None),
         # each market's own review span, for the neighbourhood cards' Years line (years only, never a date)
         "nb_years": {str(k): [int(v.min()), int(v.max())] for k, v in r.groupby("neighbourhood")["year"]},
     }
