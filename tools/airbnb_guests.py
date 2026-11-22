@@ -154,7 +154,8 @@ def behaviour_features(t: pd.DataFrame) -> pd.DataFrame:
                          "compl": t["complaint"].fillna(0).clip(upper=.5), "detail": np.log1p(t["sent"].fillna(0))}, index=t.index)
 
 
-def mix_block(r: pd.DataFrame, t: pd.DataFrame, lt: pd.DataFrame, loc_names, price_names, beh_names, seg_names, host_names) -> dict:
+def mix_block(r: pd.DataFrame, t: pd.DataFrame, lt: pd.DataFrame, loc_names, price_names, beh_names, seg_names, host_names,
+              rentals: dict | None = None) -> dict:
     """Every type across every other type (SportsAnalytics issue 812). Families: the guest's place, price and travel types
     (guests of 2 or more homes) and the home's ML segment and host size (the homes of the cards' calendar snapshot).
     A pair of guest families counts guests; a pair with a home family counts stays (reviews by typed guests of typed
@@ -164,8 +165,20 @@ def mix_block(r: pd.DataFrame, t: pd.DataFrame, lt: pd.DataFrame, loc_names, pri
             ("beh", "How guests travel", list(beh_names), "guest"), ("seg", "Home segment", list(seg_names), "home"),
             ("host", "Host size", list(host_names), "home")]
     g = t[["t_loc", "t_price", "t_beh"]].rename(columns=lambda c: c[2:])
-    stays = r[["reviewer_id", "listing_id"]].merge(g, left_on="reviewer_id", right_index=True).merge(lt, on="listing_id")
-    out = {"fams": [{"key": k, "l": l, "names": n, "unit": u} for k, l, n, u in fams], "pairs": {}}
+    # every stay keeps its guest's types; a home's types join where known (a pair uses only stays with both its types)
+    stays = r[["reviewer_id", "listing_id", "host_id", "neighbourhood"]].merge(g, left_on="reviewer_id", right_index=True) \
+        .merge(lt, on="listing_id", how="left")
+    holds = {}
+    if rentals:
+        # the Rentals Archetypes study's types (issue 718), joined by listing id, host id and neighbourhood
+        for key, label, col in (("lt", "Listing type", "listing_id"), ("ht", "Host type", "host_id"), ("nt", "Neighbourhood type", "neighbourhood")):
+            fam = rentals[key]
+            stays[key] = stays[col].astype(str).map(fam["map"])
+            fams.append((key, label, list(fam["names"]), "home"))
+            holds[key] = {"status": fam["hold"], "held": fam.get("held")}
+    out = {"fams": [{"key": k, "l": l, "names": n, "unit": u, **({"hold": holds[k]["status"], "held": holds[k]["held"]} if k in holds else {})}
+                    for k, l, n, u in fams],
+           "pairs": {}, "rentals_asof": (rentals or {}).get("asof")}
     for a, _, an, au in fams:
         for b, _, bn, bu in fams:
             if a == b:
@@ -193,7 +206,7 @@ def mix_block(r: pd.DataFrame, t: pd.DataFrame, lt: pd.DataFrame, loc_names, pri
     return out
 
 
-def build_guests(models_dir, listing_types: pd.DataFrame | None = None, seg_names=None, host_names=None) -> dict:
+def build_guests(models_dir, listing_types: pd.DataFrame | None = None, seg_names=None, host_names=None, rentals: dict | None = None) -> dict:
     from sklearn.cluster import KMeans
     from sklearn.metrics import silhouette_score
     proc = pathlib.Path(models_dir)
@@ -322,7 +335,7 @@ def build_guests(models_dir, listing_types: pd.DataFrame | None = None, seg_name
         },
         "pool_all": int(len(t)),
         "mix": (mix_block(r, t.assign(t_loc=loc_type(t), t_price=price_type(t), t_beh=behaviour(t)), listing_types,
-                          [n for n, _ in LOC_TYPES], [n for n, _ in PRICE_TYPES], beh_names, seg_names, host_names)
+                          [n for n, _ in LOC_TYPES], [n for n, _ in PRICE_TYPES], beh_names, seg_names, host_names, rentals)
                 if listing_types is not None else None),
         # each market's own review span, for the neighbourhood cards' Years line (years only, never a date)
         "nb_years": {str(k): [int(v.min()), int(v.max())] for k, v in r.groupby("neighbourhood")["year"]},

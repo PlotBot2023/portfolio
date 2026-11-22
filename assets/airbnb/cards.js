@@ -187,7 +187,7 @@
   }
   // ── the archetype mix (SportsAnalytics issue 812): a card per type; a tile per other family, its 100% bar the type's
   // mix (width the share, colour more or less often than the county on the cyan-to-pink scale by z), its back the table ──
-  var MIX_HUE = { loc: "#2DD4BF", price: "#FFC72C", beh: "#60A5FA", seg: "#C084FC", host: "#FB923C" };
+  var MIX_HUE = { loc: "#2DD4BF", price: "#FFC72C", beh: "#60A5FA", seg: "#C084FC", host: "#FB923C", lt: "#A3E635", ht: "#E879F9", nt: "#38BDF8" };
   var MIX_CACHE = null;
   function mixItems() {
     if (MIX_CACHE) return MIX_CACHE;
@@ -201,11 +201,11 @@
     var top = Math.max.apply(null, f.names.map(function (n, j) { return Math.max(row[j] || 0, p.county[j] || 0); })) || 1;
     var rows = f.names.map(function (n, j) {
       var v = row[j], c = p.county[j], z = zr[j];
-      if (v == null) return '<li class="ts-na"><b>' + esc(n.replace(/^The /, "")) + '</b><span class="trk"></span><span class="val"><i>too few</i></span></li>';
+      if (v == null) return '<li class="ts-na"><b>' + esc(n.replace(/^The /, "")) + '</b><span class="trk"></span><span class="val"><i class="pill">too few</i><small class="cap">all ' + Math.round(c) + "%</small></span></li>";
       var g = Math.abs(z) < .25 ? "\u2248" : z > 0 ? "\u25B2" : "\u25BC";
       return '<li class="' + heat(z).replace("hs-", "ts-") + '"><b>' + esc(n.replace(/^The /, "")) + '</b><span class="trk"><span class="fill" style="width:' + (100 * v / top).toFixed(1)
-        + '%"></span><span class="cty" style="left:' + (100 * c / top).toFixed(1) + '%"></span></span><span class="val"><i><span aria-hidden="true">' + g + "</span> " + Math.round(v)
-        + "%</i><small>all " + Math.round(c) + "%</small></span></li>";
+        + '%"></span><span class="cty" style="left:' + (100 * c / top).toFixed(1) + '%"></span></span><span class="val"><i class="pill">' + Math.round(v)
+        + '%</i><small class="cap">all ' + Math.round(c) + "%</small></span></li>";
     }).join("");
     var tbl = '<table class="twin"><thead><tr><th scope="col">' + esc(f.l) + '</th><th scope="col">' + esc(x.name.replace(/^The /, "")) + '</th><th scope="col">All</th><th scope="col">' + esc(p.unit) + "</th></tr></thead><tbody>"
       + f.names.map(function (n, j) { return "<tr><td>" + esc(n) + "</td><td>" + (row[j] == null ? "too few" : row[j].toFixed(1) + "%") + "</td><td>" + p.county[j].toFixed(1) + "%</td><td>" + (p.n[x.i][j] < 0 ? "under " + D.guests.crowd : p.n[x.i][j].toLocaleString("en-US")) + "</td></tr>"; }).join("") + "</tbody></table>";
@@ -218,15 +218,39 @@
   function mixView(x) {
     var X = D.guests.mix, others = X.fams.filter(function (f) { return f.key !== x.fam; });
     return '<div class="ab-tiles ab-mixtiles">' + others.map(function (f) { return mixTile(x, f); }).join("") + "</div>"
-      + '<p class="ab-note">Each bar is this type\'s share; the white tick is the share among all of them. Pink: more often than all, cyan: less, by z. Two guest families count guests (2 or more homes); a family of homes counts stays (reviews). Fewer than ' + D.guests.crowd + " is not shown.</p>";
+      + '<p class="ab-note">Each bar is this type\'s share; the white tick is the share among all of them. Pink: more often than all, cyan: less, by z. Two guest families count guests (2 or more homes); a family of homes counts stays (reviews) where its types are known.'
+      + (X.rentals_asof ? " Listing, host and neighbourhood types: the Rentals Archetypes study, snapshot of " + esc(X.rentals_asof) + "." : "") + " Fewer than " + D.guests.crowd + " is not shown.</p>";
   }
   function mixBand(x) {
     var X = D.guests.mix, f = X.fams.filter(function (q) { return q.key === x.fam; })[0];
     var any = X.pairs[x.fam + "|" + X.fams.filter(function (q) { return q.key !== x.fam; })[0].key];
     return '<div class="ab-disc" aria-hidden="true">M</div>'
       + '<div class="ab-id"><span class="eyebrow">' + esc("Mix: " + f.l) + '</span><p id="ab-title" class="ab-name" role="heading" aria-level="2">' + esc(x.name) + "</p>"
-      + '<span class="ab-sub ab-yrs">' + esc(any.rows[x.i].toLocaleString("en-US") + " " + any.unit) + "</span></div>"
-      + '<div class="ab-tray"><div class="ab-badges" aria-label="Badges">' + emblem("data", "REV", "Data", "Measured from review data") + "</div></div>";
+      + '<span class="ab-sub ab-yrs">' + esc(any.rows[x.i].toLocaleString("en-US") + " " + any.unit + (f.hold && f.hold[x.i] !== "pass" ? ", type not confirmed" : "")) + "</span></div>"
+      + '<div class="ab-tray"><div class="ab-badges" aria-label="Badges">' + emblem("data", "REV", "Data", "Measured from review data") + mixHold(x, f) + "</div>"
+      + '<div class="ab-chips"><span class="ab-chip"><i>' + esc(any.unit.charAt(0).toUpperCase() + any.unit.slice(1)) + "</i><b>" + any.rows[x.i].toLocaleString("en-US") + "</b></span>" + mixTop(x) + "</div></div>";
+  }
+  // the hold badge: how often a member keeps its type (guest types: early against late reviews; the Rentals types: one
+  // snapshot to the next); a type that could not be tested says so
+  function mixHold(x, f) {
+    var held = null, ok = true;
+    if (D.guests.types[x.fam]) { var h = D.guests.types[x.fam].hold.by[x.i] || D.guests.types[x.fam].hold.by[String(x.i)]; if (h) held = [h.kept, h.chance]; }
+    else if (f.held) { held = f.held[x.i]; ok = f.hold[x.i] === "pass"; }
+    if (!held) return "";
+    if (!ok) return emblem("dim", "?", "Not tested", "Hold not measured: too few to test");
+    return emblem("hold", Math.round(100 * held[0]) + "%", "Holds", "Keeps its type " + Math.round(100 * held[0]) + " percent of the time, against " + Math.round(100 * held[1]) + " percent by chance");
+  }
+  // the type's strongest pull across every other family
+  function mixTop(x) {
+    var X = D.guests.mix, best = null;
+    X.fams.forEach(function (f) {
+      if (f.key === x.fam) return;
+      var p = X.pairs[x.fam + "|" + f.key];
+      // the biggest pull: the highest share over everyone's, among shares of at least 5% (a z is only fair inside its family)
+      p.share[x.i].forEach(function (v, j) { var c = p.county[j]; if (v != null && v >= 5 && c > 0 && (!best || v / c > best.lift)) best = { lift: v / c, name: f.names[j], v: v, c: c }; });
+    });
+    if (!best || best.lift < 1.1) return "";
+    return '<span class="ab-chip ab-pull"><i>Most over</i><b>' + esc(best.name.replace(/^The /, "")) + "</b><small>" + Math.round(best.v) + "% against " + Math.round(best.c) + "%</small></span>";
   }
   function typeName(fam, i) { return i == null ? "not typed" : D.guests.types[fam].names[i]; }
   function items(level) { return level === "listing" ? listingItems() : level === "guest" ? guestItems() : level === "mix" ? mixItems() : D.levels[level]; }
@@ -514,8 +538,18 @@
     var paged = window.innerWidth >= 900 && window.innerHeight <= 960;
     var tl = DLG.querySelector(".ab-tiles"), hh = DLG.querySelector(".ab-h2h");
     if (tl) { tl.querySelectorAll(".ab-t:not(.hero)").forEach(function (t, i, all) { t.dataset.pg = i < Math.ceil(all.length / 2) ? 0 : 1; }); }
-    state.pages = tl && paged ? 2 : 1;
-    if (tl) { state.page = state.page % 2; tl.classList.toggle("paged", paged); tl.classList.add("pg" + state.page); }
+    if (tl && tl.classList.contains("ab-mixtiles")) {
+      // a mix card shows its other families four at a time (two on short screens), at full size
+      var mts = [].slice.call(tl.querySelectorAll(".ab-t")), per = paged ? 2 : 4;
+      state.pages = Math.ceil(mts.length / per); state.page = state.page % state.pages;
+      mts.forEach(function (t, i) { t.style.display = Math.floor(i / per) === state.page ? "" : "none"; t.style.gridColumn = ""; });
+      var shown = mts.filter(function (t) { return t.style.display !== "none"; });
+      if (shown.length % 2 === 1) shown[shown.length - 1].style.gridColumn = "1 / -1";      // an odd page fills its row
+      tl.classList.toggle("paged", paged);
+    } else {
+      state.pages = tl && paged ? 2 : 1;
+      if (tl) { state.page = state.page % 2; tl.classList.toggle("paged", paged); tl.classList.add("pg" + state.page); }
+    }
     if (hh) {
       // head to head: as many rows as fit, page by page (its header leaves a different height at each size)
       var box = hh.querySelector(".ab-rows"), rs = [].slice.call(hh.querySelectorAll(".ab-row"));

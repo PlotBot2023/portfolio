@@ -555,11 +555,33 @@ def sheet(s, legend, now, commit):
 </div>"""
 
 
+def rentals_types(sa_root: pathlib.Path) -> dict:
+    """Each listing's, host's and neighbourhood's type from the Rentals Archetypes study (SportsAnalytics rentals/,
+    issue 718), run read-only from its own folder: never a copy of its code. Returns, for each of the three families,
+    its type names, each unit's type as an index, and each type's hold-test status."""
+    import os
+    import sys
+    os.environ.setdefault("SA_NO_DB", "1")
+    sys.path.insert(0, str(sa_root))
+    from rentals import archetypes
+    model = archetypes.build()
+    out = {"asof": model.get("asof")}
+    for key, seg in (("lt", "listings"), ("ht", "hosts"), ("nt", "neighbourhoods")):
+        s = model[seg]
+        names = [t["name"] for t in s["types"]]
+        out[key] = {"names": names, "map": {r["id"]: names.index(r["type"]) for r in s["rows"] if r["type"] in names},
+                    "hold": [((t.get("hold") or {}).get("status") or "not measured") for t in s["types"]],
+                    "held": [[round(float((t.get("hold") or {}).get(k) or 0), 3) for k in ("held", "chance")] if t.get("hold") else None
+                             for t in s["types"]]}
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--src", required=True, type=pathlib.Path)
     ap.add_argument("--now", type=pathlib.Path, help="the pipeline's tableau_listings.csv, for the newest snapshot")
     ap.add_argument("--models", type=pathlib.Path, help="bnbscope's processed folder for the region, for the cards' Models family")
+    ap.add_argument("--rentals", type=pathlib.Path, help="the SportsAnalytics folder: its Rentals Archetypes types join the mix (issue 812)")
     a = ap.parse_args()
     s = build(load(a.src))
     now = market_now(a.now) if a.now else None
@@ -611,7 +633,8 @@ def main():
     if a.models:
         # the guest cards (SportsAnalytics issue 808) and each market's review years, from the study's reviews
         from airbnb_guests import build_guests
-        g = build_guests(a.models, getattr(build_cards, "listing_types", None), cards["seg_names"], cards["host_types"])
+        g = build_guests(a.models, getattr(build_cards, "listing_types", None), cards["seg_names"], cards["host_types"],
+                         rentals_types(a.rentals) if a.rentals else None)
         cards["nb_years"] = g.pop("nb_years")
         cards["guests"] = g
     (ROOT / "assets" / "airbnb" / "cards.json").write_text(json.dumps(cards, separators=(",", ":"), allow_nan=False), encoding="utf-8")
